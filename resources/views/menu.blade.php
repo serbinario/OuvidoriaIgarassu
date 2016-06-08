@@ -53,6 +53,18 @@
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
                 </li>
 
+                @role('admin')
+                <li>
+                    <a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
+                        {{--<li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>--}}
+                    </ul>
+                </li>
+                @endrole
+
+
                 @role('biblioteca')
                 <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Biblioteca</span> <span
