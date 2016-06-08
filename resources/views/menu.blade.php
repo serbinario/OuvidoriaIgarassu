@@ -65,7 +65,7 @@
                 {{--@endrole--}}
 
 
-                @role('biblioteca')
+                {{--@role('biblioteca')--}}
                 <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Biblioteca</span> <span
                                 class="fa arrow"></span></a>
@@ -74,6 +74,7 @@
                         <li><a href="{{ route('seracademico.biblioteca.indexEditora') }}"><i class="material-icons">card_travel</i> Editora</a></li>
                         <li><a href="{{ route('seracademico.biblioteca.indexAcervo') }}"><i class="material-icons">find_in_page</i> Acervo</a></li>
                         <li><a href="{{ route('seracademico.biblioteca.indexExemplar') }}"><i class="material-icons">receipt</i> Exemplar</a></li>
+                        <a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a>
                         <li>
                             <a href="#">Controle <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
@@ -92,7 +93,7 @@
                         <li><a href="{{ route('seracademico.biblioteca.dashboardBliblioteca') }}"><i class="material-icons">perm_identity</i> Dashboard Biblioteca</a></li>
                     </ul>
                 </li>
-                @endrole
+               {{-- @endrole--}}
             </ul>
         </div>
     </nav>
