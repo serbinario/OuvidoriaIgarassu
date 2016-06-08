@@ -53,16 +53,16 @@
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
                 </li>
 
-                @role('admin')
-                <li>
-                    <a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
+                {{--@role('admin')--}}
+                {{--<li>--}}
+                    {{--<a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span--}}
+                                {{--class="fa arrow"></span></a>--}}
+                    {{--<ul class="nav nav-second-level collapse">--}}
+                        {{--<li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>--}}
                         {{--<li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>--}}
-                    </ul>
-                </li>
-                @endrole
+                    {{--</ul>--}}
+                {{--</li>--}}
+                {{--@endrole--}}
 
 
                 @role('biblioteca')
@@ -74,7 +74,6 @@
                         <li><a href="{{ route('seracademico.biblioteca.indexEditora') }}"><i class="material-icons">card_travel</i> Editora</a></li>
                         <li><a href="{{ route('seracademico.biblioteca.indexAcervo') }}"><i class="material-icons">find_in_page</i> Acervo</a></li>
                         <li><a href="{{ route('seracademico.biblioteca.indexExemplar') }}"><i class="material-icons">receipt</i> Exemplar</a></li>
-                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
                         <li>
                             <a href="#">Controle <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
