@@ -53,125 +53,6 @@
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
                 </li>
 
-                @role('posgraduacao')
-                {{--<li>--}}
-                    {{--<a href="index.html"><i class="material-icons">school</i> <span class="nav-label">Pós-Graduação</span> <span--}}
-                                {{--class="fa arrow"></span></a>--}}
-                    {{--<ul class="nav nav-second-level collapse">--}}
-                        {{--<li>--}}
-                            {{--<a href="#"><i class="material-icons">style</i> Secretaria <span class="fa arrow"></span></a>--}}
-                            {{--<ul class="nav nav-third-level">--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.aluno.index') }}"><i class="fa fa-users"></i>Alunos</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.disciplina.index') }}"><i class="material-icons">collections_bookmark</i> Disciplinas</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.curso.index') }}"><i class="material-icons">next_week</i> Cursos</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.curriculo.index') }}"><i class="material-icons">library_books</i> Currículos</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.turma.index') }}"><i class="material-icons">turned_in</i> Turmas</a></li>--}}
-                            {{--</ul>--}}
-                        {{--</li>--}}
-                        {{--<li>--}}
-                            {{--<a href="#">Tesouraria <span class="fa arrow"></span></a>--}}
-                            {{--<ul class="nav nav-third-level">--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.aluno.index') }}">Alunos</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.disciplina.index') }}">Disciplinas</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.curso.index') }}">Cursos</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.curriculo.index') }}">Currículos</a></li>--}}
-                                {{--<li><a href="{{ route('seracademico.posgraduacao.turma.index') }}">Turmas</a></li>--}}
-                            {{--</ul>--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                @endrole
-
-                @role('graduacao')
-                <li>
-                    <a href="index.html"><i class="fa fa-graduation-cap"></i> <span class="nav-label">Graduação</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @permission('secretaria.view')
-                        <li>
-                            <a href="#"><i class="material-icons">style</i> Secretaria <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level collapse">
-                                @permission('graduacao.aluno.view')
-                                <li><a href="{{ route('seracademico.matricula.index') }}"><i class="fa fa-users"></i>Matricular Aluno</a></li>
-                                <li><a href="{{ route('seracademico.graduacao.aluno.index') }}"><i class="fa fa-users"></i>Alunos</a></li>
-                                @endpermission
-
-                                @permission('secretaria.other')
-                                <li><a href="{{ route('seracademico.graduacao.disciplina.index') }}"><i class="material-icons">collections_bookmark</i> Disciplinas</a></li>
-                                <li><a href="{{ route('seracademico.graduacao.curso.index') }}"><i class="material-icons">collections_bookmark</i> Cursos</a></li>
-                                <li><a href="{{ route('seracademico.graduacao.curriculo.index') }}"><i class="material-icons">library_books</i> Currículos</a></li>
-                                <li><a href="{{ route('seracademico.graduacao.turma.index') }}"><i class="material-icons">turned_in</i> Turmas</a></li>
-                                @endpermission
-                            </ul>
-                        </li>
-                        @endpermission
-
-                        @permission('vestibular.view')
-                        <li>
-                            <a href="#"><i class="material-icons">style</i> Vestibular <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level collapse">
-                                <li><a href="{{ route('seracademico.materia.index') }}"><i class="material-icons">collections_bookmark</i> Matérias</a></li>
-                                <li><a href="{{ route('seracademico.vestibular.index') }}"><i class="material-icons">collections_bookmark</i> Vestibulares</a></li>
-                                <li><a href="{{ route('seracademico.vestibulando.index') }}"><i class="material-icons">collections_bookmark</i> Vestibulando</a></li>
-                                <li>
-                                    <a href="#"><i class="material-icons">style</i> Relatórios <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level collapse">
-                                        <li><a target="_blank" href="{{ route('seracademico.vestibular.relatorios.relatorio1') }}"><i class="material-icons">collections_bookmark</i> Relatório 1</a></li>
-                                        <li><a targt="_blank" href="{{ route('seracademico.vestibular.relatorios.relatorio2') }}"><i class="material-icons">collections_bookmark</i> Relatório 2</a></li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </li>
-                        @endpermission
-
-                        {{--<li>
-                            <a href="#">Tesouraria <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li><a href="{{ route('seracademico.posgraduacao.aluno.index') }}">Alunos</a></li>
-                                <li><a href="{{ route('seracademico.posgraduacao.disciplina.index') }}">Disciplinas</a></li>
-                                <li><a href="{{ route('seracademico.posgraduacao.curso.index') }}">Cursos</a></li>
-                                <li><a href="{{ route('seracademico.posgraduacao.curriculo.index') }}">Currículos</a></li>
-                                <li><a href="{{ route('seracademico.posgraduacao.turma.index') }}">Turmas</a></li>
-                            </ul>
-                        </li>--}}
-                    </ul>
-                </li>
-                @endrole
-
-                @role('admin')
-                <li>
-                    <a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
-                        <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
-                    </ul>
-                </li>
-
-
-                <li>
-                    <a href="index.html"><i class="material-icons">perm_data_setting</i> <span class="nav-label">Parâmetros</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.empresa.check') }}"><i class="fa fa-university"></i> Empresa</a></li>
-                        <li><a href="{{ route('seracademico.sede.index') }}"><i class="fa fa-building"></i> Sedes</a></li>
-                        <li><a href="{{ route('seracademico.departamento.index') }}"><i class="material-icons">view_module</i> Dpts/Sede</a></li>
-                        <li><a href="{{ route('seracademico.sala.index') }}"><i class="material-icons">class</i> Salas</a></li>
-                        <li><a href="{{ route('seracademico.tipoAvaliacao.index') }}"><i class="fa fa-star-half-empty"></i> Tipos de Avaliações</a></li>
-                        <li><a href="{{ route('seracademico.tipoDisciplina.index') }}"><i class="fa fa-tags"></i> Tipos de Disciplinas</a></li>
-                        <li><a href="{{ route('seracademico.graduacao.semestre.index') }}"><i class="fa fa-calendar"></i> Semestres</a></li>
-                        <li><a href="{{ route('seracademico.tipoCurso.index') }}"><i class="material-icons">next_week</i> Tipos de Cursos</a></li>
-                        <li><a href="{{ route('seracademico.posgraduacao.professor.index') }}"><i class="material-icons">rate_review</i> Professor</a></li>
-                        <li><a href="{{ route('seracademico.banco.index') }}"><i class="material-icons">rate_review</i> Bancos</a></li>
-                        <li><a href="{{ route('seracademico.tipoVencimento.index') }}"><i class="material-icons">rate_review</i> Tipo de Vencimento</a></li>
-                        <li><a href="{{ route('seracademico.taxa.index') }}"><i class="material-icons">rate_review</i> Taxas</a></li>
-                        <li><a href="{{ route('seracademico.parametro.index') }}"><i class="material-icons">rate_review</i> Configurações</a></li>
-                    </ul>
-                </li>
-                @endrole
-
-
                 @role('biblioteca')
                 <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Biblioteca</span> <span
@@ -181,7 +62,6 @@
                         <li><a href="{{ route('seracademico.biblioteca.indexEditora') }}"><i class="material-icons">card_travel</i> Editora</a></li>
                         <li><a href="{{ route('seracademico.biblioteca.indexAcervo') }}"><i class="material-icons">find_in_page</i> Acervo</a></li>
                         <li><a href="{{ route('seracademico.biblioteca.indexExemplar') }}"><i class="material-icons">receipt</i> Exemplar</a></li>
-                        <li><a href="{{ route('indexConsulta') }}" target="__blank"><i class="material-icons">receipt</i> Consulta</a></li>
                         <li>
                             <a href="#">Controle <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
@@ -199,9 +79,6 @@
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.biblioteca.dashboardBliblioteca') }}"><i class="material-icons">perm_identity</i> Dashboard Biblioteca</a></li>
                     </ul>
-                </li>
-                <li>
-                    <a href="{{ route('seracademico.portal.indexPortal') }}" target="__blank"><i class="material-icons">perm_identity</i> Portal</a>
                 </li>
                 @endrole
             </ul>
