@@ -405,6 +405,21 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
         });
 
+        Route::group(['prefix' => 'ouvidoria', 'as' => 'ouvidoria.'], function () {
+
+            Route::group(['prefix' => 'demanda', 'as' => 'demanda.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'Ouvidoria\DemandaController@index']);
+                Route::get('grid', ['as' => 'grid', 'uses' => 'Ouvidoria\DemandaController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'Ouvidoria\DemandaController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\DemandaController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\DemandaController@update']);
+                Route::get('delete/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@delete']);
+                Route::get('registro/{id}', ['as' => 'registro', 'uses' => 'Ouvidoria\DemandaController@registro']);
+            });
+
+        });
+
 
         Route::group(['prefix' => 'biblioteca', 'as' => 'biblioteca.'], function () {
             Route::get('indexResponsavel', ['as' => 'indexResponsavel', 'uses' => 'Biblioteca\ResponsavelController@index']);
@@ -516,4 +531,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Route::get('seachSimplePage', ['as' => 'seachSimplePage', 'uses' => 'Biblioteca\ConsultaController@seachSimplePage']);
     Route::get('seachDetalhe/exemplar/{id}', ['as' => 'seachDetalhe', 'uses' => 'Biblioteca\ConsultaController@seachDetalhe']);
     Route::get('meusEmprestimos', ['as' => 'meusEmprestimos', 'uses' => 'Biblioteca\ConsultaController@meusEmprestimos']);
+
+    //Ouvidoria
+    Route::get('createPublico', ['as' => 'createPublico', 'uses' => 'Ouvidoria\DemandaController@createPublic']);
+    Route::post('storePublico', ['as' => 'storePublico', 'uses' => 'Ouvidoria\DemandaController@storePublic']);
 });
