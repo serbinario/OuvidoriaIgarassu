@@ -46,7 +46,7 @@ $dataFromat = $data->format('d/m/Y');
     <h4>1. DADOS PESSOAIS</h4>
     <table style="width: 100%">
         <tr>
-            <td style="width: 500px"><span class="text">Nome: {{$demanda['nome']}}</span></td>
+            <td style="width: 250px"><span class="text">Nome: {{$demanda['nome']}}</span></td>
         </tr>
         <tr>
             <td style="width: 100px"><span class="text">Endreço: {{$demanda['endereco']}}</span></td>
