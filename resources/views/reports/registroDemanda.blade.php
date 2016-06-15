@@ -26,7 +26,10 @@ $dataFromat = $data->format('d/m/Y');
         .rodape{
             position:absolute;
             bottom:0;
-            width:100%;
+            width: 100%;
+            height: 82px;
+            margin-top: 550px;
+
         }
     </style>
     <link href="" rel="stylesheet" media="screen">
@@ -35,15 +38,44 @@ $dataFromat = $data->format('d/m/Y');
 <body>
 <div class="page">
     <h4>REGISTRO DE DEMANDAS DA OUVIDORIA</h4>
-    <span class="text">Data: {{$dataFromat}}</span> <span class="text" style="margin-left: 581px">Demanda n.º {{$codFull}}</span><br />
-    <span class="text">Sigilo @if($demanda['sigilo']['id'] == '2') ( X ) @elseif ($demanda['sigilo']['id'] == '1') ( ) @endif</span> <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span> <br />
+    <span class="text">Data: {{$dataFromat}}</span> --
+    <span class="text">Demanda n.º {{$codFull}}</span><br />
+    <span class="text">Sigilo @if($demanda['sigilo']['id'] == '2') ( X ) @elseif ($demanda['sigilo']['id'] == '1') ( ) @endif</span>
+    <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span> <br />
 
     <h4>1. DADOS PESSOAIS</h4>
-    <span class="text">Nome: {{$demanda['nome']}}</span><br />
-    <span class="text">Endreço: {{$demanda['endereco']}}</span><br />
-    <span class="text">Bairro: {{$demanda['minicipio']}}</span> <span class="text" style="margin-left: 400px">Telefone: {{$demanda['fone']}}</span><br />
-    <span class="text">Idade: {{$demanda['idade']['nome']}}</span> <span class="text" style="margin-left: 445px">Sexo: {{$demanda['sexo']['nome']}}</span><br />
-    <span class="text">Escolaridade: {{$demanda['escolaridade']['nome']}}</span> <span class="text" style="margin-left: 277px">Usa exclusivamente SUS? ( <?php if($demanda['exclusividadeSUS']['id'] == '1') { ?> X <?php }?> ) Sim ( <?php if($demanda['exclusividadeSUS']['id'] == '2') { ?> X <?php }?> ) Não </span>
+    <table style="width: 100%">
+        <tr>
+            <td style="width: 500px"><span class="text">Nome: {{$demanda['nome']}}</span></td>
+        </tr>
+        <tr>
+            <td style="width: 100px"><span class="text">Endreço: {{$demanda['endereco']}}</span></td>
+        </tr>
+        <tr>
+            <td style="width: 100px">
+                <span class="text">Bairro: {{$demanda['minicipio']}}</span>
+            </td>
+            <td>
+                <span class="text">Telefone: {{$demanda['fone']}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100px">
+                <span class="text">Idade: {{$demanda['idade']['nome']}}</span>
+            </td>
+            <td>
+                <span class="text">Sexo: {{$demanda['sexo']['nome']}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100px">
+                <span class="text">Escolaridade: {{$demanda['escolaridade']['nome']}}</span>
+            </td>
+            <td>
+                <span class="text">Usa exclusivamente SUS? ( <?php if($demanda['exclusividadeSUS']['id'] == '1') { ?> X <?php }?> ) Sim ( <?php if($demanda['exclusividadeSUS']['id'] == '2') { ?> X <?php }?> ) Não </span>
+            </td>
+        </tr>
+    </table>
 
     <h4>2. RELATO (com data aproximada)</h4>
     <p class="text" style="text-align: justify">{{$demanda['relato']}}</p>
@@ -57,8 +89,8 @@ $dataFromat = $data->format('d/m/Y');
 </div>
 
 <center>
-    <div class="rodape" style="background: url({{asset('/img/igarassu.png')}}); width: 354px; height: 82px; margin-top: 550px; margin-left: 30%">
-
+    <div class="rodape" style="">
+        <center><img src="{{asset('/img/igarassu.png')}}" style="width: 290px; height: 62px"></center>
     </div>
 </center>
 
