@@ -1,6 +1,6 @@
 <?php
 
-/*return array(
+return array(
 
 
     'pdf' => array(
@@ -17,8 +17,8 @@
     ),
 
 
-);*/
-
+);
+/*
 return array(
 
 
@@ -36,4 +36,4 @@ return array(
     ),
 
 
-);
+);*/
