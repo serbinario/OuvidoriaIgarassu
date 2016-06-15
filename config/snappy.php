@@ -4,22 +4,22 @@ return array(
 
 
     'pdf' => array(
-        'enabled' => ,
+        'enabled' => true,
         'binary' => '/usr/local/bin/wkhtmltopdf',
-        'timeout' => ,
+        'timeout' => false,
         'options' => array(),
     ),
     'image' => array(
-        'enabled' => ,
+        'enabled' => true,
         'binary' => '/usr/local/bin/wkhtmltoimage',
-        'timeout' => ,
+        'timeout' => false,
         'options' => array(),
     ),
 
 
 );
-/*
-return array(
+
+/*return array(
 
 
     'pdf' => array(
