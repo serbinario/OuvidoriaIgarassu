@@ -50,7 +50,12 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
+                    @role('ouvidoria')
+                    <img alt="image" class="logoDash" src="{{ asset('/img/ouvidoria_logo.jpg')}}"/>
+                    @endrole
+                    @role('biblioteca')
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
+                    @endrole
                 </li>
 
                 @role('admin')
