@@ -62,6 +62,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('endereco', 'Endereço') !!}
+                                    {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('informacao_id', 'O que deseja?') !!}
@@ -74,12 +82,10 @@
                                     {!! Form::select('area_id', $loadFields['ouvidoria\area'], Session::getOldInput('area_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('endereco', 'Endereço') !!}
-                                    {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
+                                    {!! Form::label('situacao_id', 'Situação') !!}
+                                    {!! Form::select('situacao_id', $loadFields['ouvidoria\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
@@ -87,7 +93,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     {!! Form::label('relato', 'Relato') !!}
-                                    {!! Form::textarea('relato', Session::getOldInput('relato')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
+                                    {!! Form::textarea('relato', Session::getOldInput('relato')  ,['size' => '124x5'] , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>

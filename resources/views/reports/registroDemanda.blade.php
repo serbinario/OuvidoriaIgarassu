@@ -37,6 +37,13 @@ $dataFromat = $data->format('d/m/Y');
 
 <body>
 <div class="page">
+
+    <center>
+        <div class="topo" style="">
+            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 120px; height: 100px"></center>
+        </div>
+    </center>
+
     <h4>REGISTRO DE DEMANDAS DA OUVIDORIA</h4>
     <span class="text">Data: {{$dataFromat}}</span> --
     <span class="text">Demanda n.º {{$codFull}}</span><br />

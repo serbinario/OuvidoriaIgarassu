@@ -33,6 +33,7 @@ class Demanda extends Model implements Transformable
 		'tipo_demanda_id',
 		'melhorias',
 		'obs',
+		'situacao_id'
 	];
 
 	/**
@@ -105,6 +106,14 @@ class Demanda extends Model implements Transformable
 	public function tipoDemanda()
 	{
 		return $this->belongsTo(TipoDemanda::class, 'tipo_demanda_id');
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function situacao()
+	{
+		return $this->belongsTo(Situacao::class, 'situacao_id');
 	}
 
 }

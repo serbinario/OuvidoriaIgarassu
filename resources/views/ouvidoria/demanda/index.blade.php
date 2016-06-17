@@ -66,25 +66,29 @@
                         <table id="sala-grid" class="display table table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
-                                <th>Detalhe</th>
+                                <th>Relato</th>
+                                <th>Data</th>
+                                <th>Nº da demanda</th>
                                 <th>Nome</th>
-                                <th>Idade</th>
-                                <th>Assunto</th>
-                                <th>Tipo da demanda</th>
-                                <th>Exclusividade SUS</th>
-                                <th>Código</th>
+                                <th>Endereço</th>
+                                <th>Bairro</th>
+                                <th>Telefone</th>
+                                <th>Caracteristica da demanda</th>
+                                <th>Meio de registro</th>
                                 <th >Acão</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Detalhe</th>
+                                <th>Relato</th>
+                                <th>Data</th>
+                                <th>Nº da demanda</th>
                                 <th>Nome</th>
-                                <th>Idade</th>
-                                <th>Assunto</th>
-                                <th>Tipo da demanda</th>
-                                <th>Exclusividade SUS</th>
-                                <th>Código</th>
+                                <th>Endereço</th>
+                                <th>Bairro</th>
+                                <th>Telefone</th>
+                                <th>Caracteristica da demanda</th>
+                                <th>Meio de registro</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
                             </tfoot>
@@ -121,12 +125,14 @@
                         "data":           'ouv_demanda.nome',
                         "defaultContent": ''
                     },
+                    {data: 'data', name: 'ouv_demanda.data'},
+                    {data: 'codigo', name: 'ouv_demanda.codigo'},
                     {data: 'nome', name: 'ouv_demanda.nome'},
-                    {data: 'idade', name: 'ouv_idade.nome'},
+                    {data: 'endereco', name: 'ouv_demanda.endereco'},
+                    {data: 'minicipio', name: 'ouv_demanda.minicipio'},
+                    {data: 'fone', name: 'ouv_demanda.fone'},
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
-                    {data: 'exclusividade', name: 'ouv_exclusividade_sus.nome'},
-                    {data: 'codigo', name: 'ouv_demanda.codigo'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

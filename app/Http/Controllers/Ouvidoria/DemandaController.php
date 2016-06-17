@@ -37,6 +37,7 @@ class DemandaController extends Controller
         'Ouvidoria\TipoDemanda',
         'Ouvidoria\ExclusividadeSUS',
         'Sexo',
+        'Ouvidoria\Situacao',
     ];
 
     /**
@@ -75,7 +76,11 @@ class DemandaController extends Controller
                 'ouv_tipo_demanda.nome as tipo_demanda',
                 'ouv_exclusividade_sus.nome as exclusividade',
                 'ouv_demanda.relato',
-                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo')
+                'ouv_demanda.endereco',
+                'ouv_demanda.minicipio',
+                'ouv_demanda.fone',
+                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data')
             );
 
         #Editando a grid

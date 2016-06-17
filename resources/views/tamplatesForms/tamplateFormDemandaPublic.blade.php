@@ -6,8 +6,6 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados Principais</a></li>
-                    <li role="presentation"><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Perfil</a></li>
-                    <li role="presentation"><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outras informações</a></li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -62,6 +60,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('endereco', 'Endereço') !!}
+                                    {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('informacao_id', 'O que deseja?') !!}
@@ -76,26 +82,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('endereco', 'Endereço') !!}
-                                    {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('relato', 'Relato') !!}
-                                    {!! Form::textarea('relato', Session::getOldInput('relato')  ,['size' => '90x5'] , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="perfil">
-                        <br />
-                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('sexos_id', 'Sexo') !!}
@@ -109,7 +95,6 @@
                                     {!! Form::select('exclusividade_sus_id', $loadFields['ouvidoria\exclusividadesus'], Session::getOldInput('exclusividade_sus_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -126,15 +111,19 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane" id="outros">
-                        <br />
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('relato', 'Relato') !!}
+                                    {!! Form::textarea('relato', Session::getOldInput('relato')  ,['size' => '90x5'] , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     {!! Form::label('melhorias', 'Quais melhorias você identifica na saúde de Igarassu?') !!}
-                                    {!! Form::textarea('melhorias', Session::getOldInput('melhorias')  ,['size' => '100x5'] , array('class' => 'form-control')) !!}
+                                    {!! Form::textarea('melhorias', Session::getOldInput('melhorias')  ,['size' => '90x5'] , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
@@ -142,7 +131,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     {!! Form::label('obs', 'Observações') !!}
-                                    {!! Form::textarea('obs', Session::getOldInput('obs')  ,['size' => '100x5'] , array('class' => 'form-control')) !!}
+                                    {!! Form::textarea('obs', Session::getOldInput('obs')  ,['size' => '90x5'] , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
