@@ -60,7 +60,7 @@ $dataFromat = $data->format('d/m/Y');
         </tr>
         <tr>
             <td style="width: 100px">
-                <span class="text">Bairro: {{$demanda['minicipio']}}</span>
+                <span class="text">Comunidade: {{$demanda['minicipio']}}</span>
             </td>
             <td>
                 <span class="text">Telefone: {{$demanda['fone']}}</span>
