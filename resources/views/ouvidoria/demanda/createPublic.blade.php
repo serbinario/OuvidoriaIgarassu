@@ -9,8 +9,8 @@
     <br />
     <div class="row">
         <center>
-            <div class="topo" style="">
-                <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 120px; height: 100px"></center>
+            <div class="topo" style="background-color: #213a53">
+                <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 220px; height: 200px"></center>
             </div>
         </center>
     </div>

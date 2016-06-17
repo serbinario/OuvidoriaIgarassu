@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    {!! Form::label('minicipio', 'Bairro') !!}
+                                    {!! Form::label('minicipio', 'Comunidade') !!}
                                     {!! Form::text('minicipio', Session::getOldInput('minicipio')  , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
