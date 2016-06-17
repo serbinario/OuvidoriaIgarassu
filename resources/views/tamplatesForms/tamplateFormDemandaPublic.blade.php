@@ -112,6 +112,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {!! Form::label('pessoa_id', 'Tipo da Pessoa') !!}
+                                    {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     {!! Form::label('relato', 'Relato') !!}

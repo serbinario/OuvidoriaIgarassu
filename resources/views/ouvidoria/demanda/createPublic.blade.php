@@ -9,7 +9,9 @@
     <br />
     <div class="row">
         <center>
-            <div class="rodape" style="background: url({{asset('/img/igarassu.png')}}); width: 354px; height: 82px;"></div>
+            <div class="topo" style="">
+                <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 120px; height: 100px"></center>
+            </div>
         </center>
     </div>
     <br />

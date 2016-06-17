@@ -440,10 +440,15 @@ class SeracademicoRepositoryProvider extends ServiceProvider
 		$this->app->bind(
 			\Seracademico\Repositories\Ouvidoria\TipoDemandaRepository::class,
 			\Seracademico\Repositories\Ouvidoria\TipoDemandaRepositoryEloquent::class
-		);
+		);
+
 		$this->app->bind(
 			\Seracademico\Repositories\SituacaoRepository::class,
 			\Seracademico\Repositories\SituacaoRepositoryEloquent::class
+		);
+		$this->app->bind(
+			\Seracademico\Repositories\OuvPessoaRepository::class,
+			\Seracademico\Repositories\OuvPessoaRepositoryEloquent::class
 		);
 	}
 }

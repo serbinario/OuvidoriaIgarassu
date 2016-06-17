@@ -38,6 +38,8 @@ class DemandaController extends Controller
         'Ouvidoria\ExclusividadeSUS',
         'Sexo',
         'Ouvidoria\Situacao',
+        'Ouvidoria\TipoDemanda',
+        'Ouvidoria\OuvPessoa',
     ];
 
     /**

@@ -33,9 +33,6 @@
                                 <div class="form-group">
                                     {!! Form::label('nome', 'Nome') !!}
                                     {!! Form::text('nome', Session::getOldInput('nome')  , array('class' => 'form-control')) !!}
-                                    @if(!isset($model->id))
-                                        {!! Form::hidden('tipo_demanda_id', '3') !!}
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -70,13 +67,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('informacao_id', 'O que deseja?') !!}
                                     {!! Form::select('informacao_id', $loadFields['ouvidoria\informacao'], Session::getOldInput('informacao_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('area_id', 'Área') !!}
                                     {!! Form::select('area_id', $loadFields['ouvidoria\area'], Session::getOldInput('area_id'), array('class' => 'form-control')) !!}
@@ -86,6 +83,20 @@
                                 <div class="form-group">
                                     {!! Form::label('situacao_id', 'Situação') !!}
                                     {!! Form::select('situacao_id', $loadFields['ouvidoria\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('tipo_demanda_id', 'Meio de registro') !!}
+                                    {!! Form::select('tipo_demanda_id', $loadFields['ouvidoria\tipodemanda'], Session::getOldInput('tipo_demanda_id'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('pessoa_id', 'Tipo da Pessoa') !!}
+                                    {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>

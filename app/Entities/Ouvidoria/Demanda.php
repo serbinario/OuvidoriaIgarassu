@@ -5,6 +5,7 @@ namespace Seracademico\Entities\Ouvidoria;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Seracademico\Entities\OuvPessoa;
 use Seracademico\Entities\Sexo;
 
 class Demanda extends Model implements Transformable
@@ -33,7 +34,8 @@ class Demanda extends Model implements Transformable
 		'tipo_demanda_id',
 		'melhorias',
 		'obs',
-		'situacao_id'
+		'situacao_id',
+		'pessoa_id',
 	];
 
 	/**
@@ -114,6 +116,14 @@ class Demanda extends Model implements Transformable
 	public function situacao()
 	{
 		return $this->belongsTo(Situacao::class, 'situacao_id');
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function pessoa()
+	{
+		return $this->belongsTo(OuvPessoa::class, 'pessoa_id');
 	}
 
 }
