@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('endereco', 'Endereço') !!}
                                     {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}

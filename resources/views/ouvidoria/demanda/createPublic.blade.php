@@ -3,6 +3,8 @@
     <link href="{{ asset('/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300" rel="stylesheet">
     <link href="{{ asset('/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+    <link href="{{ asset('/css/bootstrapValidation.mim.css')}}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery.datetimepicker.css')}}" rel="stylesheet"/>
 </head>
 <body>
 <div class="conteiner">
@@ -49,6 +51,9 @@
 <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>
+<script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
+<script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
+
 </body>
 </html>
