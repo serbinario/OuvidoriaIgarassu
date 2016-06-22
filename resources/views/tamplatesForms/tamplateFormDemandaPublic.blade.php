@@ -49,7 +49,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('fone', 'Fone') !!}
-                                    {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control phone')) !!}
+                                    {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -66,12 +66,18 @@
                                     {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('numero_end', 'Número') !!}
+                                    {!! Form::text('numero_end', Session::getOldInput('numero_end')  , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('informacao_id', 'O que deseja?') !!}
-                                    {!! Form::select('informacao_id', $loadFields['ouvidoria\informacao'], Session::getOldInput('informacao_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('informacao_id', (["" => "Selecione"] + $loadFields['ouvidoria\informacao']->toArray()), Session::getOldInput('informacao_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -114,7 +120,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('pessoa_id', 'Tipo da Pessoa') !!}
+                                    {!! Form::label('pessoa_id', 'Perfil') !!}
                                     {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>

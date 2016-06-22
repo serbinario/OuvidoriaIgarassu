@@ -36,6 +36,7 @@ class Demanda extends Model implements Transformable
 		'obs',
 		'situacao_id',
 		'pessoa_id',
+		'numero_end',
 	];
 
 	/**

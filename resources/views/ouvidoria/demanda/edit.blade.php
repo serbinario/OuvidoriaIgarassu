@@ -29,7 +29,7 @@
                 </div>
             @endif
 
-            {!! Form::model($model, ['route'=> ['seracademico.ouvidoria.demanda.update', $model->id], 'method' => "POST" ]) !!}
+            {!! Form::model($model, ['route'=> ['seracademico.ouvidoria.demanda.update', $model->id], 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
                 @include('tamplatesForms.tamplateFormDemanda')
             {!! Form::close() !!}
         </div>
@@ -38,6 +38,7 @@
 @stop
 
 @section('javascript')
+    <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
     <script type="text/javascript">
     </script>
 @stop

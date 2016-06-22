@@ -36,7 +36,7 @@
                     @endforeach
                 </div>
             @endif
-            {!! Form::open(['route'=>'storePublico', 'method' => "POST" ]) !!}
+            {!! Form::open(['route'=>'storePublico', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
             @include('tamplatesForms.tamplateFormDemandaPublic')
             {!! Form::close() !!}
         </div>
@@ -49,5 +49,6 @@
 <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>
+<script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
 </body>
 </html>

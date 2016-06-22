@@ -28,7 +28,7 @@
                     @endforeach
                 </div>
             @endif
-            {!! Form::open(['route'=>'seracademico.ouvidoria.demanda.store', 'method' => "POST" ]) !!}
+            {!! Form::open(['route'=>'seracademico.ouvidoria.demanda.store', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
                 @include('tamplatesForms.tamplateFormDemanda')
             {!! Form::close() !!}
         </div>
@@ -36,6 +36,7 @@
 @stop
 
 @section('javascript')
+    <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
     <script type="text/javascript">
 
     </script>
