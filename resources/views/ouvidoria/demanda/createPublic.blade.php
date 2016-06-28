@@ -12,7 +12,9 @@
     <div class="row">
         <center>
             <div class="topo" style="background-color: #213a53">
-                <center><img src="{{asset('/img/ouvidoria_saude_igarassu.png')}}" style="width: 220px; height: 200px"></center>
+                <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 220px; height: 200px">
+                    <img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">
+                </center>
             </div>
         </center>
     </div>
