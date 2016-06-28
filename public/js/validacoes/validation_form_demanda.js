@@ -21,13 +21,6 @@ $(document).ready(function () {
                     },
                 },
             },
-            'nome': {
-                validators: {
-                    notEmpty: {
-                        message: "Este campo é obrigatório",
-                    },
-                },
-            },
             'minicipio': {
                 validators: {
                     notEmpty: {

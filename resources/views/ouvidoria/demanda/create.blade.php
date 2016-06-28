@@ -38,6 +38,15 @@
 @section('javascript')
     <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
     <script type="text/javascript">
-
+        $(document).ready(function(){
+            $('#anonimo').on('change', function(){
+                var value = $('#anonimo').val();
+                if(value == '2') {
+                    $('#nome').prop('readonly', true);
+                } else {
+                    $('#nome').prop('readonly', false);
+                }
+            });
+        });
     </script>
 @stop

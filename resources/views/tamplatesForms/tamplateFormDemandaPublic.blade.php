@@ -22,7 +22,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('anonimo_id', 'Anônimo') !!}
-                                    {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], Session::getOldInput('anonimo_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], Session::getOldInput('anonimo_id'), array('class' => 'form-control', 'id' => 'anonimo')) !!}
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     {!! Form::label('nome', 'Nome') !!}
-                                    {!! Form::text('nome', Session::getOldInput('nome')  , array('class' => 'form-control')) !!}
+                                    {!! Form::text('nome', Session::getOldInput('nome')  , array('class' => 'form-control', 'id' => 'nome')) !!}
                                     @if(!isset($model->id))
                                         {!! Form::hidden('tipo_demanda_id', '1') !!}
                                     @endif

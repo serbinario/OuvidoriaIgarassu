@@ -12,7 +12,7 @@
     <div class="row">
         <center>
             <div class="topo" style="background-color: #213a53">
-                <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 220px; height: 200px"></center>
+                <center><img src="{{asset('/img/ouvidoria_saude_igarassu.png')}}" style="width: 220px; height: 200px"></center>
             </div>
         </center>
     </div>
@@ -54,6 +54,18 @@
 <script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#anonimo').on('change', function(){
+            var value = $('#anonimo').val();
+            if(value == '2') {
+                $('#nome').prop('readonly', true);
+            } else {
+                $('#nome').prop('readonly', false);
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
