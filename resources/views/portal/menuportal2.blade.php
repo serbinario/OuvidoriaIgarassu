@@ -26,7 +26,7 @@
     <div class="container">{{----}}
         <div class="nav-wrapper">
             <a href="#!" class="brand-logo">
-                <img src="{{ asset('/portal/img/logo_alpha_faculdade-01.png')}}" style="width: 130px;margin-top: -20%;"> </a>
+                <img src="{{ asset('/img/marca_prefeitura.png')}}" style="width: 130px;margin-top: -20%;"> </a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons" style="color: #283277;">menu</i></a>
         </div>
     </div>
@@ -57,14 +57,14 @@
         <div class="row">
             <div class="col l6 s12">
                 <a href="">
-                    <img src="{{ asset('/portal/img/logo-alpha-b.png')}}"
+                    <img src="{{ asset('/img/marca_prefeitura.png')}}"
                          style="width: 180px;position: relative;float: left;">
                 </a>
 
             </div>
             <div class="col l4 offset-l2 s12">
-                <h5 class="white-text"><b>Alpha Faculdade</b></h5>
-                <p class="grey-text text-lighten-4">Biblioteca Institucional</p>
+                <h5 class="white-text"><b>Biblioteca de Igarassu</b></h5>
+                <p class="grey-text text-lighten-4">Biblioteca Pública</p>
                 <ul>
                     <li><a class="grey-text text-lighten-3" href="#!">Sobre</a></li>
                     <li><a class="grey-text text-lighten-3" href="#!">Ajuda</a></li>

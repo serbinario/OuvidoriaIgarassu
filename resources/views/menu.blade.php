@@ -88,6 +88,7 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('indexConsulta') }}" target="__blank"><i class="material-icons">receipt</i> Consulta</a></li>
+                        <li><a href="{{ route('seracademico.biblioteca.indexPessoa') }}"><i class="material-icons">receipt</i> Pessoa</a></li>
                     </ul>
                 </li>
                 <li>

@@ -6,21 +6,21 @@ use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
-use Seracademico\Services\Biblioteca\ArcevoService;
+use Seracademico\Services\Biblioteca\PessoaService;
+use Seracademico\Validators\Biblioteca\PessoaValidator;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
-use Seracademico\Validators\Biblioteca\ArcevoValidator;
 
-class ArcevoController extends Controller
+class PessoaController extends Controller
 {
     /**
-    * @var ArcevoService
+    * @var PessoaService
     */
     private $service;
 
     /**
-    * @var ArcevoValidator
+    * @var PessoaValidator
     */
     private $validator;
 
@@ -28,21 +28,16 @@ class ArcevoController extends Controller
      * @var array
      */
     private $loadFields = [
-        'Biblioteca\TipoAcervo',
-        'Biblioteca\Responsavel',
-        'Biblioteca\TipoAutor',
-        'Biblioteca\Corredor',
-        'Biblioteca\Estante',
-        'Biblioteca\Colecao',
-        'Biblioteca\Genero',
-        'Biblioteca\Situacao',
+        'Sexo',
+        'EstadoCivil',
+        'Estado',
     ];
 
     /**
-    * @param ArcevoService $service
-    * @param ArcevoValidator $validator
+    * @param PessoaService $service
+    * @param PessoaValidator $validator
     */
-    public function __construct(ArcevoService $service, ArcevoValidator $validator)
+    public function __construct(PessoaService $service, PessoaValidator $validator)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
@@ -53,7 +48,7 @@ class ArcevoController extends Controller
      */
     public function index()
     {
-        return view('biblioteca.acervo.index');
+        return view('biblioteca.pessoa.index');
     }
 
     /**
@@ -62,38 +57,22 @@ class ArcevoController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('bib_arcevos')
-            ->leftJoin(\DB::raw('(SELECT arcevos_id, count(*) as qtd_exemplares FROM bib_exemplares GROUP BY arcevos_id)exemplares'), function ($join) {
-                $join->on('exemplares.arcevos_id', '=', 'bib_arcevos.id');
-            })
-            ->leftJoin(\DB::raw('(SELECT arcevos_id, id, responsaveis_id FROM primeira_entrada GROUP BY arcevos_id) entrada'), function ($join) {
-                $join->on('entrada.arcevos_id', '=', 'bib_arcevos.id');
-            })
-//            ->join('primeira_entrada', 'primeira_entrada.arcevos_id', '=', 'bib_arcevos.id')
-            ->leftJoin('responsaveis', 'responsaveis.id', '=', 'entrada.responsaveis_id')
-            ->select([
-            'bib_arcevos.id',
-            'bib_arcevos.titulo',
-            'bib_arcevos.subtitulo',
-            'bib_arcevos.cutter',
-            'bib_arcevos.cdd',
-            'exemplares.qtd_exemplares',
-            \DB::raw('CONCAT (responsaveis.sobrenome, ", ", responsaveis.nome) as autor'),
-            ]);
+        $rows = \DB::table('pessoas')->select(['id', 'nome']);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
             $html       = '<div class="fixed-action-btn horizontal">
                             <a class="btn-floating btn-main"><i class="large material-icons">dehaze</i></a>
                             <ul>
-                            <li><a class="btn-floating" href="editAcervo/'.$row->id.'" title="Editar disciplina"><i class="material-icons">edit</i></a></li>';
-            $obra = $this->service->find($row->id);
+                            <li><a class="btn-floating" href="editPessoa/'.$row->id.'" title="Editar pessoa"><i class="material-icons">edit</i></a></li></ul>
+                           </div>';
+            //$reponsavel = $this->service->find($row->id);
             # Verificando se existe vinculo com o currículo
-            if(count($obra['acervo']->exemplares) == 0) {
-                $html .= '<li><a class="btn-floating excluir" href="deleteAcervo/'.$row->id.'" title="Excluir disciplina"><i class="material-icons">delete</i></a></li>
+            /*if(count($reponsavel->autores) == 0 && count($reponsavel->outros) == 0) {
+                $html .= '<li><a class="btn-floating excluir" href="deletePessoa/'.$row->id.'" title="Excluir pessoa"><i class="material-icons">delete</i></a></li>
                             </ul>
                            </div>';
-            }
+            }*/
 
             # Retorno
             return $html;
@@ -109,7 +88,7 @@ class ArcevoController extends Controller
         $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('biblioteca.acervo.create', compact('loadFields'));
+        return view('biblioteca.pessoa.create', compact('loadFields'));
     }
 
     /**
@@ -145,11 +124,7 @@ class ArcevoController extends Controller
     {
         try {
             #Recuperando a empresa
-            $retorno = $this->service->find($id);
-            $model = $retorno['acervo'];
-            $segundaEntrada = $retorno['segundaEntrada'];
-            $primeiraEntrada = $retorno['primeiraEntrada'];
-            //dd($segundaEntrada);
+            $model = $this->service->find($id);
 
             #Tratando as datas
            // $aluno = $this->service->getAlunoWithDateFormatPtBr($aluno);
@@ -158,7 +133,7 @@ class ArcevoController extends Controller
             $loadFields = $this->service->load($this->loadFields);
 
             #retorno para view
-            return view('biblioteca.acervo.edit', compact('model', 'segundaEntrada', 'primeiraEntrada','loadFields'));
+            return view('biblioteca.pessoa.edit', compact('model', 'loadFields'));
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }
@@ -204,6 +179,31 @@ class ArcevoController extends Controller
             return redirect()->back()->with("message", "Remoção realizada com sucesso!");
         } catch (\Throwable $e) { dd($e);
             return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return $this|array|\Illuminate\Http\RedirectResponse
+     */
+    public function storeAjax(Request $request)
+    {
+        try {
+            #Recuperando os dados da requisição
+            $data = $request->all();
+
+            #Validando a requisição
+            $this->validator->with($data['dados'])->passesOrFail(ValidatorInterface::RULE_CREATE);
+
+            #Executando a ação
+            $this->service->store($data['dados']);
+
+            #Retorno para a view
+            return array('msg' => 'Cadastro realizado com sucesso!');
+        } catch (ValidatorException $e) {
+            return $this->validator->errors();
+        } catch (\Throwable $e) { dd($e);
+            return $e->getMessage();
         }
     }
 
