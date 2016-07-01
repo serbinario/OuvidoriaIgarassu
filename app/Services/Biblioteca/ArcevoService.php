@@ -121,10 +121,6 @@ class ArcevoService
         #Salvando o registro pincipal
         $arcevo =  $this->repository->create($data);
 
-        if(isset($data['cursos'])){
-            $arcevo->cursos()->attach($data['cursos']);
-        }
-
         //Inserir primeira entrada do acervos
         if(count($data['primeira']['responsaveis_id']) > 0 ) {
             for($i = 0; $i < count($data['primeira']['responsaveis_id']); $i++){

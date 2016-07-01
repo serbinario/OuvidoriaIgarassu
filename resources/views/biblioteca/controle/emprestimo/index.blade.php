@@ -41,8 +41,9 @@
                             <thead>
                             <tr>
                                 <th>Acervo - Título</th>
-                                <th>Cutter</th>
                                 <th>Subtítulo</th>
+                                <th>Autor</th>
+                                <th>Cutter</th>
                                 <th>Edição</th>
                                 <th>Tombo</th>
                                 <th>Situação</th>
@@ -54,8 +55,9 @@
                             <tfoot>
                             <tr>
                                 <th>Acervo - Título</th>
-                                <th>Cutter</th>
                                 <th>Subtítulo</th>
+                                <th>Autor</th>
+                                <th>Cutter</th>
                                 <th>Edição</th>
                                 <th>Tombo</th>
                                 <th>Situação</th>
@@ -83,8 +85,8 @@
                                 <thead>
                                 <tr>
                                     <th>Acervo - Título</th>
-                                    <th>Cutter</th>
                                     <th>Subtítulo</th>
+                                    <th>Cutter</th>
                                     <th>Edição</th>
                                     <th>Tombo</th>
                                     <th>Situação</th>
@@ -116,8 +118,9 @@
             ajax: "{!! route('seracademico.biblioteca.gridEmprestimo') !!}",
             columns: [
                 {data: 'titulo', name: 'bib_arcevos.titulo'},
-                {data: 'cutter', name: 'bib_arcevos.cutter'},
                 {data: 'subtitulo', name: 'bib_arcevos.subtitulo'},
+                {data: 'autor', name: 'responsaveis.sobrenome'},
+                {data: 'cutter', name: 'bib_arcevos.cutter'},
                 {data: 'edicao', name: 'bib_exemplares.edicao'},
                 {data: 'tombo', name: 'bib_exemplares.codigo'},
                 {data: 'nome_sit', name: 'bib_emprestimo.nome'},

@@ -72,7 +72,7 @@ class ExemplarController extends Controller
                 'bib_exemplares.edicao',
                  'bib_situacao.nome as nome_sit',
                 'bib_arcevos.subtitulo as subtitulo',
-                \DB::raw('CONCAT (SUBSTRING(bib_exemplares.codigo, 4, 4), "/", SUBSTRING(bib_exemplares.codigo, -4, 4)) as tombo')
+                'bib_exemplares.codigo as tombo'
                 );
 
         #Editando a grid

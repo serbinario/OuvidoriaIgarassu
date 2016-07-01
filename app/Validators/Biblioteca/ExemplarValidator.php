@@ -12,7 +12,7 @@ class ExemplarValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE => [
             
 			'ano' =>  '' ,
-			'registros' =>  'required' ,
+			'registros' =>  '' ,
 			'editoras_id' =>  '' ,
 			'ilustracoes_id' =>  '' ,
 			'idiomas_id' =>  '' ,

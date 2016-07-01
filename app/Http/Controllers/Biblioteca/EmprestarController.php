@@ -76,6 +76,10 @@ class EmprestarController extends Controller
             ->join('bib_arcevos', 'bib_arcevos.id', '=', 'bib_exemplares.arcevos_id')
             ->join('bib_emprestimo', 'bib_emprestimo.id', '=', 'bib_exemplares.emprestimo_id')
             ->join('bib_situacao', 'bib_situacao.id', '=', 'bib_exemplares.situacao_id')
+            ->leftJoin(\DB::raw('(SELECT arcevos_id, id, responsaveis_id FROM primeira_entrada GROUP BY arcevos_id) entrada'), function ($join) {
+                $join->on('entrada.arcevos_id', '=', 'bib_arcevos.id');
+            })
+            ->leftJoin('responsaveis', 'responsaveis.id', '=', 'entrada.responsaveis_id')
             ->where('bib_exemplares.exemp_principal', '!=', '1')
             ->where('bib_exemplares.situacao_id', '!=', '5')
             ->where('bib_exemplares.situacao_id', '!=', '4')
@@ -89,7 +93,8 @@ class EmprestarController extends Controller
                 'bib_arcevos.subtitulo as subtitulo',
                 'bib_emprestimo.nome as nome_emp',
                 'bib_emprestimo.id as id_emp',
-                \DB::raw('CONCAT (SUBSTRING(bib_exemplares.codigo, 4, 4), "/", SUBSTRING(bib_exemplares.codigo, -4, 4)) as tombo')
+                'bib_exemplares.codigo as tombo',
+                \DB::raw('CONCAT (responsaveis.sobrenome, ", ", responsaveis.nome) as autor')
             );
 
         #Editando a grid

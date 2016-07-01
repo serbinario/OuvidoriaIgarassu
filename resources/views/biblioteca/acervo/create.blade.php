@@ -38,10 +38,6 @@
 @section('javascript')
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#cursos').multiselect({
-                buttonClass: 'btn-default',
-                nonSelectedText: 'Selecione um Curso'
-            });
 
             function formatRepo(repo) {
                 if (repo.loading) return repo.text;

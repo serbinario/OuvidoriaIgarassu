@@ -40,32 +40,11 @@
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            {!! Form::label('codigo_barra', 'Código de barras') !!}
-                            {!! Form::text('codigo_barra', Session::getOldInput('codigo_barra')  , array('class' => 'form-control')) !!}
+                            {!! Form::label('codigo', 'Tombo') !!}
+                            {!! Form::text('codigo', Session::getOldInput('codigo')  , array('class' => 'form-control')) !!}
                         </div>
                     </div>
 
-                    @if(!isset($model->id))
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                {!! Form::label('registros', 'Quantidade de Exemplares (Registros)') !!}
-                                {!! Form::text('registros', Session::getOldInput('registros')  , array('class' => 'form-control numberFor')) !!}
-                            </div>
-                        </div>
-                    @endif
-                    @if(isset($model->id))
-                        <?php
-                            $codigo = substr($model->codigo, 0, -4);
-                            $ano    = substr($model->codigo, -4);
-                        ?>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                {!! Form::label('codigo', 'Tombo') !!}
-                                {!! Form::text('codigo', $codigo  , array('class' => 'form-control')) !!}
-                                <input type="hidden" name="ano" value="{{$ano}}">
-                            </div>
-                        </div>
-                    @endif
 
                     <div class="col-md-2">
                         <div class="form-group">
@@ -80,20 +59,6 @@
                         </div>
                     </div>
 
-                    <div class="col-md-5">
-                        <div class="btn-group">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
-                                    Nova Editora
-                                </button>
-                            </div>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalRespo">
-                                    Novo Editor
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                     {{--<div class="col-md-2">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 135px; height: 115px;">
@@ -113,6 +78,31 @@
                             </div>
                         </div>
                     </div>--}}
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="checkbox checkbox-primary">
+                            {!! Form::hidden('exemp_principal', 0) !!}
+                            {!! Form::checkbox('exemp_principal', 1, null, array('class' => 'form-control')) !!}
+                            {!! Form::label('exemp_principal', 'Exemplar principal da obra?', false) !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="btn-group">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+                                    Nova Editora
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalRespo">
+                                    Novo Editor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

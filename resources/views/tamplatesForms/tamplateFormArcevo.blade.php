@@ -42,24 +42,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            {!! Form::label('cursos', 'Cursos') !!}
-                            {{--{{dd($model->cursos->lists('id')->all())}}--}}
-                            @if(isset($model->id))
-                                <select class="form-control" multiple="multiple" name="cursos[]" id="cursos">
-                                    @foreach($loadFields['curso'] as $key => $value)
-                                        <option value="{{$key}}"
-                                                @foreach($model->cursos->lists('id') as $c) @if($key == $c)selected="selected"@endif @endforeach>{{$value}}</option>
-                                    @endforeach
-                                </select>
-                            @else
-                                {!! Form::select('cursos[]', $loadFields['curso'], null, ['id' => 'cursos', 'multiple' => 'multiple', 'class' => 'form-control']) !!}
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             {!! Form::label('volume', 'Volume') !!}
@@ -74,7 +56,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            {!! Form::label('cdd', 'CDD') !!}
+                            {!! Form::label('cdd', 'CDU') !!}
                             {!! Form::text('cdd', Session::getOldInput('cdd')  , array('class' => 'form-control')) !!}
                         </div>
                     </div>
@@ -86,47 +68,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            {!! Form::label('colecao_id', 'Coleção') !!}
-                            {!! Form::select('colecao_id', (["" => "Selecione a coleção"] + $loadFields['biblioteca\colecao']->toArray()), Session::getOldInput('colecao_id'), array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('genero_id', 'Genero') !!}
-                            {!! Form::select('genero_id', (["" => "Selecione o genero"] + $loadFields['biblioteca\genero']->toArray()), Session::getOldInput('genero_id'), array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
                             {!! Form::label('situacao_id', 'Situação') !!}
                             {!! Form::select('situacao_id', $loadFields['biblioteca\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('estante_id', 'Estante') !!}
-                            {!! Form::select('estante_id', (["" => "Selecione a estante"] + $loadFields['biblioteca\estante']->toArray()), Session::getOldInput('estante_id'), array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!! Form::label('corredor_id', 'Corredor') !!}
-                            {!! Form::select('corredor_id', (["" => "Selecione o corredor"] + $loadFields['biblioteca\corredor']->toArray()), Session::getOldInput('corredor_id'), array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="checkbox checkbox-primary">
-                            {!! Form::hidden('uso_global', 0) !!}
-                            {!! Form::checkbox('uso_global', 1, null, array('class' => 'form-control')) !!}
-                            {!! Form::label('uso_global', 'Este livro serve para todos os cursos?', false) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="checkbox checkbox-primary">
-                            {!! Form::hidden('exemplar_ref', 0) !!}
-                            {!! Form::hidden('tipo_periodico', 1) !!}
-                            {!! Form::checkbox('exemplar_ref', 1, null, array('class' => 'form-control')) !!}
-                            {!! Form::label('exemplar_ref', 'Exemplar de referẽncia (Apenas consulta)', false) !!}
                         </div>
                     </div>
                     @if(isset($model->id))
@@ -138,37 +81,24 @@
                         </div>
                     @endif
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="checkbox checkbox-primary">
+                            {!! Form::hidden('exemplar_ref', 0) !!}
+                            {!! Form::hidden('tipo_periodico', 1) !!}
+                            {!! Form::checkbox('exemplar_ref', 1, null, array('class' => 'form-control')) !!}
+                            {!! Form::label('exemplar_ref', 'Exemplar de referẽncia (Apenas consulta)', false) !!}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="infoAdd">
                 <br/>
-
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            {!! Form::label('obs_geral', 'Observação Geral') !!}
-                            {!! Form::textarea('obs_geral', Session::getOldInput('obs_geral')  ,['size' => '55x5'] , array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <div class="form-group">
                             {!! Form::label('palavras_chaves', 'Palavras chave') !!}
-                            {!! Form::textarea('palavras_chaves', Session::getOldInput('palavras_chaves')  ,['size' => '55x5'] , array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="form-group">
-                            {!! Form::label('resumo', 'Notas') !!}
-                            {!! Form::textarea('resumo', Session::getOldInput('resumo')  ,['size' => '117x6'] , array('class' => 'form-control')) !!}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="form-group">
-                            {!! Form::label('sumario', 'Sumário') !!}
-                            {!! Form::textarea('sumario', Session::getOldInput('sumario')  ,['size' => '117x6'] , array('class' => 'form-control')) !!}
+                            {!! Form::textarea('palavras_chaves', Session::getOldInput('palavras_chaves')  ,['size' => '117x6'] , array('class' => 'form-control')) !!}
                         </div>
                     </div>
                 </div>

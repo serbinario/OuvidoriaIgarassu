@@ -172,69 +172,16 @@ class ExemplarService
         //recupera o acervo
         $acervo = $this->repoAcervo->find($data['arcevos_id']);
 
-        //recupera o maior código ja registrado
-        $codigo = \DB::table('bib_exemplares')->max('codigo');
-        $dataObj  = new \DateTime('now');
-        $this->anoAtual = $dataObj->format('Y');
-        $codigoMax = $codigo != null ? $codigoMax = $codigo : $codigoMax = "0001{$this->anoAtual}";
-        $codigoAtual = substr($codigoMax, 0, -4);
-        $this->ultimoAno = substr($codigo, -4);
-
-        //trata a quantidade de exemplar caso o valor informado seja 0
-        $qtdExemplar = $data['registros'] == '0' ? $qtdExemplar = 1 : $qtdExemplar = $data['registros'];
-        //dd($codigoMax);
-        if($acervo['exemplar_ref'] == '1') {
-            for($i = 0; $i < $qtdExemplar; $i++) {
-                if($i == 0){
-                    $data['exemp_principal'] = '1';
-                    $data['emprestimo_id'] = '2';
-                    $data['situacao_id'] = '3';
-                    $this->tombo = $this->tratarCodigoExemplar($codigoAtual);
-                    $data['codigo'] = $this->tombo;
-                    #Salvando o registro pincipal
-                    $exemplar =  $this->repository->create($data);
-                    $ultCodigo = substr($exemplar->codigo, 0, -4);
-                    $codNovo = $ultCodigo + 1;
-                    $this->tombo = $codNovo.$this->anoAtual;
-                } else {
-                    $data['exemp_principal'] = '0';
-                    $data['emprestimo_id'] = '2';
-                    $data['situacao_id'] = '3';
-                    // dd($this->tombo);
-                    $data['codigo'] = $this->tombo;
-                    #Salvando o registro pincipal
-                    $exemplar =  $this->repository->create($data);
-                    $ultCodigo = substr($exemplar->codigo, 0, -4);
-                    $codNovo = $ultCodigo + 1;
-                    $this->tombo = $codNovo.$this->anoAtual;
-                }
-            }
+        if ($acervo['exemplar_ref'] == '1') {
+            $data['emprestimo_id'] = '2';
+            $data['situacao_id'] = '3';
+            #Salvando o registro pincipal
+            $exemplar = $this->repository->create($data);
         } else {
-            for($i = 0; $i < $qtdExemplar; $i++) {
-                if($i == 0){
-                    $data['exemp_principal'] = '1';
-                    $data['emprestimo_id'] = '2';
-                    $data['situacao_id'] = '3';
-                    $this->tombo = $this->tratarCodigoExemplar($codigoAtual);
-                    $data['codigo'] = $this->tombo;
-                    #Salvando o registro pincipal
-                    $exemplar =  $this->repository->create($data);
-                    $ultCodigo = substr($exemplar->codigo, 0, -4);
-                    $codNovo = $ultCodigo + 1;
-                    $this->tombo = $codNovo.$this->anoAtual;
-                } else {
-                    $data['exemp_principal'] = '0';
-                    $data['emprestimo_id'] = '1';
-                    $data['situacao_id'] = '1';
-                   // dd($this->tombo);
-                    $data['codigo'] = $this->tombo;
-                    #Salvando o registro pincipal
-                    $exemplar =  $this->repository->create($data);
-                    $ultCodigo = substr($exemplar->codigo, 0, -4);
-                    $codNovo = $ultCodigo + 1;
-                    $this->tombo = $codNovo.$this->anoAtual;
-                }
-            }
+            $data['emprestimo_id'] = '1';
+            $data['situacao_id'] = '1';
+            #Salvando o registro pincipal
+            $exemplar = $this->repository->create($data);
         }
 
         #Verificando se foi criado no banco de dados
@@ -257,35 +204,8 @@ class ExemplarService
         $data = $this->tratamentoDatas($data);
         $data = $this->tratamentoCampos($data);
 
-        $codigo = $data['codigo'];
-        $ano    = $data['ano'];
-
-        $data['codigo'] = $codigo.$ano;
-
         #Atualizando no banco de dados
         $exemplar = $this->repository->update($data, $id);
-
-        #tratando a imagem
-        /*if(isset($data['img'])) {
-            $file     = $data['img'];
-            $fileName = md5(uniqid(rand(), true)) . "." . $file->getClientOriginalExtension();
-
-
-            #removendo a imagem antiga
-            if ($exemplar->path_image != null) {
-                unlink(__DIR__ . "/../../public/" . $this->destinationPath . $exemplar->path_image);
-            }
-
-            #Movendo a imagem
-            $file->move($this->destinationPath, $fileName);
-
-            #setando o nome da imagem no model
-            $exemplar->path_image = $fileName;
-            $exemplar->save();
-
-            #destruindo o img do array
-            unset($data['img']);
-        }*/
 
         #Verificando se foi atualizado no banco de dados
         if(!$exemplar) {
@@ -401,24 +321,6 @@ class ExemplarService
 
         #return
         return $entity;
-    }
-
-    /**
-     * @param $codigo
-     * @return string
-     */
-    public function tratarCodigoExemplar($codigo)
-    {
-        if($codigo <= 1 || $this->anoAtual != $this->ultimoAno) {
-            $newCod2  = '1'.$this->anoAtual;
-        } else {
-            $newCod = $codigo + 1;
-            $newCod2 = $newCod.$this->anoAtual;
-        }
-
-        $newCod2 = str_pad($newCod2,8,"0",STR_PAD_LEFT);
-
-        return $newCod2;
     }
 
     /**

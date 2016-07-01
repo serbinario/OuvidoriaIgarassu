@@ -87,6 +87,7 @@
                                 <li><a href="{{ route('seracademico.biblioteca.reservados') }}">Reservas</a></li>
                             </ul>
                         </li>
+                        <li><a href="{{ route('indexConsulta') }}" target="__blank"><i class="material-icons">receipt</i> Consulta</a></li>
                     </ul>
                 </li>
                 <li>
