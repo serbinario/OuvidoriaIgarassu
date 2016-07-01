@@ -87,13 +87,13 @@ class PessoaService
     public function update(array $data, int $id) : Pessoa
     {
 
-        //$this->tratamentoCampos($data);
+        $this->tratamentoCampos($data);
 
         #Atualizando no banco de dados
         $pessoa = $this->repository->update($data, $id);
 
         $this->enderecoRepository->update($data['endereco'], $pessoa->endereco->id);
-        
+
         #Verificando se foi atualizado no banco de dados
         if(!$pessoa) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
