@@ -75,6 +75,7 @@
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
+                                <th>Situação</th>
                                 <th >Acão</th>
                             </tr>
                             </thead>
@@ -89,6 +90,7 @@
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
+                                <th>Situação</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
                             </tfoot>
@@ -133,6 +135,7 @@
                     {data: 'fone', name: 'ouv_demanda.fone'},
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
+                    {data: 'situacao', name: 'ouv_situacao.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
