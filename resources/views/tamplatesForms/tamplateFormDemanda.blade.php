@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('situacao_id', 'Situação') !!}
+                                    {!! Form::label('situacao_id', 'Status') !!}
                                     {!! Form::select('situacao_id', $loadFields['ouvidoria\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>

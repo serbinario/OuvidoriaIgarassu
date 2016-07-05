@@ -75,7 +75,7 @@
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
-                                <th>Situação</th>
+                                <th>Status</th>
                                 <th >Acão</th>
                             </tr>
                             </thead>
@@ -90,7 +90,7 @@
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
-                                <th>Situação</th>
+                                <th>Status</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
                             </tfoot>
