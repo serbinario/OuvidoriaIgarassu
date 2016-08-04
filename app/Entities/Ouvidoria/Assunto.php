@@ -1,16 +1,16 @@
 <?php
 
-namespace Seracademico\Entities;
+namespace Seracademico\Entities\Ouvidoria;
 
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
-class Melhoria extends Model implements Transformable
+class Assunto extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table    = 'ouv_melhorias';
+    protected $table    = 'ouv_assunto';
 
     protected $fillable = [ 
 		'nome',

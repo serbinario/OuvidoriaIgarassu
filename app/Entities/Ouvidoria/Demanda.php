@@ -37,6 +37,8 @@ class Demanda extends Model implements Transformable
 		'situacao_id',
 		'pessoa_id',
 		'numero_end',
+		'subassunto_id',
+		'melhoria_id',
 	];
 
 	/**
@@ -127,4 +129,19 @@ class Demanda extends Model implements Transformable
 		return $this->belongsTo(OuvPessoa::class, 'pessoa_id');
 	}
 
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function subassunto()
+	{
+		return $this->belongsTo(Subassunto::class, 'subassunto_id');
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function melhoria()
+	{
+		return $this->belongsTo(Melhoria::class, 'melhoria_id');
+	}
 }

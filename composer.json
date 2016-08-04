@@ -16,7 +16,8 @@
         "barryvdh/laravel-snappy": "0.2.x",
         "doctrine/dbal": "~2.3",
         "nesbot/carbon": "~1.14",
-        "mariuzzo/laravel-js-localization": "^1.2"
+        "mariuzzo/laravel-js-localization": "^1.2",
+        "khill/lavacharts" : "3.0.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

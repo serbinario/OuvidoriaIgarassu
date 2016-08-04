@@ -232,5 +232,20 @@ class SeracademicoRepositoryProvider extends ServiceProvider
 			\Seracademico\Repositories\Ouvidoria\TipoDemandaRepositoryEloquent::class
 		);
         
+		$this->app->bind(
+			\Seracademico\Repositories\Ouvidoria\AssuntoRepository::class,
+			\Seracademico\Repositories\Ouvidoria\AssuntoRepositoryEloquent::class
+		);
+        
+
+		$this->app->bind(
+			\Seracademico\Repositories\Ouvidoria\SubassuntoRepository::class,
+			\Seracademico\Repositories\Ouvidoria\SubassuntoRepositoryEloquent::class
+		);
+
+		$this->app->bind(
+			\Seracademico\Repositories\Ouvidoria\MelhoriaRepository::class,
+			\Seracademico\Repositories\Ouvidoria\MelhoriaRepositoryEloquent::class
+		);
 	}
 }

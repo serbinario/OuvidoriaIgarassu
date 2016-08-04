@@ -105,6 +105,7 @@
 @section('javascript')
     <script type="text/javascript">
         $(document).ready(function(){
+
             function format(d) {
 
                 var html = "";

@@ -49,8 +49,31 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\DemandaController@update']);
                 Route::get('delete/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@delete']);
                 Route::get('registro/{id}', ['as' => 'registro', 'uses' => 'Ouvidoria\DemandaController@registro']);
+                Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
             });
 
+            Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
+                Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
+                Route::get('viewReportStatus', ['as' => 'viewReportStatus', 'uses' => 'Ouvidoria\DemandaController@viewReportStatus']);
+                Route::post('reportStatus', ['as' => 'reportStatus', 'uses' => 'Ouvidoria\DemandaController@reportStatus']);
+            });
+
+            Route::group(['prefix' => 'graficos', 'as' => 'graficos.'], function () {
+                Route::get('caracteristicas', ['as' => 'caracteristicas', 'uses' => 'Ouvidoria\GraficosController@caracteristicas']);
+                Route::post('caracteristicasAjax', ['as' => 'caracteristicasAjax', 'uses' => 'Ouvidoria\GraficosController@caracteristicasAjax']);
+                Route::get('assunto', ['as' => 'assunto', 'uses' => 'Ouvidoria\GraficosController@assunto']);
+                Route::post('assuntoAjax', ['as' => 'assuntoAjax', 'uses' => 'Ouvidoria\GraficosController@assuntoAjax']);
+                Route::get('subassunto', ['as' => 'subassunto', 'uses' => 'Ouvidoria\GraficosController@subassunto']);
+                Route::post('subassuntoAjax', ['as' => 'subassuntoAjax', 'uses' => 'Ouvidoria\GraficosController@subassuntoAjax']);
+                Route::get('meioRegistro', ['as' => 'meioRegistro', 'uses' => 'Ouvidoria\GraficosController@meioRegistro']);
+                Route::post('meioRegistroAjax', ['as' => 'meioRegistroAjax', 'uses' => 'Ouvidoria\GraficosController@meioRegistroAjax']);
+                Route::get('perfil', ['as' => 'perfil', 'uses' => 'Ouvidoria\GraficosController@perfil']);
+                Route::post('perfilAjax', ['as' => 'perfilAjax', 'uses' => 'Ouvidoria\GraficosController@perfilAjax']);
+                Route::get('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\GraficosController@escolaridade']);
+                Route::post('escolaridadeAjax', ['as' => 'escolaridadeAjax', 'uses' => 'Ouvidoria\GraficosController@escolaridadeAjax']);
+                Route::get('idade', ['as' => 'idade', 'uses' => 'Ouvidoria\GraficosController@idade']);
+                Route::post('idadeAjax', ['as' => 'idadeAjax', 'uses' => 'Ouvidoria\GraficosController@idadeAjax']);
+            });
         });
 
 

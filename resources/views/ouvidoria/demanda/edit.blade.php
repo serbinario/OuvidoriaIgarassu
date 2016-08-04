@@ -50,5 +50,42 @@
                 }
             });
         });
+
+        //Carregando os bairros
+        $(document).on('change', "#assunto_id", function () {
+            //Removendo as Bairros
+            $('#subassunto_id option').remove();
+
+            //Recuperando a cidade
+            var assunto = $(this).val();
+
+            if (assunto !== "") {
+                var dados = {
+                    'table' : 'ouv_subassunto',
+                    'field_search' : 'assunto_id',
+                    'value_search': assunto,
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um subassunto</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#subassunto_id option').remove();
+                    $('#subassunto_id').append(option);
+                });
+            }
+        });
     </script>
 @stop

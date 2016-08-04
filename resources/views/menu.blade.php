@@ -100,6 +100,7 @@
                 </li>
                @endrole
                @role('ouvidoria')
+                @role('ouvidoria|posgraduacao')
                 <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Ouvidoria</span> <span
                                 class="fa arrow"></span></a>
@@ -107,7 +108,45 @@
                         <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
                     </ul>
                 </li>
+                @endrole
+                <li>
+                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Relatório</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.report.reportPessoas') }}" target="_blank"><i class="material-icons">perm_identity</i> Pessoas</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus') }}"><i class="material-icons">perm_identity</i> Status</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Gráficos</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicas') }}" target="_blank"><i class="material-icons">perm_identity</i> Características</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.assunto') }}" target="_blank"><i class="material-icons">perm_identity</i> Assuntos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.subassunto') }}" target="_blank"><i class="material-icons">perm_identity</i> Subassuntos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistro') }}" target="_blank"><i class="material-icons">perm_identity</i> Meios de registro</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.perfil') }}" target="_blank"><i class="material-icons">perm_identity</i> Perfies</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridade') }}" target="_blank"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.idade') }}" target="_blank"><i class="material-icons">perm_identity</i> Idades</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
+                        <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
+                    </ul>
+                </li>
                @endrole
+                @role('admin')
+                    <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
+                            <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
+                        </ul>
+                    </li>
+                @endrole
             </ul>
         </div>
     </nav>

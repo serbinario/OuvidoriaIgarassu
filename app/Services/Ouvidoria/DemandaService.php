@@ -54,10 +54,44 @@ class DemandaService
             'idade',
             'escolaridade',
             'tipoDemanda',
+            'subassunto.assunto',
         ];
 
         #Recuperando o registro no banco de dados
         $demanda = $this->repository->with($relacionamentos)->find($id);
+
+        #Verificando se o registro foi encontrado
+        if(!$demanda) {
+            throw new \Exception('Empresa não encontrada!');
+        }
+
+        #retorno
+        return $demanda;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function all()
+    {
+
+        $relacionamentos = [
+            'sexo',
+            'sigilo',
+            'anonimo',
+            'informacao',
+            'area',
+            'exclusividadeSUS',
+            'idade',
+            'escolaridade',
+            'tipoDemanda',
+            'subassunto.assunto',
+        ];
+
+        #Recuperando o registro no banco de dados
+        $demanda = $this->repository->with($relacionamentos)->all();
 
         #Verificando se o registro foi encontrado
         if(!$demanda) {
@@ -74,6 +108,8 @@ class DemandaService
      */
     public function store(array $data) : Demanda
     {
+
+        $data = $this->tratamentoCampos($data);
 
         //recupera o maior código ja registrado
         $codigo = \DB::table('ouv_demanda')->max('codigo');
@@ -105,6 +141,8 @@ class DemandaService
      */
     public function update(array $data, int $id) : Demanda
     {
+        $data = $this->tratamentoCampos($data);
+
         #Atualizando no banco de dados
         $demanda = $this->repository->update($data, $id);
 
@@ -156,6 +194,24 @@ class DemandaService
 
          #retorno
          return $result;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function tratamentoCampos(array &$data)
+    {
+        # Tratamento de campos de chaves estrangeira
+        foreach ($data as $key => $value) {
+            $explodeKey = explode("_", $key);
+
+            if ($explodeKey[count($explodeKey) -1] == "id" && $value == null ) {
+                unset($data[$key]);
+            }
+        }
+        #Retorno
+        return $data;
     }
 
     /**

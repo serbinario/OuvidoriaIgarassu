@@ -142,6 +142,11 @@ return [
         */
         Barryvdh\Snappy\ServiceProvider::class,
 
+        /*
+        * Lavacharts gerar gráficos
+        */
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+
         //Form
        //Illuminate\Html\HtmlServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,

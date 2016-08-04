@@ -105,6 +105,26 @@
                                     {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('assunto_id', 'Assunto ') !!}
+                                    @if(isset($model->subassunto->assunto->id))
+                                        {!! Form::select('assunto_id', (["" => "Selecione"] + $loadFields['ouvidoria\assunto']->toArray()), $model->subassunto->assunto->id, array('class' => 'form-control')) !!}
+                                    @else
+                                        {!! Form::select('assunto_id', (["" => "Selecione"] + $loadFields['ouvidoria\assunto']->toArray()), Session::getOldInput('assunto_id'), array('class' => 'form-control')) !!}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('subassunto_id', 'Subassunto ') !!}
+                                    @if(isset($model->subassunto->id))
+                                        {!! Form::select('subassunto_id', array($model->subassunto->id => $model->subassunto->nome), $model->subassunto->id,array('class' => 'form-control')) !!}
+                                    @else
+                                        {!! Form::select('subassunto_id', array(), Session::getOldInput('subassunto_id'),array('class' => 'form-control')) !!}
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -115,7 +135,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div role="tabpanel" class="tab-pane" id="perfil">
                         <br />
                         <div class="row">
@@ -147,9 +166,16 @@
                             </div>
                         </div>
                     </div>
-
                     <div role="tabpanel" class="tab-pane" id="outros">
                         <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('melhoria_id', 'Melhoria') !!}
+                                    {!! Form::select('melhoria_id', (["" => "Selecione"] + $loadFields['ouvidoria\melhoria']->toArray()), Session::getOldInput('melhoria_id'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
+use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Services\Ouvidoria\DemandaService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -18,6 +19,11 @@ class DemandaController extends Controller
     * @var DemandaService
     */
     private $service;
+
+    /**
+     * @var DemandaRepository
+     */
+    private $repository;
 
     /**
     * @var DemandaValidator
@@ -40,16 +46,20 @@ class DemandaController extends Controller
         'Ouvidoria\Situacao',
         'Ouvidoria\TipoDemanda',
         'Ouvidoria\OuvPessoa',
+        'Ouvidoria\Melhoria',
+        'Ouvidoria\Assunto',
+        'Ouvidoria\Subassunto',
     ];
 
     /**
     * @param DemandaService $service
     * @param DemandaValidator $validator
     */
-    public function __construct(DemandaService $service, DemandaValidator $validator)
+    public function __construct(DemandaService $service, DemandaValidator $validator, DemandaRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
+        $this->repository =  $repository;
     }
 
     /**
@@ -234,6 +244,46 @@ class DemandaController extends Controller
         $demanda = $this->service->find($id);
 
         return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reportPessoas()
+    {
+        $demandas = $this->service->all();
+
+        return \PDF::loadView('ouvidoria.reports.reportPessoas', ['demandas' =>  $demandas])->stream();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function viewReportStatus()
+    {
+        #Carregando os dados para o cadastro
+        $loadFields = $this->service->load($this->loadFields);
+
+        #Retorno para view
+        return view('ouvidoria.reports.viewReportStatus', compact('loadFields'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reportStatus(Request $request)
+    {
+        $dados = $request->request->all();
+
+        $demandas = $this->repository->with(['situacao', 'subassunto.assunto'])->findWhere(['situacao_id' => $dados['status']]);
+//dd($demandas);
+        return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $demandas])->stream();
     }
 
 }
