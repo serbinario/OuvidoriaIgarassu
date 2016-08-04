@@ -50,24 +50,13 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    @role('ouvidoria')
+                    @role('ouvidoria|posgraduacao')
                     <img alt="image" class="logoDash" src="{{ asset('/img/ouvidoria_saude_igarassu.png')}}"/>
                     @endrole
                     @role('biblioteca')
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
                     @endrole
                 </li>
-
-                @role('admin')
-                <li>
-                    <a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
-                        <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
-                    </ul>
-                </li>
-                @endrole
 
                 @role('biblioteca')
                 <li>
@@ -99,8 +88,7 @@
                     </ul>
                 </li>
                @endrole
-               @role('ouvidoria')
-                @role('ouvidoria|posgraduacao')
+                @role('posgraduacao')
                 <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Ouvidoria</span> <span
                                 class="fa arrow"></span></a>
@@ -109,6 +97,14 @@
                     </ul>
                 </li>
                 @endrole
+               @role('ouvidoria')
+                <li>
+                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Ouvidoria</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Relatório</span> <span
                                 class="fa arrow"></span></a>
@@ -130,15 +126,8 @@
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.idade') }}" target="_blank"><i class="material-icons">perm_identity</i> Idades</a></li>
                     </ul>
                 </li>
-                <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
-                        <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
-                    </ul>
-                </li>
                @endrole
-                @role('admin')
+                {{--@role('admin')
                     <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
                                     class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
@@ -146,7 +135,7 @@
                             <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
                         </ul>
                     </li>
-                @endrole
+                @endrole--}}
             </ul>
         </div>
     </nav>
