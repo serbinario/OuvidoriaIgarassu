@@ -48,7 +48,8 @@ $dataFromat = $data->format('d/m/Y');
     <span class="text">Data: {{$dataFromat}}</span> --
     <span class="text">Demanda n.º {{$codFull}}</span><br />
     <span class="text">Sigilo @if($demanda['sigilo']['id'] == '2') ( X ) @elseif ($demanda['sigilo']['id'] == '1') ( ) @endif</span>
-    <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span> <br />
+    <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span>
+    <span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />
 
     <h4>1. DADOS PESSOAIS</h4>
     <table style="width: 100%">
@@ -57,6 +58,7 @@ $dataFromat = $data->format('d/m/Y');
         </tr>
         <tr>
             <td style="width: 100px"><span class="text">Endreço: {{$demanda['endereco']}}</span></td>
+            <td style="width: 100px"><span class="text">Número: {{$demanda['numero_end']}}</span></td>
         </tr>
         <tr>
             <td style="width: 100px">
