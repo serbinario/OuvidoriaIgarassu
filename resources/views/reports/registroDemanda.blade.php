@@ -48,8 +48,8 @@ $dataFromat = $data->format('d/m/Y');
     <span class="text">Data: {{$dataFromat}}</span> --
     <span class="text">Demanda n.º {{$codFull}}</span><br />
     <span class="text">Sigilo @if($demanda['sigilo']['id'] == '2') ( X ) @elseif ($demanda['sigilo']['id'] == '1') ( ) @endif</span>
-    <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span>
-    <span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />
+    <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span><br />
+    {{--<span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />--}}
 
     <h4>1. DADOS PESSOAIS</h4>
     <table style="width: 100%">
@@ -89,17 +89,37 @@ $dataFromat = $data->format('d/m/Y');
     <h4>2. RELATO (com data aproximada)</h4>
     <p class="text" style="text-align: justify">{{$demanda['relato']}}</p>
 
-    <h4>3. Quais melhorias você identifica na saúde de Igarassu</h4>
-    <p class="text" style="text-align: justify">{{$demanda['melhorias']}}</p>
+    <h4>3. Dados da demanda</h4>
+    <table style="width: 100%">
+        <tr>
+            <td colspan="2" ><span class="text">Origem: {{$demanda['tipoDemanda']['nome']}}</span></td>
+        </tr>
+        <tr>
+            <td style="width: 80px"><span class="text">Assunto: {{$demanda['subassunto']['assunto']['nome']}}</span></td>
+            <td style="width: 50px"><span class="text">Subassunto: {{$demanda['subassunto']['nome']}}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 500px"><span class="text">Destino: {{$demanda['encaminhamento']['destinatario']['nome']}}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 340px"><span class="text">Comentário\Parecer:</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 340px"><span class="text">{{$demanda['encaminhamento']['parecer']}}</span></td>
+        </tr>
+    </table>
+
+    {{--<h4>4. Dados da demanda</h4>--}}
+    {{--<p class="text" style="text-align: justify">{{$demanda['melhorias']}}</p>--}}
 
 
-    <h4>4. Observações</h4>
-    <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>
+    {{--<h4>4. Observações</h4>
+    <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>--}}
 </div>
 
 <center>
     <div class="rodape" style="">
-        <center><img src="{{asset('/img/igarassu.png')}}" style="width: 290px; height: 62px"></center>
+        <center><img src="{{asset('/img/igarassu.png')}}" style="width: 230px; height: 55px"></center>
     </div>
 </center>
 

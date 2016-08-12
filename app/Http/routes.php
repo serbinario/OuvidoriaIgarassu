@@ -42,7 +42,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
             Route::group(['prefix' => 'demanda', 'as' => 'demanda.'], function () {
                 Route::get('index', ['as' => 'index', 'uses' => 'Ouvidoria\DemandaController@index']);
-                Route::get('grid', ['as' => 'grid', 'uses' => 'Ouvidoria\DemandaController@grid']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'Ouvidoria\DemandaController@grid']);
                 Route::get('create', ['as' => 'create', 'uses' => 'Ouvidoria\DemandaController@create']);
                 Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\DemandaController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@edit']);

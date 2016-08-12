@@ -2,8 +2,11 @@
 
 namespace Seracademico\Services\Ouvidoria;
 
+use Seracademico\Entities\Ouvidoria\Prioridade;
 use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Entities\Ouvidoria\Demanda;
+use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
+
 //use Carbon\Carbon;
 
 class DemandaService
@@ -12,6 +15,11 @@ class DemandaService
      * @var DemandaRepository
      */
     private $repository;
+
+    /**
+     * @var EncaminhamentoRepository
+     */
+    private $encaminhamentoRepository;
 
     /**
      * @var
@@ -31,9 +39,10 @@ class DemandaService
     /**
      * @param DemandaRepository $repository
      */
-    public function __construct(DemandaRepository $repository)
+    public function __construct(DemandaRepository $repository, EncaminhamentoRepository $encaminhamentoRepository)
     {
         $this->repository = $repository;
+        $this->encaminhamentoRepository = $encaminhamentoRepository;
     }
 
     /**
@@ -55,6 +64,7 @@ class DemandaService
             'escolaridade',
             'tipoDemanda',
             'subassunto.assunto',
+            'encaminhamento'
         ];
 
         #Recuperando o registro no banco de dados
@@ -88,6 +98,7 @@ class DemandaService
             'escolaridade',
             'tipoDemanda',
             'subassunto.assunto',
+            'encaminhamento'
         ];
 
         #Recuperando o registro no banco de dados
@@ -109,6 +120,8 @@ class DemandaService
     public function store(array $data) : Demanda
     {
 
+        //dd($data);
+
         $data = $this->tratamentoCampos($data);
 
         //recupera o maior código ja registrado
@@ -125,8 +138,19 @@ class DemandaService
         #Salvando o registro pincipal
         $demanda =  $this->repository->create($data);
 
+        #### Encaminhamento ###
+
+        $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
+        $previsao = $dataObj->add(new \DateInterval("P{$prioridade->dias}D"));
+
+        $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
+        $data['encaminhamento']['data'] = $data['data'];
+        $data['encaminhamento']['demanda_id'] = $demanda->id;
+
+        $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
+        
         #Verificando se foi criado no banco de dados
-        if(!$demanda) {
+        if(!$demanda || !$encaminhamento) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
@@ -146,9 +170,27 @@ class DemandaService
         #Atualizando no banco de dados
         $demanda = $this->repository->update($data, $id);
 
+        $enc = $this->encaminhamentoRepository->findWhere(['demanda_id' => $demanda->id]);
+
+        if(count($enc) > 0) {
+            $encaminhamento = $this->encaminhamentoRepository->update($data['encaminhamento'], $enc[0]->id);
+        } else {
+            $dataObj  = new \DateTime('now');
+            $date     = $dataObj->format('Y-m-d');
+
+            $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
+            $previsao = $dataObj->add(new \DateInterval("P{$prioridade->dias}D"));
+
+            $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
+            $data['encaminhamento']['data'] = $date;
+            $data['encaminhamento']['demanda_id'] = $demanda->id;
+
+            $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
+        }
+
 
         #Verificando se foi atualizado no banco de dados
-        if(!$demanda) {
+        if(!$demanda || !$encaminhamento) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 

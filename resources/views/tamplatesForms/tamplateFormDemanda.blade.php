@@ -8,6 +8,7 @@
                     <li role="presentation" class="active"><a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados Principais</a></li>
                     <li role="presentation"><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Perfil</a></li>
                     <li role="presentation"><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outras informações</a></li>
+                    <li role="presentation"><a href="#encaminhamento" aria-controls="encaminhamento" role="tab" data-toggle="tab">Encaminhamento</a></li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -189,6 +190,59 @@
                                 <div class="form-group">
                                     {!! Form::label('obs', 'Observações') !!}
                                     {!! Form::textarea('obs', Session::getOldInput('obs')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="encaminhamento">
+                        <br />
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    {!! Form::label('destinatario_id', 'Destino') !!}
+                                    {!! Form::select('encaminhamento[destinatario_id]', $loadFields['ouvidoria\destinatario'], Session::getOldInput('destinatario_id'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('prioridade_id', 'Prioridade') !!}
+                                    {!! Form::select('encaminhamento[prioridade_id]',  $loadFields['ouvidoria\prioridade'], Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('status_id', 'Prioridade') !!}
+                                    {!! Form::select('encaminhamento[status_id]', $loadFields['ouvidoria\status'], Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    {!! Form::label('encaminhado', 'Documento encaminhado') !!}
+                                    {!! Form::text('encaminhamento[encaminhado]', Session::getOldInput('encaminhamento[encaminhado]')  , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {!! Form::label('copia', 'Cópia Para') !!}
+                                    {!! Form::text('encaminhamento[copia]', Session::getOldInput('encaminhamento[copia]')  , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('parecer', 'Comentário/Parecer') !!}
+                                    {!! Form::textarea('encaminhamento[parecer]', Session::getOldInput('encaminhamento[parecer]')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('resposta', 'Resposta') !!}
+                                    {!! Form::textarea('encaminhamento[resposta]', Session::getOldInput('encaminhamento[resposta]')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>

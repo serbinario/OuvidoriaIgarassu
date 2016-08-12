@@ -25,7 +25,7 @@ class EditoraService
      */
     public function __construct(EditoraRepository $repository, EnderecoRepository $enderecoRepository)
     {
-        $this->repository = $repository;
+        $this->repository         = $repository;
         $this->enderecoRepository = $enderecoRepository;
     }
 

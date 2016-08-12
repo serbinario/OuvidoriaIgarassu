@@ -144,4 +144,12 @@ class Demanda extends Model implements Transformable
 	{
 		return $this->belongsTo(Melhoria::class, 'melhoria_id');
 	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function encaminhamento()
+	{
+		return $this->hasOne(Encaminhamento::class, 'demanda_id', 'id');
+	}
 }

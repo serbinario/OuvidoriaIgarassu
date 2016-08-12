@@ -49,6 +49,9 @@ class DemandaController extends Controller
         'Ouvidoria\Melhoria',
         'Ouvidoria\Assunto',
         'Ouvidoria\Subassunto',
+        'Ouvidoria\Status',
+        'Ouvidoria\Prioridade',
+        'Ouvidoria\Destinatario',
     ];
 
     /**
@@ -281,7 +284,7 @@ class DemandaController extends Controller
     {
         $dados = $request->request->all();
 
-        $demandas = $this->repository->with(['situacao', 'subassunto.assunto'])->findWhere(['situacao_id' => $dados['status']]);
+        $demandas = $this->repository->with(['situacao', 'subassunto.assunto', 'tipoDemanda'])->findWhere(['situacao_id' => $dados['status']]);
 //dd($demandas);
         return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $demandas])->stream();
     }

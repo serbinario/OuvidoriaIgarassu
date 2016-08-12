@@ -6,14 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
-class Melhoria extends Model implements Transformable
+class Encaminhamento extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table    = 'ouv_melhorias';
+    protected $table    = 'encaminhamento';
 
     protected $fillable = [ 
-		'nome',
+		'previsao',
+		'data',
+		'parecer',
+		'resposta',
+		'destinatario_id',
+		'status_id',
+		'prioridade_id',
+		'demanda_id',
 	];
 
 }

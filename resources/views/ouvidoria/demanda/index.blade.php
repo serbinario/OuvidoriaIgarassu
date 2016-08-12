@@ -63,7 +63,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive no-padding">
-                        <table id="sala-grid" class="display table table-bordered" cellspacing="0" width="100%">
+                        <table id="demanda-grid" class="display table table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>Relato</th>
@@ -116,11 +116,14 @@
                 return html;
             }
 
-            var table = $('#sala-grid').DataTable({
+            var table = $('#demanda-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],
-                ajax: "{!! route('seracademico.ouvidoria.demanda.grid') !!}",
+                ajax: {
+                    url: "{!! route('seracademico.ouvidoria.demanda.grid') !!}",
+                    method: 'POST'
+                },
                 columns: [
                     {
                         "className":      'details-control',
@@ -142,7 +145,7 @@
             });
 
             // Add event listener for opening and closing details
-            $('#sala-grid tbody').on('click', 'td.details-control', function () {
+            $('#demanda-grid tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = table.row( tr );
 

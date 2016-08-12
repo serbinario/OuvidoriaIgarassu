@@ -247,5 +247,10 @@ class SeracademicoRepositoryProvider extends ServiceProvider
 			\Seracademico\Repositories\Ouvidoria\MelhoriaRepository::class,
 			\Seracademico\Repositories\Ouvidoria\MelhoriaRepositoryEloquent::class
 		);
+
+		$this->app->bind(
+			\Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository::class,
+			\Seracademico\Repositories\Ouvidoria\EncaminhamentoRepositoryEloquent::class
+		);
 	}
 }
