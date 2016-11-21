@@ -51,7 +51,7 @@
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
                     @role('ouvidoria|posgraduacao')
-                    <img alt="image" class="logoDash" src="{{ asset('/img/ouvidoria_saude_igarassu.png')}}"/>
+                    <img alt="image" class="logoDash" src="{{ asset('/img/ouvidoria_saude.png')}}"/>
                     @endrole
                     @role('biblioteca')
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>

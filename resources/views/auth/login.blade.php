@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-4 col-md-6">
 
-            <h2 class="text-center">Bem Vindo <b class="text-success"></b></h2>
+            <h2 class="text-center">Bem Vindo ao <b class="text-success">Sistema de Ouvidoria</b></h2>
 
             <p class="text-center">
                 Faça login para ter acesso. Caso não esteja cadastrado, increva-se.
@@ -28,7 +28,7 @@
         <div class="col-sm-8 col-md-6">
             <div class="ibox-content">
                 <p>
-                    {{--<img src="{{ asset('/img/seracad.png')}}" style="width: 50%;margin-left: 25%;"/>--}}
+                    <img src="{{ asset('/img/ouvidoria_saude.png')}}" style="width: 50%;margin-left: 25%;"/>
                 </p>
                 {!! Form::open(['url'=>'auth/login', 'method' => "POST"]) !!}
                 {!! csrf_field() !!}
@@ -47,7 +47,9 @@
 
                 @endif
 
-
+                <center>
+                    <img src="{{ asset('/img/marca_prefeitura.png')}}" style="width: 35%;"/>
+                </center>
 
                {{-- <p class="text-muted text-center">
                     <small><a href="#">Esqueceu a senha?</a></small>
