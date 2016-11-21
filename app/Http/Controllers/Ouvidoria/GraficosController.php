@@ -32,6 +32,15 @@ class GraficosController extends Controller
     }
 
     /**
+     * @return mixed
+     */
+    public function caracteristicasView()
+    {
+        //return \PDF::loadView('ouvidoria.graficos.chartCaracteristicas')->stream();
+        return view('ouvidoria.graficos.chartCaracteristicasView');
+    }
+
+    /**
      * @return string
      */
     public function caracteristicasAjax()
@@ -65,6 +74,14 @@ class GraficosController extends Controller
     public function assunto()
     {
         return view('ouvidoria.graficos.chartAssunto');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function assuntoView()
+    {
+        return view('ouvidoria.graficos.chartAssuntoView');
     }
 
     /**
@@ -104,6 +121,14 @@ class GraficosController extends Controller
     }
 
     /**
+     * @return mixed
+     */
+    public function subassuntoView()
+    {
+        return view('ouvidoria.graficos.chartSubassuntoView');
+    }
+
+    /**
      * @return string
      */
     public function subassuntoAjax()
@@ -136,6 +161,14 @@ class GraficosController extends Controller
     public function meioRegistro()
     {
         return view('ouvidoria.graficos.chartMeioRegistro');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function meioRegistroView()
+    {
+        return view('ouvidoria.graficos.chartMeioRegistroView');
     }
 
     /**
@@ -174,6 +207,14 @@ class GraficosController extends Controller
     }
 
     /**
+     * @return mixed
+     */
+    public function perfilView()
+    {
+        return view('ouvidoria.graficos.chartPerfilView');
+    }
+
+    /**
      * @return string
      */
     public function perfilAjax()
@@ -206,6 +247,14 @@ class GraficosController extends Controller
     public function escolaridade()
     {
         return view('ouvidoria.graficos.chartEscolaridade');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function escolaridadeView()
+    {
+        return view('ouvidoria.graficos.chartEscolaridadeView');
     }
 
     /**
@@ -249,7 +298,7 @@ class GraficosController extends Controller
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->groupBy('ouv_demanda.idade_id')
-            ->whereBetween('ouv_idade.id', array(1, 20))
+            ->whereBetween('ouv_idade.id', array(1, 204))
             ->select([
                 'ouv_idade.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),

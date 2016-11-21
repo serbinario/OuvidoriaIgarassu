@@ -59,16 +59,22 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
 
             Route::group(['prefix' => 'graficos', 'as' => 'graficos.'], function () {
+                Route::get('caracteristicasView', ['as' => 'caracteristicasView', 'uses' => 'Ouvidoria\GraficosController@caracteristicasView']);
                 Route::get('caracteristicas', ['as' => 'caracteristicas', 'uses' => 'Ouvidoria\GraficosController@caracteristicas']);
                 Route::post('caracteristicasAjax', ['as' => 'caracteristicasAjax', 'uses' => 'Ouvidoria\GraficosController@caracteristicasAjax']);
+                Route::get('assuntoView', ['as' => 'assuntoView', 'uses' => 'Ouvidoria\GraficosController@assuntoView']);
                 Route::get('assunto', ['as' => 'assunto', 'uses' => 'Ouvidoria\GraficosController@assunto']);
                 Route::post('assuntoAjax', ['as' => 'assuntoAjax', 'uses' => 'Ouvidoria\GraficosController@assuntoAjax']);
+                Route::get('subassuntoView', ['as' => 'subassuntoView', 'uses' => 'Ouvidoria\GraficosController@subassuntoView']);
                 Route::get('subassunto', ['as' => 'subassunto', 'uses' => 'Ouvidoria\GraficosController@subassunto']);
                 Route::post('subassuntoAjax', ['as' => 'subassuntoAjax', 'uses' => 'Ouvidoria\GraficosController@subassuntoAjax']);
+                Route::get('meioRegistroView', ['as' => 'meioRegistroView', 'uses' => 'Ouvidoria\GraficosController@meioRegistroView']);
                 Route::get('meioRegistro', ['as' => 'meioRegistro', 'uses' => 'Ouvidoria\GraficosController@meioRegistro']);
                 Route::post('meioRegistroAjax', ['as' => 'meioRegistroAjax', 'uses' => 'Ouvidoria\GraficosController@meioRegistroAjax']);
+                Route::get('perfilView', ['as' => 'perfilView', 'uses' => 'Ouvidoria\GraficosController@perfilView']);
                 Route::get('perfil', ['as' => 'perfil', 'uses' => 'Ouvidoria\GraficosController@perfil']);
                 Route::post('perfilAjax', ['as' => 'perfilAjax', 'uses' => 'Ouvidoria\GraficosController@perfilAjax']);
+                Route::get('escolaridadeView', ['as' => 'escolaridadeView', 'uses' => 'Ouvidoria\GraficosController@escolaridadeView']);
                 Route::get('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\GraficosController@escolaridade']);
                 Route::post('escolaridadeAjax', ['as' => 'escolaridadeAjax', 'uses' => 'Ouvidoria\GraficosController@escolaridadeAjax']);
                 Route::get('idade', ['as' => 'idade', 'uses' => 'Ouvidoria\GraficosController@idade']);

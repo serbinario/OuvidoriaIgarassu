@@ -117,13 +117,13 @@
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Gráficos</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicas') }}" target="_blank"><i class="material-icons">perm_identity</i> Características</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.assunto') }}" target="_blank"><i class="material-icons">perm_identity</i> Assuntos</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.subassunto') }}" target="_blank"><i class="material-icons">perm_identity</i> Subassuntos</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistro') }}" target="_blank"><i class="material-icons">perm_identity</i> Meios de registro</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.perfil') }}" target="_blank"><i class="material-icons">perm_identity</i> Perfies</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridade') }}" target="_blank"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.idade') }}" target="_blank"><i class="material-icons">perm_identity</i> Idades</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView') }}"><i class="material-icons">perm_identity</i> Características</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.assuntoView') }}" ><i class="material-icons">perm_identity</i> Assuntos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView') }}" ><i class="material-icons">perm_identity</i> Subassuntos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView') }}" ><i class="material-icons">perm_identity</i> Meios de registro</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView') }}" ><i class="material-icons">perm_identity</i> Perfis</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView') }}" ><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                        {{--<li><a href="{{ route('seracademico.ouvidoria.graficos.idade') }}" ><i class="material-icons">perm_identity</i> Idades</a></li>--}}
                     </ul>
                 </li>
                @endrole
