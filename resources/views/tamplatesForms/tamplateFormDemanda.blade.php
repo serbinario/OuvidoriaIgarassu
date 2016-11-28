@@ -52,10 +52,18 @@
                                     {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
                                 </div>
                             </div>
+                            @if(isset($model->id))
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('minicipio', 'Comunidade') !!}
+                                        {!! Form::text('minicipio', Session::getOldInput('minicipio')  , array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('minicipio', 'Comunidade') !!}
-                                    {!! Form::text('minicipio', Session::getOldInput('minicipio')  , array('class' => 'form-control')) !!}
+                                    {!! Form::label('comunidade_id', 'Comunidade') !!}
+                                    {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
@@ -205,7 +213,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('prioridade_id', 'Prioridade') !!}
+                                    {!! Form::label('prioridade_id', 'Status') !!}
                                     {!! Form::select('encaminhamento[prioridade_id]',  $loadFields['ouvidoria\prioridade'], Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>

@@ -39,6 +39,7 @@ class Demanda extends Model implements Transformable
 		'numero_end',
 		'subassunto_id',
 		'melhoria_id',
+		'comunidade_id'
 	];
 
 	/**
@@ -151,5 +152,13 @@ class Demanda extends Model implements Transformable
 	public function encaminhamento()
 	{
 		return $this->hasOne(Encaminhamento::class, 'demanda_id', 'id');
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function comunidade()
+	{
+		return $this->belongsTo(Comunidade::class, 'comunidade_id', 'id');
 	}
 }

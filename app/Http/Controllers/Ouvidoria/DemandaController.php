@@ -52,6 +52,7 @@ class DemandaController extends Controller
         'Ouvidoria\Status',
         'Ouvidoria\Prioridade',
         'Ouvidoria\Destinatario',
+        'Ouvidoria\Comunidade',
     ];
 
     /**
@@ -105,6 +106,7 @@ class DemandaController extends Controller
 
             $html = '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a> ';
             $html .= '<a href="registro/'.$row->id.'" class="btn btn-xs btn-success" target="__blanck"><i class="fa fa-edit"></i> Registro</a>';
+            $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck"><i class="fa fa-edit"></i> Documento</a>';
 
             return $html;
         })->make(true);
@@ -285,8 +287,23 @@ class DemandaController extends Controller
         $dados = $request->request->all();
 
         $demandas = $this->repository->with(['situacao', 'subassunto.assunto', 'tipoDemanda'])->findWhere(['situacao_id' => $dados['status']]);
-//dd($demandas);
+        
         return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $demandas])->stream();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function cartaEcaminhamento(Request $request, $id)
+    {
+        $demandas = $this->repository->with(['situacao', 'subassunto.assunto',
+            'tipoDemanda', 'encaminhamento.destinatario', 'sigilo', 'comunidade'])->find($id);
+
+       // dd($demandas);
+
+        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->stream();
     }
 
 }
