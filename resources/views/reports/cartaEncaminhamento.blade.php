@@ -104,11 +104,14 @@ $dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
     <h4>3. RELATO</h4>
     <p class="text" style="text-align: justify">{{$demanda['relato']}}</p>
 
-    <h4>4. COMENTÁRIO/PARECER</h4>
+    <h4>4. OBSERVAÇÃO</h4>
+    <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>
+
+    <h4>5. COMENTÁRIO/PARECER</h4>
     <p class="text" style="text-align: justify">Encaminhamos Manifestação para análise e providências cabíveis</p>
     {{--<p class="text" style="text-align: justify">{{$demanda['encaminhamento']['parecer']}}</p>--}}
 
-    <h4>5. RESPOSTA</h4>
+    <h4>6. RESPOSTA</h4>
     <p class="text" style="text-align: justify">{{$demanda['encaminhamento']['resposta']}}</p>
 
     {{--<h4>4. Dados da demanda</h4>--}}
