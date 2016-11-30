@@ -150,7 +150,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('sexos_id', 'Sexo') !!}
-                                    {!! Form::select('sexos_id', $loadFields['sexo'], Session::getOldInput('sexos_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('sexos_id', (["" => "Não informado"] + $loadFields['sexo']->toArray()), Session::getOldInput('sexos_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
@@ -213,13 +213,13 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('prioridade_id', 'Status') !!}
+                                    {!! Form::label('prioridade_id', 'Prioridade') !!}
                                     {!! Form::select('encaminhamento[prioridade_id]',  $loadFields['ouvidoria\prioridade'], Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('status_id', 'Prioridade') !!}
+                                    {!! Form::label('status_id', 'Status') !!}
                                     {!! Form::select('encaminhamento[status_id]', $loadFields['ouvidoria\status'], Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>

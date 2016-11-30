@@ -298,8 +298,17 @@ class DemandaController extends Controller
      */
     public function cartaEcaminhamento(Request $request, $id)
     {
-        $demandas = $this->repository->with(['situacao', 'subassunto.assunto',
-            'tipoDemanda', 'encaminhamento.destinatario', 'sigilo', 'comunidade'])->find($id);
+        $with = [
+            'situacao',
+            'subassunto.assunto',
+            'informacao',
+            'encaminhamento.destinatario',
+            'encaminhamento.prioridade',
+            'sigilo',
+            'comunidade'
+        ];
+
+        $demandas = $this->repository->with($with)->find($id);
 
        // dd($demandas);
 
