@@ -97,7 +97,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('situacao_id', 'Status') !!}
-                                    {!! Form::select('situacao_id', $loadFields['ouvidoria\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('situacao_id', $loadFields['ouvidoria\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control', 'id' => 'situacao')) !!}
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -220,7 +220,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('status_id', 'Status') !!}
-                                    {!! Form::select('encaminhamento[status_id]', $loadFields['ouvidoria\status'], Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('encaminhamento[status_id]', $loadFields['ouvidoria\status'], Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
                                 </div>
                             </div>
                         </div>

@@ -26,6 +26,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('registro/{id}', ['as' => 'registro', 'uses' => 'Ouvidoria\DemandaController@registro']);
                 Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
                 Route::get('cartaEcaminhamento/{id}', ['as' => 'cartaEcaminhamento', 'uses' => 'Ouvidoria\DemandaController@cartaEcaminhamento']);
+                Route::post('situacaoAjax', ['as' => 'situacaoAjax', 'uses' => 'Ouvidoria\DemandaController@situacaoAjax']);
             });
 
             Route::group(['prefix' => 'report', 'as' => 'report.'], function () {

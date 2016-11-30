@@ -85,5 +85,56 @@
                 });
             }
         });
+
+
+        //Carregando os bairros
+        $(document).on('change', "#encaminhamento", function () {
+
+            //Recuperando a cidade
+            var encaminhamento = $(this).val();
+
+            if (encaminhamento !== "") {
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.ouvidoria.demanda.situacaoAjax')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    datatype: 'json'
+                }).done(function (json) {
+
+                    //alert('sdsd');
+
+                    ///console.log(encaminhamento);
+                    var option = "";
+
+                    option += '<option value="">Selecione</option>';
+                    for (var i = 0; i < json['situacao'].length; i++) {
+                        if(encaminhamento == '1' && json['situacao'][i]['id'] == 2) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '2' && json['situacao'][i]['id'] == 3) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '3' && json['situacao'][i]['id'] == 6) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '4' && json['situacao'][i]['id'] == 4) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '5' && json['situacao'][i]['id'] == 1) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '6' && json['situacao'][i]['id'] == 7) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '7' && json['situacao'][i]['id'] == 5) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else {
+                            option += '<option value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        }
+
+                    }
+
+                    $('#situacao option').remove();
+                    $('#situacao').append(option);
+                });
+            }
+        });
     </script>
 @stop

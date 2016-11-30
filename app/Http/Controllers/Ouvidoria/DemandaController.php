@@ -310,9 +310,23 @@ class DemandaController extends Controller
 
         $demandas = $this->repository->with($with)->find($id);
 
-       // dd($demandas);
-
         return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->stream();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function situacaoAjax(Request $request)
+    {
+        $situacao = \DB::table('ouv_situacao')
+            ->select([
+                'id',
+                'nome'
+            ])->get();
+
+        return ['situacao' =>  $situacao];
     }
 
 }
