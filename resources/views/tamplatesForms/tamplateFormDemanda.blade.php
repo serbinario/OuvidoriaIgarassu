@@ -170,7 +170,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('escolaridade_id', 'Escolaridade') !!}
-                                    {!! Form::select('escolaridade_id', $loadFields['ouvidoria\escolaridade'], Session::getOldInput('escolaridade_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('escolaridade_id',  (["1" => "Não informado"] + $loadFields['ouvidoria\escolaridade']->toArray()), Session::getOldInput('escolaridade_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>

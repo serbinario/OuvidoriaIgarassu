@@ -114,6 +114,16 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Tabelas</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.sexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.escolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Gráficos</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">

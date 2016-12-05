@@ -35,6 +35,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('reportStatus', ['as' => 'reportStatus', 'uses' => 'Ouvidoria\DemandaController@reportStatus']);
             });
 
+            Route::group(['prefix' => 'tabelas', 'as' => 'tabelas.'], function () {
+                Route::get('assuntoClassificacao', ['as' => 'assuntoClassificacao', 'uses' => 'Ouvidoria\TabelasController@assuntoClassificacao']);
+                Route::get('assuntoView', ['as' => 'assuntoView', 'uses' => 'Ouvidoria\TabelasController@assuntoView']);
+                Route::post('assuntos', ['as' => 'assuntos', 'uses' => 'Ouvidoria\TabelasController@assuntos']);
+                Route::get('sexo', ['as' => 'sexo', 'uses' => 'Ouvidoria\TabelasController@sexo']);
+                Route::get('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\TabelasController@escolaridade']);
+            });
+
             Route::group(['prefix' => 'graficos', 'as' => 'graficos.'], function () {
                 Route::get('caracteristicasView', ['as' => 'caracteristicasView', 'uses' => 'Ouvidoria\GraficosController@caracteristicasView']);
                 Route::get('caracteristicas', ['as' => 'caracteristicas', 'uses' => 'Ouvidoria\GraficosController@caracteristicas']);
