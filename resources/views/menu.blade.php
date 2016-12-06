@@ -57,56 +57,16 @@
                     <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
                     @endrole
                 </li>
-
-                @role('biblioteca')
-                <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Biblioteca</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.biblioteca.indexResponsavel') }}"><i class="material-icons">perm_identity</i> Responsável</a></li>
-                        <li><a href="{{ route('seracademico.biblioteca.indexEditora') }}"><i class="material-icons">card_travel</i> Editora</a></li>
-                        <li><a href="{{ route('seracademico.biblioteca.indexAcervo') }}"><i class="material-icons">find_in_page</i> Acervo</a></li>
-                        <li><a href="{{ route('seracademico.biblioteca.indexExemplar') }}"><i class="material-icons">receipt</i> Exemplar</a></li>
-                        <li>
-                            <a href="#">Controle <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li><a href="{{ route('seracademico.biblioteca.indexEmprestimo') }}">Emprestimo</a></li>
-                                <li><a href="{{ route('seracademico.biblioteca.viewDevolucaoEmprestimo') }}">Devolução</a></li>
-                                <li><a href="{{ route('seracademico.biblioteca.indexReserva') }}">Reservar</a></li>
-                                <li><a href="{{ route('seracademico.biblioteca.reservados') }}">Reservas</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{{ route('indexConsulta') }}" target="__blank"><i class="material-icons">receipt</i> Consulta</a></li>
-                        <li><a href="{{ route('seracademico.biblioteca.indexPessoa') }}"><i class="material-icons">receipt</i> Pessoa</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Dashboards</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.biblioteca.dashboardBliblioteca') }}"><i class="material-icons">perm_identity</i> Dashboard Biblioteca</a></li>
-                    </ul>
-                </li>
-               @endrole
-                @role('posgraduacao')
-                <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Ouvidoria</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
-                    </ul>
-                </li>
-                @endrole
                @role('ouvidoria')
                 <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Ouvidoria</span> <span
+                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Ouvidoria</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Relatório</span> <span
+                    <a href="index.html"><i class="fa fa-file-text-o"></i> <span class="nav-label"> Relatório</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.report.reportPessoas') }}" target="_blank"><i class="material-icons">perm_identity</i> Pessoas</a></li>
@@ -114,7 +74,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Tabelas</span> <span
+                    <a href="index.html"><i class="fa fa-list-alt"></i> <span class="nav-label"> Tabelas</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
@@ -124,7 +84,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="index.html"><i class="fa fa-book"></i> <span class="nav-label"> Gráficos</span> <span
+                    <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label"> Gráficos</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView') }}"><i class="material-icons">perm_identity</i> Características</a></li>
@@ -133,7 +93,9 @@
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView') }}" ><i class="material-icons">perm_identity</i> Meios de registro</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView') }}" ><i class="material-icons">perm_identity</i> Perfis</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView') }}" ><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                        {{--<li><a href="{{ route('seracademico.ouvidoria.graficos.idade') }}" ><i class="material-icons">perm_identity</i> Idades</a></li>--}}
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento') }}" ><i class="material-icons">perm_identity</i> Meio Atendi.</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao') }}" ><i class="material-icons">perm_identity</i> Calss. Manifestação</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
                     </ul>
                 </li>
                @endrole

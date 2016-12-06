@@ -320,30 +320,106 @@ class GraficosController extends Controller
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    /*public function idadeAjax()
+    public function atendimento()
     {
+        return view('ouvidoria.graficos.meioAtendimentoView');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function atendimentoAjax(Request $request)
+    {
+
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
-            ->groupBy('ouv_demanda.idade_id')
+            ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', "=", "ouv_demanda.tipo_demanda_id")
+            ->groupBy('ouv_tipo_demanda.id')
             ->select([
-                'ouv_idade.nome as nome',
+                'ouv_tipo_demanda.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
         $dados = [];
-        $dados[0] = ['Idade', 'Idades'];
 
-        $contar = 1;
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd];
-            $dados[$contar] = $r;
-            $contar++;
+            $r = ['name' => $row->nome, 'y' => $row->qtd];
+            $dados[] = $r;
         }
 
         return response()->json($dados);
-    }*/
+    }
+
+    /**
+     * @return mixed
+     */
+    public function informacao()
+    {
+        return view('ouvidoria.graficos.informacaoView');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function informacaoAjax(Request $request)
+    {
+
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
+            ->groupBy('ouv_informacao.id')
+            ->select([
+                'ouv_informacao.nome as nome',
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])->get();
+
+        $dados = [];
+
+        foreach ($rows as $row) {
+            $r = ['name' => $row->nome, 'y' => $row->qtd];
+            $dados[] = $r;
+        }
+
+        return response()->json($dados);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function status()
+    {
+        return view('ouvidoria.graficos.statusView');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function statusAjax(Request $request)
+    {
+
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->join('ouv_situacao', 'ouv_situacao.id', "=", "ouv_demanda.situacao_id")
+            ->groupBy('ouv_situacao.id')
+            ->select([
+                'ouv_situacao.nome as nome',
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])->get();
+
+        $dados = [];
+
+        foreach ($rows as $row) {
+            $r = ['name' => $row->nome, 'y' => $row->qtd];
+            $dados[] = $r;
+        }
+
+        return response()->json($dados);
+    }
 
 }
