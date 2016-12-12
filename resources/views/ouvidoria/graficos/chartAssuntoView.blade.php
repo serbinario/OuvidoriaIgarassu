@@ -28,7 +28,7 @@
         </div>
 
         <div class="ibox-content">
-            <div id="container" style=" margin: 0 auto"></div>
+            <div id="container" style="margin: 0 auto"></div>
         </div>
     </div>
 @stop
@@ -46,44 +46,43 @@
                 dataType: 'JSON',
                 success: function (json) {
 
-                    console.log(json[0]);
 
                     $(function () {
                         Highcharts.chart('container', {
                             chart: {
-                                type: 'bar'
+                                type: 'column'
                             },
                             title: {
                                 text: 'Quantidade de demandas por assuntos'
                             },
                             xAxis: {
-                                categories: json[0],
-                                title: {
-                                    text: null
-                                }
+                                categories: json[0]
                             },
                             yAxis: {
                                 min: 0,
                                 title: {
-                                    text: 'Assunto',
-                                    align: 'high'
+                                    text: 'Total de demandas'
                                 },
-                                labels: {
-                                    overflow: 'justify'
-                                }
-                            },
-                            tooltip: {
-                                valueSuffix: ''
-                            },
-                            plotOptions: {
-                                bar: {
-                                    dataLabels: {
-                                        enabled: true
+                                stackLabels: {
+                                    enabled: true,
+                                    style: {
+                                        fontWeight: 'bold',
+                                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
                                     }
                                 }
                             },
-                            credits: {
-                                enabled: false
+                            tooltip: {
+                                headerFormat: '<b>{point.x}</b><br/>',
+                                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                            },
+                            plotOptions: {
+                                column: {
+                                    stacking: 'normal',
+                                    dataLabels: {
+                                        enabled: false,
+                                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                                    }
+                                }
                             },
                             series: [{
                                 name: 'Quantidade',
