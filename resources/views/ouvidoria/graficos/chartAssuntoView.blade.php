@@ -46,7 +46,6 @@
                 dataType: 'JSON',
                 success: function (json) {
 
-
                     $(function () {
                         Highcharts.chart('container', {
                             chart: {
