@@ -71,6 +71,7 @@
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.report.reportPessoas') }}" target="_blank"><i class="material-icons">perm_identity</i> Pessoas</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus') }}"><i class="material-icons">perm_identity</i> Status</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
                     </ul>
                 </li>
                 <li>

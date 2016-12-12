@@ -253,7 +253,7 @@ class DemandaController extends Controller
     {
         $demanda = $this->service->find($id);
 
-        return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
+        return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->setOrientation('landscape')->stream();
     }
 
     /**
@@ -265,7 +265,7 @@ class DemandaController extends Controller
     {
         $demandas = $this->service->all();
 
-        return \PDF::loadView('ouvidoria.reports.reportPessoas', ['demandas' =>  $demandas])->stream();
+        return \PDF::loadView('ouvidoria.reports.reportPessoas', ['demandas' =>  $demandas])->setOrientation('landscape')->stream();
     }
 
     /**
@@ -292,8 +292,8 @@ class DemandaController extends Controller
         $dados = $request->request->all();
 
         $demandas = $this->repository->with(['situacao', 'subassunto.assunto', 'tipoDemanda'])->findWhere(['situacao_id' => $dados['status']]);
-        
-        return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $demandas])->stream();
+
+        return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $demandas])->setOrientation('landscape')->stream();
     }
 
     /**
@@ -315,7 +315,7 @@ class DemandaController extends Controller
 
         $demandas = $this->repository->with($with)->find($id);
 
-        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->stream();
+        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->setOrientation('landscape')->stream();
     }
 
     /**
@@ -334,4 +334,33 @@ class DemandaController extends Controller
         return ['situacao' =>  $situacao];
     }
 
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function comunidadeView()
+    {
+        #Carregando os dados para o cadastro
+        $loadFields = $this->service->load($this->loadFields);
+
+        #Retorno para view
+        return view('ouvidoria.reports.viewReportComunidades', compact('loadFields'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function comunidade(Request $request)
+    {
+        $dados = $request->request->all();
+
+        $demandas = $this->repository->with(['situacao', 'subassunto.assunto', 'tipoDemanda'])->findWhere(['comunidade_id' => $dados['comunidade']]);
+
+        return \PDF::loadView('ouvidoria.reports.reportComunidade', ['demandas' =>  $demandas])->setOrientation('landscape')->stream();
+    }
+    
 }

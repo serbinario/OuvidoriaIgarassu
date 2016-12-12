@@ -33,6 +33,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
                 Route::get('viewReportStatus', ['as' => 'viewReportStatus', 'uses' => 'Ouvidoria\DemandaController@viewReportStatus']);
                 Route::post('reportStatus', ['as' => 'reportStatus', 'uses' => 'Ouvidoria\DemandaController@reportStatus']);
+                Route::get('comunidadeView', ['as' => 'comunidadeView', 'uses' => 'Ouvidoria\DemandaController@comunidadeView']);
+                Route::post('comunidade', ['as' => 'comunidade', 'uses' => 'Ouvidoria\DemandaController@comunidade']);
             });
 
             Route::group(['prefix' => 'tabelas', 'as' => 'tabelas.'], function () {
