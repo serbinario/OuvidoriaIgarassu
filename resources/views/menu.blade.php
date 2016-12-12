@@ -98,6 +98,7 @@
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento') }}" ><i class="material-icons">perm_identity</i> Meio Atendi.</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao') }}" ><i class="material-icons">perm_identity</i> Calss. Manifestação</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria') }}" ><i class="material-icons">perm_identity</i> Recla. x Melhoria</a></li>
                     </ul>
                 </li>
                @endrole

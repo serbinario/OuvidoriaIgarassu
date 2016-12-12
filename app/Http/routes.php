@@ -74,6 +74,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('informacaoAjax', ['as' => 'informacaoAjax', 'uses' => 'Ouvidoria\GraficosController@informacaoAjax']);
                 Route::get('status', ['as' => 'status', 'uses' => 'Ouvidoria\GraficosController@status']);
                 Route::post('statusAjax', ['as' => 'statusAjax', 'uses' => 'Ouvidoria\GraficosController@statusAjax']);
+                Route::get('melhoria', ['as' => 'melhoria', 'uses' => 'Ouvidoria\GraficosController@melhoria']);
+                Route::post('melhoriaAjax', ['as' => 'melhoriaAjax', 'uses' => 'Ouvidoria\GraficosController@melhoriaAjax']);
             });
         });
 
