@@ -151,4 +151,47 @@ class TabelasController extends Controller
     }
 
 
+    /**
+     * @return mixed
+     */
+    public function comunidadeClassificacao()
+    {
+
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->groupBy('ouv_comunidade.id', 'ouv_informacao.id')
+            ->select([
+                'ouv_informacao.nome as info',
+                'ouv_comunidade.nome as comunidade',
+                'ouv_comunidade.id as comunidade_id',
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])->get();
+
+        $array = [];
+        $arrayComunidade = [];
+        $count = 0;
+        $totalDemandas = 0;
+
+        foreach ($rows as $row) {
+            if(in_array($row->comunidade, $arrayComunidade)) {
+                continue;
+            }
+            $array[$count]['comunidade'] = $row->comunidade;
+            $arrayComunidade[$count]  = $row->comunidade;
+            $totalGeral = 0;
+            foreach ($rows as $row2) {
+                if($row2->comunidade_id == $row->comunidade_id) {
+                    $array[$count][$row2->info] = $row2->qtd;
+                    $totalGeral += $row2->qtd;
+                }
+            }
+            $array[$count]['totalGeral'] = $totalGeral;
+            $totalDemandas += $totalGeral;
+            $count++;
+        }
+
+        return view('ouvidoria.tabelas.comunidadeClassificacao', compact('array', 'totalDemandas'));
+    }
 }

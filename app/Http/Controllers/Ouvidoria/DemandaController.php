@@ -37,7 +37,6 @@ class DemandaController extends Controller
         'Ouvidoria\Area',
         'Ouvidoria\Anonimo',
         'Ouvidoria\Escolaridade',
-        'Ouvidoria\Idade',
         'Ouvidoria\Informacao',
         'Ouvidoria\Sigilo',
         'Ouvidoria\TipoDemanda',
@@ -53,6 +52,10 @@ class DemandaController extends Controller
         'Ouvidoria\Prioridade',
         'Ouvidoria\Destinatario',
         'Ouvidoria\Comunidade',
+    ];
+
+    private $loadFields2 = [
+        'Ouvidoria\Idade',
     ];
 
     /**
@@ -119,9 +122,10 @@ class DemandaController extends Controller
     {
         #Carregando os dados para o cadastro
         $loadFields = $this->service->load($this->loadFields);
+        $loadFields2 = $this->service->load2($this->loadFields2);
 
         #Retorno para view
-        return view('ouvidoria.demanda.create', compact('loadFields'));
+        return view('ouvidoria.demanda.create', compact('loadFields', 'loadFields2'));
     }
 
     /**
@@ -202,9 +206,10 @@ class DemandaController extends Controller
 
             #Carregando os dados para o cadastro
             $loadFields = $this->service->load($this->loadFields);
+            $loadFields2 = $this->service->load2($this->loadFields2);
 
             #retorno para view
-            return view('ouvidoria.demanda.edit', compact('model', 'loadFields'));
+            return view('ouvidoria.demanda.edit', compact('model', 'loadFields', 'loadFields2'));
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }

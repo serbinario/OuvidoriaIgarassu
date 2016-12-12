@@ -120,8 +120,6 @@ class DemandaService
     public function store(array $data) : Demanda
     {
 
-        //dd($data);
-
         $data = $this->tratamentoCampos($data);
 
         //recupera o maior código ja registrado
@@ -139,18 +137,21 @@ class DemandaService
         $demanda =  $this->repository->create($data);
 
         #### Encaminhamento ###
+        if($data['encaminhamento']['prioridade_id'] && $data['encaminhamento']['destinatario_id']) {
 
-        $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
-        $previsao = $dataObj->add(new \DateInterval("P{$prioridade->dias}D"));
+            $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
+            $previsao = $dataObj->add(new \DateInterval("P{$prioridade->dias}D"));
 
-        $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
-        $data['encaminhamento']['data'] = $data['data'];
-        $data['encaminhamento']['demanda_id'] = $demanda->id;
+            $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
+            $data['encaminhamento']['data'] = $data['data'];
+            $data['encaminhamento']['demanda_id'] = $demanda->id;
 
-        $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
+            $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
+        }
+
         
         #Verificando se foi criado no banco de dados
-        if(!$demanda || !$encaminhamento) {
+        if(!$demanda) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
@@ -174,7 +175,9 @@ class DemandaService
 
         if(count($enc) > 0) {
             $encaminhamento = $this->encaminhamentoRepository->update($data['encaminhamento'], $enc[0]->id);
-        } else {
+        } else if (count($enc) <= 0 && $data['encaminhamento']['prioridade_id'] != ""
+            && $data['encaminhamento']['destinatario_id'] != "") {
+
             $dataObj  = new \DateTime('now');
             $date     = $dataObj->format('Y-m-d');
 
@@ -190,7 +193,7 @@ class DemandaService
 
 
         #Verificando se foi atualizado no banco de dados
-        if(!$demanda || !$encaminhamento) {
+        if(!$demanda) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
@@ -247,6 +250,64 @@ class DemandaService
                 } else {
                     #Recuperando o registro e armazenando no array
                     $result[strtolower($model)] = $nameModel::orderBy('nome', 'asc')->lists('nome', 'id');
+                }
+            }
+            # Limpando a expressão
+            $expressao = [];
+        }
+        #retorno
+        return $result;
+    }
+
+    /**
+     * @param array $models
+     * @return array
+     */
+    public function load2(array $models, $ajax = false) : array
+    {
+        #Declarando variáveis de uso
+        $result    = [];
+        $expressao = [];
+        #Criando e executando as consultas
+        foreach ($models as $model) {
+            # separando as strings
+            $explode   = explode("|", $model);
+            # verificando a condição
+            if(count($explode) > 1) {
+                $model     = $explode[0];
+                $expressao = explode(",", $explode[1]);
+            }
+            #qualificando o namespace
+            $nameModel = "\\Seracademico\\Entities\\$model";
+            #Verificando se existe sobrescrita do nome do model
+            //$model     = isset($expressao[2]) ? $expressao[2] : $model;
+            if ($ajax) {
+                if(count($expressao) > 0) {
+                    switch (count($expressao)) {
+                        case 1 :
+                            #Recuperando o registro e armazenando no array
+                            $result[strtolower($model)] = $nameModel::{$expressao[0]}()->get(['nome', 'id']);
+                            break;
+                        case 2 :
+                            #Recuperando o registro e armazenando no array
+                            $result[strtolower($model)] = $nameModel::{$expressao[0]}($expressao[1])->get(['nome', 'id']);
+                            break;
+                        case 3 :
+                            #Recuperando o registro e armazenando no array
+                            $result[strtolower($model)] = $nameModel::{$expressao[0]}($expressao[1], $expressao[2])->get(['nome', 'id']);
+                            break;
+                    }
+                } else {
+                    #Recuperando o registro e armazenando no array
+                    $result[strtolower($model)] = $nameModel::orderBy('nome', 'asc')->get(['nome', 'id']);
+                }
+            } else {
+                if(count($expressao) > 1) {
+                    #Recuperando o registro e armazenando no array
+                    $result[strtolower($model)] = $nameModel::{$expressao[0]}($expressao[1])->lists('nome', 'id');
+                } else {
+                    #Recuperando o registro e armazenando no array
+                    $result[strtolower($model)] = $nameModel::lists('nome', 'id');
                 }
             }
             # Limpando a expressão

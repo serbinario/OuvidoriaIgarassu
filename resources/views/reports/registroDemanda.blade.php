@@ -81,7 +81,7 @@ $dataFromat = $data->format('d/m/Y');
                 <span class="text">Escolaridade: {{$demanda['escolaridade']['nome']}}</span>
             </td>
             <td>
-                <span class="text">Usa exclusivamente SUS? ( <?php if($demanda['exclusividadeSUS']['id'] == '1') { ?> X <?php }?> ) Sim ( <?php if($demanda['exclusividadeSUS']['id'] == '2') { ?> X <?php }?> ) Não </span>
+                <span class="text">Usa exclusivamente SUS? ( <?php if($demanda['exclusividadeSUS']['id'] == '2') { ?> X <?php }?> ) Sim ( <?php if($demanda['exclusividadeSUS']['id'] == '3') { ?> X <?php }?> ) Não </span>
             </td>
         </tr>
     </table>

@@ -94,11 +94,13 @@ $dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
             <tr>
                 <td style="width: 100px"><span class="text"><b>Número:</b> {{$demanda['numero_end']}}</span></td>
             </tr>
-            <tr>
-                <td>
-                    <span class="text"><b>Telefone:</b> {{$demanda['fone']}}</span>
-                </td>
-            </tr>
+            @if($demanda['sigilo']['id'] == 1)
+                <tr>
+                    <td>
+                        <span class="text"><b>Telefone:</b> {{$demanda['fone']}}</span>
+                    </td>
+                </tr>
+            @endif
     </table>
 
     <h4>3. RELATO</h4>

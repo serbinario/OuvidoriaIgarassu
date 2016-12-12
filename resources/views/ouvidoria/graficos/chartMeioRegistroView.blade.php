@@ -28,50 +28,73 @@
         </div>
 
         <div class="ibox-content">
-            <center>
-                <div id="barchart_values" style="width: 900px; height: 300px;"></div>
-            </center>
+            <div id="container" style=" margin: 0 auto"></div>
         </div>
     </div>
 @stop
 
 @section('javascript')
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
+    <script src="{{ asset('/js/plugins/exporting.js')  }}"></script>
     <script type="text/javascript">
-        google.charts.load("current", {packages:["corechart"]});
-        google.charts.setOnLoadCallback(drawChart);
 
-        $.ajax({
-            url: '{{route('seracademico.ouvidoria.graficos.meioRegistroAjax')}}',
-            type: 'POST',
-            dataType: 'JSON',
-            success: function (json) {
-                drawChart(json)
-            }
+        $(document).ready(function(){
+
+            $.ajax({
+                url: '{{route('seracademico.ouvidoria.graficos.meioRegistroAjax')}}',
+                type: 'POST',
+                dataType: 'JSON',
+                success: function (json) {
+
+                    console.log(json[0]);
+
+                    $(function () {
+                        Highcharts.chart('container', {
+                            chart: {
+                                type: 'bar'
+                            },
+                            title: {
+                                text: 'Quantidade de demandas por meio de registro'
+                            },
+                            xAxis: {
+                                categories: json[0],
+                                title: {
+                                    text: null
+                                }
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Meios de registro',
+                                    align: 'high'
+                                },
+                                labels: {
+                                    overflow: 'justify'
+                                }
+                            },
+                            tooltip: {
+                                valueSuffix: ''
+                            },
+                            plotOptions: {
+                                bar: {
+                                    dataLabels: {
+                                        enabled: true
+                                    }
+                                }
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: 'Quantidade',
+                                data: json[1]
+                            }]
+                        });
+                    });
+
+                }
+            });
         });
 
-        function drawChart(json) {
-
-            var data = google.visualization.arrayToDataTable(json);
-
-            var view = new google.visualization.DataView(data);
-            view.setColumns([0, 1,
-                { calc: "stringify",
-                    sourceColumn: 1,
-                    type: "string",
-                    role: "annotation" },
-                2]);
-
-            var options = {
-                title: "Meios de registro",
-                width: 600,
-                height: 300,
-                bar: {groupWidth: "50%"},
-                legend: { position: "none" },
-            };
-
-            var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-            chart.draw(view, options);
-        }
     </script>
 @stop

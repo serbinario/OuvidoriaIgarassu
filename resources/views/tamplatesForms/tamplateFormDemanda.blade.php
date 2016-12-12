@@ -97,13 +97,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('situacao_id', 'Status') !!}
-                                    {!! Form::select('situacao_id', $loadFields['ouvidoria\situacao'], Session::getOldInput('situacao_id'), array('class' => 'form-control', 'id' => 'situacao')) !!}
+                                    {!! Form::select('situacao_id', (["" => "Selecione"] + $loadFields['ouvidoria\situacao']->toArray()), Session::getOldInput('situacao_id'), array('class' => 'form-control', 'id' => 'situacao')) !!}
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('tipo_demanda_id', 'Meio de registro') !!}
-                                    {!! Form::select('tipo_demanda_id', $loadFields['ouvidoria\tipodemanda'], Session::getOldInput('tipo_demanda_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('tipo_demanda_id', (["" => "Selecione"] + $loadFields['ouvidoria\tipodemanda']->toArray()), Session::getOldInput('tipo_demanda_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
@@ -157,13 +157,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('exclusividade_sus_id', 'Utiliza exclusivamente o SUS?') !!}
-                                    {!! Form::select('exclusividade_sus_id', $loadFields['ouvidoria\exclusividadesus'], Session::getOldInput('exclusividade_sus_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('exclusividade_sus_id', (["2" => "Sim"] + $loadFields['ouvidoria\exclusividadesus']->toArray()), Session::getOldInput('exclusividade_sus_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('idade_id', 'Idade') !!}
-                                    {!! Form::select('idade_id', $loadFields['ouvidoria\idade'], Session::getOldInput('idade_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('idade_id', $loadFields2['ouvidoria\idade'], Session::getOldInput('idade_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
 
@@ -208,19 +208,19 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     {!! Form::label('destinatario_id', 'Destino') !!}
-                                    {!! Form::select('encaminhamento[destinatario_id]', $loadFields['ouvidoria\destinatario'], Session::getOldInput('destinatario_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('encaminhamento[destinatario_id]', (["" => "Selecione"] + $loadFields['ouvidoria\destinatario']->toArray()), Session::getOldInput('destinatario_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('prioridade_id', 'Prioridade') !!}
-                                    {!! Form::select('encaminhamento[prioridade_id]',  $loadFields['ouvidoria\prioridade'], Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
+                                    {!! Form::select('encaminhamento[prioridade_id]',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('status_id', 'Status') !!}
-                                    {!! Form::select('encaminhamento[status_id]', $loadFields['ouvidoria\status'], Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
+                                    {!! Form::select('encaminhamento[status_id]', (["" => "Selecione"] + $loadFields['ouvidoria\status']->toArray()), Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
                                 </div>
                             </div>
                         </div>

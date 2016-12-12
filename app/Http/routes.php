@@ -41,6 +41,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('assuntos', ['as' => 'assuntos', 'uses' => 'Ouvidoria\TabelasController@assuntos']);
                 Route::get('sexo', ['as' => 'sexo', 'uses' => 'Ouvidoria\TabelasController@sexo']);
                 Route::get('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\TabelasController@escolaridade']);
+                Route::get('comunidadeClassificacao', ['as' => 'comunidadeClassificacao', 'uses' => 'Ouvidoria\TabelasController@comunidadeClassificacao']);
             });
 
             Route::group(['prefix' => 'graficos', 'as' => 'graficos.'], function () {

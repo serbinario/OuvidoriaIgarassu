@@ -20,7 +20,7 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title">
             <div class="col-sm-6 col-md-9">
-                <h4><i class="material-icons">find_in_page</i> TABELA DE ASSUNTO POR CLASSIFICAÇÃO</h4>
+                <h4><i class="material-icons">find_in_page</i> TABELA DE COMUNIDADE POR CLASSIFICAÇÃO</h4>
             </div>
             <div class="col-sm-6 col-md-3">
                 {{--<a href="{{ route('seracademico.ouvidoria.graficos.assunto') }}" target="_blank" class="btn-sm btn-primary pull-right">Imprimir</a>--}}
@@ -35,7 +35,7 @@
                     <th colspan="6" style="text-align: center;background-color: #e7ebe9">Classificação</th>
                 </tr>
                 <tr style="background-color: #f1f3f2">
-                    <th>Assunto</th>
+                    <th>Comunidade</th>
                     <th>Denúncia</th>
                     <th>Elogio</th>
                     <th>Informação</th>
@@ -49,7 +49,7 @@
                 <tbody>
                     @foreach($array as $item)
                         <tr>
-                            <td>{{$item['assunto']}}</td>
+                            <td>{{$item['comunidade']}}</td>
                             <td>
                                 @if(isset($item['Denúncia']))
                                     {{$item['Denúncia']}}

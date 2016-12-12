@@ -36,7 +36,6 @@ class GraficosController extends Controller
      */
     public function caracteristicasView()
     {
-        //return \PDF::loadView('ouvidoria.graficos.chartCaracteristicas')->stream();
         return view('ouvidoria.graficos.chartCaracteristicasView');
     }
 
@@ -53,18 +52,16 @@ class GraficosController extends Controller
                 'ouv_informacao.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
+        
+        $nomes = [];
+        $data = [];
 
-        $dados = [];
-        $dados[0] = ['Element', 'Density', ['role' => 'style']];
-
-        $contar = 1;
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd, 'silver'];
-            $dados[$contar] = $r;
-            $contar++;
+            $nomes[] = $row->nome;
+            $data[] = $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json([$nomes,$data]);
     }
 
 
@@ -99,17 +96,15 @@ class GraficosController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
-        $dados = [];
-        $dados[0] = ['Element', 'Density', ['role' => 'style']];
+        $nomes = [];
+        $data = [];
 
-        $contar = 1;
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd, 'silver'];
-            $dados[$contar] = $r;
-            $contar++;
+            $nomes[] = $row->nome;
+            $data[] = $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json([$nomes,$data]);
     }
 
     /**
@@ -142,17 +137,15 @@ class GraficosController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
-        $dados = [];
-        $dados[0] = ['Element', 'Density', ['role' => 'style']];
+        $nomes = [];
+        $data = [];
 
-        $contar = 1;
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd, 'silver'];
-            $dados[$contar] = $r;
-            $contar++;
+            $nomes[] = $row->nome;
+            $data[] = $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json([$nomes,$data]);
     }
 
     /**
@@ -185,17 +178,15 @@ class GraficosController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
-        $dados = [];
-        $dados[0] = ['Element', 'Density', ['role' => 'style']];
-
-        $contar = 1;
+        $nomes = [];
+        $data = [];
+        
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd, 'silver'];
-            $dados[$contar] = $r;
-            $contar++;
+            $nomes[] = $row->nome;
+            $data[] = $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json([$nomes,$data]);
     }
 
     /**
@@ -228,17 +219,15 @@ class GraficosController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
-        $dados = [];
-        $dados[0] = ['Element', 'Density', ['role' => 'style']];
+        $nomes = [];
+        $data = [];
 
-        $contar = 1;
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd, 'silver'];
-            $dados[$contar] = $r;
-            $contar++;
+            $nomes[] = $row->nome;
+            $data[] = $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json([$nomes,$data]);
     }
 
     /**
@@ -271,17 +260,15 @@ class GraficosController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
-        $dados = [];
-        $dados[0] = ['Element', 'Density', ['role' => 'style']];
-
-        $contar = 1;
+        $nomes = [];
+        $data = [];
+        
         foreach ($rows as $row) {
-            $r = [$row->nome, $row->qtd, 'silver'];
-            $dados[$contar] = $r;
-            $contar++;
+            $nomes[] = $row->nome;
+            $data[] = $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json([$nomes,$data]);
     }
 
     /**

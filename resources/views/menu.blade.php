@@ -81,6 +81,7 @@
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.sexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.escolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.comunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
                     </ul>
                 </li>
                 <li>
