@@ -253,7 +253,7 @@ class DemandaController extends Controller
     {
         $demanda = $this->service->find($id);
 
-        return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->setOrientation('landscape')->stream();
+        return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
     }
 
     /**
@@ -315,7 +315,7 @@ class DemandaController extends Controller
 
         $demandas = $this->repository->with($with)->find($id);
 
-        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->setOrientation('landscape')->stream();
+        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->stream();
     }
 
     /**
