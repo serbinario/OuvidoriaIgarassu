@@ -122,10 +122,14 @@ class DemandaService
 
         $data = $this->tratamentoCampos($data);
 
-        //recupera o maior código ja registrado
-        $codigo = \DB::table('ouv_demanda')->max('codigo');
         $dataObj  = new \DateTime('now');
         $this->anoAtual = $dataObj->format('Y');
+        
+        //recupera o maior código ja registrado
+        $codigo = \DB::table('ouv_demanda')
+            ->where('ouv_demanda.codigo', 'like', '%'.$this->anoAtual)
+            ->max('codigo');
+        
         $codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
         $codigoAtual = $codigo != null ?  substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
         $this->ultimoAno = substr($codigo, -4);
