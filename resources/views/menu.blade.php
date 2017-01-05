@@ -79,7 +79,7 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos x Subass.</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.sexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.escolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.comunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
@@ -98,6 +98,7 @@
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento') }}" ><i class="material-icons">perm_identity</i> Meio Atendi.</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao') }}" ><i class="material-icons">perm_identity</i> Calss. Manifestação</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias') }}" ><i class="material-icons">perm_identity</i> Melhorias</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria') }}" ><i class="material-icons">perm_identity</i> Recla. x Melhoria</a></li>
                     </ul>
                 </li>

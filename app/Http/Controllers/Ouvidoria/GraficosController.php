@@ -445,4 +445,39 @@ class GraficosController extends Controller
         return response()->json($dados);
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function melhorias()
+    {
+        return view('ouvidoria.graficos.melhoriasView');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function melhoriasAjax(Request $request)
+    {
+
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->join('ouv_melhorias', 'ouv_melhorias.id', "=", "ouv_demanda.melhoria_id")
+            ->groupBy('ouv_melhorias.id')
+            ->select([
+                'ouv_melhorias.nome as nome',
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])->get();
+
+        $dados = [];
+
+        foreach ($rows as $row) {
+            $r = ['name' => $row->nome, 'y' => $row->qtd];
+            $dados[] = $r;
+        }
+
+        return response()->json($dados);
+    }
+
 }

@@ -62,8 +62,8 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="table-responsive no-padding">
-                        <table id="demanda-grid" class="display table table-bordered" cellspacing="0" width="100%">
+                    <div class="table-responsive">
+                        <table id="demanda-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>Relato</th>
@@ -75,8 +75,9 @@
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
+                                <th>Assunto</th>
                                 <th>Status</th>
-                                <th >Acão</th>
+                                <th>Acão</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -90,6 +91,7 @@
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
+                                <th>Assunto</th>
                                 <th>Status</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
@@ -139,6 +141,7 @@
                     {data: 'fone', name: 'ouv_demanda.fone'},
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
+                    {data: 'assunto', name: 'ouv_assunto.nome'},
                     {data: 'situacao', name: 'ouv_situacao.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

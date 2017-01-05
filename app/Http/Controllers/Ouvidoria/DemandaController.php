@@ -89,6 +89,8 @@ class DemandaController extends Controller
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->leftJoin('ouv_situacao', 'ouv_situacao.id', '=', 'ouv_demanda.situacao_id')
             ->leftJoin('ouv_exclusividade_sus', 'ouv_exclusividade_sus.id', '=', 'ouv_demanda.exclusividade_sus_id')
+            ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
+            ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->select('ouv_demanda.id',
                 'ouv_demanda.nome',
                 'ouv_informacao.nome as informacao',
@@ -100,6 +102,7 @@ class DemandaController extends Controller
                 'ouv_demanda.endereco',
                 'ouv_demanda.minicipio',
                 'ouv_demanda.fone',
+                'ouv_assunto.nome as assunto',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data')
             );
