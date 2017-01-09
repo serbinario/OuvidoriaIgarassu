@@ -76,6 +76,7 @@
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
                                 <th>Assunto</th>
+                                <th>Melhoria</th>
                                 <th>Status</th>
                                 <th>Acão</th>
                             </tr>
@@ -92,6 +93,7 @@
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
                                 <th>Assunto</th>
+                                <th>Melhoria</th>
                                 <th>Status</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
@@ -142,6 +144,7 @@
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
                     {data: 'assunto', name: 'ouv_assunto.nome'},
+                    {data: 'melhoria', name: 'ouv_melhorias.nome'},
                     {data: 'situacao', name: 'ouv_situacao.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

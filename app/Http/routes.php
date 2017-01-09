@@ -43,6 +43,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('assuntos', ['as' => 'assuntos', 'uses' => 'Ouvidoria\TabelasController@assuntos']);
                 Route::get('sexo', ['as' => 'sexo', 'uses' => 'Ouvidoria\TabelasController@sexo']);
                 Route::get('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\TabelasController@escolaridade']);
+                Route::get('melhorias', ['as' => 'melhorias', 'uses' => 'Ouvidoria\TabelasController@melhorias']);
                 Route::get('comunidadeClassificacao', ['as' => 'comunidadeClassificacao', 'uses' => 'Ouvidoria\TabelasController@comunidadeClassificacao']);
             });
 

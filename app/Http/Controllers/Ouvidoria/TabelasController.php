@@ -194,4 +194,29 @@ class TabelasController extends Controller
 
         return view('ouvidoria.tabelas.comunidadeClassificacao', compact('array', 'totalDemandas'));
     }
+
+    /**
+     * @return mixed
+     */
+    public function melhorias()
+    {
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->join('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
+            ->groupBy('ouv_melhorias.id')
+            ->select([
+                'ouv_melhorias.id as melhoria',
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])->get();
+
+        $totalMelhorias = 0;
+
+        foreach ($rows as $row) {
+            $totalMelhorias += $row->qtd;
+        }
+
+        $melhorias = \DB::table('ouv_melhorias')->get();
+
+        return view('ouvidoria.tabelas.melhorias', compact('rows', 'totalMelhorias', 'melhorias'));
+    }
 }
