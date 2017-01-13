@@ -59,6 +59,7 @@
 @section('javascript')
     <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
     <script src="{{ asset('/js/plugins/exporting.js')  }}"></script>
+    <script src="{{ asset('/js/plugins/highcharts_theme.js')  }}"></script>
     <script type="text/javascript">
 
         $(document).ready(function(){
@@ -83,7 +84,7 @@
             };
 
             $.ajax({
-                url: '{{route('seracademico.ouvidoria.graficos.informacaoAjax')}}',
+                url: '{{route('seracademico.ouvidoria.graficos.statusAjax')}}',
                 type: 'POST',
                 dataType: 'json',
                 data: dados
