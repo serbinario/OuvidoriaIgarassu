@@ -61,6 +61,28 @@
             @endif
 
             <div class="row">
+                {!! Form::open(['method' => "POST"]) !!}
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <?php $data = new \DateTime('now') ?>
+                            {!! Form::label('data_inicio', 'Início') !!}
+                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::label('data_fim', 'Fim') !!}
+                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" style="margin-top: 22px" id="search" class="btn-primary btn input-sm">Consultar</button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            </div><br />
+            <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <table id="demanda-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
@@ -126,7 +148,11 @@
                 order: [[ 1, "asc" ]],
                 ajax: {
                     url: "{!! route('seracademico.ouvidoria.demanda.grid') !!}",
-                    method: 'POST'
+                    method: 'POST',
+                    data: function (d) {
+                        d.data_inicio = $('input[name=data_inicio]').val();
+                        d.data_fim = $('input[name=data_fim]').val();
+                    }
                 },
                 columns: [
                     {
@@ -148,6 +174,12 @@
                     {data: 'situacao', name: 'ouv_situacao.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
+            });
+
+            //Função do submit do search da grid principal
+            $('#search').click(function(e) {
+                table.draw();
+                e.preventDefault();
             });
 
             // Add event listener for opening and closing details

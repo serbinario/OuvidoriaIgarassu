@@ -66,10 +66,18 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Cadastros</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.assunto.index') }}"><i class="material-icons">perm_identity</i> Assunto</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.subassunto.index') }}"><i class="material-icons">perm_identity</i> Subassunto</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="index.html"><i class="fa fa-file-text-o"></i> <span class="nav-label"> Relatório</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.report.reportPessoas') }}" target="_blank"><i class="material-icons">perm_identity</i> Pessoas</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas') }}"><i class="material-icons">perm_identity</i> Pessoas</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus') }}"><i class="material-icons">perm_identity</i> Status</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
                     </ul>
@@ -78,12 +86,12 @@
                     <a href="index.html"><i class="fa fa-list-alt"></i> <span class="nav-label"> Tabelas</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewAssuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos x Subass.</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.sexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.escolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.melhorias') }}"><i class="material-icons">perm_identity</i> Melhoria</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.comunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias') }}"><i class="material-icons">perm_identity</i> Melhoria</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
                     </ul>
                 </li>
                 <li>

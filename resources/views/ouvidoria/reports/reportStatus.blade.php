@@ -47,8 +47,8 @@
                     {{$count}}
                 </td>
                 <td>{{$demanda->nome}}</td>
-                <td>@if(isset($demanda->subassunto->nome)) {{$demanda->subassunto->nome}} @endif</td>
-                <td>@if(isset($demanda->situacao->nome)) {{$demanda->situacao->nome}} @endif</td>
+                <td>@if(isset($demanda->subassunto)) {{$demanda->subassunto}} @endif</td>
+                <td>@if(isset($demanda->situacao)) {{$demanda->situacao}} @endif</td>
                 <td>{{$demanda->fone}}</td>
             </tr>
         @endforeach

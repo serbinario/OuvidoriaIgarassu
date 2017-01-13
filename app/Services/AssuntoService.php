@@ -2,8 +2,8 @@
 
 namespace Seracademico\Services;
 
-use Seracademico\Repositories\AssuntoRepository;
-use Seracademico\Entities\Assunto;
+use Seracademico\Repositories\Ouvidoria\AssuntoRepository;
+use Seracademico\Entities\Ouvidoria\Assunto;
 //use Carbon\Carbon;
 
 class AssuntoService

@@ -26,7 +26,9 @@ class SubassuntoController extends Controller
     /**
     * @var array
     */
-    private $loadFields = [];
+    private $loadFields = [
+        'Ouvidoria\Assunto'
+    ];
 
     /**
     * @param SubassuntoService $service
@@ -52,7 +54,13 @@ class SubassuntoController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_subassunto')->select(['id', 'nome']);
+        $rows = \DB::table('ouv_subassunto')
+            ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->select([
+                'ouv_subassunto.id as id',
+                'ouv_subassunto.nome as nome',
+                'ouv_assunto.nome as assunto'
+            ]);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
@@ -83,7 +91,7 @@ class SubassuntoController extends Controller
             $data = $request->all();
 
             #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
+            //$this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);

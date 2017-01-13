@@ -40,12 +40,25 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <?php $data = new \DateTime('now') ?>
+                            {!! Form::label('data_inicio', 'Início') !!}
+                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::label('data_fim', 'Fim') !!}
+                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                {!! Form::submit('Salvar', array('class' => 'btn btn-primary btn-block')) !!}
+                                {!! Form::submit('Consultar', array('class' => 'btn btn-primary btn-block')) !!}
                             </div>
                         </div>
                     </div>

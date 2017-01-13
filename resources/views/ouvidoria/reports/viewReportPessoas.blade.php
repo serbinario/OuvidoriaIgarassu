@@ -28,29 +28,23 @@
                     @endforeach
                 </div>
             @endif
-            {!! Form::open(['route'=>'seracademico.ouvidoria.report.reportStatus', 'method' => "POST", 'target' => '_blank' ]) !!}
+            {!! Form::open(['route'=>'seracademico.ouvidoria.report.reportPessoas', 'method' => "POST", 'target' => '_blank' ]) !!}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    {!! Form::label('status', 'Status') !!}
-                                    {!! Form::select('status', $loadFields['ouvidoria\situacao'], null, array('class' => 'form-control')) !!}
+                                    <?php $data = new \DateTime('now') ?>
+                                    {!! Form::label('data_inicio', 'Início') !!}
+                                    {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <?php $data = new \DateTime('now') ?>
-                            {!! Form::label('data_inicio', 'Início') !!}
-                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            {!! Form::label('data_fim', 'Fim') !!}
-                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('data_fim', 'Fim') !!}
+                                    {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

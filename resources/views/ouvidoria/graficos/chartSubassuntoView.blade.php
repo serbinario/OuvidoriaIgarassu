@@ -28,7 +28,32 @@
         </div>
 
         <div class="ibox-content">
-            <div id="container" style=" margin: 0 auto"></div>
+
+            <div class="row">
+                {!! Form::open(['method' => "POST"]) !!}
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <?php $data = new \DateTime('now') ?>
+                            {!! Form::label('data_inicio', 'Início') !!}
+                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::label('data_fim', 'Fim') !!}
+                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" style="margin-top: 22px" id="search" class="btn-primary btn input-sm">Consultar</button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            </div><br />
+            <div class="row">
+                <div id="container" style=" margin: 0 auto"></div>
+            </div>
         </div>
     </div>
 @stop
@@ -45,54 +70,77 @@
                 type: 'POST',
                 dataType: 'JSON',
                 success: function (json) {
-
-                    $(function () {
-                        Highcharts.chart('container', {
-                            chart: {
-                                type: 'bar'
-                            },
-                            title: {
-                                text: 'Quantidade de demandas por subassunto'
-                            },
-                            xAxis: {
-                                categories: json[0],
-                                title: {
-                                    text: null
-                                }
-                            },
-                            yAxis: {
-                                min: 0,
-                                title: {
-                                    text: 'Subassunto',
-                                    align: 'high'
-                                },
-                                labels: {
-                                    overflow: 'justify'
-                                }
-                            },
-                            tooltip: {
-                                valueSuffix: ''
-                            },
-                            plotOptions: {
-                                bar: {
-                                    dataLabels: {
-                                        enabled: true
-                                    }
-                                }
-                            },
-                            credits: {
-                                enabled: false
-                            },
-                            series: [{
-                                name: 'Quantidade',
-                                data: json[1]
-                            }]
-                        });
-                    });
-
+                        grafico(json);
                 }
             });
         });
 
+        $(document).on('click', '#search', function(){
+
+            var data_inicio = $('input[name=data_inicio]').val();
+            var data_fim    = $('input[name=data_fim]').val();
+
+            var dados = {
+                'data_inicio': data_inicio,
+                'data_fim': data_fim,
+            };
+
+            $.ajax({
+                url: '{{route('seracademico.ouvidoria.graficos.subassuntoAjax')}}',
+                type: 'POST',
+                dataType: 'JSON',
+                data: dados,
+                success: function (json) {
+                    grafico(json)
+                }
+            });
+
+        });
+
+        function grafico (json) {
+            $(function () {
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: 'Quantidade de demandas por subassunto'
+                    },
+                    xAxis: {
+                        categories: json[0],
+                        title: {
+                            text: null
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Subassunto',
+                            align: 'high'
+                        },
+                        labels: {
+                            overflow: 'justify'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Quantidade',
+                        data: json[1]
+                    }]
+                });
+            });
+        }
     </script>
 @stop

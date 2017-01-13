@@ -2,8 +2,8 @@
 
 namespace Seracademico\Services;
 
-use Seracademico\Repositories\SubassuntoRepository;
-use Seracademico\Entities\Subassunto;
+use Seracademico\Repositories\Ouvidoria\SubassuntoRepository;
+use Seracademico\Entities\Ouvidoria\Subassunto;
 //use Carbon\Carbon;
 
 class SubassuntoService
@@ -67,8 +67,7 @@ class SubassuntoService
     {
         #Atualizando no banco de dados
         $subassunto = $this->repository->update($data, $id);
-
-
+        
         #Verificando se foi atualizado no banco de dados
         if(!$subassunto) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');

@@ -102,7 +102,7 @@ class DemandaService
         ];
 
         #Recuperando o registro no banco de dados
-        $demanda = $this->repository->with($relacionamentos)->all();
+        $demanda = $this->repository->with($relacionamentos)->wh();
 
         #Verificando se o registro foi encontrado
         if(!$demanda) {
