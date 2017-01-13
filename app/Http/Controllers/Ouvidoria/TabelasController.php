@@ -129,13 +129,17 @@ class TabelasController extends Controller
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->where('ouv_assunto.id', '=', $assuntoId)->select(['ouv_subassunto.nome', 'ouv_subassunto.id'])->get();
 
+        #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->where('ouv_assunto.id', '=', $assuntoId)
-            ->groupBy('ouv_demanda.subassunto_id')
+            ->groupBy('ouv_demanda.subassunto_id', 'ouv_informacao.id')
             ->select([
-                'ouv_subassunto.id as subassunto',
+                'ouv_informacao.nome as info',
+                'ouv_subassunto.nome as subassunto',
+                'ouv_subassunto.id as subassunto_id',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
@@ -144,8 +148,31 @@ class TabelasController extends Controller
         }
 
         $rows = $rows->get();
+
+        $array = [];
+        $arraySubassunto = [];
+        $count = 0;
+        $totalDemandas = 0;
+
+        foreach ($rows as $row) {
+            if(in_array($row->subassunto, $arraySubassunto)) {
+                continue;
+            }
+            $array[$count]['subassunto'] = $row->subassunto;
+            $arraySubassunto[$count]  = $row->subassunto;
+            $totalGeral = 0;
+            foreach ($rows as $row2) {
+                if($row2->subassunto_id == $row->subassunto_id) {
+                    $array[$count][$row2->info] = $row2->qtd;
+                    $totalGeral += $row2->qtd;
+                }
+            }
+            $array[$count]['totalGeral'] = $totalGeral;
+            $totalDemandas += $totalGeral;
+            $count++;
+        }
         
-        return view('ouvidoria.tabelas.assuntos', compact('assuntos', 'assuntosFirst','subassuntos', 'rows'), ['request' => $request]);
+        return view('ouvidoria.tabelas.assuntos', compact('assuntos', 'assuntosFirst','subassuntos', 'array', 'totalDemandas'), ['request' => $request]);
     }
 
     /**
