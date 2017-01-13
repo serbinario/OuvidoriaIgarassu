@@ -5,6 +5,7 @@ namespace Seracademico\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Seracademico\Http\Requests;
+use Seracademico\Repositories\PsfRepository;
 use Seracademico\Services\PsfService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -29,13 +30,19 @@ class PsfController extends Controller
     private $loadFields = [];
 
     /**
+     * @var PsfRepository
+     */
+    private $repository;
+
+    /**
     * @param PsfService $service
     * @param PsfValidator $validator
     */
-    public function __construct(PsfService $service, PsfValidator $validator)
+    public function __construct(PsfService $service, PsfValidator $validator, PsfRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
+        $this->repository = $repository;
     }
 
     /**
@@ -56,7 +63,18 @@ class PsfController extends Controller
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+            # Recuperando a psf
+            $psf = $this->repository->find($row->id);
+
+            # Html de edição
+            $html = '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            # Verificando a possibilidade de exclusão
+            if(count($psf->comunidades) == 0) {
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-delete"></i> Remover</a>';
+            }
+
+            return $html;
         })->make(true);
     }
 
@@ -142,6 +160,23 @@ class PsfController extends Controller
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         } catch (\Throwable $e) { dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function destroy($id)
+    {
+        try {
+            # Removendo o registro
+            $this->repository->delete($id);
+
+            #retorno para view
+            return redirect()->back()->with("message", "Exclusão realizada com sucesso!");
+        } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }
     }

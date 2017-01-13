@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
+use Seracademico\Repositories\Ouvidoria\ComunidadeRepository;
 use Seracademico\Services\Ouvidoria\ComunidadeService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -25,6 +26,11 @@ class ComunidadeController extends Controller
     private $validator;
 
     /**
+     * @var ComunidadeRepository
+     */
+    private $repository;
+
+    /**
     * @var array
     */
     private $loadFields = [
@@ -35,10 +41,11 @@ class ComunidadeController extends Controller
     * @param ComunidadeService $service
     * @param ComunidadeValidator $validator
     */
-    public function __construct(ComunidadeService $service, ComunidadeValidator $validator)
+    public function __construct(ComunidadeService $service, ComunidadeValidator $validator, ComunidadeRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
+        $this->repository = $repository;
     }
 
     /**
@@ -56,7 +63,7 @@ class ComunidadeController extends Controller
     {
         #Criando a consulta
         $rows = \DB::table('ouv_comunidade')
-            ->join('psf', 'psf.id', '=', 'ouv_comunidade.psf_id')
+            ->leftJoin('psf', 'psf.id', '=', 'ouv_comunidade.psf_id')
             ->select([
                 'ouv_comunidade.id',
                 'ouv_comunidade.nome',
@@ -65,7 +72,18 @@ class ComunidadeController extends Controller
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+            # Recuperando a comunidade
+            $comunidade = $this->repository->find($row->id);
+
+            # Html de edição
+            $html = '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            # Verificando a possibilidade de exclusão
+            if(count($comunidade->demandas) == 0) {
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-delete"></i> Remover</a>';
+            }
+
+            return $html;
         })->make(true);
     }
 
@@ -155,4 +173,20 @@ class ComunidadeController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function destroy($id)
+    {
+        try {
+            # Removendo o registro
+            $this->repository->delete($id);
+
+            #retorno para view
+            return redirect()->back()->with("message", "Exclusão realizada com sucesso!");
+        } catch (\Throwable $e) {dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
 }

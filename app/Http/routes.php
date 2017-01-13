@@ -112,6 +112,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('store', ['as' => 'store', 'uses' => 'PsfController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'PsfController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'PsfController@update']);
+                Route::get('destroy/{id}', ['as' => 'edit', 'uses' => 'PsfController@destroy']);
             });
 
             Route::group(['prefix' => 'comunidade', 'as' => 'comunidade.'], function () {
@@ -121,6 +122,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\ComunidadeController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\ComunidadeController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\ComunidadeController@update']);
+                Route::get('destroy/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\ComunidadeController@destroy']);
             });
         });
 
