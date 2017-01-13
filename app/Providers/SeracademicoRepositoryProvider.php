@@ -127,5 +127,16 @@ class SeracademicoRepositoryProvider extends ServiceProvider
 			\Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository::class,
 			\Seracademico\Repositories\Ouvidoria\EncaminhamentoRepositoryEloquent::class
 		);
+
+		$this->app->bind(
+			\Seracademico\Repositories\PsfRepository::class,
+			\Seracademico\Repositories\PsfRepositoryEloquent::class
+		);
+
+        $this->app->bind(
+            \Seracademico\Repositories\Ouvidoria\ComunidadeRepository::class,
+            \Seracademico\Repositories\Ouvidoria\ComunidadeRepositoryEloquent::class
+        );
+		
 	}
 }

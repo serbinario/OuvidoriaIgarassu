@@ -14,6 +14,7 @@ class Comunidade extends Model implements Transformable
 
     protected $fillable = [ 
 		'nome',
+        'psf_id'
 	];
 
 }

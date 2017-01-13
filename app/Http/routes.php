@@ -104,6 +104,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('melhorias', ['as' => 'melhorias', 'uses' => 'Ouvidoria\GraficosController@melhorias']);
                 Route::post('melhoriasAjax', ['as' => 'melhoriasAjax', 'uses' => 'Ouvidoria\GraficosController@melhoriasAjax']);
             });
+
+            Route::group(['prefix' => 'psf', 'as' => 'psf.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'PsfController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'PsfController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'PsfController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'PsfController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'PsfController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'PsfController@update']);
+            });
+
+            Route::group(['prefix' => 'comunidade', 'as' => 'comunidade.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'Ouvidoria\ComunidadeController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'Ouvidoria\ComunidadeController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'Ouvidoria\ComunidadeController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\ComunidadeController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\ComunidadeController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\ComunidadeController@update']);
+            });
         });
 
         //Rotas para componentes de segurança

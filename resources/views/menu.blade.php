@@ -69,6 +69,8 @@
                     <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Cadastros</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.psf.index') }}"><i class="material-icons">perm_identity</i> PSF</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.comunidade.index') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.assunto.index') }}"><i class="material-icons">perm_identity</i> Assunto</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.subassunto.index') }}"><i class="material-icons">perm_identity</i> Subassunto</a></li>
                     </ul>
@@ -149,7 +151,7 @@
                                 @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                                     <li>
                                         <a rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
-                                            {{{ $properties['native'] }}}
+                                            {{ $properties['native'] }}}
                                         </a>
                                     </li>
                                 @endforeach
