@@ -14,6 +14,11 @@ class Comunidade extends Model implements Transformable
 
     protected $fillable = [ 
 		'nome',
+        'psf_id'
 	];
-
+    
+    public function demandas()
+    {
+        return $this->hasMany(Demanda::class, 'comunidade_id');
+    }
 }
