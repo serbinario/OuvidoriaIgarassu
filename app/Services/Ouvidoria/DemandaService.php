@@ -370,4 +370,23 @@ class DemandaService
         return $newCod2;
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
+    public function destroy(int $id)
+    {
+        #deletando o curso
+        $result = $this->repository->delete($id);
+
+        # Verificando se a execução foi bem sucessida
+        if(!$result) {
+            throw new \Exception('Ocorreu um erro ao tentar remover o curso!');
+        }
+
+        #retorno
+        return true;
+    }
+
 }

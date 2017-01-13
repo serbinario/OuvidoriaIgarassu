@@ -22,7 +22,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\DemandaController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\DemandaController@update']);
-                Route::get('delete/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@delete']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Ouvidoria\DemandaController@destroy']);
                 Route::get('registro/{id}', ['as' => 'registro', 'uses' => 'Ouvidoria\DemandaController@registro']);
                 Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
                 Route::get('cartaEcaminhamento/{id}', ['as' => 'cartaEcaminhamento', 'uses' => 'Ouvidoria\DemandaController@cartaEcaminhamento']);
@@ -36,6 +36,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('store', ['as' => 'store', 'uses' => 'AssuntoController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'AssuntoController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'AssuntoController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'AssuntoController@destroy']);
             });
 
             Route::group(['prefix' => 'subassunto', 'as' => 'subassunto.'], function () {
@@ -45,6 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('store', ['as' => 'store', 'uses' => 'SubassuntoController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SubassuntoController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'SubassuntoController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'SubassuntoController@destroy']);
             });
 
             Route::group(['prefix' => 'report', 'as' => 'report.'], function () {

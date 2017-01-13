@@ -100,6 +100,7 @@ class DemandaController extends Controller
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
+            ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->select('ouv_demanda.id',
                 'ouv_demanda.nome',
                 'ouv_informacao.nome as informacao',
@@ -109,10 +110,10 @@ class DemandaController extends Controller
                 'ouv_exclusividade_sus.nome as exclusividade',
                 'ouv_demanda.relato',
                 'ouv_demanda.endereco',
-                'ouv_demanda.minicipio',
                 'ouv_demanda.fone',
                 'ouv_assunto.nome as assunto',
                 'ouv_melhorias.nome as melhoria',
+                'ouv_comunidade.nome as comunidade',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data')
             );
@@ -124,10 +125,17 @@ class DemandaController extends Controller
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
 
+            # Recuperando a calendario
+            $demanda = $this->repository->find($row->id);
+            
             $html = '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a> ';
             $html .= '<a href="registro/'.$row->id.'" class="btn btn-xs btn-success" target="__blanck"><i class="fa fa-edit"></i> Registro</a>';
             $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck"><i class="fa fa-edit"></i> Documento</a>';
 
+            if(count($demanda->encaminhamento) == 0) {
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
+            }
+            
             return $html;
         })->make(true);
     }
@@ -455,5 +463,22 @@ class DemandaController extends Controller
         
         return \PDF::loadView('ouvidoria.reports.reportComunidade', ['demandas' =>  $rows->get()])->setOrientation('landscape')->stream();
     }
-    
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            #Executando a ação
+            $this->service->destroy($id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Remoção realizada com sucesso!");
+        } catch (\Throwable $e) {
+            dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
 }

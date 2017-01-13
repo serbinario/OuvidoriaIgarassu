@@ -52,14 +52,6 @@
                                     {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
                                 </div>
                             </div>
-                            @if(isset($model->id))
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('minicipio', 'Comunidade') !!}
-                                        {!! Form::text('minicipio', Session::getOldInput('minicipio')  , array('class' => 'form-control')) !!}
-                                    </div>
-                                </div>
-                            @endif
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('comunidade_id', 'Comunidade') !!}

@@ -15,5 +15,12 @@ class Assunto extends Model implements Transformable
     protected $fillable = [ 
 		'nome',
 	];
-
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function subassuntos()
+    {
+        return $this->hasMany(Subassunto::class, 'assunto_id');
+    }
 }

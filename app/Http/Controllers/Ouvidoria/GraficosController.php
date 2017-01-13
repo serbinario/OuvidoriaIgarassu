@@ -445,6 +445,12 @@ class GraficosController extends Controller
     public function informacaoAjax(Request $request)
     {
 
+        $dados = $request->request->all();
+
+        //Tratando as datas
+        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
+        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
@@ -452,7 +458,13 @@ class GraficosController extends Controller
             ->select([
                 'ouv_informacao.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
-            ])->get();
+            ]);
+
+        if($dataIni && $dataFim) {
+            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        $rows = $rows->get();
 
         $dados = [];
 
@@ -480,6 +492,12 @@ class GraficosController extends Controller
     public function statusAjax(Request $request)
     {
 
+        $dados = $request->request->all();
+
+        //Tratando as datas
+        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
+        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_situacao', 'ouv_situacao.id', "=", "ouv_demanda.situacao_id")
@@ -487,7 +505,13 @@ class GraficosController extends Controller
             ->select([
                 'ouv_situacao.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
-            ])->get();
+            ]);
+
+        if($dataIni && $dataFim) {
+            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        $rows = $rows->get();
 
         $dados = [];
 
@@ -514,6 +538,12 @@ class GraficosController extends Controller
     public function melhoriaAjax(Request $request)
     {
 
+        $dados = $request->request->all();
+
+        //Tratando as datas
+        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
+        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
@@ -523,7 +553,13 @@ class GraficosController extends Controller
             ->select([
                 'ouv_informacao.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
-            ])->get();
+            ]);
+
+        if($dataIni && $dataFim) {
+            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        $rows = $rows->get();
 
         $dados = [];
 
@@ -551,6 +587,12 @@ class GraficosController extends Controller
     public function melhoriasAjax(Request $request)
     {
 
+        $dados = $request->request->all();
+
+        //Tratando as datas
+        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
+        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', "=", "ouv_demanda.melhoria_id")
@@ -558,7 +600,13 @@ class GraficosController extends Controller
             ->select([
                 'ouv_melhorias.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
-            ])->get();
+            ]);
+
+        if($dataIni && $dataFim) {
+            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        $rows = $rows->get();
 
         $dados = [];
 
