@@ -136,6 +136,53 @@ class GraficosController extends Controller
     /**
      * @return mixed
      */
+    public function demandasView()
+    {
+        return view('ouvidoria.graficos.chartDemandasView');
+    }
+
+    /**
+     * @return string
+     */
+    public function demandasAjax(Request $request)
+    {
+
+        $dados = $request->request->all();
+
+        //Tratando as datas
+        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
+        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->select([
+                \DB::raw('month(ouv_demanda.data) as mes'),
+                \DB::raw('year(ouv_demanda.data) as ano'),
+                \DB::raw('CONCAT(DATE_FORMAT(ouv_demanda.data,"%m"), "/", DATE_FORMAT(ouv_demanda.data,"%Y")) as legenda'),
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])
+            ->groupBy('mes', 'ano');
+
+        if($dataIni && $dataFim) {
+            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        $rows = $rows->get();
+
+        $nomes = [];
+        $data = [];
+
+        foreach ($rows as $row) {
+            $nomes[] = $row->legenda;
+            $data[] = $row->qtd;
+        }
+
+        return response()->json([$nomes,$data]);
+    }
+
+    /**
+     * @return mixed
+     */
     public function subassunto()
     {
         return view('ouvidoria.graficos.chartSubassunto');

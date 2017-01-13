@@ -111,6 +111,7 @@
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias') }}" ><i class="material-icons">perm_identity</i> Melhorias</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria') }}" ><i class="material-icons">perm_identity</i> Recla. x Melhoria</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView') }}" ><i class="material-icons">perm_identity</i> Demandas</a></li>
                     </ul>
                 </li>
                @endrole
