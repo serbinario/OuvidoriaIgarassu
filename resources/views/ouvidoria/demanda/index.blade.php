@@ -61,6 +61,28 @@
             @endif
 
             <div class="row">
+                {!! Form::open(['method' => "POST"]) !!}
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <?php $data = new \DateTime('now') ?>
+                            {!! Form::label('data_inicio', 'Início') !!}
+                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::label('data_fim', 'Fim') !!}
+                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" style="margin-top: 22px" id="search" class="btn-primary btn input-sm">Consultar</button>
+                    </div>
+                </div>
+                {!! Form::close() !!}
+            </div><br />
+            <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <table id="demanda-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
@@ -73,7 +95,7 @@
                                 <th>Endereço</th>
                                 <th>Comunidade</th>
                                 <th>Telefone</th>
-                                <th>Caracteristica da demanda</th>
+                                <th>Caract. da demanda</th>
                                 <th>Meio de registro</th>
                                 <th>Assunto</th>
                                 <th>Melhoria</th>
@@ -90,7 +112,7 @@
                                 <th>Endereço</th>
                                 <th>Comunidade</th>
                                 <th>Telefone</th>
-                                <th>Caracteristica da demanda</th>
+                                <th>Caract da demanda</th>
                                 <th>Meio de registro</th>
                                 <th>Assunto</th>
                                 <th>Melhoria</th>
@@ -126,7 +148,11 @@
                 order: [[ 1, "asc" ]],
                 ajax: {
                     url: "{!! route('seracademico.ouvidoria.demanda.grid') !!}",
-                    method: 'POST'
+                    method: 'POST',
+                    data: function (d) {
+                        d.data_inicio = $('input[name=data_inicio]').val();
+                        d.data_fim = $('input[name=data_fim]').val();
+                    }
                 },
                 columns: [
                     {
@@ -139,10 +165,7 @@
                     {data: 'codigo', name: 'ouv_demanda.codigo'},
                     {data: 'nome', name: 'ouv_demanda.nome'},
                     {data: 'endereco', name: 'ouv_demanda.endereco'},
-                    {data: 'minicipio', name: 'ouv_demanda.minicipio'},
-                    /*
-                    {data: 'comunidade', name: 'ouv_demanda.comunidade'},
-                    */
+                    {data: 'comunidade', name: 'ouv_comunidade.nome'},
                     {data: 'fone', name: 'ouv_demanda.fone'},
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
@@ -151,6 +174,12 @@
                     {data: 'situacao', name: 'ouv_situacao.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
+            });
+
+            //Função do submit do search da grid principal
+            $('#search').click(function(e) {
+                table.draw();
+                e.preventDefault();
             });
 
             // Add event listener for opening and closing details

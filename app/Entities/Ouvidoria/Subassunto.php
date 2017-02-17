@@ -25,4 +25,12 @@ class Subassunto extends Model implements Transformable
         return $this->belongsTo(Assunto::class, 'assunto_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function demandas()
+    {
+        return $this->hasMany(Demanda::class, 'subassunto_id');
+    }
+    
 }

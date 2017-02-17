@@ -102,7 +102,7 @@ class DemandaService
         ];
 
         #Recuperando o registro no banco de dados
-        $demanda = $this->repository->with($relacionamentos)->all();
+        $demanda = $this->repository->with($relacionamentos)->wh();
 
         #Verificando se o registro foi encontrado
         if(!$demanda) {
@@ -367,6 +367,25 @@ class DemandaService
         $newCod2 = str_pad($newCod2,8,"0",STR_PAD_LEFT);
 
         return $newCod2;
+    }
+
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
+    public function destroy(int $id)
+    {
+        #deletando o curso
+        $result = $this->repository->delete($id);
+
+        # Verificando se a execução foi bem sucessida
+        if(!$result) {
+            throw new \Exception('Ocorreu um erro ao tentar remover o curso!');
+        }
+
+        #retorno
+        return true;
     }
 
 }

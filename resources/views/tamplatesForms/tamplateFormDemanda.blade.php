@@ -55,16 +55,6 @@
                                     {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
                                 </div>
                             </div>
-                            {{--O campo só aparece em edit, com a condição de que exista $model presente na página.
-                            @if(isset($model->id))
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        {!! Form::label('minicipio', 'Comunidade') !!}
-                                        {!! Form::text('minicipio', Session::getOldInput('minicipio')  , array('class' => 'form-control')) !!}
-                                    </div>
-                                </div>
-                            @endif
-                            Removido por Felipe 12-01-2017--}}
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('comunidade_id', 'Comunidade') !!}

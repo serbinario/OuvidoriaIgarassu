@@ -22,15 +22,36 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\DemandaController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\DemandaController@update']);
-                Route::get('delete/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\DemandaController@delete']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Ouvidoria\DemandaController@destroy']);
                 Route::get('registro/{id}', ['as' => 'registro', 'uses' => 'Ouvidoria\DemandaController@registro']);
                 Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
                 Route::get('cartaEcaminhamento/{id}', ['as' => 'cartaEcaminhamento', 'uses' => 'Ouvidoria\DemandaController@cartaEcaminhamento']);
                 Route::post('situacaoAjax', ['as' => 'situacaoAjax', 'uses' => 'Ouvidoria\DemandaController@situacaoAjax']);
             });
 
+            Route::group(['prefix' => 'assunto', 'as' => 'assunto.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'AssuntoController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'AssuntoController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'AssuntoController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'AssuntoController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'AssuntoController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'AssuntoController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'AssuntoController@destroy']);
+            });
+
+            Route::group(['prefix' => 'subassunto', 'as' => 'subassunto.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'SubassuntoController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'SubassuntoController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'SubassuntoController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'SubassuntoController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SubassuntoController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'SubassuntoController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'SubassuntoController@destroy']);
+            });
+
             Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
-                Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
+                Route::get('viewReportPessoas', ['as' => 'viewReportPessoas', 'uses' => 'Ouvidoria\DemandaController@viewReportPessoas']);
+                Route::post('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
                 Route::get('viewReportStatus', ['as' => 'viewReportStatus', 'uses' => 'Ouvidoria\DemandaController@viewReportStatus']);
                 Route::post('reportStatus', ['as' => 'reportStatus', 'uses' => 'Ouvidoria\DemandaController@reportStatus']);
                 Route::get('comunidadeView', ['as' => 'comunidadeView', 'uses' => 'Ouvidoria\DemandaController@comunidadeView']);
@@ -38,13 +59,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             });
 
             Route::group(['prefix' => 'tabelas', 'as' => 'tabelas.'], function () {
-                Route::get('assuntoClassificacao', ['as' => 'assuntoClassificacao', 'uses' => 'Ouvidoria\TabelasController@assuntoClassificacao']);
+                Route::get('viewAssuntoClassificacao', ['as' => 'viewAssuntoClassificacao', 'uses' => 'Ouvidoria\TabelasController@viewAssuntoClassificacao']);
+                Route::post('assuntoClassificacao', ['as' => 'assuntoClassificacao', 'uses' => 'Ouvidoria\TabelasController@assuntoClassificacao']);
                 Route::get('assuntoView', ['as' => 'assuntoView', 'uses' => 'Ouvidoria\TabelasController@assuntoView']);
                 Route::post('assuntos', ['as' => 'assuntos', 'uses' => 'Ouvidoria\TabelasController@assuntos']);
-                Route::get('sexo', ['as' => 'sexo', 'uses' => 'Ouvidoria\TabelasController@sexo']);
-                Route::get('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\TabelasController@escolaridade']);
-                Route::get('melhorias', ['as' => 'melhorias', 'uses' => 'Ouvidoria\TabelasController@melhorias']);
-                Route::get('comunidadeClassificacao', ['as' => 'comunidadeClassificacao', 'uses' => 'Ouvidoria\TabelasController@comunidadeClassificacao']);
+                Route::get('viewSexo', ['as' => 'viewSexo', 'uses' => 'Ouvidoria\TabelasController@viewSexo']);
+                Route::post('sexo', ['as' => 'sexo', 'uses' => 'Ouvidoria\TabelasController@sexo']);
+                Route::get('viewEscolaridade', ['as' => 'viewEscolaridade', 'uses' => 'Ouvidoria\TabelasController@viewEscolaridade']);
+                Route::post('escolaridade', ['as' => 'escolaridade', 'uses' => 'Ouvidoria\TabelasController@escolaridade']);
+                Route::get('viewMelhorias', ['as' => 'viewMelhorias', 'uses' => 'Ouvidoria\TabelasController@viewMelhorias']);
+                Route::post('melhorias', ['as' => 'melhorias', 'uses' => 'Ouvidoria\TabelasController@melhorias']);
+                Route::get('viewComunidadeClassificacao', ['as' => 'viewComunidadeClassificacao', 'uses' => 'Ouvidoria\TabelasController@viewComunidadeClassificacao']);
+                Route::post('comunidadeClassificacao', ['as' => 'comunidadeClassificacao', 'uses' => 'Ouvidoria\TabelasController@comunidadeClassificacao']);
             });
 
             Route::group(['prefix' => 'graficos', 'as' => 'graficos.'], function () {
@@ -68,6 +94,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('escolaridadeAjax', ['as' => 'escolaridadeAjax', 'uses' => 'Ouvidoria\GraficosController@escolaridadeAjax']);
                 Route::get('idade', ['as' => 'idade', 'uses' => 'Ouvidoria\GraficosController@idade']);
                 Route::post('idadeAjax', ['as' => 'idadeAjax', 'uses' => 'Ouvidoria\GraficosController@idadeAjax']);
+                Route::get('demandasView', ['as' => 'demandasView', 'uses' => 'Ouvidoria\GraficosController@demandasView']);
+                Route::post('demandasAjax', ['as' => 'demandasAjax', 'uses' => 'Ouvidoria\GraficosController@demandasAjax']);
 
                 Route::get('atendimento', ['as' => 'atendimento', 'uses' => 'Ouvidoria\GraficosController@atendimento']);
                 Route::post('atendimentoAjax', ['as' => 'atendimentoAjax', 'uses' => 'Ouvidoria\GraficosController@atendimentoAjax']);
@@ -79,6 +107,26 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('melhoriaAjax', ['as' => 'melhoriaAjax', 'uses' => 'Ouvidoria\GraficosController@melhoriaAjax']);
                 Route::get('melhorias', ['as' => 'melhorias', 'uses' => 'Ouvidoria\GraficosController@melhorias']);
                 Route::post('melhoriasAjax', ['as' => 'melhoriasAjax', 'uses' => 'Ouvidoria\GraficosController@melhoriasAjax']);
+            });
+
+            Route::group(['prefix' => 'psf', 'as' => 'psf.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'PsfController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'PsfController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'PsfController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'PsfController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'PsfController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'PsfController@update']);
+                Route::get('destroy/{id}', ['as' => 'edit', 'uses' => 'PsfController@destroy']);
+            });
+
+            Route::group(['prefix' => 'comunidade', 'as' => 'comunidade.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'Ouvidoria\ComunidadeController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'Ouvidoria\ComunidadeController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'Ouvidoria\ComunidadeController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'Ouvidoria\ComunidadeController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\ComunidadeController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\ComunidadeController@update']);
+                Route::get('destroy/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\ComunidadeController@destroy']);
             });
         });
 

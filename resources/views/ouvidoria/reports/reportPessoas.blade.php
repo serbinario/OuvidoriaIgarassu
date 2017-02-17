@@ -33,7 +33,7 @@
             <th>Numeração</th>
             <th>Nome</th>
             <th>Endereço</th>
-            <th>Bairro</th>
+            <th>Comunidade</th>
             <th>Telefone</th>
             <th>Subassunto</th>
         </tr>
@@ -48,9 +48,9 @@
                 </td>
                 <td>{{$demanda->nome}}</td>
                 <td>{{$demanda->endereco}}</td>
-                <td>{{$demanda->minicipio}}</td>
+                <td>{{$demanda->comunidade}}</td>
                 <td>{{$demanda->fone}}</td>
-                <td>@if(isset($demanda->subassunto->nome)) {{$demanda->subassunto->nome}} @endif</td>
+                <td>@if(isset($demanda->subassunto)) {{$demanda->subassunto}} @endif</td>
             </tr>
         @endforeach
     </tbody>

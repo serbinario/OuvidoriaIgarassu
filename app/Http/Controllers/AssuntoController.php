@@ -10,6 +10,7 @@ use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Seracademico\Validators\AssuntoValidator;
+use Seracademico\Repositories\Ouvidoria\AssuntoRepository;
 
 class AssuntoController extends Controller
 {
@@ -24,6 +25,11 @@ class AssuntoController extends Controller
     private $validator;
 
     /**
+     * @var AssuntoRepository
+     */
+    protected $repository;
+
+    /**
     * @var array
     */
     private $loadFields = [];
@@ -32,10 +38,13 @@ class AssuntoController extends Controller
     * @param AssuntoService $service
     * @param AssuntoValidator $validator
     */
-    public function __construct(AssuntoService $service, AssuntoValidator $validator)
+    public function __construct(AssuntoService $service,
+                                AssuntoValidator $validator,
+                                AssuntoRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
+        $this->repository = $repository;
     }
 
     /**
@@ -56,7 +65,19 @@ class AssuntoController extends Controller
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            # Recuperando a calendario
+            $assunto = $this->repository->find($row->id);
+
+            $html = "";
+            $html .= '<a style="margin-right: 5%;" href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            if(count($assunto->subassuntos) == 0) {
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
+            }
+
+            return $html;
+
         })->make(true);
     }
 
@@ -83,7 +104,7 @@ class AssuntoController extends Controller
             $data = $request->all();
 
             #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
+            //$this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
@@ -149,4 +170,21 @@ class AssuntoController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            #Executando a ação
+            $this->service->destroy($id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Remoção realizada com sucesso!");
+        } catch (\Throwable $e) {
+            dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
 }

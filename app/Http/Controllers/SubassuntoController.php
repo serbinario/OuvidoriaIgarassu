@@ -10,6 +10,7 @@ use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Seracademico\Validators\SubassuntoValidator;
+use Seracademico\Repositories\Ouvidoria\SubassuntoRepository;
 
 class SubassuntoController extends Controller
 {
@@ -24,18 +25,28 @@ class SubassuntoController extends Controller
     private $validator;
 
     /**
+     * @var AssuntoRepository
+     */
+    protected $repository;
+
+    /**
     * @var array
     */
-    private $loadFields = [];
+    private $loadFields = [
+        'Ouvidoria\Assunto'
+    ];
 
     /**
     * @param SubassuntoService $service
     * @param SubassuntoValidator $validator
     */
-    public function __construct(SubassuntoService $service, SubassuntoValidator $validator)
+    public function __construct(SubassuntoService $service,
+                                SubassuntoValidator $validator,
+                                SubassuntoRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
+        $this->repository = $repository;
     }
 
     /**
@@ -52,11 +63,29 @@ class SubassuntoController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_subassunto')->select(['id', 'nome']);
+        $rows = \DB::table('ouv_subassunto')
+            ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->select([
+                'ouv_subassunto.id as id',
+                'ouv_subassunto.nome as nome',
+                'ouv_assunto.nome as assunto'
+            ]);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            # Recuperando a calendario
+            $subassunto = $this->repository->find($row->id);
+
+            $html = "";
+            $html .= '<a style="margin-right: 5%;" href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            if(count($subassunto->demandas) == 0) {
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
+            }
+
+            return $html;
+
         })->make(true);
     }
 
@@ -83,7 +112,7 @@ class SubassuntoController extends Controller
             $data = $request->all();
 
             #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
+            //$this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
@@ -149,4 +178,21 @@ class SubassuntoController extends Controller
         }
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            #Executando a ação
+            $this->service->destroy($id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Remoção realizada com sucesso!");
+        } catch (\Throwable $e) {
+            dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
 }

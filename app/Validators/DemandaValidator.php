@@ -7,7 +7,15 @@ use \Prettus\Validator\LaravelValidator;
 
 class DemandaValidator extends LaravelValidator
 {
-    use TraitReplaceRulesValidator;
+	use TraitReplaceRulesValidator;
+
+	protected $attributes = [
+
+	];
+
+	protected $messages = [
+
+	];
 
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
