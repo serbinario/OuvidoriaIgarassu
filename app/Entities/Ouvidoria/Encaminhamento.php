@@ -23,6 +23,8 @@ class Encaminhamento extends Model implements Transformable
 		'demanda_id',
 		'encaminhado',
 		'copia',
+		'data_recebimento',
+		'data_resposta'
 	];
 
 	/**

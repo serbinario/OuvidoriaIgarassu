@@ -35,7 +35,7 @@ class DemandaController extends Controller
     * @var array
     */
     private $loadFields = [
-        'Ouvidoria\Area',
+        'Ouvidoria\Secretaria',
         'Ouvidoria\Anonimo',
         'Ouvidoria\Escolaridade',
         'Ouvidoria\Informacao',
@@ -95,7 +95,7 @@ class DemandaController extends Controller
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
-            ->leftJoin('ouv_situacao', 'ouv_situacao.id', '=', 'ouv_demanda.situacao_id')
+            ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
             ->leftJoin('ouv_exclusividade_sus', 'ouv_exclusividade_sus.id', '=', 'ouv_demanda.exclusividade_sus_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
@@ -106,7 +106,7 @@ class DemandaController extends Controller
                 'ouv_informacao.nome as informacao',
                 'ouv_idade.nome as idade',
                 'ouv_tipo_demanda.nome as tipo_demanda',
-                'ouv_situacao.nome as situacao',
+                'ouv_status.nome as status',
                 'ouv_exclusividade_sus.nome as exclusividade',
                 'ouv_demanda.relato',
                 'ouv_demanda.endereco',

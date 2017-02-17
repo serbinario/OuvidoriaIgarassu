@@ -4,7 +4,7 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title">
             <div class="col-sm-6 col-md-9">
-                <h4><i class="material-icons">find_in_page</i> Cadastrar Demanda</h4>
+                <h4><i class="material-icons">find_in_page</i> Cadastrar Secretaria</h4>
             </div>
             <div class="col-sm-6 col-md-3">
 
@@ -28,9 +28,14 @@
                     @endforeach
                 </div>
             @endif
-            {!! Form::open(['route'=>'seracademico.ouvidoria.demanda.store', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
-                @include('tamplatesForms.tamplateFormDemanda')
+
+            {!! Form::open(['route'=>'seracademico.ouvidoria.secretaria.store', 'method' => "POST", 'id'=> 'formSecretaria' ]) !!}
+                @include('tamplatesForms.tamplateFormSecretaria')
             {!! Form::close() !!}
         </div>
     </div>
+@stop
+
+@section('javascript')
+    <script src="{{ asset('/js/validacoes/validation_form_assunto.js')}}"></script>
 @stop

@@ -2,21 +2,21 @@
 
 namespace Seracademico\Services;
 
-use Seracademico\Repositories\Ouvidoria\SubassuntoRepository;
-use Seracademico\Entities\Ouvidoria\Subassunto;
+use Seracademico\Repositories\Ouvidoria\SecretariaRepository;
+use Seracademico\Entities\Ouvidoria\Secretaria;
 //use Carbon\Carbon;
 
-class SubassuntoService
+class SecretariaService
 {
     /**
-     * @var SubassuntoRepository
+     * @var SecretariaRepository
      */
     private $repository;
 
     /**
-     * @param SubassuntoRepository $repository
+     * @param SecretariaRepository $repository
      */
-    public function __construct(SubassuntoRepository $repository)
+    public function __construct(SecretariaRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -29,33 +29,33 @@ class SubassuntoService
     public function find($id)
     {
         #Recuperando o registro no banco de dados
-        $subassunto = $this->repository->with(['assunto.secretaria'])->find($id);
+        $secretaria = $this->repository->find($id);
 
         #Verificando se o registro foi encontrado
-        if(!$subassunto) {
+        if(!$secretaria) {
             throw new \Exception('Empresa não encontrada!');
         }
 
         #retorno
-        return $subassunto;
+        return $secretaria;
     }
 
     /**
      * @param array $data
      * @return array
      */
-    public function store(array $data) : Subassunto
+    public function store(array $data) : Secretaria
     {
         #Salvando o registro pincipal
-        $subassunto =  $this->repository->create($data);
+        $secretaria =  $this->repository->create($data);
 
         #Verificando se foi criado no banco de dados
-        if(!$subassunto) {
+        if(!$secretaria) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
         #Retorno
-        return $subassunto;
+        return $secretaria;
     }
 
     /**
@@ -63,18 +63,19 @@ class SubassuntoService
      * @param int $id
      * @return mixed
      */
-    public function update(array $data, int $id) : Subassunto
+    public function update(array $data, int $id) : Secretaria
     {
         #Atualizando no banco de dados
-        $subassunto = $this->repository->update($data, $id);
-        
+        $secretaria = $this->repository->update($data, $id);
+
+
         #Verificando se foi atualizado no banco de dados
-        if(!$subassunto) {
+        if(!$secretaria) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
         #Retorno
-        return $subassunto;
+        return $secretaria;
     }
 
     /**

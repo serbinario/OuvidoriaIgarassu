@@ -63,7 +63,7 @@ class DemandaService
             'idade',
             'escolaridade',
             'tipoDemanda',
-            'subassunto.assunto',
+            'subassunto.assunto.secretaria',
             'encaminhamento'
         ];
 
@@ -149,6 +149,7 @@ class DemandaService
             $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
             $data['encaminhamento']['data'] = $data['data'];
             $data['encaminhamento']['demanda_id'] = $demanda->id;
+            $data['encaminhamento']['status_id'] = '1';
 
             $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
         }
@@ -175,7 +176,7 @@ class DemandaService
         #Atualizando no banco de dados
         $demanda = $this->repository->update($data, $id);
 
-        $enc = $this->encaminhamentoRepository->findWhere(['demanda_id' => $demanda->id]);
+        /*$enc = $this->encaminhamentoRepository->findWhere(['demanda_id' => $demanda->id]);
 
         if(count($enc) > 0) {
             $encaminhamento = $this->encaminhamentoRepository->update($data['encaminhamento'], $enc[0]->id);
@@ -193,7 +194,7 @@ class DemandaService
             $data['encaminhamento']['demanda_id'] = $demanda->id;
 
             $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
-        }
+        }*/
 
 
         #Verificando se foi atualizado no banco de dados

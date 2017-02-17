@@ -29,6 +29,26 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('situacaoAjax', ['as' => 'situacaoAjax', 'uses' => 'Ouvidoria\DemandaController@situacaoAjax']);
             });
 
+            Route::group(['prefix' => 'secretaria', 'as' => 'secretaria.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'SecretariasController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'SecretariasController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'SecretariasController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'SecretariasController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SecretariasController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'SecretariasController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'SecretariasController@destroy']);
+            });
+
+            Route::group(['prefix' => 'departamento', 'as' => 'departamento.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'DepartamentosController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'DepartamentosController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'DepartamentosController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'DepartamentosController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'DepartamentosController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'DepartamentosController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'DepartamentosController@destroy']);
+            });
+
             Route::group(['prefix' => 'assunto', 'as' => 'assunto.'], function () {
                 Route::get('index', ['as' => 'index', 'uses' => 'AssuntoController@index']);
                 Route::post('grid', ['as' => 'grid', 'uses' => 'AssuntoController@grid']);
@@ -47,6 +67,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SubassuntoController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'SubassuntoController@update']);
                 Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'SubassuntoController@destroy']);
+            });
+
+            Route::group(['prefix' => 'encaminhamento', 'as' => 'encaminhamento.'], function () {
+                Route::get('encaminhados', ['as' => 'encaminhados', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhados']);
+                Route::post('encaminhadosGrid', ['as' => 'encaminhadosGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhadosGrid']);
+                Route::get('detalheAnalise/{id}', ['as' => 'detalheAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@detalheParaAnaliseDoEncaminhamento']);
+                Route::post('responder', ['as' => 'responder', 'uses' => 'Ouvidoria\EncaminhamentoController@responder']);
+                Route::get('historico/{id}', ['as' => 'historico', 'uses' => 'Ouvidoria\EncaminhamentoController@historicoEncamihamentos']);
+                Route::get('reencaminar/{id}', ['as' => 'reencaminar', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminar']);
+                Route::post('reencaminarStore', ['as' => 'reencaminarStore', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminarStore']);
+                Route::get('encaminhar/{id}', ['as' => 'encaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhar']);
+                Route::post('encaminharStore', ['as' => 'encaminharStore', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminharStore']);
+                Route::get('concluidos', ['as' => 'concluidos', 'uses' => 'Ouvidoria\EncaminhamentoController@concluidos']);
+                Route::post('concluidosGrid', ['as' => 'concluidosGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@concluidosGrid']);
+                Route::get('emAnalise', ['as' => 'emAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@emAnalise']);
+                Route::post('emAnaliseGrid', ['as' => 'emAnaliseGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@emAnaliseGrid']);
+                
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Ouvidoria\EncaminhamentoController@destroy']);
             });
 
             Route::group(['prefix' => 'report', 'as' => 'report.'], function () {

@@ -33,7 +33,8 @@ class SubassuntoController extends Controller
     * @var array
     */
     private $loadFields = [
-        'Ouvidoria\Assunto'
+        'Ouvidoria\Assunto',
+        'Ouvidoria\Secretaria'
     ];
 
     /**
@@ -65,10 +66,12 @@ class SubassuntoController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_subassunto')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
             ->select([
                 'ouv_subassunto.id as id',
                 'ouv_subassunto.nome as nome',
-                'ouv_assunto.nome as assunto'
+                'ouv_assunto.nome as assunto',
+                'ouv_area.nome as area'
             ]);
 
         #Editando a grid

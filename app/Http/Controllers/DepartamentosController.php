@@ -5,27 +5,27 @@ namespace Seracademico\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Seracademico\Http\Requests;
-use Seracademico\Services\AssuntoService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
-use Seracademico\Validators\AssuntoValidator;
-use Seracademico\Repositories\Ouvidoria\AssuntoRepository;
+use Seracademico\Validators\DepartamentoValidator;
+use Seracademico\Repositories\Ouvidoria\DepartamentoRepository;
+use Seracademico\Services\DepartamentoService;
 
-class AssuntoController extends Controller
+class DepartamentosController extends Controller
 {
     /**
-    * @var AssuntoService
+    * @var DepartamentoService
     */
     private $service;
 
     /**
-    * @var AssuntoValidator
+    * @var DepartamentoValidator
     */
     private $validator;
 
     /**
-     * @var AssuntoRepository
+     * @var DepartamentoRepository
      */
     protected $repository;
 
@@ -37,12 +37,14 @@ class AssuntoController extends Controller
     ];
 
     /**
-    * @param AssuntoService $service
-    * @param AssuntoValidator $validator
-    */
-    public function __construct(AssuntoService $service,
-                                AssuntoValidator $validator,
-                                AssuntoRepository $repository)
+     * SecretariasController constructor.
+     * @param DepartamentoService $service
+     * @param DepartamentoValidator $validator
+     * @param DepartamentoRepository $repository
+     */
+    public function __construct(DepartamentoService $service,
+                                DepartamentoValidator $validator,
+                                DepartamentoRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
@@ -54,7 +56,7 @@ class AssuntoController extends Controller
      */
     public function index()
     {
-        return view('assunto.index');
+        return view('departamento.index');
     }
 
     /**
@@ -63,11 +65,11 @@ class AssuntoController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_assunto')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
+        $rows = \DB::table('ouv_destinatario')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->select([
-                'ouv_assunto.id', 
-                'ouv_assunto.nome',
+                'ouv_destinatario.id',
+                'ouv_destinatario.nome',
                 'ouv_area.nome as area'
             ]);
 
@@ -75,12 +77,12 @@ class AssuntoController extends Controller
         return Datatables::of($rows)->addColumn('action', function ($row) {
 
             # Recuperando a calendario
-            $assunto = $this->repository->find($row->id);
+            $departamento = $this->repository->find($row->id);
 
             $html = "";
             $html .= '<a style="margin-right: 5%;" href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
 
-            if(count($assunto->subassuntos) == 0) {
+            if(count($departamento->encaminhamentos) == 0) {
                 $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
             }
 
@@ -98,7 +100,7 @@ class AssuntoController extends Controller
         $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('assunto.create', compact('loadFields'));
+        return view('departamento.create', compact('loadFields'));
     }
 
     /**
@@ -143,7 +145,7 @@ class AssuntoController extends Controller
             $loadFields = $this->service->load($this->loadFields);
 
             #retorno para view
-            return view('assunto.edit', compact('model', 'loadFields'));
+            return view('departamento.edit', compact('model', 'loadFields'));
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }

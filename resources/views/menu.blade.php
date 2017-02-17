@@ -66,11 +66,22 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Encaminhamentos</span> <span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="material-icons">perm_identity</i> Novos</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.emAnalise') }}"><i class="material-icons">perm_identity</i> Em análise</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.concluidos') }}"><i class="material-icons">perm_identity</i> Concluídos</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Cadastros</span> <span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="{{ route('seracademico.ouvidoria.psf.index') }}"><i class="material-icons">perm_identity</i> PSF</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.comunidade.index') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.secretaria.index') }}"><i class="material-icons">perm_identity</i> Secretarias</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.departamento.index') }}"><i class="material-icons">perm_identity</i> Departamentos</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.assunto.index') }}"><i class="material-icons">perm_identity</i> Assunto</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.subassunto.index') }}"><i class="material-icons">perm_identity</i> Subassunto</a></li>
                     </ul>
