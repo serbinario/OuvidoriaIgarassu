@@ -113,6 +113,7 @@ class DemandaController extends Controller
                 'ouv_demanda.fone',
                 'ouv_assunto.nome as assunto',
                 'ouv_melhorias.nome as melhoria',
+                'ouv_comunidade.nome as comunidade',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data')
             );
