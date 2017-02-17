@@ -57,7 +57,7 @@ class CrudGeneratorService
             if(file_exists(app_path().'/Http/Controllers/'.$this->controllerName.'Controller.php')) { $this->output->info('Controller already exists, use --force to overwrite'); return; }
             if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/add.blade.php')) { $this->output->info('Add view already exists, use --force to overwrite'); return; }
             if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/show.blade.php')) { $this->output->info('Show view already exists, use --force to overwrite'); return; }
-            if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/index.blade.php')) { $this->output->info('Index view already exists, use --force to overwrite');  return; }
+            if(file_exists(base_path().'/resources/views/'.$this->viewFolderName.'/encaminhados.blade.php')) { $this->output->info('Index view already exists, use --force to overwrite');  return; }
         }
 
 
@@ -91,7 +91,7 @@ class CrudGeneratorService
         $filegenerator->Generate();
 
         $filegenerator->templateName = 'view.index';
-        $filegenerator->path = base_path().'/resources/views/'.$this->viewFolderName.'/index.blade.php';
+        $filegenerator->path = base_path().'/resources/views/'.$this->viewFolderName.'/encaminhados.blade.php';
         $filegenerator->Generate();
         //###############################################################################
 
@@ -151,7 +151,7 @@ class CrudGeneratorService
     protected function deletePreviousFiles($tablename, $existing_model) {
         $todelete = [
                 app_path().'/Http/Controllers/'.ucfirst($tablename).'Controller.php',
-                base_path().'/resources/views/'.str_plural($tablename).'/index.blade.php',
+                base_path().'/resources/views/'.str_plural($tablename).'/encaminhados.blade.php',
                 base_path().'/resources/views/'.str_plural($tablename).'/add.blade.php',
                 base_path().'/resources/views/'.str_plural($tablename).'/show.blade.php',
             ];

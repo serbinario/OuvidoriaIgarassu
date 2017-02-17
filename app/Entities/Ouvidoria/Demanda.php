@@ -34,7 +34,7 @@ class Demanda extends Model implements Transformable
 		'tipo_demanda_id',
 		'melhorias',
 		'obs',
-		'situacao_id',
+		'status_id',
 		'pessoa_id',
 		'numero_end',
 		'subassunto_id',
@@ -120,7 +120,7 @@ class Demanda extends Model implements Transformable
 	 */
 	public function situacao()
 	{
-		return $this->belongsTo(Situacao::class, 'situacao_id');
+		return $this->belongsTo(Status::class, 'status_id');
 	}
 
 	/**

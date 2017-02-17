@@ -12,9 +12,14 @@ $data = \DateTime::createFromFormat('Y-m-d', $date[0]);
 $dataFromat = $data->format('d/m/Y');
 
 //formatando data
-$dateEncaminhamento = explode('T', $demanda['encaminhamento']['data']);
-$dataEncaminhamento = \DateTime::createFromFormat('Y-m-d', $dateEncaminhamento[0]);
-$dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
+if(isset($demanda['encaminhamento']['data'])) {
+    $dateEncaminhamento = explode('T', $demanda['encaminhamento']['data']);
+    $dataEncaminhamento = \DateTime::createFromFormat('Y-m-d', $dateEncaminhamento[0]);
+    $dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
+} else {
+    $dataEncaminhamentoFormat = "";
+}
+
 
 ?>
 <html>
@@ -111,17 +116,9 @@ $dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
 
     <h4>5. COMENTÁRIO/PARECER</h4>
     <p class="text" style="text-align: justify">Encaminhamos Manifestação para análise e providências cabíveis</p>
-    {{--<p class="text" style="text-align: justify">{{$demanda['encaminhamento']['parecer']}}</p>--}}
 
     <h4>6. RESPOSTA</h4>
     <p class="text" style="text-align: justify">{{$demanda['encaminhamento']['resposta']}}</p>
-
-    {{--<h4>4. Dados da demanda</h4>--}}
-    {{--<p class="text" style="text-align: justify">{{$demanda['melhorias']}}</p>--}}
-
-
-    {{--<h4>4. Observações</h4>
-    <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>--}}
 </div>
 
 <center>

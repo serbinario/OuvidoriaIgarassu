@@ -5,44 +5,44 @@ namespace Seracademico\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Seracademico\Http\Requests;
-use Seracademico\Services\AssuntoService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
-use Seracademico\Validators\AssuntoValidator;
-use Seracademico\Repositories\Ouvidoria\AssuntoRepository;
+use Seracademico\Validators\SecretariaValidator;
+use Seracademico\Repositories\Ouvidoria\SecretariaRepository;
+use Seracademico\Services\SecretariaService;
 
-class AssuntoController extends Controller
+class SecretariasController extends Controller
 {
     /**
-    * @var AssuntoService
+    * @var SecretariaService
     */
     private $service;
 
     /**
-    * @var AssuntoValidator
+    * @var SecretariaValidator
     */
     private $validator;
 
     /**
-     * @var AssuntoRepository
+     * @var SecretariaRepository
      */
     protected $repository;
 
     /**
     * @var array
     */
-    private $loadFields = [
-        'Ouvidoria\Secretaria'
-    ];
+    private $loadFields = [];
 
     /**
-    * @param AssuntoService $service
-    * @param AssuntoValidator $validator
-    */
-    public function __construct(AssuntoService $service,
-                                AssuntoValidator $validator,
-                                AssuntoRepository $repository)
+     * SecretariasController constructor.
+     * @param SecretariaService $service
+     * @param SecretariaValidator $validator
+     * @param SecretariaRepository $repository
+     */
+    public function __construct(SecretariaService $service,
+                                SecretariaValidator $validator,
+                                SecretariaRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
@@ -54,7 +54,7 @@ class AssuntoController extends Controller
      */
     public function index()
     {
-        return view('assunto.index');
+        return view('secretaria.index');
     }
 
     /**
@@ -63,24 +63,18 @@ class AssuntoController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_assunto')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
-            ->select([
-                'ouv_assunto.id', 
-                'ouv_assunto.nome',
-                'ouv_area.nome as area'
-            ]);
+        $rows = \DB::table('ouv_area')->select(['id', 'nome']);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
 
             # Recuperando a calendario
-            $assunto = $this->repository->find($row->id);
+            $secretaria = $this->repository->find($row->id);
 
             $html = "";
             $html .= '<a style="margin-right: 5%;" href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
 
-            if(count($assunto->subassuntos) == 0) {
+            if(count($secretaria->assuntos) == 0 && count($secretaria->departamentos) == 0 && count($secretaria->demandas) == 0) {
                 $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
             }
 
@@ -98,7 +92,7 @@ class AssuntoController extends Controller
         $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('assunto.create', compact('loadFields'));
+        return view('secretaria.create', compact('loadFields'));
     }
 
     /**
@@ -143,7 +137,7 @@ class AssuntoController extends Controller
             $loadFields = $this->service->load($this->loadFields);
 
             #retorno para view
-            return view('assunto.edit', compact('model', 'loadFields'));
+            return view('secretaria.edit', compact('model', 'loadFields'));
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }

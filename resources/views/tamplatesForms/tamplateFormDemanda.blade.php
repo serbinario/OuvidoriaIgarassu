@@ -11,7 +11,9 @@
                     <li role="presentation" class="active"><a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados Principais</a></li>
                     <li role="presentation"><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Perfil</a></li>
                     <li role="presentation"><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outras informações</a></li>
-                    <li role="presentation"><a href="#encaminhamento" aria-controls="encaminhamento" role="tab" data-toggle="tab">Encaminhamento</a></li>
+                    @if(!isset($model))
+                        <li role="presentation"><a href="#encaminhamento" aria-controls="encaminhamento" role="tab" data-toggle="tab">Encaminhamento</a></li>
+                    @endif
                 </ul>
 
                 <!-- Tab panes -->
@@ -85,14 +87,14 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('area_id', 'Área') !!}
-                                    {!! Form::select('area_id', $loadFields['ouvidoria\area'], Session::getOldInput('area_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::label('pessoa_id', 'Perfil') !!}
+                                    {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('situacao_id', 'Status') !!}
-                                    {!! Form::select('situacao_id', (["" => "Selecione"] + $loadFields['ouvidoria\situacao']->toArray()), Session::getOldInput('situacao_id'), array('class' => 'form-control', 'id' => 'situacao')) !!}
+                                    {!! Form::label('status_id', 'Status') !!}
+                                    {!! Form::select('status_id', (["" => "Selecione"] + $loadFields['ouvidoria\status']->toArray()), Session::getOldInput('status_id'), array('class' => 'form-control', 'id' => 'status')) !!}
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -105,17 +107,21 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    {!! Form::label('pessoa_id', 'Perfil') !!}
-                                    {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
+                                    {!! Form::label('area_id', 'Área') !!}
+                                    @if(isset($model->subassunto->assunto->secretaria->id))
+                                        {!! Form::select('area_id', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), $model->subassunto->assunto->secretaria->id, array('class' => 'form-control')) !!}
+                                    @else
+                                        {!! Form::select('area_id', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('area_id'), array('class' => 'form-control')) !!}
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('assunto_id', 'Assunto ') !!}
                                     @if(isset($model->subassunto->assunto->id))
-                                        {!! Form::select('assunto_id', (["" => "Selecione"] + $loadFields['ouvidoria\assunto']->toArray()), $model->subassunto->assunto->id, array('class' => 'form-control')) !!}
+                                        {!! Form::select('assunto_id', array($model->subassunto->assunto->id => $model->subassunto->assunto->nome), $model->subassunto->assunto->id, array('class' => 'form-control')) !!}
                                     @else
-                                        {!! Form::select('assunto_id', (["" => "Selecione"] + $loadFields['ouvidoria\assunto']->toArray()), Session::getOldInput('assunto_id'), array('class' => 'form-control')) !!}
+                                        {!! Form::select('assunto_id', array(), Session::getOldInput('assunto_id'), array('class' => 'form-control')) !!}
                                     @endif
                                 </div>
                             </div>
@@ -197,59 +203,67 @@
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="encaminhamento">
-                        <br />
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    {!! Form::label('destinatario_id', 'Destino') !!}
-                                    {!! Form::select('encaminhamento[destinatario_id]', (["" => "Selecione"] + $loadFields['ouvidoria\destinatario']->toArray()), Session::getOldInput('destinatario_id'), array('class' => 'form-control')) !!}
+                    @if(!isset($model))
+                        <div role="tabpanel" class="tab-pane" id="encaminhamento">
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('secretaria', 'Secretaria') !!}
+                                        {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('destinatario_id', 'Destino') !!}
+                                        {!! Form::select('encaminhamento[destinatario_id]', array(), Session::getOldInput('destinatario_id'), array('class' => 'form-control', 'id' => 'destinatario_id')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('prioridade_id', 'Prioridade') !!}
+                                        {!! Form::select('encaminhamento[prioridade_id]',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                {{--<div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::label('status_id', 'Status') !!}
+                                        {!! Form::select('encaminhamento[status_id]', (["" => "Selecione"] + $loadFields['ouvidoria\status']->toArray()), Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
+                                    </div>
+                                </div>--}}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        {!! Form::label('encaminhado', 'Documento encaminhado') !!}
+                                        {!! Form::text('encaminhamento[encaminhado]', Session::getOldInput('encaminhamento[encaminhado]')  , array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::label('copia', 'Cópia Para') !!}
+                                        {!! Form::text('encaminhamento[copia]', Session::getOldInput('encaminhamento[copia]')  , array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('prioridade_id', 'Prioridade') !!}
-                                    {!! Form::select('encaminhamento[prioridade_id]',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        {!! Form::label('parecer', 'Comentário/Parecer') !!}
+                                        {!! Form::textarea('encaminhamento[parecer]', Session::getOldInput('encaminhamento[parecer]')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('status_id', 'Status') !!}
-                                    {!! Form::select('encaminhamento[status_id]', (["" => "Selecione"] + $loadFields['ouvidoria\status']->toArray()), Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
+                            {{--<div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        {!! Form::label('resposta', 'Resposta') !!}
+                                        {!! Form::textarea('encaminhamento[resposta]', Session::getOldInput('encaminhamento[resposta]')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    {!! Form::label('encaminhado', 'Documento encaminhado') !!}
-                                    {!! Form::text('encaminhamento[encaminhado]', Session::getOldInput('encaminhamento[encaminhado]')  , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('copia', 'Cópia Para') !!}
-                                    {!! Form::text('encaminhamento[copia]', Session::getOldInput('encaminhamento[copia]')  , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('parecer', 'Comentário/Parecer') !!}
-                                    {!! Form::textarea('encaminhamento[parecer]', Session::getOldInput('encaminhamento[parecer]')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('resposta', 'Resposta') !!}
-                                    {!! Form::textarea('encaminhamento[resposta]', Session::getOldInput('encaminhamento[resposta]')  ,['size' => '130x5'] , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
 		</div>
@@ -267,3 +281,177 @@
         </div>
 	</div>
 </div>
+@section('javascript')
+    <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#anonimo').on('change', function(){
+                var value = $('#anonimo').val();
+                if(value == '2') {
+                    $('#nome').prop('readonly', true);
+                } else {
+                    $('#nome').prop('readonly', false);
+                }
+            });
+        });
+
+        //Carregando os bairros
+        $(document).on('change', "#assunto_id", function () {
+            //Removendo as Bairros
+            $('#subassunto_id option').remove();
+
+            //Recuperando a cidade
+            var assunto = $(this).val();
+
+            if (assunto !== "") {
+                var dados = {
+                    'table' : 'ouv_subassunto',
+                    'field_search' : 'assunto_id',
+                    'value_search': assunto,
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um subassunto</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#subassunto_id option').remove();
+                    $('#subassunto_id').append(option);
+                });
+            }
+        });
+
+        //Carregando os assuntos
+        $(document).on('change', "#area_id", function () {
+            //Removendo as assuntos
+            $('#assunto_id option').remove();
+
+            //Recuperando a secretaria
+            var secretaria = $(this).val();
+
+            if (secretaria !== "") {
+                var dados = {
+                    'table' : 'ouv_assunto',
+                    'field_search' : 'area_id',
+                    'value_search': secretaria,
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um assunto</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#assunto_id option').remove();
+                    $('#assunto_id').append(option);
+                });
+            }
+        });
+
+        //Carregando os bairros
+        $(document).on('change', "#secretaria", function () {
+            //Removendo as assuntos
+            $('#destinatario_id option').remove();
+
+            //Recuperando a secretaria
+            var secretaria = $(this).val();
+
+            if (secretaria !== "") {
+                var dados = {
+                    'table' : 'ouv_destinatario',
+                    'field_search' : 'area_id',
+                    'value_search': secretaria,
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#destinatario_id option').remove();
+                    $('#destinatario_id').append(option);
+                });
+            }
+        });
+
+
+        //Carregando os bairros
+        /*$(document).on('change', "#encaminhamento", function () {
+
+            //Recuperando a cidade
+            var encaminhamento = $(this).val();
+
+            if (encaminhamento !== "") {
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.ouvidoria.demanda.situacaoAjax')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    datatype: 'json'
+                }).done(function (json) {
+
+                    var option = "";
+
+                    option += '<option value="">Selecione</option>';
+                    for (var i = 0; i < json['situacao'].length; i++) {
+                        if(encaminhamento == '1' && json['situacao'][i]['id'] == 2) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '2' && json['situacao'][i]['id'] == 3) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '3' && json['situacao'][i]['id'] == 6) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '4' && json['situacao'][i]['id'] == 4) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '5' && json['situacao'][i]['id'] == 1) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '6' && json['situacao'][i]['id'] == 7) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else if (encaminhamento == '7' && json['situacao'][i]['id'] == 5) {
+                            option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        } else {
+                            option += '<option value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
+                        }
+
+                    }
+
+                    $('#situacao option').remove();
+                    $('#situacao').append(option);
+                });
+            }
+        });*/
+    </script>
+@stop

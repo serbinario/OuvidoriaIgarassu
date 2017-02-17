@@ -171,7 +171,7 @@
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
                     {data: 'assunto', name: 'ouv_assunto.nome'},
                     {data: 'melhoria', name: 'ouv_melhorias.nome'},
-                    {data: 'situacao', name: 'ouv_situacao.nome'},
+                    {data: 'status', name: 'ouv_status.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

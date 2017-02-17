@@ -137,6 +137,13 @@ class SeracademicoRepositoryProvider extends ServiceProvider
             \Seracademico\Repositories\Ouvidoria\ComunidadeRepository::class,
             \Seracademico\Repositories\Ouvidoria\ComunidadeRepositoryEloquent::class
         );
-		
+
+		$this->app->bind(
+			\Seracademico\Repositories\Ouvidoria\SecretariaRepository::class,
+			\Seracademico\Repositories\Ouvidoria\SecretariaRepositoryEloquent::class);
+
+		$this->app->bind(
+			\Seracademico\Repositories\Ouvidoria\DepartamentoRepository::class,
+			\Seracademico\Repositories\Ouvidoria\DepartamentoRepositoryEloquent::class);
 	}
 }

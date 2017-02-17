@@ -66,12 +66,14 @@
                         <table id="assunto-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
+                                <th>Secretaria</th>
                                 <th>Nome</th>
                                 <th>Acão</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
+                                <th>Secretaria</th>
                                 <th>Nome</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
@@ -97,7 +99,8 @@
                     method: 'POST'
                 },
                 columns: [
-                    {data: 'nome', name: 'nome'},
+                    {data: 'area', name: 'ouv_area.nome'},
+                    {data: 'nome', name: 'ouv_assunto.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

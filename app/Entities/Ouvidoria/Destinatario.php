@@ -14,6 +14,22 @@ class Destinatario extends Model implements Transformable
 
     protected $fillable = [ 
 		'nome',
+        'area_id'
 	];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function encaminhamentos()
+    {
+        return $this->hasMany(Encaminhamento::class, 'destinatario_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function area()
+    {
+        return $this->belongsTo(Secretaria::class, 'area_id');
+    }
 }

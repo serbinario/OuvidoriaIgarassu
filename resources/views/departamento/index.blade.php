@@ -37,10 +37,10 @@
     <div class="ibox float-e-margins">
         <div class="ibox-title">
             <div class="col-sm-6 col-md-9">
-                <h4><i class="material-icons">find_in_page</i> Listar Subassuntos</h4>
+                <h4><i class="material-icons">find_in_page</i> Listar Departamentos</h4>
             </div>
             <div class="col-sm-6 col-md-3">
-                <a href="{{ route('seracademico.ouvidoria.subassunto.create')}}" class="btn-sm btn-primary pull-right">Novo Subassunto</a>
+                <a href="{{ route('seracademico.ouvidoria.departamento.create')}}" class="btn-sm btn-primary pull-right">Novo Departamento</a>
             </div>
         </div>
         <div class="ibox-content">
@@ -63,11 +63,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table id="subassunto-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
+                        <table id="departamento-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
                             <thead>
                             <tr>
                                 <th>Secretaria</th>
-                                <th>Assunto</th>
                                 <th>Nome</th>
                                 <th>Acão</th>
                             </tr>
@@ -75,7 +74,6 @@
                             <tfoot>
                             <tr>
                                 <th>Secretaria</th>
-                                <th>Assunto</th>
                                 <th>Nome</th>
                                 <th style="width: 16%;">Acão</th>
                             </tr>
@@ -92,18 +90,17 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#subassunto-grid').DataTable({
+            var table = $('#departamento-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],
                 ajax: {
-                    url: "{!! route('seracademico.ouvidoria.subassunto.grid') !!}",
+                    url: "{!! route('seracademico.ouvidoria.departamento.grid') !!}",
                     method: 'POST'
                 },
                 columns: [
                     {data: 'area', name: 'ouv_area.nome'},
-                    {data: 'assunto', name: 'ouv_assunto.nome'},
-                    {data: 'nome', name: 'ouv_subassunto.nome'},
+                    {data: 'nome', name: 'ouv_destinatario.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
