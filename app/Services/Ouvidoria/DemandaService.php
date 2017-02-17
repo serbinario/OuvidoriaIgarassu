@@ -118,8 +118,7 @@ class DemandaService
      * @return array
      */
     public function store(array $data) : Demanda
-    {
-
+    { dd($data);
         $data = $this->tratamentoCampos($data);
 
         $dataObj  = new \DateTime('now');

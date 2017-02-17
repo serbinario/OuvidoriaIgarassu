@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Gestão Acadêmica</title>
+    <title>Ouvidoria - Prefeitura de Igarassu</title>
 
     <link href="{{ asset('/css/bootstrap.min.css')}}" rel="stylesheet">
     {{--<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">--}}

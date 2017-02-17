@@ -71,7 +71,7 @@
                                 <th>Nº da demanda</th>
                                 <th>Nome</th>
                                 <th>Endereço</th>
-                                <th>Bairro</th>
+                                <th>Comunidade</th>
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
@@ -88,7 +88,7 @@
                                 <th>Nº da demanda</th>
                                 <th>Nome</th>
                                 <th>Endereço</th>
-                                <th>Bairro</th>
+                                <th>Comunidade</th>
                                 <th>Telefone</th>
                                 <th>Caracteristica da demanda</th>
                                 <th>Meio de registro</th>
@@ -140,6 +140,9 @@
                     {data: 'nome', name: 'ouv_demanda.nome'},
                     {data: 'endereco', name: 'ouv_demanda.endereco'},
                     {data: 'minicipio', name: 'ouv_demanda.minicipio'},
+                    /*
+                    {data: 'comunidade', name: 'ouv_demanda.comunidade'},
+                    */
                     {data: 'fone', name: 'ouv_demanda.fone'},
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},

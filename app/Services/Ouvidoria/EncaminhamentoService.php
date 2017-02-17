@@ -45,7 +45,7 @@ class EncaminhamentoService
      * @return array
      */
     public function store(array $data) : Encaminhamento
-    {
+    { dd($data);
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
 
