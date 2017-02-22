@@ -42,7 +42,7 @@ $dataFromat = $data->format('d/m/Y');*/
 
         }
         span, p {
-            font-size: 13px;
+            font-size: 11px;
         }
     </style>
     <link href="" rel="stylesheet" media="screen">
