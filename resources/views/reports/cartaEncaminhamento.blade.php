@@ -38,7 +38,7 @@ $dataFromat = $data->format('d/m/Y');*/
             bottom:0;
             width: 100%;
             height: 82px;
-            margin-top: 550px;
+            margin-top: 585px;
 
         }
         span, p {
@@ -124,7 +124,7 @@ $dataFromat = $data->format('d/m/Y');*/
 
 <center>
     <div class="rodape" style="">
-        <center><img src="{{asset('/img/igarassu.png')}}" style="width: 230px; height: 55px"></center>
+        <center><img src="{{asset('/img/igarassu.png')}}" style="width: 210px; height: 50px"></center>
     </div>
 </center>
 
