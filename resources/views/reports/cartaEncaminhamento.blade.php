@@ -1,24 +1,24 @@
 <?php
 
 //Pegando o código
-$cod = str_pad($demanda['codigo'],8,"0",STR_PAD_LEFT);
+/*$cod = str_pad($demanda['codigo'],8,"0",STR_PAD_LEFT);
 $codigo =  substr($cod, 0, -4);
 $ano = substr($cod, -4);
-$codFull = $codigo."/".$ano;
+$codFull = $codigo."/".$ano;*/
 
 //formatando data
-$date = explode('T', $demanda['data']);
+/*$date = explode('T', $demanda['data']);
 $data = \DateTime::createFromFormat('Y-m-d', $date[0]);
-$dataFromat = $data->format('d/m/Y');
+$dataFromat = $data->format('d/m/Y');*/
 
 //formatando data
-if(isset($demanda['encaminhamento']['data'])) {
+/*if(isset($demanda['encaminhamento']['data'])) {
     $dateEncaminhamento = explode('T', $demanda['encaminhamento']['data']);
     $dataEncaminhamento = \DateTime::createFromFormat('Y-m-d', $dateEncaminhamento[0]);
     $dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
 } else {
     $dataEncaminhamentoFormat = "";
-}
+}*/
 
 
 ?>
@@ -59,66 +59,67 @@ if(isset($demanda['encaminhamento']['data'])) {
         <span style="font-size: 10px">Ouvidoria da Saúde</span>
     </center>
 
-    <h5 style="font-size: 15px">Demanda N.º: {{$codFull}}</h5>
+    <h5 style="font-size: 15px">Demanda N.º: {{$demanda->codigo}}</h5>
 
-    <span class="text"><b>Data do encaminhamento:</b> {{$dataEncaminhamentoFormat}}</span> <br />
-    <span class="text"><b>Destino:</b> {{$demanda['encaminhamento']['destinatario']['nome']}}</span><br />
+    <span class="text"><b>Data do encaminhamento:</b> {{$demanda->data}}</span> <br />
+    <span class="text"><b>Secretaria:</b> {{$demanda->area}}</span><br />
+    <span class="text"><b>Destino:</b> {{$demanda->destino}}</span><br />
     {{--<span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />--}}
 
     <h4>1. DETALHES DA DEMANDA</h4>
     <table style="width: 100%">
         <tr>
-            <td style="width: 340px"><span class="text"><b>Característica da demanda:</b> {{$demanda['informacao']['nome']}}</span></td>
+            <td style="width: 340px"><span class="text"><b>Característica da demanda:</b> {{$demanda->informacao}}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Prioridade :</b> {{$demanda['encaminhamento']['prioridade']['nome']}}</span></td>
+            <td style="width: 340px"><span class="text"><b>Prioridade :</b> {{$demanda->prioridade}}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Assunto:</b> {{$demanda['subassunto']['assunto']['nome']}}</span></td>
+            <td style="width: 340px"><span class="text"><b>Assunto:</b> {{$demanda->assunto}}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Subassunto:</b> {{$demanda['subassunto']['nome']}}</span></td>
+            <td style="width: 340px"><span class="text"><b>Subassunto:</b> {{$demanda->subassunto}}</span></td>
         </tr>
     </table>
 
     <h4>2. DADOS DO CIDADÃO</h4>
     <table style="width: 100%">
-        @if($demanda['sigilo']['id'] == 1)
+        @if($demanda->sigilo_id == 1)
             <tr>
-                <td style="width: 340px"><span class="text"><b>Nome:</b> {{$demanda['nome']}}</span></td>
+                <td style="width: 340px"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
             </tr>
         @endif
             <tr>
                 <td>
-                    <span class="text"><b>Comunidade:</b> @if(isset($demanda['comunidade']['nome'])){{$demanda['comunidade']['nome']}}@endif</span>
+                    <span class="text"><b>Comunidade:</b> {{$demanda->comunidade}}</span>
                 </td>
             </tr>
             <tr>
-                <td style="width: 100px"><span class="text"><b>Endreço:</b> {{$demanda['endereco']}}</span></td>
+                <td style="width: 100px"><span class="text"><b>Endreço:</b> {{$demanda->endereco}}</span></td>
             </tr>
             <tr>
-                <td style="width: 100px"><span class="text"><b>Número:</b> {{$demanda['numero_end']}}</span></td>
+                <td style="width: 100px"><span class="text"><b>Número:</b> {{$demanda->numero_end}}</span></td>
             </tr>
-            @if($demanda['sigilo']['id'] == 1)
+            @if($demanda->sigilo_id == 1)
                 <tr>
                     <td>
-                        <span class="text"><b>Telefone:</b> {{$demanda['fone']}}</span>
+                        <span class="text"><b>Telefone:</b> {{$demanda->fone}}</span>
                     </td>
                 </tr>
             @endif
     </table>
 
     <h4>3. RELATO</h4>
-    <p class="text" style="text-align: justify">{{$demanda['relato']}}</p>
+    <p class="text" style="text-align: justify">{{$demanda->relato}}</p>
 
     <h4>4. OBSERVAÇÃO</h4>
-    <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>
+    <p class="text" style="text-align: justify">{{$demanda->obs}}</p>
 
     <h4>5. COMENTÁRIO/PARECER</h4>
     <p class="text" style="text-align: justify">Encaminhamos Manifestação para análise e providências cabíveis</p>
 
     <h4>6. RESPOSTA</h4>
-    <p class="text" style="text-align: justify">{{$demanda['encaminhamento']['resposta']}}</p>
+    <p class="text" style="text-align: justify">{{$demanda->resposta}}</p>
 </div>
 
 <center>

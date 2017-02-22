@@ -396,19 +396,50 @@ class DemandaController extends Controller
      */
     public function cartaEcaminhamento(Request $request, $id)
     {
-        $with = [
-            'situacao',
-            'subassunto.assunto',
-            'informacao',
-            'encaminhamento.destinatario',
-            'encaminhamento.prioridade',
-            'sigilo',
-            'comunidade'
-        ];
 
-        $demandas = $this->repository->with($with)->find($id);
+        // Estrutura da query em geral
+        $rows = \DB::table('ouv_demanda')
+            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                        where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
+            ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->where('ouv_demanda.id', '=', $id)
+            ->select([
+                'ouv_encaminhamento.id as encaminhamento_id',
+                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                'ouv_prioridade.nome as prioridade',
+                'ouv_destinatario.nome as destino',
+                'ouv_area.nome as area',
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                'ouv_status.nome as status',
+                'ouv_status.id as status_id',
+                'ouv_informacao.nome as informacao',
+                'ouv_assunto.nome as assunto',
+                'ouv_subassunto.nome as subassunto',
+                'ouv_demanda.nome as nome',
+                'ouv_comunidade.nome as comunidade',
+                'ouv_demanda.endereco',
+                'ouv_demanda.numero_end',
+                'ouv_demanda.fone',
+                'ouv_demanda.relato',
+                'ouv_demanda.obs',
+                'ouv_encaminhamento.resposta',
+                'ouv_demanda.sigilo_id'
+            ])->first();
 
-        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $demandas])->stream();
+        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows])->stream();
     }
 
     /**
