@@ -127,6 +127,10 @@
                                                     <td>{{$detalheEncaminhamento->encaminhado}}</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="titulo">Relato</td>
+                                                    <td>{{$detalheEncaminhamento->relato}}</td>
+                                                </tr>
+                                                <tr>
                                                     <td class="titulo">Parecer</td>
                                                     <td>{{$detalheEncaminhamento->parecer}}</td>
                                                 </tr>

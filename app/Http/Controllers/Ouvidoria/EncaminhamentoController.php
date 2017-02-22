@@ -224,6 +224,7 @@ class EncaminhamentoController extends Controller
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
+                'ouv_demanda.relato'
             ])->first();
 
         return $query;
