@@ -38,7 +38,7 @@ $dataFromat = $data->format('d/m/Y');*/
             bottom:0;
             width: 100%;
             height: 82px;
-            margin-top: 585px;
+            margin-top: 785px;
 
         }
         span, p {
