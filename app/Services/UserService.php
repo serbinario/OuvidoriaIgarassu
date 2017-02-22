@@ -144,7 +144,7 @@ class UserService
     public function update(array $data, int $id) : User
     {
 
-        $data = $this->tratamentoCampos($data);
+        $data = $this->tratamentoCamposUpdate($data);
 
         #tratando a senha
         if(empty($data['password'])) {
@@ -321,6 +321,24 @@ class UserService
 
             if ($explodeKey[count($explodeKey) -1] == "id" && $value == null ) {
                 unset($data[$key]);
+            }
+        }
+        #Retorno
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function tratamentoCamposUpdate(array &$data)
+    {
+        # Tratamento de campos de chaves estrangeira
+        foreach ($data as $key => $value) {
+            $explodeKey = explode("_", $key);
+
+            if ($explodeKey[count($explodeKey) -1] == "id" && $value == null ) {
+                $data[$key] = null;
             }
         }
         #Retorno
