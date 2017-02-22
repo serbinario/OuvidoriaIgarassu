@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Seracademico\Services\Ouvidoria\EncaminhamentoService;
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
 use Yajra\Datatables\Datatables;
@@ -32,6 +33,11 @@ class EncaminhamentoController extends Controller
     private $validator;
 
     /**
+     * @var
+     */
+    private $user;
+
+    /**
     * @var array
     */
     private $loadFields = [
@@ -54,6 +60,7 @@ class EncaminhamentoController extends Controller
         $this->service   =  $service;
         $this->validator =  $validator;
         $this->repository =  $repository;
+        $this->user = Auth::user();
     }
 
     /**
@@ -61,26 +68,93 @@ class EncaminhamentoController extends Controller
      */
     public function encaminhados()
     {
-        return view('encaminhamento.encaminhados');
+        
+        return view('encaminhamento.encaminhados', compact('loadFields'));
     }
 
     /**
      * @return mixed
      */
-    public function encaminhadosGrid()
+    public function encaminhadosGrid(Request $request)
     {
+        $data  = new \DateTime('now');
+
         #Criando a consulta
-        $rows = \DB::table('ouv_demanda')
-            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+        $rows = \DB::table('ouv_demanda');
+
+        # Buscanco as demandas pelos últimos encaminhamentos
+        if($request->has('status') && $request->get('status') == 0) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
-                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 1 OR  encaminhamento.status_id = 7 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
-            })
-            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            });
+
+        }
+
+        # Buscanco apenas as demandas encaminhadas e reencaminhadas
+        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '1') {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas em análise
+        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '2') {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 2 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas concluídas
+        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '3') {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 4 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas finalizadas
+        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '4') {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 6 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas atrasadas
+        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '5') {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'));
+
+        }
+
+        // Estrutura da query em geral
+        $rows->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
@@ -89,93 +163,18 @@ class EncaminhamentoController extends Controller
                 'ouv_destinatario.nome as destino',
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                'ouv_status.nome as status',
+                'ouv_status.id as status_id'
             ]);
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Analisar</a>';
-        })->make(true);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function concluidos()
-    {
-        return view('encaminhamento.concluidos');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function concluidosGrid()
-    {
-        #Criando a consulta
-        $rows = \DB::table('ouv_demanda')
-            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
-                $join->on(
-                    'ouv_encaminhamento.id', '=',
-                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
-                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 4  ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
-                );
-            })
-            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->select([
-                'ouv_encaminhamento.id as encaminhamento_id',
-                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
-                'ouv_prioridade.nome as prioridade',
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
-            ]);
-
-        #Editando a grid
-        return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Analisar</a>';
-        })->make(true);
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function emAnalise()
-    {
-        return view('encaminhamento.emAnalise');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function emAnaliseGrid()
-    {
-        #Criando a consulta
-        $rows = \DB::table('ouv_demanda')
-            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
-                $join->on(
-                    'ouv_encaminhamento.id', '=',
-                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
-                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 2  ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
-                );
-            })
-            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->select([
-                'ouv_encaminhamento.id as encaminhamento_id',
-                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
-                'ouv_prioridade.nome as prioridade',
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
-            ]);
-
-        #Editando a grid
-        return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Analisar</a>';
+            return '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Visualizar</a>';
         })->make(true);
     }
 
@@ -185,15 +184,8 @@ class EncaminhamentoController extends Controller
     public function detalheParaAnaliseDoEncaminhamento($id)
     {
 
-        $date  = new \DateTime('now');
+        $this->service->visualizar($id);
 
-        $encaminhamento = $this->repository->find($id);
-        if($encaminhamento->status_id == '1' || $encaminhamento->status_id == '7') {
-            $encaminhamento->status_id = 2;
-        }
-        $encaminhamento->data_recebimento = $date->format('Y-m-d');
-        $encaminhamento->save();
-        
         $detalheEncaminhamento = $this->queryParaDetalheEncaminhamento($id);
 
         return view('encaminhamento.detalheDoEncaminhamento', compact('detalheEncaminhamento'));
@@ -211,6 +203,9 @@ class EncaminhamentoController extends Controller
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
+            ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->where('ouv_encaminhamento.id', '=', $id)
             ->select([
                 'ouv_encaminhamento.id as id',
@@ -225,7 +220,10 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_encaminhamento.encaminhado',
                 'ouv_encaminhamento.resposta',
-                'ouv_encaminhamento.status_id as status'
+                'ouv_encaminhamento.status_id as status_id',
+                'ouv_assunto.nome as assunto',
+                'ouv_subassunto.nome as subassunto',
+                'ouv_informacao.nome as informacao',
             ])->first();
 
         return $query;
@@ -296,7 +294,7 @@ class EncaminhamentoController extends Controller
 
             #retorno para view
             return view('encaminhamento.reencaminhamento', compact('model', 'loadFields'));
-        } catch (\Throwable $e) {dd($e);
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }
@@ -314,7 +312,7 @@ class EncaminhamentoController extends Controller
             $this->service->reencaminarStore($data);
 
             #Retorno para a view
-            return redirect()->back()->with("message", "Reencaminhamento realizado com sucesso!");
+            return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Reencaminhamento realizado com sucesso!");
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
         }
@@ -334,7 +332,7 @@ class EncaminhamentoController extends Controller
 
             #retorno para view
             return view('encaminhamento.encaminhamento', compact('model','loadFields'));
-        } catch (\Throwable $e) {dd($e);
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }
@@ -352,10 +350,97 @@ class EncaminhamentoController extends Controller
             $this->service->encaminharStore($data);
 
             #Retorno para a view
-            return redirect()->back()->with("message", "Encaminhamento realizado com sucesso!");
+            return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Encaminhamento realizado com sucesso!");
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
         }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function finalizar($id)
+    {
+        try {
+            #Recuperando a empresa
+            $this->service->finalizar($id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Demanda finalizada com sucesso!");
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function novosEncaminhanetos(Request $request)
+    {
+        
+        $encaminhamentos = \DB::table('ouv_encaminhamento')
+            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->whereIn('ouv_status.id', [1, 7])
+            ->select([
+                'ouv_encaminhamento.id as id',
+            ]);
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
+
+        if(count($encaminhamentos->get()) > 0) {
+            $msg = "sucesso";
+        } else {
+            $msg = "nao";
+        }
+
+        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function demandasAtrasadas(Request $request)
+    {
+
+        $data  = new \DateTime('now');
+
+        $encaminhamentos = \DB::table('ouv_demanda')
+            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2)  ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
+            ->select([
+                'ouv_encaminhamento.id as id',
+            ]);
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
+
+        if(count($encaminhamentos->get()) > 0) {
+            $msg = "sucesso";
+        } else {
+            $msg = "nao";
+        }
+
+        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
     }
 
     /**
@@ -410,7 +495,7 @@ class EncaminhamentoController extends Controller
             return redirect()->back()->with("message", "Alteração realizada com sucesso!");
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) { dd($e);
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }

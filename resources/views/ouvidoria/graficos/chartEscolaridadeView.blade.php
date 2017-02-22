@@ -31,6 +31,12 @@
             <div class="row">
                 {!! Form::open(['method' => "POST"]) !!}
                 <div class="col-md-12">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {!! Form::label('secretaria', 'Secretaria *') !!}
+                            {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <?php $data = new \DateTime('now') ?>
@@ -78,10 +84,12 @@
 
             var data_inicio = $('input[name=data_inicio]').val();
             var data_fim    = $('input[name=data_fim]').val();
+            var secretaria  = $('select[name=secretaria] option:selected').val();
 
             var dados = {
                 'data_inicio': data_inicio,
                 'data_fim': data_fim,
+                'secretaria' : secretaria
             };
 
             $.ajax({

@@ -11,16 +11,29 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Khill\Lavacharts\Lavacharts;
 use Seracademico\Uteis\SerbinarioDateFormat;
+use Seracademico\Services\Ouvidoria\DemandaService;
 
 class GraficosController extends Controller
 {
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @var DemandaService
      */
-    public function index()
+    private $service;
+
+    /**
+     * @var array
+     */
+    private $loadFields = [
+        'Ouvidoria\Secretaria',
+    ];
+
+    /**
+     * @param DemandaService $service
+     */
+    public function __construct(DemandaService $service)
     {
-        return view('biblioteca.responsavel.index');
+        $this->service   =  $service;
     }
 
     /**
@@ -28,8 +41,7 @@ class GraficosController extends Controller
      */
     public function caracteristicas()
     {
-        //return \PDF::loadView('ouvidoria.graficos.chartCaracteristicas')->stream();
-        return view('ouvidoria.graficos.chartCaracteristicas');
+        return view('ouvidoria.graficos.chartCaracteristicas', compact('loadFields'));
     }
 
     /**
@@ -37,7 +49,9 @@ class GraficosController extends Controller
      */
     public function caracteristicasView()
     {
-        return view('ouvidoria.graficos.chartCaracteristicasView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartCaracteristicasView', compact('loadFields'));
     }
 
     /**
@@ -50,10 +64,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_demanda.informacao_id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -62,6 +78,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -91,7 +111,9 @@ class GraficosController extends Controller
      */
     public function assuntoView()
     {
-        return view('ouvidoria.graficos.chartAssuntoView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartAssuntoView', compact('loadFields'));
     }
 
     /**
@@ -105,11 +127,13 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
             ->groupBy('ouv_subassunto.assunto_id')
             ->select([
                 'ouv_assunto.nome as nome',
@@ -118,6 +142,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -136,64 +164,11 @@ class GraficosController extends Controller
     /**
      * @return mixed
      */
-    public function demandasView()
-    {
-        return view('ouvidoria.graficos.chartDemandasView');
-    }
-
-    /**
-     * @return string
-     */
-    public function demandasAjax(Request $request)
-    {
-
-        $dados = $request->request->all();
-
-        //Tratando as datas
-        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
-        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
-
-        #Criando a consulta
-        $rows = \DB::table('ouv_demanda')
-            ->select([
-                \DB::raw('month(ouv_demanda.data) as mes'),
-                \DB::raw('year(ouv_demanda.data) as ano'),
-                \DB::raw('CONCAT(DATE_FORMAT(ouv_demanda.data,"%m"), "/", DATE_FORMAT(ouv_demanda.data,"%Y")) as legenda'),
-                \DB::raw('count(ouv_demanda.id) as qtd'),
-            ])
-            ->groupBy('mes', 'ano');
-
-        if($dataIni && $dataFim) {
-            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
-        }
-
-        $rows = $rows->get();
-
-        $nomes = [];
-        $data = [];
-
-        foreach ($rows as $row) {
-            $nomes[] = $row->legenda;
-            $data[] = $row->qtd;
-        }
-
-        return response()->json([$nomes,$data]);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function subassunto()
-    {
-        return view('ouvidoria.graficos.chartSubassunto');
-    }
-
-    /**
-     * @return mixed
-     */
     public function subassuntoView()
     {
-        return view('ouvidoria.graficos.chartSubassuntoView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartSubassuntoView', compact('loadFields'));
     }
 
     /**
@@ -207,10 +182,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $assunto = isset($dados['assunto']) ? $dados['assunto'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
+            ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->groupBy('ouv_demanda.subassunto_id')
             ->select([
                 'ouv_subassunto.nome as nome',
@@ -219,6 +196,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($assunto) {
+            $rows->where('ouv_assunto.id', '=', $assunto);
         }
 
         $rows = $rows->get();
@@ -237,17 +218,11 @@ class GraficosController extends Controller
     /**
      * @return mixed
      */
-    public function meioRegistro()
-    {
-        return view('ouvidoria.graficos.chartMeioRegistro');
-    }
-
-    /**
-     * @return mixed
-     */
     public function meioRegistroView()
     {
-        return view('ouvidoria.graficos.chartMeioRegistroView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartMeioRegistroView', compact('loadFields'));
     }
 
     /**
@@ -260,10 +235,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_demanda.tipo_demanda_id')
             ->select([
                 'ouv_tipo_demanda.nome as nome',
@@ -272,6 +249,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -290,17 +271,12 @@ class GraficosController extends Controller
     /**
      * @return mixed
      */
-    public function perfil()
-    {
-        return view('ouvidoria.graficos.chartPerfil');
-    }
-
-    /**
-     * @return mixed
-     */
     public function perfilView()
     {
-        return view('ouvidoria.graficos.chartPerfilView');
+
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartPerfilView', compact('loadFields'));
     }
 
     /**
@@ -314,10 +290,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_demanda.pessoa_id')
             ->select([
                 'ouv_pessoa.nome as nome',
@@ -326,6 +304,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -344,17 +326,12 @@ class GraficosController extends Controller
     /**
      * @return mixed
      */
-    public function escolaridade()
-    {
-        return view('ouvidoria.graficos.chartEscolaridade');
-    }
-
-    /**
-     * @return mixed
-     */
     public function escolaridadeView()
     {
-        return view('ouvidoria.graficos.chartEscolaridadeView');
+
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartEscolaridadeView', compact('loadFields'));
     }
 
     /**
@@ -368,10 +345,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_demanda.escolaridade_id')
             ->select([
                 'escolaridade.nome as nome',
@@ -380,6 +359,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -436,7 +419,9 @@ class GraficosController extends Controller
      */
     public function atendimento()
     {
-        return view('ouvidoria.graficos.meioAtendimentoView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.meioAtendimentoView', compact('loadFields'));
     }
 
     /**
@@ -451,10 +436,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', "=", "ouv_demanda.tipo_demanda_id")
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_tipo_demanda.id')
             ->select([
                 'ouv_tipo_demanda.nome as nome',
@@ -463,6 +450,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -482,7 +473,9 @@ class GraficosController extends Controller
      */
     public function informacao()
     {
-        return view('ouvidoria.graficos.informacaoView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.informacaoView', compact('loadFields'));
     }
 
     /**
@@ -497,10 +490,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -509,6 +504,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -529,7 +528,9 @@ class GraficosController extends Controller
      */
     public function status()
     {
-        return view('ouvidoria.graficos.statusView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.statusView', compact('loadFields'));
     }
 
     /**
@@ -544,18 +545,24 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_situacao', 'ouv_situacao.id', "=", "ouv_demanda.situacao_id")
-            ->groupBy('ouv_situacao.id')
+            ->join('ouv_status', 'ouv_status.id', "=", "ouv_demanda.status_id")
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->groupBy('ouv_status.id')
             ->select([
-                'ouv_situacao.nome as nome',
+                'ouv_status.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -575,7 +582,9 @@ class GraficosController extends Controller
      */
     public function melhoria()
     {
-        return view('ouvidoria.graficos.melhoriaView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.melhoriaView', compact('loadFields'));
     }
 
     /**
@@ -590,12 +599,13 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
-            ->where('ouv_demanda.informacao_id', '=', 2)
-            ->orWhere('ouv_demanda.informacao_id', '=', 4)
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->whereIn('ouv_demanda.informacao_id', [2,4])
             ->groupBy('ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -604,6 +614,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -624,7 +638,9 @@ class GraficosController extends Controller
      */
     public function melhorias()
     {
-        return view('ouvidoria.graficos.melhoriasView');
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.melhoriasView', compact('loadFields'));
     }
 
     /**
@@ -639,10 +655,12 @@ class GraficosController extends Controller
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', "=", "ouv_demanda.melhoria_id")
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.nome as nome',
@@ -651,6 +669,10 @@ class GraficosController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -665,4 +687,59 @@ class GraficosController extends Controller
         return response()->json($dados);
     }
 
+    /**
+     * @return mixed
+     */
+    public function demandasView()
+    {
+
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('ouvidoria.graficos.chartDemandasView', compact('loadFields'));
+    }
+
+    /**
+     * @return string
+     */
+    public function demandasAjax(Request $request)
+    {
+
+        $dados = $request->request->all();
+
+        //Tratando as datas
+        $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
+        $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
+
+        #Criando a consulta
+        $rows = \DB::table('ouv_demanda')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->select([
+                \DB::raw('month(ouv_demanda.data) as mes'),
+                \DB::raw('year(ouv_demanda.data) as ano'),
+                \DB::raw('CONCAT(DATE_FORMAT(ouv_demanda.data,"%m"), "/", DATE_FORMAT(ouv_demanda.data,"%Y")) as legenda'),
+                \DB::raw('count(ouv_demanda.id) as qtd'),
+            ])
+            ->groupBy('mes', 'ano');
+
+        if($dataIni && $dataFim) {
+            $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
+        }
+
+        $rows = $rows->get();
+
+        $nomes = [];
+        $data = [];
+
+        foreach ($rows as $row) {
+            $nomes[] = $row->legenda;
+            $data[] = $row->qtd;
+        }
+
+        return response()->json([$nomes,$data]);
+    }
 }

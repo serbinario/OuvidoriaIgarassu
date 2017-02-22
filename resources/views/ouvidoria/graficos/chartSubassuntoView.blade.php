@@ -34,6 +34,22 @@
                 <div class="col-md-12">
                     <div class="col-md-2">
                         <div class="form-group">
+                            {!! Form::label('secretaria', 'Secretaria *') !!}
+                            {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="assunto">Assuntos</label>
+                            <select name="assunto" class="form-control" id="assunto">
+                                {{--@foreach($assuntos as $assunto)
+                                    <option value="{{$assunto->id}}">{{$assunto->nome}}</option>
+                                @endforeach--}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <?php $data = new \DateTime('now') ?>
                             {!! Form::label('data_inicio', 'Início') !!}
                             {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
@@ -65,24 +81,26 @@
 
         $(document).ready(function(){
 
-            $.ajax({
+            /*$.ajax({
                 url: '{{route('seracademico.ouvidoria.graficos.subassuntoAjax')}}',
                 type: 'POST',
                 dataType: 'JSON',
                 success: function (json) {
                         grafico(json);
                 }
-            });
+            });*/
         });
 
         $(document).on('click', '#search', function(){
 
             var data_inicio = $('input[name=data_inicio]').val();
             var data_fim    = $('input[name=data_fim]').val();
+            var assunto    = $('select[name=assunto] option:selected').val();
 
             var dados = {
                 'data_inicio': data_inicio,
                 'data_fim': data_fim,
+                'assunto' : assunto
             };
 
             $.ajax({
@@ -142,5 +160,42 @@
                 });
             });
         }
+
+        //Carregando os assuntos
+        $(document).on('change', "#secretaria", function () {
+            //Removendo as assuntos
+            $('#assunto option').remove();
+
+            //Recuperando a secretaria
+            var secretaria = $(this).val();
+
+            if (secretaria !== "") {
+                var dados = {
+                    'table' : 'ouv_assunto',
+                    'field_search' : 'area_id',
+                    'value_search': secretaria,
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um assunto</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#assunto option').remove();
+                    $('#assunto').append(option);
+                });
+            }
+        });
     </script>
 @stop

@@ -29,7 +29,14 @@ class UserController extends Controller
      */
     private $loadFields = [
         'Role',
-        'Permission'
+        'Permission',
+    ];
+
+    /**
+     * @var array
+     */
+    private $loadFields2 = [
+        'Ouvidoria\Secretaria'
     ];
 
     /**
@@ -68,9 +75,10 @@ class UserController extends Controller
     {
         #Carregando os dados para o cadastro
         $loadFields = $this->service->load($this->loadFields);
+        $loadFields2 = $this->service->load2($this->loadFields2);
 
         #Retorno para view
-        return view('user.create', compact('loadFields'));
+        return view('user.create', compact('loadFields', 'loadFields2'));
     }
 
     /**
@@ -82,6 +90,15 @@ class UserController extends Controller
         try {
             #Recuperando os dados da requisição
             $data = $request->all();
+
+            # Validando se o perfil secretaria foi marcado sem selecioanar uma secretaria
+            if(isset($data['role'])) {
+                foreach ($data['role'] as $role) {
+                    if($role == '3' && !$data['area_id']) {
+                        return redirect()->back()->with("warning", "Para o perfil de Secretaria deve ser selecionado uma secretaria!");
+                    }
+                }
+            }
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
@@ -110,9 +127,10 @@ class UserController extends Controller
 
             #Carregando os dados para o cadastro
             $loadFields = $this->service->load($this->loadFields);
+            $loadFields2 = $this->service->load2($this->loadFields2);
 
             #retorno para view
-            return view('user.edit', compact('user', 'loadFields'));
+            return view('user.edit', compact('user', 'loadFields', 'loadFields2'));
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }
@@ -128,6 +146,15 @@ class UserController extends Controller
         try {
             #Recuperando os dados da requisição
             $data = $request->all();
+
+            # Validando se o perfil secretaria foi marcado sem selecioanar uma secretaria
+            if(isset($data['role'])) {
+                foreach ($data['role'] as $role) {
+                    if($role == '3' && !$data['area_id']) {
+                        return redirect()->back()->with("warning", "Para o perfil de Secretaria deve ser selecionado uma secretaria!");
+                    }
+                }
+            }
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);

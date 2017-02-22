@@ -13,6 +13,7 @@
     <link href="{{ asset('/fonts/iconfont/material-icons.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300" rel="stylesheet">
     <link href="{{ asset('/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+    <link href="{{ asset('/css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/select2.min.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/animate.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/style.css')}}" rel="stylesheet">
@@ -43,98 +44,98 @@
     @yield('css')
 </head>
 
-<body>
+<body class="pace-done skin-1">
 
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    @role('ouvidoria|posgraduacao')
                     <img alt="image" class="logoDash" src="{{ asset('/img/ouvidoria_saude.png')}}"/>
-                    @endrole
-                    @role('biblioteca')
-                    <img alt="image" class="logoDash" src="{{ asset('/img/logoser2.png')}}"/>
-                    @endrole
                 </li>
-               @role('ouvidoria')
+                @role('ouvidoria|admin')
+                    <li>
+                        <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Ouvidoria</span> <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
+                        </ul>
+                    </li>
+                @endrole
                 <li>
-                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Ouvidoria</span> <span
-                                class="fa arrow"></span></a>
+                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Encaminhamentos</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
+                        @role('ouvidoria|secretaria|admin')
+                            <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="material-icons">perm_identity</i> Relação</a></li>
+                        @endrole
                     </ul>
                 </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Encaminhamentos</span> <span
-                                class="fa arrow"></span></a>
+                @role('ouvidoria|admin')
+                    <li>
+                        <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Cadastros</span> <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ route('seracademico.ouvidoria.psf.index') }}"><i class="material-icons">perm_identity</i> PSF</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.comunidade.index') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.secretaria.index') }}"><i class="material-icons">perm_identity</i> Secretarias</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.departamento.index') }}"><i class="material-icons">perm_identity</i> Departamentos</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.assunto.index') }}"><i class="material-icons">perm_identity</i> Assunto</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.subassunto.index') }}"><i class="material-icons">perm_identity</i> Subassunto</a></li>
+                        </ul>
+                    </li>
+                @endrole
+                @role('ouvidoria|admin')
+                    <li>
+                        <a href="index.html"><i class="fa fa-file-text-o"></i> <span class="nav-label"> Relatório</span> <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas') }}"><i class="material-icons">perm_identity</i> Pessoas</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus') }}"><i class="material-icons">perm_identity</i> Status</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
+                        </ul>
+                    </li>
+                @endrole
+                @role('ouvidoria|admin')
+                    <li>
+                        <a href="index.html"><i class="fa fa-list-alt"></i> <span class="nav-label"> Tabelas</span> <span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewAssuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos x Subass.</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias') }}"><i class="material-icons">perm_identity</i> Melhoria</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
+                        </ul>
+                    </li>
+                @endrole
+                @role('ouvidoria|admin')
+                    <li>
+                        <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label"> Gráficos</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView') }}"><i class="material-icons">perm_identity</i> Características</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.assuntoView') }}" ><i class="material-icons">perm_identity</i> Assuntos</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView') }}" ><i class="material-icons">perm_identity</i> Subassuntos</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView') }}" ><i class="material-icons">perm_identity</i> Meios de registro</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView') }}" ><i class="material-icons">perm_identity</i> Perfis</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView') }}" ><i class="material-icons">perm_identity</i> Escolaridade</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento') }}" ><i class="material-icons">perm_identity</i> Meio Atendi.</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao') }}" ><i class="material-icons">perm_identity</i> Calss. Manifestação</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias') }}" ><i class="material-icons">perm_identity</i> Melhorias</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria') }}" ><i class="material-icons">perm_identity</i> Recla. x Melhoria</a></li>
+                            <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView') }}" ><i class="material-icons">perm_identity</i> Demandas</a></li>
+                        </ul>
+                    </li>
+                @endrole
+               @role('admin')
+                <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="material-icons">perm_identity</i> Novos</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.emAnalise') }}"><i class="material-icons">perm_identity</i> Em análise</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.concluidos') }}"><i class="material-icons">perm_identity</i> Concluídos</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Cadastros</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.psf.index') }}"><i class="material-icons">perm_identity</i> PSF</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.comunidade.index') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.secretaria.index') }}"><i class="material-icons">perm_identity</i> Secretarias</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.departamento.index') }}"><i class="material-icons">perm_identity</i> Departamentos</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.assunto.index') }}"><i class="material-icons">perm_identity</i> Assunto</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.subassunto.index') }}"><i class="material-icons">perm_identity</i> Subassunto</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-file-text-o"></i> <span class="nav-label"> Relatório</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas') }}"><i class="material-icons">perm_identity</i> Pessoas</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus') }}"><i class="material-icons">perm_identity</i> Status</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-list-alt"></i> <span class="nav-label"> Tabelas</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewAssuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos x Subass.</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias') }}"><i class="material-icons">perm_identity</i> Melhoria</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label"> Gráficos</span> <span
-                                class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView') }}"><i class="material-icons">perm_identity</i> Características</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.assuntoView') }}" ><i class="material-icons">perm_identity</i> Assuntos</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView') }}" ><i class="material-icons">perm_identity</i> Subassuntos</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView') }}" ><i class="material-icons">perm_identity</i> Meios de registro</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView') }}" ><i class="material-icons">perm_identity</i> Perfis</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView') }}" ><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento') }}" ><i class="material-icons">perm_identity</i> Meio Atendi.</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao') }}" ><i class="material-icons">perm_identity</i> Calss. Manifestação</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias') }}" ><i class="material-icons">perm_identity</i> Melhorias</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria') }}" ><i class="material-icons">perm_identity</i> Recla. x Melhoria</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView') }}" ><i class="material-icons">perm_identity</i> Demandas</a></li>
+                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
+                        <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
                     </ul>
                 </li>
                @endrole
-                {{--@role('admin')
-                    <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span
-                                    class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
-                            <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
-                        </ul>
-                    </li>
-                @endrole--}}
             </ul>
         </div>
     </nav>
@@ -204,7 +205,6 @@
 <script src="{{ asset('/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('/js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
-<script src="{{ asset('/js/plugins/toastr.min.js')}}"></script>
 <script src="{{ asset('/js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
 <script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.tree.js')}}" type="text/javascript"></script>
@@ -225,6 +225,7 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('/js/inspinia.js')}}"></script>
 <script src="{{ asset('/js/plugins/pace/pace.min.js')}}"></script>
+<script src="{{ asset('/js/plugins/toastr.min.js')}}"></script>
 <script src="{{ asset('/js/jasny-bootstrap.js')}}"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>
@@ -232,6 +233,7 @@
 <script src="{{ asset('/messages.js')}}"></script>
 <script src="{{ asset('/js/plugins/sweetalert/sweetalert.min.js')  }}"></script>
 <script src="{{ asset('/js/plugins/botao/materialize.min.js')  }}"></script>
+
 <script type="text/javascript">
     $(document).on({
         'show.bs.modal': function () {
@@ -251,6 +253,84 @@
             }
         }
     }, '.modal');
+
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "progressBar": true,
+        "preventDuplicates": false,
+        "positionClass": "toast-top-right",
+        "onclick": null,
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "10000",
+        "extendedTimeOut": "10000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut",
+    };
+
+    verificarNovasDemandas();
+    verificarDemandasAtrasadas();
+
+    // Verificar noas demandas
+    function verificarNovasDemandas() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.novosEncaminhanetos') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg'] === "sucesso") {
+                    toastr.info('Você tem novas demandas a serem analisadas','Novas Demandas!');
+                    //toastr.clear();
+                }
+            });
+
+            toastr.options.onclick = function () {
+                window.location.href = '{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}'
+            };
+
+        });
+    }
+
+    // Verificar demandas atrasadas
+    function verificarDemandasAtrasadas() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAtrasadas') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg'] === "sucesso") {
+                    toastr.warning('Você tem demandas em atraso','Demandas Atrasadas!');
+                    //toastr.clear();
+                }
+            });
+
+            toastr.options.onclick = function () {
+                window.location.href = '{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}'
+            };
+
+        });
+    }
+
+    // Faz um refresh para os alertas
+    function myLoop () {           //  vamos criar uma função de loop
+        setTimeout(function () {    //  Chama a função a cada 3 segundos
+            verificarNovasDemandas();
+            verificarDemandasAtrasadas();
+            toastr.clear();
+
+        }, 12000)
+    }
+    myLoop();
+    var intervalo = window.setInterval(myLoop, 12000);
 </script>
 
 @yield('javascript')

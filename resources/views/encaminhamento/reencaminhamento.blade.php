@@ -82,8 +82,8 @@
                     <div class="col-md-3">
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
-                                <a href="{{ route('seracademico.ouvidoria.subassunto.index') }}" class="btn btn-primary btn-block"><i
-                                            class="fa fa-long-arrow-left"></i> Voltar</a></div>
+                                <button type="button" onclick='javascript:history.back();' class="btn btn-primary btn-block"><i
+                                            class="fa fa-long-arrow-left"></i> Voltar</button></div>
                             <div class="btn-group">
                                 {!! Form::submit('Salvar', array('class' => 'btn btn-primary btn-block')) !!}
                             </div>

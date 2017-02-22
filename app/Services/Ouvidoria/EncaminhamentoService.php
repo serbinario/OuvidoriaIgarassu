@@ -3,9 +3,10 @@
 namespace Seracademico\Services\Ouvidoria;
 
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
+use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Entities\Ouvidoria\Encaminhamento;
 use Seracademico\Entities\Ouvidoria\Prioridade;
-//use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EncaminhamentoService
 {
@@ -15,11 +16,24 @@ class EncaminhamentoService
     private $repository;
 
     /**
+     * @var EncaminhamentoRepository
+     */
+    private $demandaPepository;
+
+    /**
+     * @var
+     */
+    private $user;
+
+    /**
      * @param EncaminhamentoRepository $repository
      */
-    public function __construct(EncaminhamentoRepository $repository)
+    public function __construct(EncaminhamentoRepository $repository,
+                                DemandaRepository $demandaPepository)
     {
         $this->repository = $repository;
+        $this->demandaPepository = $demandaPepository;
+        $this->user = Auth::user();
     }
 
     /**
@@ -61,11 +75,18 @@ class EncaminhamentoService
         $date  = new \DateTime('now');
 
         if($id && $Resposta) {
+
             $encaminhamento = $this->find($id);
             $encaminhamento->resposta = $Resposta;
             $encaminhamento->status_id = 4;
             $encaminhamento->data_resposta = $date->format('Y-m-d');
+            $encaminhamento->user_id = $this->user->id;
             $encaminhamento->save();
+
+            // Alterando a situação da demanda para concluído
+            $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+            $demanda->status_id = 4;
+            $demanda->save();
 
             #Retorno
             return $encaminhamento;
@@ -91,6 +112,7 @@ class EncaminhamentoService
         $data['data'] = $dataAtual;
         $data['previsao'] = $previsao->format('Y-m-d');
         $data['status_id'] = 7;
+        $data['user_id'] = $this->user->id;
 
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
@@ -99,6 +121,11 @@ class EncaminhamentoService
         $encaminhamentoAnterior = $this->find($data['id']);
         $encaminhamentoAnterior->status_id = 3;
         $encaminhamentoAnterior->save();
+
+        // Alterando a situação da demanda para reecaminhado
+        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+        $demanda->status_id = 7;
+        $demanda->save();
 
         #Verificando se foi criado no banco de dados
         if(!$encaminhamento) {
@@ -125,6 +152,7 @@ class EncaminhamentoService
         $data['data'] = $dataAtual;
         $data['previsao'] = $previsao->format('Y-m-d');
         $data['status_id'] = 1;
+        $data['user_id'] = $this->user->id;
 
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
@@ -133,6 +161,11 @@ class EncaminhamentoService
         $encaminhamentoAnterior = $this->find($data['id']);
         $encaminhamentoAnterior->status_id = 3;
         $encaminhamentoAnterior->save();
+
+        // Alterando a situação da demanda para reecaminhado
+        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+        $demanda->status_id = 1;
+        $demanda->save();
 
         #Verificando se foi criado no banco de dados
         if(!$encaminhamento) {
@@ -144,22 +177,61 @@ class EncaminhamentoService
     }
 
     /**
-     * @param array $data
-     * @param int $id
-     * @return mixed
-     */
-    public function update(array $data, int $id) : Encaminhamento
+ * @param $id
+ * @return mixed
+ * @throws \Exception
+ */
+    public function finalizar($id)
     {
-        #Atualizando no banco de dados
-        $encaminhamento = $this->repository->update($data, $id);
+        #Recuperando o registro no banco de dados
+        $encaminhamento = $this->repository->find($id);
+        $encaminhamento->status_id = 6;
+        $encaminhamento->user_id = $this->user->id;
+        $encaminhamento->save();
 
+        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+        $demanda->status_id = 6;
+        $demanda->save();
 
-        #Verificando se foi atualizado no banco de dados
-        if(!$encaminhamento) {
-            throw new \Exception('Ocorreu um erro ao cadastrar!');
+        #Verificando se o registro foi encontrado
+        if(!$encaminhamento || !$demanda) {
+            throw new \Exception('Não fio possível finalizar a demanda!');
         }
 
-        #Retorno
+        #retorno
+        return $encaminhamento;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function visualizar($id)
+    {
+        $date  = new \DateTime('now');
+
+        #Recuperando o registro no banco de dados e marcando como em análise e inserindo data de recebimento
+        $encaminhamento = $this->repository->find($id);
+        if($encaminhamento->status_id == '1' || $encaminhamento->status_id == '7') {
+            $encaminhamento->data_recebimento = $date->format('Y-m-d');
+            $encaminhamento->status_id = 2;
+        }
+        $encaminhamento->save();
+
+        // Alterando a situação da demanda para em análise
+        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+        if($encaminhamento->status_id == '1' || $encaminhamento->status_id == '7') {
+            $demanda->status_id = 2;
+        }
+        $demanda->save();
+
+        #Verificando se o registro foi encontrado
+        if(!$encaminhamento || !$demanda) {
+            throw new \Exception('Não fio possível visualizar a demanda!');
+        }
+
+        #retorno
         return $encaminhamento;
     }
 

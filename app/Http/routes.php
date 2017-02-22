@@ -79,12 +79,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('reencaminarStore', ['as' => 'reencaminarStore', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminarStore']);
                 Route::get('encaminhar/{id}', ['as' => 'encaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhar']);
                 Route::post('encaminharStore', ['as' => 'encaminharStore', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminharStore']);
-                Route::get('concluidos', ['as' => 'concluidos', 'uses' => 'Ouvidoria\EncaminhamentoController@concluidos']);
-                Route::post('concluidosGrid', ['as' => 'concluidosGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@concluidosGrid']);
-                Route::get('emAnalise', ['as' => 'emAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@emAnalise']);
-                Route::post('emAnaliseGrid', ['as' => 'emAnaliseGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@emAnaliseGrid']);
+                Route::get('finalizar/{id}', ['as' => 'finalizar', 'uses' => 'Ouvidoria\EncaminhamentoController@finalizar']);
                 
-                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Ouvidoria\EncaminhamentoController@destroy']);
+                #notificações
+                Route::post('novosEncaminhanetos', ['as' => 'novosEncaminhanetos', 'uses' => 'Ouvidoria\EncaminhamentoController@novosEncaminhanetos']);
+                Route::post('demandasAtrasadas', ['as' => 'demandasAtrasadas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAtrasadas']);
             });
 
             Route::group(['prefix' => 'report', 'as' => 'report.'], function () {

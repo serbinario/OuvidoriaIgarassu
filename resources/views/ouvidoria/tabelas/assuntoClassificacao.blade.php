@@ -32,6 +32,12 @@
                 <div class="col-12-md">
                     {!! Form::open(['method' => "POST", 'route'=>'seracademico.ouvidoria.tabelas.assuntoClassificacao',]) !!}
                     <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {!! Form::label('secretaria', 'Secretaria *') !!}
+                                {!! Form::select('secretaria',$loadFields['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <?php $data = new \DateTime('now') ?>
@@ -75,130 +81,132 @@
                         <th>%</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    @foreach($array as $item)
-                        <tr>
-                            <td>{{$item['assunto']}}</td>
-                            <td>
-                                @if(isset($item['Denúncia']))
-                                    {{$item['Denúncia']}}
-                                @endif
-                            </td>
-                            <td>
-                                @if(isset($item['Elogio']))
-                                    {{$item['Elogio']}}
-                                @endif
-                            </td>
-                            <td>
-                                @if(isset($item['Informação']))
-                                    {{$item['Informação']}}
-                                @endif
-                            </td>
-                            <td>
-                                @if(isset($item['Reclamação']))
-                                    {{$item['Reclamação']}}
-                                @endif
-                            </td>
-                            <td>
-                                @if(isset($item['Solicitação']))
-                                    {{$item['Solicitação']}}
-                                @endif
-                            </td>
-                            <td>
-                                @if(isset($item['Sugestão']))
-                                    {{$item['Sugestão']}}
-                                @endif
-                            </td>
-                            <td>
-                                {{$item['totalGeral']}}
-                            </td>
-                            <td>
+                    @if(isset($array))
+                        <tbody>
+                        @foreach($array as $item)
+                            <tr>
+                                <td>{{$item['assunto']}}</td>
+                                <td>
+                                    @if(isset($item['Denúncia']))
+                                        {{$item['Denúncia']}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($item['Elogio']))
+                                        {{$item['Elogio']}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($item['Informação']))
+                                        {{$item['Informação']}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($item['Reclamação']))
+                                        {{$item['Reclamação']}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($item['Solicitação']))
+                                        {{$item['Solicitação']}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($item['Sugestão']))
+                                        {{$item['Sugestão']}}
+                                    @endif
+                                </td>
+                                <td>
+                                    {{$item['totalGeral']}}
+                                </td>
+                                <td>
+                                    <?php
+                                    $valor = $item['totalGeral'] / $totalDemandas;
+                                    $porcentagem = $valor * 100;
+                                    echo number_format($porcentagem, 2, ',', '.') . "%";
+                                    ?>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr style="background-color: #f1f3f2">
+                            <th></th>
+                            <th>
                                 <?php
-                                $valor = $item['totalGeral'] / $totalDemandas;
-                                $porcentagem = $valor * 100;
-                                echo number_format($porcentagem, 2, ',', '.') . "%";
+                                $denuncia = 0;
+                                foreach ($array as $i) {
+                                    if (isset($i['Denúncia'])) {
+                                        $denuncia += $i['Denúncia'];
+                                    }
+                                }
+                                echo $denuncia;
                                 ?>
-                            </td>
+                            </th>
+                            <th>
+                                <?php
+                                $elogio = 0;
+                                foreach ($array as $i) {
+                                    if (isset($i['Elogio'])) {
+                                        $elogio += $i['Elogio'];
+                                    }
+                                }
+                                echo $elogio;
+                                ?>
+                            </th>
+                            <th>
+                                <?php
+                                $informacao = 0;
+                                foreach ($array as $i) {
+                                    if (isset($i['Informação'])) {
+                                        $informacao += $i['Informação'];
+                                    }
+                                }
+                                echo $informacao;
+                                ?>
+                            </th>
+                            <th>
+                                <?php
+                                $reclamacao = 0;
+                                foreach ($array as $i) {
+                                    if (isset($i['Reclamação'])) {
+                                        $reclamacao += $i['Reclamação'];
+                                    }
+                                }
+                                echo $reclamacao;
+                                ?>
+                            </th>
+                            <th>
+                                <?php
+                                $solicitacao = 0;
+                                foreach ($array as $i) {
+                                    if (isset($i['Solicitação'])) {
+                                        $solicitacao += $i['Solicitação'];
+                                    }
+                                }
+                                echo $solicitacao;
+                                ?>
+                            </th>
+                            <th>
+                                <?php
+                                $sugestao = 0;
+                                foreach ($array as $i) {
+                                    if (isset($i['Sugestão'])) {
+                                        $sugestao += $i['Sugestão'];
+                                    }
+                                }
+                                echo $sugestao;
+                                ?>
+                            </th>
+                            <th>
+                                {{$totalDemandas}}
+                            </th>
+                            <th>
+                                100%
+                            </th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                    <tfoot>
-                    <tr style="background-color: #f1f3f2">
-                        <th></th>
-                        <th>
-                            <?php
-                            $denuncia = 0;
-                            foreach ($array as $i) {
-                                if (isset($i['Denúncia'])) {
-                                    $denuncia += $i['Denúncia'];
-                                }
-                            }
-                            echo $denuncia;
-                            ?>
-                        </th>
-                        <th>
-                            <?php
-                            $elogio = 0;
-                            foreach ($array as $i) {
-                                if (isset($i['Elogio'])) {
-                                    $elogio += $i['Elogio'];
-                                }
-                            }
-                            echo $elogio;
-                            ?>
-                        </th>
-                        <th>
-                            <?php
-                            $informacao = 0;
-                            foreach ($array as $i) {
-                                if (isset($i['Informação'])) {
-                                    $informacao += $i['Informação'];
-                                }
-                            }
-                            echo $informacao;
-                            ?>
-                        </th>
-                        <th>
-                            <?php
-                            $reclamacao = 0;
-                            foreach ($array as $i) {
-                                if (isset($i['Reclamação'])) {
-                                    $reclamacao += $i['Reclamação'];
-                                }
-                            }
-                            echo $reclamacao;
-                            ?>
-                        </th>
-                        <th>
-                            <?php
-                            $solicitacao = 0;
-                            foreach ($array as $i) {
-                                if (isset($i['Solicitação'])) {
-                                    $solicitacao += $i['Solicitação'];
-                                }
-                            }
-                            echo $solicitacao;
-                            ?>
-                        </th>
-                        <th>
-                            <?php
-                            $sugestao = 0;
-                            foreach ($array as $i) {
-                                if (isset($i['Sugestão'])) {
-                                    $sugestao += $i['Sugestão'];
-                                }
-                            }
-                            echo $sugestao;
-                            ?>
-                        </th>
-                        <th>
-                            {{$totalDemandas}}
-                        </th>
-                        <th>
-                            100%
-                        </th>
-                    </tr>
-                    </tfoot>
+                        </tfoot>
+                    @endif
                 </table>
             </div>
         </div>

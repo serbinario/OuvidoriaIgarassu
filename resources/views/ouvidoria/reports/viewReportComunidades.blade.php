@@ -32,6 +32,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    {!! Form::label('secretaria', 'Secretaria *') !!}
+                                    {!! Form::select('secretaria',(["" => "Selecione uma secretaria"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('comunidade', 'Comunidade') !!}

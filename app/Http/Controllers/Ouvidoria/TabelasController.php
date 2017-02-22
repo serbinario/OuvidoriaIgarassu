@@ -11,10 +11,31 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Khill\Lavacharts\Lavacharts;
 use Seracademico\Uteis\SerbinarioDateFormat;
+use Seracademico\Services\Ouvidoria\DemandaService;
 
 class TabelasController extends Controller
 {
 
+    /**
+     * @var DemandaService
+     */
+    private $service;
+
+    /**
+     * @var array
+     */
+    private $loadFields = [
+        'Ouvidoria\Secretaria',
+    ];
+
+    /**
+     * @param DemandaService $service
+     */
+    public function __construct(DemandaService $service)
+    {
+        $this->service   =  $service;
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -22,11 +43,10 @@ class TabelasController extends Controller
      */
     public function viewAssuntoClassificacao()
     {
-        
-        $query = $this->assuntoClassificacaoQuery(array());
+        $loadFields = $this->service->load($this->loadFields);
         
         #Retorno para view
-        return view('ouvidoria.tabelas.assuntoClassificacao', $query);
+        return view('ouvidoria.tabelas.assuntoClassificacao',  compact('loadFields'));
     }
 
     /**
@@ -48,14 +68,19 @@ class TabelasController extends Controller
      */
     public function assuntoClassificacaoQuery($dados)
     {
+
+        $loadFields = $this->service->load($this->loadFields);
+
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->groupBy('ouv_assunto.id', 'ouv_informacao.id')
             ->select([
@@ -67,6 +92,10 @@ class TabelasController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -94,7 +123,7 @@ class TabelasController extends Controller
             $count++;
         }
 
-        return compact('array', 'totalDemandas');
+        return compact('array', 'totalDemandas', 'loadFields');
     }
 
 
@@ -103,9 +132,10 @@ class TabelasController extends Controller
      */
     public function assuntoView()
     {
-        $assuntos = \DB::table('ouv_assunto')->get();
+        //$assuntos = \DB::table('ouv_assunto')->get();
+        $loadFields = $this->service->load($this->loadFields);
         
-        return view('ouvidoria.tabelas.assuntos', ['assuntos' => $assuntos]);
+        return view('ouvidoria.tabelas.assuntos', compact('loadFields'));
     }
 
     /**
@@ -113,6 +143,8 @@ class TabelasController extends Controller
      */
     public function assuntos(Request $request)
     {
+        $loadFields = $this->service->load($this->loadFields);
+        
         $dados = $request->request->all();
         $assuntoId = $dados['assunto'];
 
@@ -172,7 +204,8 @@ class TabelasController extends Controller
             $count++;
         }
         
-        return view('ouvidoria.tabelas.assuntos', compact('assuntos', 'assuntosFirst','subassuntos', 'array', 'totalDemandas'), ['request' => $request]);
+        return view('ouvidoria.tabelas.assuntos', 
+            compact('assuntos', 'assuntosFirst','subassuntos', 'array', 'totalDemandas', 'loadFields'), ['request' => $request]);
     }
 
     /**
@@ -184,9 +217,10 @@ class TabelasController extends Controller
     {
 
         $query = $this->sexoQuery(array());
+        $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.tabelas.sexo', $query);
+        return view('ouvidoria.tabelas.sexo', $query, compact('loadFields'));
     }
 
     /**
@@ -207,13 +241,17 @@ class TabelasController extends Controller
      */
     public function sexoQuery($dados)
     {
+        $loadFields = $this->service->load($this->loadFields);
+
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('sexos.id')
             ->select([
                 'sexos.nome as sexo',
@@ -224,6 +262,10 @@ class TabelasController extends Controller
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
         }
 
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
+        }
+
         $rows = $rows->get();
 
         $totalDemandas = 0;
@@ -232,7 +274,7 @@ class TabelasController extends Controller
             $totalDemandas += $row->qtd;
         }
 
-        return compact('rows', 'totalDemandas');
+        return compact('rows', 'totalDemandas', 'loadFields');
     }
 
     /**
@@ -244,9 +286,10 @@ class TabelasController extends Controller
     {
 
         $query = $this->escolaridadeQuery(array());
+        $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.tabelas.escolaridade',$query);
+        return view('ouvidoria.tabelas.escolaridade',$query, compact('loadFields'));
     }
 
     /**
@@ -267,13 +310,18 @@ class TabelasController extends Controller
      */
     public function escolaridadeQuery($dados)
     {
+
+        $loadFields = $this->service->load($this->loadFields);
+
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('escolaridade.id')
             ->select([
                 'escolaridade.id as escolaridade',
@@ -282,6 +330,10 @@ class TabelasController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -294,7 +346,7 @@ class TabelasController extends Controller
         
         $escolaridades = \DB::table('escolaridade')->get();
 
-        return compact('rows', 'totalDemandas', 'escolaridades');
+        return compact('rows', 'totalDemandas', 'escolaridades', 'loadFields');
     }
 
 
@@ -306,9 +358,10 @@ class TabelasController extends Controller
     public function viewComunidadeClassificacao()
     {
         $query = $this->comunidadeClassificacaoQuery(array());
+        $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.tabelas.comunidadeClassificacao', $query);
+        return view('ouvidoria.tabelas.comunidadeClassificacao', $query, compact('loadFields'));
     }
 
     /**
@@ -330,14 +383,18 @@ class TabelasController extends Controller
     public function comunidadeClassificacaoQuery($dados)
     {
 
+        $loadFields = $this->service->load($this->loadFields);
+
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_comunidade.id', 'ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as info',
@@ -348,6 +405,10 @@ class TabelasController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -375,7 +436,7 @@ class TabelasController extends Controller
             $count++;
         }
 
-        return compact('array', 'totalDemandas');
+        return compact('array', 'totalDemandas', 'loadFields');
     }
 
     /**
@@ -387,9 +448,10 @@ class TabelasController extends Controller
     {
 
         $query = $this->melhoriasQuery(array());
+        $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.tabelas.melhorias', $query);
+        return view('ouvidoria.tabelas.melhorias', $query, compact('loadFields'));
     }
 
     /**
@@ -410,13 +472,17 @@ class TabelasController extends Controller
      */
     public function melhoriasQuery($dados)
     {
+        $loadFields = $this->service->load($this->loadFields);
+
         //Tratando as datas
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.id as melhoria',
@@ -425,6 +491,10 @@ class TabelasController extends Controller
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -437,6 +507,6 @@ class TabelasController extends Controller
 
         $melhorias = \DB::table('ouv_melhorias')->get();
 
-        return compact('rows', 'totalMelhorias', 'melhorias');
+        return compact('rows', 'totalMelhorias', 'melhorias', 'loadFields');
     }
 }

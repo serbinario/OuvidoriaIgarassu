@@ -32,14 +32,20 @@
         <div class="ibox-content">
             {!! Form::open(['route'=>'seracademico.ouvidoria.tabelas.assuntos', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
             <div class="row">
-                <div class="col-md-8 col-md-offset-3">
-                    <div class="col-md-4">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            {!! Form::label('secretaria', 'Secretaria *') !!}
+                            {!! Form::select('secretaria',$loadFields['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="assunto">Assuntos</label>
                             <select name="assunto" class="form-control" id="assunto">
-                                @foreach($assuntos as $assunto)
+                                {{--@foreach($assuntos as $assunto)
                                     <option value="{{$assunto->id}}">{{$assunto->nome}}</option>
-                                @endforeach
+                                @endforeach--}}
                             </select>
                         </div>
                     </div>
@@ -226,4 +232,42 @@
 @stop
 
 @section('javascript')
+    <script type="text/javascript">
+        //Carregando os assuntos
+        $(document).on('change', "#secretaria", function () {
+            //Removendo as assuntos
+            $('#assunto option').remove();
+
+            //Recuperando a secretaria
+            var secretaria = $(this).val();
+
+            if (secretaria !== "") {
+                var dados = {
+                    'table' : 'ouv_assunto',
+                    'field_search' : 'area_id',
+                    'value_search': secretaria,
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um assunto</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#assunto option').remove();
+                    $('#assunto').append(option);
+                });
+            }
+        });
+    </script>
 @stop

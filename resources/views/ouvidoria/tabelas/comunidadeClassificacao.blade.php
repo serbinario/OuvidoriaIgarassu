@@ -33,6 +33,12 @@
                 <div class="col-12-md">
                     {!! Form::open(['method' => "POST", 'route'=>'seracademico.ouvidoria.tabelas.comunidadeClassificacao',]) !!}
                     <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                {!! Form::label('secretaria', 'Secretaria *') !!}
+                                {!! Form::select('secretaria',$loadFields['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
                         <div class="col-md-2">
                             <div class="form-group">
                                 <?php $data = new \DateTime('now') ?>

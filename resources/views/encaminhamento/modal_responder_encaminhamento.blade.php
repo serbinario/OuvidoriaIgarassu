@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             {!! Form::label('resposta', 'Resposta') !!}
-                            {!! Form::textarea('resposta', Session::getOldInput('resposta')  ,['size' => '72x5'] , array('class' => 'form-control')) !!}
+                            {!! Form::textarea('resposta', $detalheEncaminhamento->resposta ,['size' => '72x5'] , array('class' => 'form-control')) !!}
                             <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
                         </div>
                     </div>

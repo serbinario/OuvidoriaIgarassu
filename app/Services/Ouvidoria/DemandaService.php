@@ -6,6 +6,7 @@ use Seracademico\Entities\Ouvidoria\Prioridade;
 use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Entities\Ouvidoria\Demanda;
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
+use Illuminate\Support\Facades\Auth;
 
 //use Carbon\Carbon;
 
@@ -118,7 +119,11 @@ class DemandaService
      * @return array
      */
     public function store(array $data) : Demanda
-    { dd($data);
+    {
+
+        // Pegando o usuário
+        $user = Auth::user();
+        
         $data = $this->tratamentoCampos($data);
 
         $dataObj  = new \DateTime('now');
@@ -135,6 +140,7 @@ class DemandaService
 
         $data['data'] = $dataObj->format('Y-m-d');
         $data['codigo'] = $this->tratarCodigo($codigoAtual);
+        $data['user_id'] = $user->id;
 
         #Salvando o registro pincipal
         $demanda =  $this->repository->create($data);
@@ -149,10 +155,10 @@ class DemandaService
             $data['encaminhamento']['data'] = $data['data'];
             $data['encaminhamento']['demanda_id'] = $demanda->id;
             $data['encaminhamento']['status_id'] = '1';
+            $data['encaminhamento']['user_id'] = $user->id;
 
             $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
         }
-
         
         #Verificando se foi criado no banco de dados
         if(!$demanda) {
@@ -170,9 +176,14 @@ class DemandaService
      */
     public function update(array $data, int $id) : Demanda
     {
-        $data = $this->tratamentoCampos($data);
 
+        // Pegando o usuário
+        $user = Auth::user();
+        
+        $data = $this->tratamentoCampos($data);
+        
         #Atualizando no banco de dados
+        $data['user_id'] = $user->id;
         $demanda = $this->repository->update($data, $id);
 
         /*$enc = $this->encaminhamentoRepository->findWhere(['demanda_id' => $demanda->id]);

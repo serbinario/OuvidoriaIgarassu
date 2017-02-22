@@ -288,9 +288,10 @@ class DemandaController extends Controller
      */
     public function viewReportPessoas()
     {
+        $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.reports.viewReportPessoas');
+        return view('ouvidoria.reports.viewReportPessoas', compact('loadFields'));
     }
     
     /**
@@ -306,10 +307,12 @@ class DemandaController extends Controller
         //Tratando as datas
         $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
         $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->select([
                 'ouv_demanda.id',
@@ -322,6 +325,10 @@ class DemandaController extends Controller
 
         if($dataIni && $dataIni) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
 
@@ -354,23 +361,29 @@ class DemandaController extends Controller
         //Tratando as datas
         $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
         $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
-            ->join('ouv_situacao', 'ouv_situacao.id', '=', 'ouv_demanda.situacao_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
-            ->where('ouv_situacao.id', '=', $dados['status'])
+            ->where('ouv_status.id', '=', $dados['status'])
             ->select([
                 'ouv_demanda.id',
                 'ouv_demanda.nome as nome',
-                'ouv_situacao.nome as situacao',
+                'ouv_status.nome as situacao',
                 'ouv_demanda.fone',
                 'ouv_subassunto.nome as subassunto',
             ]);
 
         if($dataIni && $dataIni) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        };
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
 
         return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $rows->get()])->setOrientation('landscape')->stream();
@@ -441,10 +454,12 @@ class DemandaController extends Controller
         //Tratando as datas
         $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
         $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
+        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->where('ouv_comunidade.id', '=', $dados['comunidade'])
             ->select([
@@ -459,6 +474,10 @@ class DemandaController extends Controller
 
         if($dataIni && $dataIni) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
+        }
+
+        if($secretaria) {
+            $rows->where('ouv_area.id', '=', $secretaria);
         }
         
         return \PDF::loadView('ouvidoria.reports.reportComunidade', ['demandas' =>  $rows->get()])->setOrientation('landscape')->stream();

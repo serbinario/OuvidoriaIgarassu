@@ -3,18 +3,39 @@
 @section('content')
     <div class="ibox float-e-margins">
         <div class="ibox-title">
-            <h4>
-                <i class="fa fa-user"></i>
-                Cadastrar Usuário
-            </h4>
-        </div>
+            <h5>Novo Usuário</h5>
 
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#">Config option 1</a>
+                    </li>
+                    <li><a href="#">Config option 2</a>
+                    </li>
+                </ul>
+                <a class="close-link">
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+        </div>
         <div class="ibox-content">
 
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <em> {!! session('message') !!}</em>
+                </div>
+            @endif
+
+            @if(Session::has('warning'))
+                <div class="alert alert-warning">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <em> {!! session('warning') !!}</em>
                 </div>
             @endif
 
@@ -47,45 +68,54 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="user">
                             <br/>
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('name', 'Nome') !!}
-                                    {!! Form::text('name', '', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('email', 'Email') !!}
-                                    {!! Form::text('email', '', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('password', 'Senha') !!}
-                                    {!! Form::password('password', '', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput"
-                                         style="width: 135px; height: 115px;">
-                                    </div>
-                                    <div>
-                                        <span class="btn btn-primary btn-xs btn-block btn-file">
-                                            <span class="fileinput-new">Selecionar</span>
-                                            <span class="fileinput-exists">Mudar</span>
-                                            <input type="file" name="img">
-                                        </span>
-                                        {{--<a href="#" class="btn btn-warning btn-xs fileinput-exists col-md-6" data-dismiss="fileinput">Remover</a>--}}
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('name', 'Nome') !!}
+                                        {!! Form::text('name', '', array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('email', 'Email') !!}
+                                        {!! Form::text('email', '', array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        {!! Form::label('password', 'Senha') !!}
+                                        {!! Form::password('password', '', array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('area_id', 'Secretaria') !!}
+                                        {!! Form::select('area_id', ['' => 'Selecione uma secretaria'] + $loadFields2['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                {{--<div class="col-md-4">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput"
+                                             style="width: 135px; height: 115px;">
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-primary btn-xs btn-block btn-file">
+                                                <span class="fileinput-new">Selecionar</span>
+                                                <span class="fileinput-exists">Mudar</span>
+                                                <input type="file" name="img">
+                                            </span>
+                                            --}}{{--<a href="#" class="btn btn-warning btn-xs fileinput-exists col-md-6" data-dismiss="fileinput">Remover</a>--}}{{--
+                                        </div>
+                                    </div>
+                                </div>--}}
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::hidden('active', 0) !!}
-                                    {!! Form::label('active', 'Ativo') !!}
-                                    {!! Form::checkbox('active', 1, null, array('class' => 'form-control')) !!}
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="checkbox checkbox-primary">
+                                        {!! Form::hidden('active', 0) !!}
+                                        {!! Form::checkbox('active', 1, null, array('class' => 'form-control')) !!}
+                                        {!! Form::label('active', 'Ativo') !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -111,13 +141,13 @@
                             <br/>
 
                             <div id="tree-permission">
-                                 <ul>
-                                     @if(isset($loadFields['role']))
-                                         @foreach($loadFields['role'] as $id => $role)
+                                <ul>
+                                    @if(isset($loadFields['role']))
+                                        @foreach($loadFields['role'] as $id => $role)
                                             <li><input type="checkbox" name="role[]" value="{{ $id  }}"> {{ $role }} </li>
-                                         @endforeach
-                                     @endif
-                                 </ul>
+                                        @endforeach
+                                    @endif
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -128,7 +158,12 @@
             </div>
             {!! Form::close() !!}
         </div>
-        
+        <div class="ibox-footer">
+            <span class="pull-right">
+                footer a direita
+            </span>
+            footer esquerda
+        </div>
     </div>
 @stop
 

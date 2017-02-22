@@ -2,10 +2,6 @@
 	<div class="col-md-12">
 		<div class="row">
             <div class="col-md-12">
-
-                <!-- Enviando id do usuario logado para o banco -->
-                {!! Form::text('user_id', Auth::user()->id ? Auth::user()->id : null, array('class' => 'hidden')) !!}
-
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active"><a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados Principais</a></li>

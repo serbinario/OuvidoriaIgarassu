@@ -29,6 +29,10 @@
         .highlight {
             background-color: #FE8E8E;
         }
+        .titulo {
+            background-color: #e7e7e7;
+            width: 16%;
+        }
     </style>
 @endsection
 
@@ -64,17 +68,14 @@
                                    data-placement="top" title="Reply" data-toggle="modal" data-target="#modal_responder_encaminhamento"><i class="fa fa-reply"></i> Responder</button>
                             </div>
                             <h2>
-                                View Message
+                                {{$detalheEncaminhamento->area}} - {{$detalheEncaminhamento->destinatario}}
                             </h2>
                             <div class="mail-tools tooltip-demo m-t-md">
                                 <h3>
-                                    <span class="font-noraml">Subject: </span>Aldus PageMaker including versions of
-                                    Lorem
-                                    Ipsum.
+                                    <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}}
                                 </h3>
                                 <h5>
-                                    <span class="pull-right font-noraml">10:15AM 02 FEB 2014</span>
-                                    <span class="font-noraml">From: </span>alex.smith@corporation.com
+                                    <span class="font-noraml">Status: </span>{{$detalheEncaminhamento->status}}
                                 </h5>
                             </div>
                         </div>
@@ -86,40 +87,52 @@
                                             <table id="encaminhamento-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
                                                 <tbody>
                                                 <tr>
-                                                    <td style="width: 16%; background-color: #cecece">Código</td>
+                                                    <td class="titulo">Tipo da demanda</td>
+                                                    <td>{{$detalheEncaminhamento->informacao}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="titulo">Código</td>
                                                     <td>{{$detalheEncaminhamento->codigo}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td  style="background-color: #cecece">Data</td>
+                                                    <td  class="titulo">Data</td>
                                                     <td>{{$detalheEncaminhamento->data}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td  style="background-color: #cecece">Previsão</td>
+                                                    <td  class="titulo">Previsão</td>
                                                     <td>{{$detalheEncaminhamento->previsao}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="background-color: #cecece">Prioridade</td>
+                                                    <td class="titulo">Prioridade</td>
                                                     <td>{{$detalheEncaminhamento->prioridade}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="background-color: #cecece">Secretaria</td>
+                                                    <td class="titulo">Secretaria</td>
                                                     <td>{{$detalheEncaminhamento->area}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="background-color: #cecece">Departamento/Destinatário</td>
+                                                    <td class="titulo">Departamento/Destinatário</td>
                                                     <td>{{$detalheEncaminhamento->destinatario}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="background-color: #cecece">Encaminhado</td>
+                                                    <td class="titulo">Assunto</td>
+                                                    <td>{{$detalheEncaminhamento->assunto}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="titulo">Subassunto</td>
+                                                    <td>{{$detalheEncaminhamento->subassunto}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="titulo">Encaminhado</td>
                                                     <td>{{$detalheEncaminhamento->encaminhado}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="background-color: #cecece">Parecer</td>
+                                                    <td class="titulo">Parecer</td>
                                                     <td>{{$detalheEncaminhamento->parecer}}</td>
                                                 </tr>
                                                 @if($detalheEncaminhamento->resposta)
                                                     <tr>
-                                                        <td style="background-color: #cecece">Resposta</td>
+                                                        <td class="titulo">Resposta</td>
                                                         <td>{{$detalheEncaminhamento->resposta}}</td>
                                                     </tr>
                                                 @endif
@@ -130,16 +143,21 @@
                                 </div>
                             </div>
                             <div class="mail-body text-right tooltip-demo">
-                                <button class="btn btn-sm btn-white" type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento"><i class="fa fa-reply"></i> Responder</button>
+                                <a class="btn btn-sm btn-white" href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}">
+                                    <i class="fa fa-reply"></i> Voltar</a>
+                                <button class="btn btn-sm btn-white" type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento"><i class="fa fa-arrow-right"></i> Responder</button>
                                 <a class="btn btn-sm btn-white" href="{!! route('seracademico.ouvidoria.encaminhamento.historico', ['id' => $detalheEncaminhamento->demanda_id]) !!}">
                                     <i class="fa fa-arrow-right"></i> Histórico do encaminhamento</a>
-                                @if($detalheEncaminhamento->status == '4')
-                                    <a href="{!! route('seracademico.ouvidoria.encaminhamento.reencaminar', ['id' => $detalheEncaminhamento->id]) !!}"
-                                       data-placement="top"  class="btn btn-sm btn-white"><i class="fa fa-print"></i> Reenchaminhar</a>
-                                    <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhar', ['id' => $detalheEncaminhamento->id]) !!}" title="" data-placement="top" class="btn btn-sm btn-white">
-                                        <i class="fa fa-trash-o"></i> Encaminhar
+                                @role('ouvidoria|admin')
+                                        <a href="{!! route('seracademico.ouvidoria.encaminhamento.reencaminar', ['id' => $detalheEncaminhamento->id]) !!}"
+                                           data-placement="top"  class="btn btn-sm btn-white"><i class="fa fa-arrow-right"></i> Reenchaminhar</a>
+                                        <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhar', ['id' => $detalheEncaminhamento->id]) !!}" title="" data-placement="top" class="btn btn-sm btn-white">
+                                            <i class="fa fa-arrow-right"></i> Encaminhar
+                                        </a>
+                                    <a href="{!! route('seracademico.ouvidoria.encaminhamento.finalizar', ['id' => $detalheEncaminhamento->id]) !!}" id="finalizarDemanda" title="" data-placement="top" class="btn btn-sm btn-blue">
+                                        <i class="fa fa-arrow-right"></i> Finalizar
                                     </a>
-                                @endif
+                                @endrole
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -153,5 +171,16 @@
 @section('javascript')
     <script type="text/javascript">
 
+        $(document).on('click', '#finalizarDemanda', function (event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            bootbox.confirm("Tem certeza que deseja finalizar essa demanda?", function (result) {
+                if (result) {
+                    location.href = url
+                } else {
+                    false;
+                }
+            });
+        });
     </script>
 @stop

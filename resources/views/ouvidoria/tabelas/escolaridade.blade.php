@@ -33,9 +33,15 @@
 
             <div class="row">
 
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-12 col-md-offset-2">
                     {!! Form::open(['method' => "POST", 'route'=>'seracademico.ouvidoria.tabelas.escolaridade',]) !!}
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {!! Form::label('secretaria', 'Secretaria *') !!}
+                            {!! Form::select('secretaria',$loadFields['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
                         <div class="form-group">
                             <?php $data = new \DateTime('now') ?>
                             <?php $dataInicio =  isset($request['data_inicio']) ? $request['data_inicio'] : ""; ?>
@@ -43,7 +49,7 @@
                             {!! Form::text('data_inicio', $dataInicio , array('class' => 'form-control date datepicker')) !!}
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <?php $dataFinal =  isset($request['data_fim']) ? $request['data_fim'] : ""; ?>
                             {!! Form::label('data_fim', 'Fim') !!}
