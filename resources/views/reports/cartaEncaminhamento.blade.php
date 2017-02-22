@@ -36,8 +36,8 @@ $dataFromat = $data->format('d/m/Y');*/
         .rodape{
             position:absolute;
             bottom:0;
-            width: 100%;
-            height: 82px;
+            width: 210px;
+            height: 50px;
             margin-top: 785px;
 
         }
