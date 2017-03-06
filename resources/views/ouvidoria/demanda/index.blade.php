@@ -39,9 +39,6 @@
             <div class="col-sm-6 col-md-9">
                 <h4><i class="material-icons">find_in_page</i> Listar Demandas</h4>
             </div>
-            <div class="col-sm-6 col-md-3">
-                <a href="{{ route('seracademico.ouvidoria.demanda.create')}}" class="btn-sm btn-primary pull-right">Nova Demanda</a>
-            </div>
         </div>
         <div class="ibox-content">
             @if(Session::has('message'))
@@ -60,6 +57,11 @@
                 </div>
             @endif
 
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <a href="{{ route('seracademico.ouvidoria.demanda.create')}}" class="btn btn-primary">Nova Demanda</a>
+                </div>
+            </div> <br />
             <div class="row">
                 {!! Form::open(['method' => "POST"]) !!}
                 <div class="col-md-12">

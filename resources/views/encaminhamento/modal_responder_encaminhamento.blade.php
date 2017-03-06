@@ -1,7 +1,7 @@
 <!-- Modal principal de disciplinas -->
 <div id="modal_responder_encaminhamento" class="modal fade modal-profile" tabindex="-1" role="dialog" aria-labelledby="modalProfile" aria-hidden="true">
     <div class="modal-dialog"{{-- style="width: 30%;"--}}>
-        <div class="modal-content animated bounceInRight">
+        <div class="modal-content animated fadeIn">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal">×</button>
                 <h4 class="modal-title">Responder ao encaminhamento</h4>

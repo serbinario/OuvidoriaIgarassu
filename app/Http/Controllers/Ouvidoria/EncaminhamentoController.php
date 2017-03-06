@@ -4,6 +4,7 @@ namespace Seracademico\Http\Controllers\Ouvidoria;
 
 use Illuminate\Http\Request;
 
+use Mail;
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Seracademico\Validators\EncaminhamentoValidator;
-use Seracademico\Uteis\SerbinarioDateFormat;
+use Seracademico\Uteis\SerbinarioSendEmail;
 
 class EncaminhamentoController extends Controller
 {
@@ -68,8 +69,9 @@ class EncaminhamentoController extends Controller
      */
     public function encaminhados()
     {
+        $usuarios = \DB::table('users')->select(['name', 'id'])->get();
         
-        return view('encaminhamento.encaminhados', compact('loadFields'));
+        return view('encaminhamento.encaminhados', compact('usuarios'));
     }
 
     /**
@@ -152,6 +154,7 @@ class EncaminhamentoController extends Controller
 
         // Estrutura da query em geral
         $rows->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->join('users', 'users.id', '=', 'ouv_demanda.user_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
@@ -164,12 +167,18 @@ class EncaminhamentoController extends Controller
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_status.nome as status',
-                'ouv_status.id as status_id'
+                'ouv_status.id as status_id',
+                'users.name as responsavel'
             ]);
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
             $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if($this->user->is('admin|ouvidoria') && $request->get('responsavel') != 0) {
+            $rows->where('users.id', '=', $request->get('responsavel'));
         }
 
         #Editando a grid
@@ -199,6 +208,7 @@ class EncaminhamentoController extends Controller
     {
         $query = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->join('users', 'users.id', '=', 'ouv_demanda.user_id')
             ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
@@ -214,6 +224,7 @@ class EncaminhamentoController extends Controller
                 'ouv_prioridade.nome as prioridade',
                 'ouv_destinatario.nome as destinatario',
                 'ouv_area.nome as area',
+                'ouv_area.id as area_id',
                 'ouv_status.nome as status',
                 'ouv_encaminhamento.parecer',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
@@ -224,7 +235,8 @@ class EncaminhamentoController extends Controller
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
-                'ouv_demanda.relato'
+                'ouv_demanda.relato',
+                'users.name as responsavel'
             ])->first();
 
         return $query;
@@ -310,7 +322,12 @@ class EncaminhamentoController extends Controller
             $data = $request->all();
 
             #Executando a ação
-            $this->service->reencaminarStore($data);
+            $returno = $this->service->reencaminarStore($data);
+
+            if($returno) {
+                $detalhe = $this->queryParaDetalheEncaminhamento($returno->id);
+                SerbinarioSendEmail::sendEmailMultiplo($detalhe);
+            }
 
             #Retorno para a view
             return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Reencaminhamento realizado com sucesso!");
@@ -348,7 +365,12 @@ class EncaminhamentoController extends Controller
             $data = $request->all();
 
             #Executando a ação
-            $this->service->encaminharStore($data);
+            $returno = $this->service->encaminharStore($data);
+
+            if($returno) {
+                $detalhe = $this->queryParaDetalheEncaminhamento($returno->id);
+                SerbinarioSendEmail::sendEmailMultiplo($detalhe);
+            }
 
             #Retorno para a view
             return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Encaminhamento realizado com sucesso!");
@@ -442,63 +464,6 @@ class EncaminhamentoController extends Controller
         }
 
         return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
-    }
-
-    /**
-     * @param Request $request
-     * @return $this|array|\Illuminate\Http\RedirectResponse
-     */
-    public function store(Request $request)
-    {
-        try {
-            #Recuperando os dados da requisição
-            $data = $request->all();
-
-            #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
-
-            #Validando a requisição
-            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            #Executando a ação
-            $this->service->store($data);
-
-            #Retorno para a view
-            return redirect()->back()->with("message", "Cadastro realizado com sucesso!");
-        } catch (ValidatorException $e) {
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {print_r($e->getMessage()); exit;
-            return redirect()->back()->with('message', $e->getMessage());
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return $this|\Illuminate\Http\RedirectResponse
-     */
-    public function update(Request $request, $id)
-    {
-        try {
-            #Recuperando os dados da requisição
-            $data = $request->all();
-
-            #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
-
-            #Validando a requisição
-            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            #Executando a ação
-            $this->service->update($data, $id);
-
-            #Retorno para a view
-            return redirect()->back()->with("message", "Alteração realizada com sucesso!");
-        } catch (ValidatorException $e) {
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {
-            return redirect()->back()->with('message', $e->getMessage());
-        }
     }
 
 }

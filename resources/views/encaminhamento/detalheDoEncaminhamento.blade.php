@@ -123,6 +123,10 @@
                                                     <td>{{$detalheEncaminhamento->subassunto}}</td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="titulo">Responsável</td>
+                                                    <td>{{$detalheEncaminhamento->responsavel}}</td>
+                                                </tr>
+                                                <tr>
                                                     <td class="titulo">Encaminhado</td>
                                                     <td>{{$detalheEncaminhamento->encaminhado}}</td>
                                                 </tr>

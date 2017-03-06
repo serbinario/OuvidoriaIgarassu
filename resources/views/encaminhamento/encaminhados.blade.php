@@ -72,6 +72,19 @@
                             </select>
                         </div>
                     </div>
+                    @role('ouvidoria|admin')
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="status">Responsável</label>
+                                <select name="responsavel" class="form-control" id="responsavel">
+                                    <option value="0">Todos</option>
+                                    @foreach($usuarios as $usuario)
+                                        <option value="{{$usuario->id}}">{{$usuario->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    @endrole
                     <div class="col-md-2" style="margin-top: 22px">
                         <div class="btn-group btn-group-justified">
                             <div class="btn-group">
@@ -89,6 +102,7 @@
                                 <th>Código</th>
                                 <th>Secretaria</th>
                                 <th>Departamento</th>
+                                <th>Responsável</th>
                                 <th>Prioridade</th>
                                 <th>Data</th>
                                 <th>Previsão</th>
@@ -101,6 +115,7 @@
                                 <th>Código</th>
                                 <th>Secretaria</th>
                                 <th>Departamento</th>
+                                <th>Responsável</th>
                                 <th>Prioridade</th>
                                 <th>Data</th>
                                 <th>Previsão</th>
@@ -130,12 +145,14 @@
                     method: 'POST',
                     data: function (d) {
                         d.status = $('select[name=status] option:selected').val();
+                        d.responsavel = $('select[name=responsavel] option:selected').val();
                     }
                 },
                 columns: [
                     {data: 'codigo', name: 'codigo', orderable: false, searchable: false},
                     {data: 'area', name: 'ouv_area.nome'},
                     {data: 'destino', name: 'ouv_destinatario.nome'},
+                    {data: 'responsavel', name: 'users.name'},
                     {data: 'prioridade', name: 'ouv_prioridade.nome'},
                     {data: 'data', name: 'ouv_encaminhamento.data'},
                     {data: 'previsao', name: 'ouv_encaminhamento.previsao'},

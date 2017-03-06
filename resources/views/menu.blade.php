@@ -44,7 +44,7 @@
     @yield('css')
 </head>
 
-<body class="pace-done skin-1">
+<body class="pace-done">
 
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -155,7 +155,7 @@
                     </span>
                 </div>
 
-                <ul class="nav navbar-top-links navbar-right">
+                {{--<ul class="nav navbar-top-links navbar-right">
                     <li>
                         <div class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -172,7 +172,7 @@
                         </div>
                     </li>
                 </ul>
-
+--}}
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
                         <div class="dropdown">

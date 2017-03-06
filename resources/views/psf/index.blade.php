@@ -39,9 +39,9 @@
             <div class="col-sm-6 col-md-9">
                 <h4><i class="material-icons">find_in_page</i> Listar Psf(s)</h4>
             </div>
-            <div class="col-sm-6 col-md-3">
+           {{-- <div class="col-sm-6 col-md-3">
                 <a href="{{ route('seracademico.ouvidoria.psf.create')}}" class="btn-sm btn-primary pull-right">Nova Psf</a>
-            </div>
+            </div>--}}
         </div>
         <div class="ibox-content">
             @if(Session::has('message'))
@@ -60,6 +60,11 @@
                 </div>
             @endif
 
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <a href="{{ route('seracademico.ouvidoria.psf.create')}}" class="btn btn-primary">Nova Psf</a>
+                </div>
+            </div><br />
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
