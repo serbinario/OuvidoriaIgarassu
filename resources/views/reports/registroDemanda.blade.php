@@ -119,7 +119,7 @@ $dataFromat = $data->format('d/m/Y');
 
 <center>
     <div class="rodape" style="">
-        <center><img src="{{asset('/img/igarassu.png')}}" style="width: 230px; height: 55px"></center>
+        <center><img src="{{asset('/img/pf.png')}}" style="width: 230px; height: 70px"></center>
     </div>
 </center>
 
