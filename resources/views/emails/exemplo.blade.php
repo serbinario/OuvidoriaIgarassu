@@ -30,14 +30,6 @@
         <td><b>Status:</b> {{$detalhe->status}}</td>
     </tr>
     <tr>
-        <td><b>Tipo da demanda:</b> {{$detalhe->informacao}}</td>
-        <td><b>Assunto:</b> {{$detalhe->assunto}}</td>
-        <td><b>Subassunto:</b> {{$detalhe->subassunto}}</td>
-    </tr>
-    <tr>
-        <td colspan="3"><b>Relato: </b></span>{{$detalhe->relato}}</td>
-    </tr>
-    <tr>
         <td colspan="3"><b>Parecer: </b></span>{{$detalhe->parecer}}</td>
     </tr>
     </tbody>
