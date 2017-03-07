@@ -208,7 +208,7 @@ class EncaminhamentoController extends Controller
     {
         $query = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('users', 'users.id', '=', 'ouv_demanda.user_id')
+            ->leftJoin('users', 'users.id', '=', 'ouv_demanda.user_id')
             ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
