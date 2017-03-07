@@ -86,7 +86,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco as demandas pelos últimos encaminhamentos
         if($request->has('status') && $request->get('status') == 0) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 

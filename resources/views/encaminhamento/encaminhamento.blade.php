@@ -1,97 +1,105 @@
 @extends('menu')
 
 @section('content')
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <div class="col-sm-6 col-md-9">
-                <h4><i class="material-icons">find_in_page</i> Reencaminhamento da demanda</h4>
+    <div class="container">
+        <section id="content">
+            {{-- Mensagem de alerta quando os dados não atendem as regras de validação que foramd efinidas no servidor --}}
+            <div class="ibox-content">
+                @if(Session::has('message'))
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <em> {!! session('message') !!}</em>
+                    </div>
+                @endif
+
+                @if(Session::has('errors'))
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
-            <div class="col-sm-6 col-md-3">
-
-            </div>
-        </div>
-
-        <div class="ibox-content">
-
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <em> {!! session('message') !!}</em>
-                </div>
-            @endif
-
-            @if(Session::has('errors'))
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    @foreach($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
-
+            {{-- Fim mensagem de alerta --}}
+            {{--Formulario--}}
             {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.encaminharStore', 'method' => "POST", 'id'=> 'formEncaminhamento' ]) !!}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('secretaria', 'Secretaria') !!}
-                                    {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), null, array('class' => 'form-control')) !!}
+            <div class="block-header">
+                <h2>Encaminhamento da demanda</h2>
+            </div>
+            <div class="card">
+                <div class="card-body card-padding">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <div class=" fg-line">
+                                        <label for="secretaria">Secretaria *</label>
+                                        <div class="select">
+                                            {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), null, array('class' => 'form-control', 'id' => 'secretaria')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class=" fg-line">
+                                        <label for="destinatario_id">Destino *</label>
+                                        <div class="select">
+                                            {!! Form::select('destinatario_id', array(), null, array('class' => 'form-control', 'id' => 'destinatario_id')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class=" fg-line">
+                                        <label for="prioridade_id">Prioridade *</label>
+                                        <div class="select">
+                                            {!! Form::select('prioridade_id',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('destinatario_id', 'Destino') !!}
-                                    {!! Form::select('destinatario_id', array(), null, array('class' => 'form-control', 'id' => 'destinatario_id')) !!}
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="encaminhado">Documento Encaminhamento</label>
+                                            {!! Form::text('encaminhado', Session::getOldInput('encaminhamento[encaminhado]')  , array('class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="copia">Cópia Para</label>
+                                            {!! Form::text('copia', Session::getOldInput('encaminhamento[copia]')  , array('class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('prioridade_id', 'Prioridade') !!}
-                                    {!! Form::select('prioridade_id',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
+                            <div class="row">
+                                <div class="form-group col-md-8">
+                                    <div class="form-group">
+                                        <div class="fg-line">
+                                            <label for="parecer">Comentário/Parecer</label>
+                                            <div class="textarea">
+                                                {!! Form::textarea('parecer', Session::getOldInput('encaminhamento[parecer]'),
+                                                    array('class' => 'form-control', 'rows' => '5')) !!}
+                                            </div>
+                                            <input type="hidden" name="demanda_id" value="{{$model->demanda_id}}">
+                                            <input type="hidden" name="id" value="{{$model->id}}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    {!! Form::label('encaminhado', 'Documento encaminhado') !!}
-                                    {!! Form::text('encaminhado', Session::getOldInput('encaminhamento[encaminhado]')  , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('copia', 'Cópia Para') !!}
-                                    {!! Form::text('copia', Session::getOldInput('encaminhamento[copia]')  , array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('parecer', 'Comentário/Parecer') !!}
-                                    {!! Form::textarea('parecer', Session::getOldInput('encaminhamento[parecer]')  ,['size' => '127x5'] , array('class' => 'form-control')) !!}
-                                    <input type="hidden" name="demanda_id" value="{{$model->demanda_id}}">
-                                    <input type="hidden" name="id" value="{{$model->id}}">
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
-                    {{--Buttons Submit e Voltar--}}
-                    <div class="col-md-3">
-                        <div class="btn-group btn-group-justified">
-                            <div class="btn-group">
-                                <button type="button" onclick='javascript:history.back();'  class="btn btn-primary btn-block"><i
-                                            class="fa fa-long-arrow-left"></i> Voltar</button></div>
-                            <div class="btn-group">
-                                {!! Form::submit('Salvar', array('class' => 'btn btn-primary btn-block')) !!}
-                            </div>
+                            <button class="btn btn-primary btn-sm m-t-10">Salvar</button>
+                            <button type="button" class="btn btn-primary btn-sm m-t-10" onclick='javascript:history.back();'>Voltar</button>
                         </div>
                     </div>
                 </div>
+            </div>
             {!! Form::close() !!}
-        </div>
+            {{--Fim formulario--}}
+        </section>
     </div>
 @stop
 

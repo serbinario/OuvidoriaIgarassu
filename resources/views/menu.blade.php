@@ -1,238 +1,261 @@
 <!DOCTYPE html>
-<html>
-
+<!--[if IE 9 ]-->
+<html class="ie9">
+<!--[endif]-->
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SerOuvidoria</title>
 
-    <title>Ouvidoria - Prefeitura de Igarassu</title>
+    {{--<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">--}}
 
-    <link href="{{ asset('/css/bootstrap.min.css')}}" rel="stylesheet">
-    {{--<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">--}}
-
-    <link href="{{ asset('/fonts/iconfont/material-icons.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300" rel="stylesheet">
-    <link href="{{ asset('/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/fullcalendar/dist/fullcalendar.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/animate.css/animate.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/sweetalert2/dist/sweetalert2.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/material-design-iconic-font/dist/css/material-design-iconic-font.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}" rel="stylesheet"/>
+    <!-- Datepicker -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/validate.css') }}"  media="screen,projection"/>
     <link href="{{ asset('/css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('/css/select2.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('/css/animate.css')}}" rel="stylesheet">
-    <link href="{{ asset('/css/style.css')}}" rel="stylesheet">
 
-    <link href="{{ asset('/css/jquery-ui.css')}}" rel="stylesheet">
-    {{--<link href="https://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css">--}}
+    {{--<link href="/lib/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet">--}}
+    {{--<link href="/lib/nouislider/distribute/nouislider.min.css" rel="stylesheet">--}}
+    {{--<link href="/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">--}}
+    {{--<link href="/lib/dropzone/dist/min/dropzone.min.css" rel="stylesheet">--}}
+    {{--<link href="/lib/farbtastic/farbtastic.css" rel="stylesheet">--}}
+    <link href="{{ asset('/lib/chosen/chosen.css') }}" rel="stylesheet">
+    <link href="{{ asset('/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('/css/jquery.tree.css')  }}" rel="stylesheet">
-    <link href="{{ asset('/css/jasny-bootstrap.css')  }}" rel="stylesheet">
-    <link href="{{ asset('/css/awesome-bootstrap-checkbox.css')  }}" rel="stylesheet">
-    <link href="{{ asset('/css/bootstrapValidation.mim.css')}}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery.datetimepicker.css')}}" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/app_1.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/app_2.min.css') }}"  media="screen,projection"/>
 
-    <link href="{{ asset('/css/jquery.dataTables.min.css')}}" rel="stylesheet"/>
-    {{--<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">--}}
-
-    <link href="{{ asset('/css/buttons.dataTables.min.css')}}" rel="stylesheet"/>
-    {{--<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">--}}
-
-    <link rel="stylesheet" href="{{ asset('/css/plugins/sweetalert/sweetalert.css')  }}">
-    <link rel="stylesheet" href="{{ asset('/css/plugins/botao/botao-fab.css')  }}">
-    <link rel="stylesheet" href="{{ asset('/css/bootstrap-multiselect.css')  }}">
-
-    <!-- zTree-->
-    <link rel="stylesheet" href="{{ asset('/css/plugins/zTree/zTreeStyle.css')  }}">
-    {{--<link rel="stylesheet" href="{{ asset('/css/plugins/zTree/demo.css')  }}">--}}
+    {{-- CSS personalizados--}}
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/demo.css') }}"  media="screen,projection"/>
 
     @yield('css')
 </head>
-
-<body class="pace-done">
-
-<div id="wrapper">
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="sidebar-collapse">
-            <ul class="nav metismenu" id="side-menu">
-                <li class="nav-header">
-                    <img alt="image" class="logoDash" src="{{ asset('/img/ouvidoria_saude.png')}}"/>
-                </li>
-                @role('ouvidoria|admin')
-                    <li>
-                        <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Ouvidoria</span> <span
-                                    class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{ route('seracademico.ouvidoria.demanda.index') }}"><i class="material-icons">perm_identity</i> Demanda</a></li>
-                        </ul>
-                    </li>
-                @endrole
-                <li>
-                    <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Encaminhamentos</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        @role('ouvidoria|secretaria|admin')
-                            <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="material-icons">perm_identity</i> Relação</a></li>
-                        @endrole
-                    </ul>
-                </li>
-                @role('ouvidoria|admin')
-                    <li>
-                        <a href="index.html"><i class="fa fa-building-o"></i> <span class="nav-label"> Cadastros</span> <span
-                                    class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{ route('seracademico.ouvidoria.psf.index') }}"><i class="material-icons">perm_identity</i> PSF</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.comunidade.index') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.secretaria.index') }}"><i class="material-icons">perm_identity</i> Secretarias</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.departamento.index') }}"><i class="material-icons">perm_identity</i> Departamentos</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.assunto.index') }}"><i class="material-icons">perm_identity</i> Assunto</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.subassunto.index') }}"><i class="material-icons">perm_identity</i> Subassunto</a></li>
-                        </ul>
-                    </li>
-                @endrole
-                @role('ouvidoria|admin')
-                    <li>
-                        <a href="index.html"><i class="fa fa-file-text-o"></i> <span class="nav-label"> Relatório</span> <span
-                                    class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas') }}"><i class="material-icons">perm_identity</i> Pessoas</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus') }}"><i class="material-icons">perm_identity</i> Status</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView') }}"><i class="material-icons">perm_identity</i> Comunidade</a></li>
-                        </ul>
-                    </li>
-                @endrole
-                @role('ouvidoria|admin')
-                    <li>
-                        <a href="index.html"><i class="fa fa-list-alt"></i> <span class="nav-label"> Tabelas</span> <span
-                                    class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewAssuntoClassificacao') }}"><i class="material-icons">perm_identity</i> Assunto class.</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView') }}"><i class="material-icons">perm_identity</i> Assuntos x Subass.</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo') }}"><i class="material-icons">perm_identity</i> Sexo</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade') }}"><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias') }}"><i class="material-icons">perm_identity</i> Melhoria</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao') }}"><i class="material-icons">perm_identity</i> Comunidade class.</a></li>
-                        </ul>
-                    </li>
-                @endrole
-                @role('ouvidoria|admin')
-                    <li>
-                        <a href="index.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label"> Gráficos</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView') }}"><i class="material-icons">perm_identity</i> Características</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.assuntoView') }}" ><i class="material-icons">perm_identity</i> Assuntos</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView') }}" ><i class="material-icons">perm_identity</i> Subassuntos</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView') }}" ><i class="material-icons">perm_identity</i> Meios de registro</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView') }}" ><i class="material-icons">perm_identity</i> Perfis</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView') }}" ><i class="material-icons">perm_identity</i> Escolaridade</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento') }}" ><i class="material-icons">perm_identity</i> Meio Atendi.</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao') }}" ><i class="material-icons">perm_identity</i> Calss. Manifestação</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.status') }}" ><i class="material-icons">perm_identity</i> Status demanda</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias') }}" ><i class="material-icons">perm_identity</i> Melhorias</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria') }}" ><i class="material-icons">perm_identity</i> Recla. x Melhoria</a></li>
-                            <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView') }}" ><i class="material-icons">perm_identity</i> Demandas</a></li>
-                        </ul>
-                    </li>
-                @endrole
-               @role('admin')
-                <li><a href="index.html"><i class="material-icons">lock</i> <span class="nav-label">Segurança</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="{{ route('seracademico.user.index') }}"><i class="material-icons">account_circle</i> Usuários</a></li>
-                        <li><a href="{{ route('seracademico.role.index') }}"><i class="material-icons">account_box</i> Perfís</a></li>
-                    </ul>
-                </li>
-               @endrole
-            </ul>
-        </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
-                    </a>
-                </div>
-                <div class="profile-img">
-                    <span>
-                        @if(isset(Session::get("user")['img']))
-                            <img alt="image" class="img-circle" src="{{asset('/uploads/fotos/'.Session::get("user")['img'])}}" alt="Foto"  height="50" width="50">
-                        @endif
-                    </span>
-                </div>
-
-                {{--<ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <div class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="text-muted text-xs block">Idioma<b class="caret"></b></span></a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                    <li>
-                                        <a rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">
-                                            {{ $properties['native'] }}}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
---}}
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <div class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="text-muted text-xs block">{{ Auth::user()->name }}<b class="caret"></b></span></a>
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                {{-- <li><a href="profile.html">Perfil</a></li>
-                                 <li><a href="contacts.html">Notificações</a></li>--}}
-                                {{--<li class="divider"></li>--}}
-                                <li><a href="{{ url('auth/logout') }}">Sair</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    @yield('content')
-                </div>
+<body>
+<header id="header" class="clearfix" data-ma-theme="blue">
+    <ul class="h-inner">
+        <li class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar">
+            <div class="line-wrap">
+                <div class="line top"></div>
+                <div class="line center"></div>
+                <div class="line bottom"></div>
             </div>
+        </li>
+
+        <li class="hi-logo hidden-xs">
+            <a href="index.html">SerOuvidoria</a>
+        </li>
+
+        <li class="pull-right">
+            <ul class="hi-menu">
+
+
+                <li class="hidden-xs ma-trigger" data-ma-action="sidebar-open" data-ma-target="#chat">
+                    <a href=""><i class="him-icon zmdi zmdi-comment-alt-text"></i></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- Top Search Content -->
+    <div class="h-search-wrap">
+        <div class="hsw-inner">
+            <i class="hsw-close zmdi zmdi-arrow-left" data-ma-action="search-close"></i>
+            <input type="text">
         </div>
     </div>
-</div>
+</header>
 
-<!-- Mainly scripts -->
-<script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
-<script src="{{ asset('/js/jquery-ui.js')}}"></script>
-<script src="{{ asset('/js/select2.full.min.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('/js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
-<script src="{{ asset('/js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+
+<section id="main">
+    {{--Menu Lateral--}}
+    <aside id="sidebar" class="sidebar c-overflow">
+        <div class="s-profile">
+            <a href="" data-ma-action="profile-menu-toggle">
+                <div class="sp-pic">
+                    <img src="{{ asset ('/dist/img/demo/profile-pics/1.jpg') }}" alt="">
+                    {{--{{dd(Auth::user())}}--}}
+                    {{--{{Auth::user()->operador()->get()->first()->nome_operadores}}--}}
+                </div>
+
+                <div class="sp-info">
+                    {{ Auth::user()->name }}
+                    <i class="zmdi zmdi-caret-down"></i>
+                </div>
+            </a>
+
+            <ul class="main-menu">
+                {{--<li>
+                    <a href="profile-about.html"><i class="zmdi zmdi-account"></i>Perfil</a>
+                </li>
+                <li>
+                    <a href=""><i class="zmdi zmdi-input-antenna"></i> Privacy Settings</a>
+                </li>
+                <li>
+                    <a href="{{ route('user.alterarSenha') }}"><i class="zmdi zmdi-settings"></i>Alterar Senha</a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}"><i class="zmdi zmdi-time-restore"></i>Sair</a>
+                </li>--}}
+                <li>
+                    <a href="{{ url('auth/logout') }}"><i class="zmdi zmdi-power"></i>Sair</a>
+                </li>
+            </ul>
+        </div>
+
+        <ul class="main-menu">
+            <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
+            @role('ouvidoria|admin')
+                <li class="sub-menu">
+                    <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment-o"></i> Ouvidoria</a>
+                    <ul>
+                        <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}">Demanda</a></li>
+                    </ul>
+                </li>
+            @endrole
+            @role('ouvidoria|secretaria|admin')
+                <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>
+            @endrole
+            @role('ouvidoria|admin')
+            <li class="sub-menu">
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-storage"></i> Cadastros</a>
+                <ul>
+                    <li><a href="{{ route('seracademico.ouvidoria.psf.index')  }}">PSF</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.secretaria.index')  }}">Secretarias</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.assunto.index')  }}">Assunto</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.subassunto.index')  }}">Subassunto</a></li>
+                </ul>
+            </li>
+            @endrole
+            @role('ouvidoria|admin')
+            <li class="sub-menu">
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Relatório</a>
+                <ul>
+                    <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas')  }}">Pessoas</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus')  }}">Status</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView')  }}">Comunidade</a></li>
+                </ul>
+            </li>
+            @endrole
+            @role('ouvidoria|admin')
+                <li class="sub-menu">
+                    <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-view-compact"></i> Tabelas</a>
+                    <ul>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewAssuntoClassificacao')  }}">Assunto class.</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView')  }}">Assuntos x Subass.</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo')  }}">Sexo</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade')  }}">Escolaridade</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias')  }}">Melhoria</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao')  }}">Comunidade class.</a></li>
+                    </ul>
+                </li>
+            @endrole
+            @role('ouvidoria|admin')
+            <li class="sub-menu">
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-chart"></i> Gráficos</a>
+                <ul>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView')  }}">Características</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.assuntoView')  }}">Assuntos</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView')  }}">Subassuntos</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView')  }}">Meios de registro</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView')  }}">Perfis</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView')  }}">Escolaridade</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento')  }}">Meio Atendi.</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao')  }}">Calss. Manifestação</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.status')  }}">Status demanda</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias')  }}">Melhorias</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria')  }}">Recla. x Melhoria</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView')  }}">Demandas</a></li>
+                </ul>
+            </li>
+            @endrole
+            @role('ouvidoria|admin')
+            <li class="sub-menu">
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-shield-security"></i> Segurança</a>
+                <ul>
+                    <li><a href="{{ route('seracademico.user.index')  }}">Usuários</a></li>
+                    {{--<li><a href="{{ route('seracademico.role.index')  }}">Perfís</a></li>--}}
+                </ul>
+            </li>
+            @endrole
+        </ul>
+    </aside>
+    {{--FIM Menu Lateral--}}
+
+    @yield('content')
+
+</section>
+
+<!-- Page Loader -->
+<div class="page-loader">
+    <div class="preloader pls-blue">
+        <svg class="pl-circular" viewBox="25 25 50 50">
+            <circle class="plc-path" cx="50" cy="50" r="20" />
+        </svg>
+
+        <p>Please wait...</p>
+    </div>
+</div>
+<!-- -->
+
+<!-- Imagem de carregamento em requisições ajax-->
+<div class="modal">
+    <div class="preloader pl-xxl">
+        <svg class="pl-circular" viewBox="25 25 50 50">
+            <circle class="plc-path" cx="50" cy="50" r="20"/>
+        </svg>
+    </div>
+</div>
+<!-- -->
+
+<footer id="footer" class="p-t-0">
+    <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
+</footer>
+
+<!-- Javascript Libraries -->
+<script src="{{ asset('/lib/jquery/dist/jquery.js') }}"></script>
+<script src="{{ asset('/lib/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+<script src="{{ asset('/lib/Waves/dist/waves.min.js') }}"></script>
+{{--<script src="{{ asset('/dist/js/bootstrap-growl/bootstrap-growl.min.js') }}"></script>--}}
+<script src="{{ asset('/lib/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('/lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/lib/select2/dist/js/select2.full.js') }}"></script>
+<script src="{{ asset('/js/plugins/toastr.min.js')}}"></script>
 <script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.tree.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/bootstrap-multiselect.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/bootbox.min.js')}}" type="text/javascript"></script>
-
-<script src="{{ asset('/js/dataTables.buttons.min.js')}}" type="text/javascript"></script>
-
-<script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
-
-{{--<script src="{{ asset('/js/jquery.datatables.customsearch.js')}}" type="text/javascript"></script>--}}
-
-<!-- zTree -->
-<script src="{{ asset('/js/plugins/zTree/jquery.ztree.core.min.js')}}"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="{{ asset('/js/inspinia.js')}}"></script>
-<script src="{{ asset('/js/plugins/pace/pace.min.js')}}"></script>
-<script src="{{ asset('/js/plugins/toastr.min.js')}}"></script>
-<script src="{{ asset('/js/jasny-bootstrap.js')}}"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>
-<script src="{{ asset('/js/sb-admin-2.js')}}"></script>
-<script src="{{ asset('/messages.js')}}"></script>
-<script src="{{ asset('/js/plugins/sweetalert/sweetalert.min.js')  }}"></script>
-<script src="{{ asset('/js/plugins/botao/materialize.min.js')  }}"></script>
+
+<!-- Datepicker e suas dependencias. Sempre importa-lo nessa ordem -->
+<script src="{{ asset('/lib/flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('/lib/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+
+{{--jquery Validator https://jqueryvalidation.org/ --}}
+<script src="{{ asset('/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
+<script src="{{ asset('/lib/jquery-validation/src/additional/cpfBR.js') }}"></script>
+<script src="{{ asset('/dist/js/fileinput/fileinput.min.js')}}"></script>
+
+{{-- Mascaras https://igorescobar.github.io/jQuery-Mask-Plugin/ --}}
+<script src="{{ asset('/lib/jquery-mask-plugin/dist/jquery.mask.js') }}"></script>
+
+<!-- Placeholder for IE9 -->
+<script type="text/javascript" src={{ asset('/lib/jquery-placeholder/jquery.placeholder.min.js') }}></script>
+
+{{--<script src="{{ asset('/js/laroute.js') }}"></script>--}}
+<script src="{{ asset('/lib/chosen/chosen.jquery.js') }}"></script>
+<script type="text/javascript" src={{ asset('/dist/js/app.js') }}></script>
 
 <script type="text/javascript">
     $(document).on({
@@ -334,6 +357,6 @@
 </script>
 
 @yield('javascript')
-</body>
 
+</body>
 </html>

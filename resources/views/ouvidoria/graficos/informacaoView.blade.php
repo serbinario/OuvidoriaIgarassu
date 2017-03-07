@@ -10,55 +10,79 @@
             border: 1px solid black;
             border-collapse: collapse;
         }
-        table , tr , td {
+        table, tr, td {
             font-size: small;
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <div class="col-sm-6 col-md-9">
-                <h4><i class="material-icons">find_in_page</i> GRÁFICO DE CLASSIFICAÇÃO DAS MANIFESTAÇÕES</h4>
+    <div class="container">
+        <section id="content">
+            {{-- Mensagem de alerta quando os dados não atendem as regras de validação que foramd efinidas no servidor --}}
+            <div class="ibox-content">
             </div>
-            <div class="col-sm-6 col-md-3">
-            </div>
-        </div>
+            {{-- Fim mensagem de alerta --}}
+            {{--Formulario--}}
+            {!! Form::open(['method' => "POST"]) !!}
 
-        <div class="ibox-content">
-            <div class="row">
-                {!! Form::open(['method' => "POST"]) !!}
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            {!! Form::label('secretaria', 'Secretaria *') !!}
-                            {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+            <div class="block-header">
+                <h2> GRÁFICO DE CLASSIFICAÇÃO DAS MANIFESTAÇÕES</h2>
+            </div>
+            <div class="card">
+                <div class="card-body card-padding">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+
+                                <div class="form-group col-md-4">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="secretaria">Secretaria *</label>
+                                            {!! Form::select('secretaria',$loadFields['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <?php $data = new \DateTime('now') ?>
+                                            <label for="data_inicio">Início</label>
+                                            {!! Form::text('data_inicio', null , array('class' => 'form-control date ')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <?php $dataFinal =  isset($request['data_fim']) ? $request['data_fim'] : ""; ?>
+                                            <label for="data_fim">Fim</label>
+                                            {!! Form::text('data_fim', $dataFinal , array('class' => 'form-control date ')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 22px" class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <button id="search" class="btn btn-primary btn-sm m-t-10">Consultar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <?php $data = new \DateTime('now') ?>
-                            {!! Form::label('data_inicio', 'Início') !!}
-                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
+                        <div class="col-12-md">
+                            <div id="container" style=" margin: 0 auto"></div>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            {!! Form::label('data_fim', 'Fim') !!}
-                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="button" style="margin-top: 22px" id="search" class="btn-primary btn input-sm">Consultar</button>
                     </div>
                 </div>
-                {!! Form::close() !!}
-            </div><br />
-            <div class="row">
-                <div id="container" style=" margin: 0 auto"></div>
             </div>
-        </div>
+
+            {!! Form::close() !!}
+            {{--Fim formulario--}}
+        </section>
     </div>
 @stop
 
@@ -79,7 +103,9 @@
             });
         });
 
-        $(document).on('click', '#search', function(){
+        $(document).on('click', '#search', function(event){
+
+            event.preventDefault();
 
             var data_inicio = $('input[name=data_inicio]').val();
             var data_fim    = $('input[name=data_fim]').val();

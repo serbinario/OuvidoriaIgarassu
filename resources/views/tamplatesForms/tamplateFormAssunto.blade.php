@@ -1,33 +1,44 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="block-header">
+    <h2>Cadastro de Assunto</h2>
+</div>
+<div class="card">
+    <div class="card-body card-padding">
         <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    {!! Form::label('area_id', 'Secretaria *') !!}
-                    {!! Form::select('area_id', $loadFields['ouvidoria\secretaria'], Session::getOldInput('area_id'), array('class' => 'form-control')) !!}
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="fg-line">
+                            <div class="fg-line">
+                                <label for="nome">Nome *</label>
+                                {!! Form::text('nome', Session::getOldInput('nome') , array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="fg-line">
+                            <div class="fg-line">
+                                <label for="area_id">Secretaria *</label>
+                                {!! Form::select('area_id', $loadFields['ouvidoria\secretaria'], Session::getOldInput('area_id'), array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    {!! Form::label('nome', 'Nome') !!}
-                    {!! Form::text('nome', Session::getOldInput('nome') , array('class' => 'form-control')) !!}
-                </div>
-            </div>
-        </div>
 
-    </div>
-    {{--Buttons Submit e Voltar--}}
-    <div class="col-md-3">
-        <div class="btn-group btn-group-justified">
-            <div class="btn-group">
-                <a href="{{ route('seracademico.ouvidoria.assunto.index') }}" class="btn btn-primary btn-block"><i
-                            class="fa fa-long-arrow-left"></i> Voltar</a></div>
-            <div class="btn-group">
-                {!! Form::submit('Salvar', array('class' => 'btn btn-primary btn-block')) !!}
+                <button class="btn btn-primary btn-sm m-t-10">Salvar</button>
+                <a class="btn btn-primary btn-sm m-t-10" href="{{ route('seracademico.ouvidoria.assunto.index') }}">Voltar</a>
             </div>
         </div>
     </div>
 </div>
+
+
 @section('javascript')
-    {{--<script src="{{ asset('/js/validacoes/validation_form_chamado.js') }}"></script>--}}
-@stop
+    {{--Mensagens personalizadas--}}
+    <script type="text/javascript" src="{{ asset('/dist/js/messages_pt_BR.js')  }}"></script>
+
+    {{--Regras de validação personalizadas--}}
+    <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
+
+    {{--Regras de validação--}}
+    <script type="text/javascript" src="{{ asset('/dist/js/validacao/disciplina.js')  }}"></script>
+@endsection

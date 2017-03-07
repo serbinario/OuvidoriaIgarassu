@@ -33,101 +33,100 @@
 @endsection
 
 @section('content')
-
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <div class="col-sm-6 col-md-9">
-                <h4><i class="material-icons">find_in_page</i> Listar Demandas</h4>
+    <section id="content">
+        <div class="container">
+            <div class="block-header">
+                <h2>Listar Demanda(s)</h2>
             </div>
-        </div>
-        <div class="ibox-content">
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <em> {!! session('message') !!}</em>
-                </div>
-            @endif
 
-            @if(Session::has('errors'))
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    @foreach($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
+            <div class="card material-table">
+                <div class="card-header">
+                    @if(Session::has('message'))
+                        <div class="alert alert-success">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <em> {!! session('message') !!}</em>
+                        </div>
+                    @endif
 
-            <div class="row">
-                <div class="col-sm-12 col-md-12">
-                    <a href="{{ route('seracademico.ouvidoria.demanda.create')}}" class="btn btn-primary">Nova Demanda</a>
-                </div>
-            </div> <br />
-            <div class="row">
-                {!! Form::open(['method' => "POST"]) !!}
-                <div class="col-md-12">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <?php $data = new \DateTime('now') ?>
-                            {!! Form::label('data_inicio', 'Início') !!}
-                            {!! Form::text('data_inicio', null , array('class' => 'form-control date datepicker')) !!}
+                    @if(Session::has('errors'))
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            @foreach($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                @endif
+
+                <!-- Botão novo -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="text-right">
+                                <a class="btn btn-primary btn-sm m-t-10", href="{{ route('seracademico.ouvidoria.demanda.create')}}">Nova Demanda</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            {!! Form::label('data_fim', 'Fim') !!}
-                            {!! Form::text('data_fim', null , array('class' => 'form-control date datepicker')) !!}
+                    <!-- Botão novo -->
+
+                    <div class="row">
+                        {!! Form::open(['method' => "POST"]) !!}
+                        <div class="col-md-12">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <?php $data = new \DateTime('now') ?>
+                                    {!! Form::label('data_inicio', 'Início') !!}
+                                    {!! Form::text('data_inicio', null , array('class' => 'form-control date')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('data_fim', 'Fim') !!}
+                                    {!! Form::text('data_fim', null , array('class' => 'form-control date')) !!}
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" style="margin-top: 28px" id="search" class="btn-primary btn input-sm">Consultar</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <button type="submit" style="margin-top: 22px" id="search" class="btn-primary btn input-sm">Consultar</button>
-                    </div>
+                        {!! Form::close() !!}
+                    </div><br/>
                 </div>
-                {!! Form::close() !!}
-            </div><br />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive">
-                        <table id="demanda-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th>Relato</th>
-                                <th>Data</th>
-                                <th>Nº da demanda</th>
-                                <th>Nome</th>
-                                <th>Endereço</th>
-                                <th>Comunidade</th>
-                                <th>Telefone</th>
-                                <th>Caract. da demanda</th>
-                                <th>Meio de registro</th>
-                                <th>Assunto</th>
-                                <th>Melhoria</th>
-                                <th>Status</th>
-                                <th>Acão</th>
-                            </tr>
-                            </thead>
-                            <tfoot>
-                            <tr>
-                                <th>Relato</th>
-                                <th>Data</th>
-                                <th>Nº da demanda</th>
-                                <th>Nome</th>
-                                <th>Endereço</th>
-                                <th>Comunidade</th>
-                                <th>Telefone</th>
-                                <th>Caract da demanda</th>
-                                <th>Meio de registro</th>
-                                <th>Assunto</th>
-                                <th>Melhoria</th>
-                                <th>Status</th>
-                                <th style="width: 16%;">Acão</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                <div class="table-responsive">
+                    <table id="demanda-grid" class="table table-bordered compact" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Relato</th>
+                            <th>Data</th>
+                            <th>Nº da demanda</th>
+                            <th>Nome</th>
+                            <th>Comunidade</th>
+                            <th>Caract. da demanda</th>
+                            <th>Meio de registro</th>
+                            <th>Assunto</th>
+                            <th>Melhoria</th>
+                            <th>Status</th>
+                            <th>Acão</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Relato</th>
+                            <th>Data</th>
+                            <th>Nº da demanda</th>
+                            <th>Nome</th>
+                            <th>Comunidade</th>
+                            <th>Caract da demanda</th>
+                            <th>Meio de registro</th>
+                            <th>Assunto</th>
+                            <th>Melhoria</th>
+                            <th>Status</th>
+                            <th style="width: 16%;">Acão</th>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @stop
 
 @section('javascript')
@@ -166,9 +165,7 @@
                     {data: 'data', name: 'ouv_demanda.data'},
                     {data: 'codigo', name: 'ouv_demanda.codigo'},
                     {data: 'nome', name: 'ouv_demanda.nome'},
-                    {data: 'endereco', name: 'ouv_demanda.endereco'},
                     {data: 'comunidade', name: 'ouv_comunidade.nome'},
-                    {data: 'fone', name: 'ouv_demanda.fone'},
                     {data: 'informacao', name: 'ouv_informacao.nome'},
                     {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
                     {data: 'assunto', name: 'ouv_assunto.nome'},

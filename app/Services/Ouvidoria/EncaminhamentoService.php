@@ -213,19 +213,17 @@ class EncaminhamentoService
 
         #Recuperando o registro no banco de dados e marcando como em análise e inserindo data de recebimento
         $encaminhamento = $this->repository->find($id);
+        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+
         if($encaminhamento->status_id == '1' || $encaminhamento->status_id == '7') {
             $encaminhamento->data_recebimento = $date->format('Y-m-d');
-            $encaminhamento->status_id = 2;
-        }
-        $encaminhamento->save();
+            $encaminhamento->status_id = 2; // Alterando o status do encaminhamento para em análise
+            $demanda->status_id = 2; // Alterando o status da demanda para em análise
 
-        // Alterando a situação da demanda para em análise
-        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
-        if($encaminhamento->status_id == '1' || $encaminhamento->status_id == '7') {
-            $demanda->status_id = 2;
+            $encaminhamento->save();
+            $demanda->save();
         }
-        $demanda->save();
-
+        
         #Verificando se o registro foi encontrado
         if(!$encaminhamento || !$demanda) {
             throw new \Exception('Não fio possível visualizar a demanda!');

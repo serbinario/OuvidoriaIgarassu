@@ -9,3 +9,5 @@ Homestead.json
 /public/images/
 .gitignore
 /config/snappy.php
+/public/lib/*
+/public/lib/

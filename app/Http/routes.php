@@ -165,6 +165,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'Ouvidoria\ComunidadeController@update']);
                 Route::get('destroy/{id}', ['as' => 'edit', 'uses' => 'Ouvidoria\ComunidadeController@destroy']);
             });
+
+            // Rotas referente a 'melhoria'
+            Route::group(['prefix' => 'melhoria', 'as' => 'melhoria.'], function () {
+                Route::get('index', ['as' => 'index', 'uses' => 'MelhoriaController@index']);
+                Route::post('grid', ['as' => 'grid', 'uses' => 'MelhoriaController@grid']);
+                Route::get('create', ['as' => 'create', 'uses' => 'MelhoriaController@create']);
+                Route::post('store', ['as' => 'store', 'uses' => 'MelhoriaController@store']);
+                Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'MelhoriaController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'MelhoriaController@update']);
+                Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'MelhoriaController@destroy']);
+            });
         });
 
         //Rotas para componentes de segurança
