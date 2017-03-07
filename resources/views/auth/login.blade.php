@@ -47,9 +47,9 @@
 
                 @endif
 
-                <center>
+                {{--<center>
                     <img src="{{ asset('/img/marca_prefeitura.png')}}" style="width: 35%;"/>
-                </center>
+                </center>--}}
 
                {{-- <p class="text-muted text-center">
                     <small><a href="#">Esqueceu a senha?</a></small>
