@@ -28,9 +28,8 @@
     {{--Mensagens personalizadas--}}
     <script type="text/javascript" src="{{ asset('/dist/js/messages_pt_BR.js')  }}"></script>
 
-    {{--Regras de validação personalizadas--}}
+    {{-- --}}
     <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
-
-    {{--Regras de validação--}}
-    <script type="text/javascript" src="{{ asset('/dist/js/validacao/disciplina.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
+    <script src="{{ asset('/js/validacoes/psf.js')}}"></script>
 @endsection

@@ -71,7 +71,7 @@ class PsfController extends Controller
 
             # Verificando a possibilidade de exclusão
             if(count($psf->comunidades) == 0) {
-                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-delete"></i> Remover</a>';
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir"><i class="fa fa-delete"></i> Deletar</a>';
             }
 
             return $html;

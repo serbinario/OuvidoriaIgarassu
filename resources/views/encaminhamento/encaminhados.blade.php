@@ -67,11 +67,12 @@
                                         <label for="status">Status *</label>
                                         <select name="status" class="form-control" id="status">
                                             <option value="0">Todos</option>
-                                            <option value="1">Encaminhados\Reencaminhados</option>
-                                            <option value="2">Em análise</option>
-                                            <option value="3">Conluídos</option>
-                                            <option value="4">Finalizados</option>
-                                            <option value="5">Atrasados</option>
+                                            <option @if($status == '1') selected @endif value="1">Encaminhados\Reencaminhados</option>
+                                            <option @if($status == '2') selected @endif value="2">Em análise</option>
+                                            <option @if($status == '3') selected @endif value="3">Conluídos</option>
+                                            <option @if($status == '4') selected @endif value="4">Finalizados</option>
+                                            <option @if($status == '5') selected @endif value="5">A Atrasar em 15 dias</option>
+                                            <option @if($status == '6') selected @endif value="6">Atrasados</option>
                                         </select>
                                     </div>
                                 </div>
@@ -100,7 +101,7 @@
                     </div><br/>
                 </div>
                 <div class="table-responsive">
-                    <table id="encaminhamento-grid" class="table table-bordered" cellspacing="0" width="100%">
+                    <table id="encaminhamento-grid" class="table table-bordered table-condensed" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Código</th>
@@ -138,6 +139,9 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
+            //Pega o status por acesso a página via get
+            var statusGet = '{{$status}}';
+
             var table = $('#encaminhamento-grid').DataTable({
                 processing: true,
                 serverSide: true,
@@ -149,6 +153,7 @@
                     data: function (d) {
                         d.status = $('select[name=status] option:selected').val();
                         d.responsavel = $('select[name=responsavel] option:selected').val();
+                        d.statusGet = statusGet;
                     }
                 },
                 columns: [
@@ -166,6 +171,7 @@
 
             // Função do submit do search da grid principal
             $('#search').click(function(e) {
+                statusGet = "0";
                 table.draw();
                 e.preventDefault();
             });

@@ -10,9 +10,47 @@
             border: 1px solid black;
             border-collapse: collapse;
         }
+
         table, tr, td {
             font-size: small;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: small;
+        }
+
+        th {
+            background-color:#CCC;
+            font-size: 12px;
+            color:#484848;
+            padding-left:4px;
+            padding-right:4px;
+            border-bottom:solid 1px #CCC;
+            height:26px;
+            padding-right:5px;
+
+        }
+        tr:nth-child(odd) {
+            background-color:#F3F3F3;
+        }
+
+        tr:nth-child(even) {
+            background-color:#FFF;
+
+        }
+
+        tr, td {
+            height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;
+        }
+
     </style>
 @endsection
 
@@ -91,9 +129,9 @@
                         </div>
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table compact">
+                                <table class="table compact table-condensed">
                                     <thead>
-                                    <tr style="background-color: #0a0a0a">
+                                    <tr class="info">
                                         <th style="text-align: center">Sexo</th>
                                         <th style="text-align: center">Total</th>
                                         <th style="text-align: center">%</th>

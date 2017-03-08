@@ -67,11 +67,14 @@ class EncaminhamentoController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function encaminhados()
+    public function encaminhados(Request $request)
     {
+        //Pega o status por acesso a página via get
+        $status = $request->has('status') ? $request->get('status') : "0";
+
         $usuarios = \DB::table('users')->select(['name', 'id'])->get();
         
-        return view('encaminhamento.encaminhados', compact('usuarios'));
+        return view('encaminhamento.encaminhados', compact('usuarios', 'status'));
     }
 
     /**
@@ -85,7 +88,7 @@ class EncaminhamentoController extends Controller
         $rows = \DB::table('ouv_demanda');
 
         # Buscanco as demandas pelos últimos encaminhamentos
-        if($request->has('status') && $request->get('status') == 0) {
+        if($request->has('status') && ($request->get('status') == 0 && $request->get('statusGet') == "0" )) {
             $rows->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -97,7 +100,7 @@ class EncaminhamentoController extends Controller
         }
 
         # Buscanco apenas as demandas encaminhadas e reencaminhadas
-        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '1') {
+        if($request->has('status') && ($request->get('status') == '1' || $request->get('statusGet') == '1')) {
             $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -108,7 +111,7 @@ class EncaminhamentoController extends Controller
         }
 
         # Buscanco apenas as demandas em análise
-        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '2') {
+        if($request->has('status') && ($request->get('status') == '2' || $request->get('statusGet') == '2')) {
             $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -119,7 +122,7 @@ class EncaminhamentoController extends Controller
         }
 
         # Buscanco apenas as demandas concluídas
-        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '3') {
+        if($request->has('status') && ($request->get('status') == '3' || $request->get('statusGet') == '3')) {
             $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -140,8 +143,20 @@ class EncaminhamentoController extends Controller
             });
         }
 
+        # Buscanco apenas as demandas a atrasar em 15 dias
+        if($request->has('status') && ($request->get('status') == '5' || $request->get('statusGet') == '5')) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })->where(\DB::raw('DATEDIFF(ouv_encaminhamento.previsao, CURDATE())'), '<=', '15');
+
+        }
+        
         # Buscanco apenas as demandas atrasadas
-        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '5') {
+        if($request->has('status') && ($request->get('status') == '6' || $request->get('statusGet') == '6')) {
             $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -192,7 +207,6 @@ class EncaminhamentoController extends Controller
      */
     public function detalheParaAnaliseDoEncaminhamento($id)
     {
-
         $this->service->visualizar($id);
 
         $detalheEncaminhamento = $this->queryParaDetalheEncaminhamento($id);
@@ -321,6 +335,9 @@ class EncaminhamentoController extends Controller
             #Recuperando os dados da requisição
             $data = $request->all();
 
+            //$detalhe = $this->queryParaDetalheEncaminhamento($data['id']);
+            //return view('emails.paginaDeNotificacao', compact('detalhe'));
+            
             #Executando a ação
             $returno = $this->service->reencaminarStore($data);
 
@@ -447,7 +464,46 @@ class EncaminhamentoController extends Controller
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
             ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
+            ->select([
+                'ouv_encaminhamento.id as id',
+            ]);
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
+
+        if(count($encaminhamentos->get()) > 0) {
+            $msg = "sucesso";
+        } else {
+            $msg = "nao";
+        }
+
+        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function demandasAAtrasar(Request $request)
+    {
+
+        $encaminhamentos = \DB::table('ouv_demanda')
+            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2)  ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
+            ->where(\DB::raw('DATEDIFF(ouv_encaminhamento.previsao, CURDATE())'), '<=', '15')
             ->select([
                 'ouv_encaminhamento.id as id',
             ]);

@@ -9457,9 +9457,12 @@ h6 small {
     height: 129px;
     margin-bottom: 5px;
     width: 100%;
-    background: url(../img/profile-menu.png) left top no-repeat;
-    background-size: 100%
+    background: url(../img/ouvidoria_saude.png) center top no-repeat;
+    background-size: 50%;
+    background-color: #59b1f6;
 }
+
+/* 289af4 */
 
 .s-profile>a .sp-pic {
     padding: 12px

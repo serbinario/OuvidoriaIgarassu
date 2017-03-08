@@ -84,6 +84,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 #notificações
                 Route::post('novosEncaminhanetos', ['as' => 'novosEncaminhanetos', 'uses' => 'Ouvidoria\EncaminhamentoController@novosEncaminhanetos']);
                 Route::post('demandasAtrasadas', ['as' => 'demandasAtrasadas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAtrasadas']);
+                Route::post('demandasAAtrasar', ['as' => 'demandasAAtrasar', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAAtrasar']);
             });
 
             Route::group(['prefix' => 'report', 'as' => 'report.'], function () {

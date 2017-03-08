@@ -19,8 +19,8 @@ class SerbinarioSendEmail
             ->select(['email', 'name'])->get();
 
 
-            Mail::send('emails.exemplo', ['detalhe' => $detalhe], function ($m) use ($usuarios) {
-                $m->from('uchiteste@gmail.com', 'Demanda');
+            Mail::send('emails.paginaDeNotificacao', ['detalhe' => $detalhe], function ($m) use ($usuarios) {
+                $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de demanda');
 
                 foreach ($usuarios as $usuario) {
                     $m->to($usuario->email, $usuario->name);

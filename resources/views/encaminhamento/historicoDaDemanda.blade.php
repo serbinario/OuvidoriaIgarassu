@@ -2,20 +2,6 @@
 
 @section('css')
     <style type="text/css" class="init">
-        td.details-control {
-            background: url({{asset("/imagemgrid/icone-produto-plus.png")}}) no-repeat center center;
-            cursor: pointer;
-        }
-
-        tr.shown td.details-control {
-            background: url({{asset("/imagemgrid/icone-produto-minus.png")}}) no-repeat center center;
-        }
-
-        a.visualizar {
-            background: url({{asset("/imagemgrid/impressao.png")}}) no-repeat 0 0;
-            width: 23px;
-        }
-
         td.bt {
             padding: 10px 0;
             width: 126px;
@@ -64,6 +50,9 @@
                         <div class="col-lg-12 animated fadeInRight">
                             <div class="mail-box-header">
                                 <div class="pull-right tooltip-demo">
+                                    <button type="button" class="btn btn-default btn-icon-text waves-effect" onclick='javascript:history.back();'>
+                                        <i class="zmdi zmdi-arrow-back"></i> Voltar
+                                    </button>
                                 </div>
                                 <h2>
                                     Histórico
@@ -80,7 +69,7 @@
                                 @foreach($encaminhamentos as $encaminhamento)
                                     <table class="table">
                                         <tbody>
-                                            <tr style="background-color: #e0e5ef">
+                                            <tr class="info">
                                                 <td><b>Data:</b> {{$encaminhamento->data}}</td>
                                                 <td><b>Previsão:</b> {{$encaminhamento->previsao}}</td>
                                                 <td><b>Prioridade:</b> {{$encaminhamento->prioridade}}</td>
@@ -100,9 +89,6 @@
                                     </table>
                                 @endforeach
                                 <div class="mail-body text-right tooltip-demo">
-                                    <button class="btn btn-sm btn-green voltar" onclick='javascript:history.back();'
-                                            type="button"><i class="fa fa-reply"></i> Voltar
-                                    </button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

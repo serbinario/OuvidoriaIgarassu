@@ -107,7 +107,7 @@
                                     <div class=" fg-line">
                                         <label for="informacao_id">O Que Deseja?</label>
                                         <div class="select">
-                                            {!! Form::select('sigilo_id', $loadFields['ouvidoria\informacao'], null, array('class'=> 'form-control')) !!}
+                                            {!! Form::select('informacao_id', $loadFields['ouvidoria\informacao'], null, array('class'=> 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -361,7 +361,14 @@
 </div>
 
 @section('javascript')
-    <script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
+    {{--Mensagens personalizadas--}}
+    <script type="text/javascript" src="{{ asset('/dist/js/messages_pt_BR.js')  }}"></script>
+
+    {{-- --}}
+    <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
+    <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
+
     <script type="text/javascript">
         $(document).ready(function(){
             $('#anonimo').on('change', function(){

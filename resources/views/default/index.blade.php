@@ -8,57 +8,65 @@
             <div class="mini-charts">
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
-                        <div class="mini-charts-item bgm-cyan ">
-                            <div class="clearfix">
-                                <div class=""></div>
-                                <div class="count">
-                                    <small>Demandas a serem analisadas</small>
-                                    <h2>{{$novas->novas}}</h2>
+                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '1']) }}">
+                            <div class="mini-charts-item bgm-cyan ">
+                                <div class="clearfix">
+                                    <div class=""></div>
+                                    <div class="count">
+                                        <small>Demandas a serem analisadas</small>
+                                        <h2>{{$novas->novas}}</h2>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <div class="mini-charts-item bgm-orange">
-                            <div class="clearfix">
-                                <div class=""></div>
-                                <div class="count">
-                                    <small>Demandas em análise</small>
-                                    <h2>{{$analises->analises}}</h2>
+                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '2']) }}">
+                            <div class="mini-charts-item bgm-orange">
+                                <div class="clearfix">
+                                    <div class=""></div>
+                                    <div class="count">
+                                        <small>Demandas em análise</small>
+                                        <h2>{{$analises->analises}}</h2>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <div class="mini-charts-item bgm-lightgreen">
-                            <div class="clearfix">
-                                <div class=""></div>
-                                <div class="count">
-                                    <small>Demandas concluídas</small>
-                                    <h2>{{$concluidas->concluidas}}</h2>
+                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '3']) }}">
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class=""></div>
+                                    <div class="count">
+                                        <small>Demandas concluídas</small>
+                                        <h2>{{$concluidas->concluidas}}</h2>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <div class="mini-charts-item bgm-red">
-                            <div class="clearfix">
-                                <div class=""></div>
-                                <div class="count">
-                                    <small>Demandas atrasadas</small>
-                                    <h2>{{$atrasadas->atrasadas}}</h2>
+                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '6']) }}">
+                            <div class="mini-charts-item bgm-red">
+                                <div class="clearfix">
+                                    <div class=""></div>
+                                    <div class="count">
+                                        <small>Demandas atrasadas</small>
+                                        <h2>{{$atrasadas->atrasadas}}</h2>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body card-padding">
                             <div class="row">
@@ -71,7 +79,7 @@
 
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body card-padding">
                             <div class="row">

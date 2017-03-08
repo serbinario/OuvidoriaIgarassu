@@ -75,7 +75,7 @@ class SecretariasController extends Controller
             $html .= '<a style="margin-right: 5%;" href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
 
             if(count($secretaria->assuntos) == 0 && count($secretaria->departamentos) == 0 && count($secretaria->demandas) == 0) {
-                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir"><i class="fa fa-edit"></i> Deletar</a>';
             }
 
             return $html;

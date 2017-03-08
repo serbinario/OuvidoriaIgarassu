@@ -2,20 +2,6 @@
 
 @section('css')
     <style type="text/css" class="init">
-        td.details-control {
-            background: url({{asset("/imagemgrid/icone-produto-plus.png")}}) no-repeat center center;
-            cursor: pointer;
-        }
-        tr.shown td.details-control {
-            background: url({{asset("/imagemgrid/icone-produto-minus.png")}}) no-repeat center center;
-        }
-
-
-        a.visualizar {
-            background: url({{asset("/imagemgrid/impressao.png")}}) no-repeat 0 0;
-            width: 23px;
-        }
-
         td.bt {
             padding: 10px 0;
             width: 126px;
@@ -65,8 +51,9 @@
                             <div class="col-lg-12 animated fadeInRight">
                                 <div class="mail-box-header">
                                     <div class="pull-right tooltip-demo">
-                                        <button type="button" class="btn btn-white btn-sm"
-                                                data-placement="top" title="Reply" data-toggle="modal" data-target="#modal_responder_encaminhamento"><i class="fa fa-reply"></i> Responder</button>
+                                        <button type="button" class="btn btn-default btn-icon-text waves-effect" data-toggle="modal" data-target="#modal_responder_encaminhamento">
+                                            <i class="zmdi zmdi-check"></i> Responder
+                                        </button>
                                     </div>
                                     <h2>
                                         {{$detalheEncaminhamento->area}} - {{$detalheEncaminhamento->destinatario}}
@@ -85,7 +72,35 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="table-responsive">
-                                                    <table id="encaminhamento-grid" class=" table compact table-bordered" cellspacing="0" width="100%">
+                                                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                                        <div class="btn-group" role="group">
+                                                            <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}" class="btn bgm-bluegray waves-effect">
+                                                                <i class="zmdi zmdi-arrow-back"></i> Voltar</a>
+                                                        </div>
+                                                        <div class="btn-group" role="group">
+                                                            <button type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento" class="btn btn-primary">
+                                                                <i class="zmdi zmdi-check"></i>  Responder</button>
+                                                        </div>
+                                                        <div class="btn-group" role="group">
+                                                            <a href="{!! route('seracademico.ouvidoria.encaminhamento.historico', ['id' => $detalheEncaminhamento->demanda_id]) !!}"
+                                                               class="btn btn-primary"><i class="zmdi zmdi-storage"></i> Histórico</a>
+                                                        </div>
+                                                        @role('ouvidoria|admin')
+                                                            <div class="btn-group" role="group">
+                                                                <a href="{!! route('seracademico.ouvidoria.encaminhamento.reencaminar', ['id' => $detalheEncaminhamento->id]) !!}"
+                                                                   class="btn btn-primary"><i class="zmdi zmdi-mail-reply"></i> Reenchaminhar</a>
+                                                            </div>
+                                                            <div class="btn-group" role="group">
+                                                                <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhar', ['id' => $detalheEncaminhamento->id]) !!}"
+                                                                   class="btn btn-primary"><i class="zmdi zmdi-mail-send"></i> Encaminhar</a>
+                                                            </div>
+                                                            <div class="btn-group" role="group">
+                                                                <button type="button" id="finalizarDemanda" class="btn btn bgm-deeporange waves-effect">
+                                                                    <i class="zmdi zmdi-close-circle-o"></i> Finalizar</button>
+                                                            </div>
+                                                        @endrole
+                                                    </div>
+                                                    <table id="encaminhamento-grid" class=" table compact table-bordered table-condensed" cellspacing="0" width="100%">
                                                         <tbody>
                                                         <tr>
                                                             <td class="titulo">Tipo da demanda</td>
@@ -151,23 +166,23 @@
                                             </div>
                                         </div>
                                     </div><br  />
-                                    <div class="mail-body text-right tooltip-demo">
+                                    {{--<div class="mail-body text-right tooltip-demo">
                                         <a class="btn btn-sm btn-white" href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}">
                                             <i class="fa fa-reply"></i> Voltar</a>
                                         <button class="btn btn-sm btn-white" type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento"><i class="fa fa-arrow-right"></i> Responder</button>
                                         <a class="btn btn-sm btn-white" href="{!! route('seracademico.ouvidoria.encaminhamento.historico', ['id' => $detalheEncaminhamento->demanda_id]) !!}">
                                             <i class="fa fa-arrow-right"></i> Histórico do encaminhamento</a>
                                         @role('ouvidoria|admin')
-                                        <a href="{!! route('seracademico.ouvidoria.encaminhamento.reencaminar', ['id' => $detalheEncaminhamento->id]) !!}"
-                                           data-placement="top"  class="btn btn-sm btn-white"><i class="fa fa-arrow-right"></i> Reenchaminhar</a>
-                                        <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhar', ['id' => $detalheEncaminhamento->id]) !!}" title="" data-placement="top" class="btn btn-sm btn-white">
-                                            <i class="fa fa-arrow-right"></i> Encaminhar
-                                        </a>
-                                        <button type="button" id="finalizarDemanda" title="" data-placement="top" class="btn btn-sm btn-blue">
-                                            <i class="fa fa-arrow-right"></i> Finalizar
-                                        </button>
+                                            <a href="{!! route('seracademico.ouvidoria.encaminhamento.reencaminar', ['id' => $detalheEncaminhamento->id]) !!}"
+                                               data-placement="top"  class="btn btn-sm btn-white"><i class="fa fa-arrow-right"></i> Reenchaminhar</a>
+                                            <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhar', ['id' => $detalheEncaminhamento->id]) !!}" title="" data-placement="top" class="btn btn-sm btn-white">
+                                                <i class="fa fa-arrow-right"></i> Encaminhar
+                                            </a>
+                                            <button type="button" id="finalizarDemanda" title="" data-placement="top" class="btn btn-sm btn-blue">
+                                                <i class="fa fa-arrow-right"></i> Finalizar
+                                            </button>
                                         @endrole
-                                    </div>
+                                    </div>--}}
                                     <div class="clearfix"></div>
                                 </div>
                             </div>

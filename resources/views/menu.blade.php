@@ -126,7 +126,7 @@
             @endrole
             @role('ouvidoria|admin')
             <li class="sub-menu">
-                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-storage"></i> Cadastros</a>
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
                 <ul>
                     <li><a href="{{ route('seracademico.ouvidoria.psf.index')  }}">PSF</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>
@@ -245,7 +245,6 @@
 {{--jquery Validator https://jqueryvalidation.org/ --}}
 <script src="{{ asset('/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
 <script src="{{ asset('/lib/jquery-validation/src/additional/cpfBR.js') }}"></script>
-<script src="{{ asset('/dist/js/fileinput/fileinput.min.js')}}"></script>
 
 {{-- Mascaras https://igorescobar.github.io/jQuery-Mask-Plugin/ --}}
 <script src="{{ asset('/lib/jquery-mask-plugin/dist/jquery.mask.js') }}"></script>
@@ -295,6 +294,7 @@
     };
 
     verificarNovasDemandas();
+    verificarDemandasAAtrasar();
     verificarDemandasAtrasadas();
 
     // Verificar noas demandas
@@ -309,6 +309,29 @@
             }).done(function (json) {
                 if (json['msg'] === "sucesso") {
                     toastr.info('Você tem novas demandas a serem analisadas','Novas Demandas!');
+                    //toastr.clear();
+                }
+            });
+
+            toastr.options.onclick = function () {
+                window.location.href = '{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}'
+            };
+
+        });
+    }
+
+    // Verificar demandas a atrasar
+    function verificarDemandasAAtrasar() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAAtrasar') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg'] === "sucesso") {
+                    toastr.warning('Você tem demandas a atrasar em 15 dias','Demandas a Atrasar!');
                     //toastr.clear();
                 }
             });
@@ -331,13 +354,13 @@
                 datatype: 'json'
             }).done(function (json) {
                 if (json['msg'] === "sucesso") {
-                    toastr.warning('Você tem demandas em atraso','Demandas Atrasadas!');
+                    toastr.error('Você tem demandas em atraso','Demandas Atrasadas!');
                     //toastr.clear();
                 }
             });
 
             toastr.options.onclick = function () {
-                window.location.href = '{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}'
+                window.location.href = '{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}'
             };
 
         });
@@ -347,13 +370,14 @@
     function myLoop () {           //  vamos criar uma função de loop
         setTimeout(function () {    //  Chama a função a cada 3 segundos
             verificarNovasDemandas();
+            verificarDemandasAAtrasar();
             verificarDemandasAtrasadas();
             toastr.clear();
 
-        }, 12000)
+        }, 16000)
     }
     myLoop();
-    var intervalo = window.setInterval(myLoop, 12000);
+    var intervalo = window.setInterval(myLoop, 16000);
 </script>
 
 @yield('javascript')
