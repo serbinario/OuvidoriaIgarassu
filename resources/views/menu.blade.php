@@ -51,7 +51,7 @@
         </li>
 
         <li class="hi-logo hidden-xs">
-            <a href="index.html">SerOuvidoria</a>
+            <a href="#">SerOuvidoria</a>
         </li>
 
         <li class="pull-right">
@@ -79,7 +79,7 @@
     {{--Menu Lateral--}}
     <aside id="sidebar" class="sidebar c-overflow">
         <div class="s-profile">
-            <a href="" data-ma-action="profile-menu-toggle">
+            <a href="#" data-ma-action="profile-menu-toggle">
                 <div class="sp-pic">
                     <img src="{{ asset ('/dist/img/demo/profile-pics/1.jpg') }}" alt="">
                     {{--{{dd(Auth::user())}}--}}
