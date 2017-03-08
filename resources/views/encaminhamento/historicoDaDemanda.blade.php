@@ -66,28 +66,30 @@
                             </div>
                             <div class="mail-box">
                                 <br />
-                                @foreach($encaminhamentos as $encaminhamento)
-                                    <table class="table">
-                                        <tbody>
-                                            <tr class="info">
-                                                <td><b>Data:</b> {{$encaminhamento->data}}</td>
-                                                <td><b>Previsão:</b> {{$encaminhamento->previsao}}</td>
-                                                <td><b>Prioridade:</b> {{$encaminhamento->prioridade}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><b>Secretaria:</b> {{$encaminhamento->area}}</td>
-                                                <td><b>Departamento/Destinatário:</b> {{$encaminhamento->destinatario}}</td>
-                                                <td><b>Status:</b> {{$encaminhamento->status}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"><b>Parecer: </b></span>{{$encaminhamento->parecer}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"><b>Resposta: </b></span>{{$encaminhamento->resposta}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                @endforeach
+                                <div class="table-responsive">
+                                    @foreach($encaminhamentos as $encaminhamento)
+                                        <table class="table">
+                                            <tbody>
+                                                <tr class="info">
+                                                    <td><b>Data:</b> {{$encaminhamento->data}}</td>
+                                                    <td><b>Previsão:</b> {{$encaminhamento->previsao}}</td>
+                                                    <td><b>Prioridade:</b> {{$encaminhamento->prioridade}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Secretaria:</b> {{$encaminhamento->area}}</td>
+                                                    <td><b>Departamento/Destinatário:</b> {{$encaminhamento->destinatario}}</td>
+                                                    <td><b>Status:</b> {{$encaminhamento->status}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><b>Parecer: </b></span>{{$encaminhamento->parecer}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><b>Resposta: </b></span>{{$encaminhamento->resposta}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    @endforeach
+                                </div>
                                 <div class="mail-body text-right tooltip-demo">
                                 </div>
                                 <div class="clearfix"></div>
