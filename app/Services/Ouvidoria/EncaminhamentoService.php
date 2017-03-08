@@ -158,9 +158,12 @@ class EncaminhamentoService
         $encaminhamento =  $this->repository->create($data);
 
         #alterando o status do encaminhamento anterior para fechado
-        $encaminhamentoAnterior = $this->find($data['id']);
-        $encaminhamentoAnterior->status_id = 3;
-        $encaminhamentoAnterior->save();
+        if($data['id']) {
+
+            $encaminhamentoAnterior = $this->find($data['id']);
+            $encaminhamentoAnterior->status_id = 3;
+            $encaminhamentoAnterior->save();
+        }
 
         // Alterando a situação da demanda para reecaminhado
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);

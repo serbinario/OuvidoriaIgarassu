@@ -84,8 +84,8 @@
                                                 {!! Form::textarea('parecer', Session::getOldInput('encaminhamento[parecer]'),
                                                     array('class' => 'form-control', 'rows' => '5')) !!}
                                             </div>
-                                            <input type="hidden" name="demanda_id" value="{{$model->demanda_id}}">
-                                            <input type="hidden" name="id" value="{{$model->id}}">
+                                            <input type="hidden" name="demanda_id" value=" @if(isset($model)) {{$model->demanda_id}} @else {{$id}} @endif ">
+                                            <input type="hidden" name="id" value="@if(isset($model)){{$model->id}}@endif">
                                         </div>
                                     </div>
                                 </div>

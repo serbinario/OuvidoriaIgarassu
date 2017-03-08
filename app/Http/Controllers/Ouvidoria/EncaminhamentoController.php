@@ -89,7 +89,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco as demandas pelos últimos encaminhamentos
         if($request->has('status') && ($request->get('status') == 0 && $request->get('statusGet') == "0" )) {
-            $rows->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -101,7 +101,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco apenas as demandas encaminhadas e reencaminhadas
         if($request->has('status') && ($request->get('status') == '1' || $request->get('statusGet') == '1')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -112,7 +112,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco apenas as demandas em análise
         if($request->has('status') && ($request->get('status') == '2' || $request->get('statusGet') == '2')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -123,7 +123,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco apenas as demandas concluídas
         if($request->has('status') && ($request->get('status') == '3' || $request->get('statusGet') == '3')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -134,7 +134,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco apenas as demandas finalizadas
         if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '4') {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -145,7 +145,7 @@ class EncaminhamentoController extends Controller
 
         # Buscanco apenas as demandas a atrasar em 15 dias
         if($request->has('status') && ($request->get('status') == '5' || $request->get('statusGet') == '5')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -157,7 +157,7 @@ class EncaminhamentoController extends Controller
         
         # Buscanco apenas as demandas atrasadas
         if($request->has('status') && ($request->get('status') == '6' || $request->get('statusGet') == '6')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -168,12 +168,13 @@ class EncaminhamentoController extends Controller
         }
 
         // Estrutura da query em geral
-        $rows->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+        $rows->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->join('users', 'users.id', '=', 'ouv_demanda.user_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->select([
+                'ouv_demanda.id as id',
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
@@ -198,7 +199,14 @@ class EncaminhamentoController extends Controller
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Visualizar</a>';
+            $html = "";
+            if($row->encaminhamento_id) {
+                $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Visualizar</a>';
+            } else {
+                $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info"><i class="fa fa-edit"></i> Encaminhar</a>';
+            }
+
+            return $html;
         })->make(true);
     }
 
@@ -349,6 +357,22 @@ class EncaminhamentoController extends Controller
             #Retorno para a view
             return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Reencaminhamento realizado com sucesso!");
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function fristEncaminhar($id)
+    {
+        try {
+            #Carregando os dados para o cadastro
+            $loadFields = $this->service->load($this->loadFields);
+
+            #retorno para view
+            return view('encaminhamento.encaminhamento', compact('id','loadFields'));
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }

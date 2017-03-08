@@ -399,17 +399,17 @@ class DemandaController extends Controller
 
         // Estrutura da query em geral
         $rows = \DB::table('ouv_demanda')
-            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
                         where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
