@@ -380,7 +380,7 @@ class EncaminhamentoController extends Controller
         try {
             #Recuperando os dados da requisição
             $data = $request->all();
-
+            
             #Executando a ação
             $returno = $this->service->encaminharStore($data);
 
