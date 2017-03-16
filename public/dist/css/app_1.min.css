@@ -9454,15 +9454,17 @@ h6 small {
 
 .s-profile>a {
     display: block;
+   /* height: 129px;*/
     height: 129px;
     margin-bottom: 5px;
+    margin-top: 20px;
     width: 100%;
-    background: url(../img/ouvidoria_saude.png) center top no-repeat;
-    background-size: 50%;
-    background-color: #59b1f6;
+    background: url(../img/ouvidoria-logo.png) center top no-repeat;
+    background-size: 100%;
+    background-color: #fff;
 }
 
-/* 289af4 */
+/* 289af4 59b1f6*/
 
 .s-profile>a .sp-pic {
     padding: 12px

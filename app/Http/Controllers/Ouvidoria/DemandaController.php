@@ -134,8 +134,8 @@ class DemandaController extends Controller
 
             if(count($demanda->encaminhamento) == 0) {
                 $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
+                $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info"><i class="fa fa-edit"></i> Encaminhar</a>';
             }
-            
             return $html;
         })->make(true);
     }

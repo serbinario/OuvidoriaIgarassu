@@ -27,6 +27,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
                 Route::get('cartaEcaminhamento/{id}', ['as' => 'cartaEcaminhamento', 'uses' => 'Ouvidoria\DemandaController@cartaEcaminhamento']);
                 Route::post('situacaoAjax', ['as' => 'situacaoAjax', 'uses' => 'Ouvidoria\DemandaController@situacaoAjax']);
+                Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
             });
 
             Route::group(['prefix' => 'secretaria', 'as' => 'secretaria.'], function () {
@@ -77,13 +78,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('historico/{id}', ['as' => 'historico', 'uses' => 'Ouvidoria\EncaminhamentoController@historicoEncamihamentos']);
                 Route::get('reencaminar/{id}', ['as' => 'reencaminar', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminar']);
                 Route::post('reencaminarStore', ['as' => 'reencaminarStore', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminarStore']);
-                Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
+                //Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
                 Route::get('encaminhar/{id}', ['as' => 'encaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhar']);
                 Route::post('encaminharStore', ['as' => 'encaminharStore', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminharStore']);
                 Route::get('finalizar/{id}', ['as' => 'finalizar', 'uses' => 'Ouvidoria\EncaminhamentoController@finalizar']);
                 
                 #notificações
-                Route::post('novosEncaminhanetos', ['as' => 'novosEncaminhanetos', 'uses' => 'Ouvidoria\EncaminhamentoController@novosEncaminhanetos']);
+                Route::post('novosDemandas', ['as' => 'novosDemandas', 'uses' => 'Ouvidoria\EncaminhamentoController@novosDemandas']);
+                Route::post('demandasEncaminhadas', ['as' => 'demandasEncaminhadas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasEncaminhadas']);
                 Route::post('demandasAtrasadas', ['as' => 'demandasAtrasadas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAtrasadas']);
                 Route::post('demandasAAtrasar', ['as' => 'demandasAAtrasar', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAAtrasar']);
             });

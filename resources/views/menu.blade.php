@@ -81,10 +81,11 @@
         <div class="s-profile">
             <a href="#" data-ma-action="profile-menu-toggle">
                 <div class="sp-pic">
-                    <img src="{{ asset ('/dist/img/demo/profile-pics/1.jpg') }}" alt="">
+                   {{-- <img src="{{ asset ('/dist/img/demo/profile-pics/1.jpg') }}" alt="">--}}
+                    <img src="" alt="">
                     {{--{{dd(Auth::user())}}--}}
                     {{--{{Auth::user()->operador()->get()->first()->nome_operadores}}--}}
-                </div>
+                </div> <br /><br />
 
                 <div class="sp-info">
                     {{ Auth::user()->name }}
@@ -293,7 +294,10 @@
         "hideMethod": "fadeOut",
     };
 
-    verificarNovasDemandas();
+    @role('ouvidoria|admin')
+        verificarNovasDemandas();
+    @endrole
+    verificarDemandasEncaminhadas();
     verificarDemandasAAtrasar();
     verificarDemandasAtrasadas();
 
@@ -304,11 +308,34 @@
 
             jQuery.ajax({
                 type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.novosEncaminhanetos') !!}",
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.novosDemandas') !!}",
                 datatype: 'json'
             }).done(function (json) {
                 if (json['msg'] === "sucesso") {
-                    toastr.info('Você tem novas demandas a serem analisadas','Novas Demandas!');
+                    toastr.success('Você tem novas demandas a serem encaminhadas','Novas Demandas!');
+                    //toastr.clear();
+                }
+            });
+
+            toastr.options.onclick = function () {
+                window.location.href = '{{ route('seracademico.ouvidoria.demanda.index') }}'
+            };
+
+        });
+    }
+
+    // Verificar noas demandas
+    function verificarDemandasEncaminhadas() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasEncaminhadas') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg'] === "sucesso") {
+                    toastr.info('Você tem novas demandas a serem analisadas','Demandas Encaminhadas!');
                     //toastr.clear();
                 }
             });
@@ -369,7 +396,10 @@
     // Faz um refresh para os alertas
     function myLoop () {           //  vamos criar uma função de loop
         setTimeout(function () {    //  Chama a função a cada 3 segundos
-            verificarNovasDemandas();
+            @role('ouvidoria|admin')
+                verificarNovasDemandas();
+            @endrole
+            verificarDemandasEncaminhadas();
             verificarDemandasAAtrasar();
             verificarDemandasAtrasadas();
             toastr.clear();
