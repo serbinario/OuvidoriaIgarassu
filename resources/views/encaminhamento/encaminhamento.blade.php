@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{--<div class="row">
                                 <div class="form-group col-md-5">
                                     <div class="fg-line">
                                         <div class="fg-line">
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="row">
                                 <div class="form-group col-md-8">
                                     <div class="form-group">
@@ -86,9 +86,6 @@
                                             </div>
                                             <input type="hidden" name="demanda_id" value="@if(isset($model)) {{$model->demanda_id}} @else {{$id}} @endif">
                                             <input type="hidden" name="id" value="@if(isset($model)){{$model->id}}@endif">
-                                            @if(isset($id))
-                                                <input type="hidden" name="primeiro_encaminhamento" value="1">
-                                            @endif
                                         </div>
                                     </div>
                                 </div>

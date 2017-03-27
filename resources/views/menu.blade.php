@@ -57,10 +57,42 @@
         <li class="pull-right">
             <ul class="hi-menu">
 
-
-                <li class="hidden-xs ma-trigger" data-ma-action="sidebar-open" data-ma-target="#chat">
-                    <a href=""><i class="him-icon zmdi zmdi-comment-alt-text"></i></a>
+                <li class="dropdown hidden-xs">
+                    <a title="Novas demandas" id="novas-demandas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '7' ])}}">
+                        <i class="him-icon zmdi zmdi-assignment-o"></i>
+                    </a>
                 </li>
+
+                <li class="dropdown hidden-xs">
+                    <a title="Demandas encaminhadas" id="demandas-encaminhadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
+                        <i class="him-icon zmdi zmdi-mail-send"></i>
+                    </a>
+                </li>
+
+                <li class="dropdown hidden-xs">
+                    <a title="Demandas em análise" id="demandas-analise" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '2' ])}}">
+                        <i class="him-icon zmdi zmdi-search"></i>
+                    </a>
+                </li>
+
+                <li class="dropdown hidden-xs">
+                    <a title="Demandas concluídas" id="demandas-concluidas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '3' ])}}">
+                        <i class="him-icon zmdi zmdi-thumb-up"></i>
+                    </a>
+                </li>
+
+                <li class="dropdown hidden-xs">
+                    <a title="Demandas a atrasar" id="demandas-para-atrasar" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '5' ])}}">
+                        <i class="him-icon zmdi zmdi-alarm-check"></i>
+                    </a>
+                </li>
+
+                <li class="dropdown hidden-xs">
+                    <a title="Demandas atrasadas" id="demandas-atrasadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '6' ])}}">
+                        <i class="him-icon zmdi zmdi-timer-off"></i>
+                    </a>
+                </li>
+
             </ul>
         </li>
     </ul>
@@ -114,7 +146,7 @@
 
         <ul class="main-menu">
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
-            @role('ouvidoria|admin')
+            @role('ouvidoria|admin|secretaria')
                 <li class="sub-menu">
                     <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment-o"></i> Ouvidoria</a>
                     <ul>
@@ -122,9 +154,9 @@
                     </ul>
                 </li>
             @endrole
-            @role('ouvidoria|secretaria|admin')
+            {{--@role('ouvidoria|secretaria|admin')
                 <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>
-            @endrole
+            @endrole--}}
             @role('ouvidoria|admin')
             <li class="sub-menu">
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
@@ -135,6 +167,7 @@
                     <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.assunto.index')  }}">Assunto</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.subassunto.index')  }}">Subassunto</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.melhoria.index')  }}">Melhorias</a></li>
                 </ul>
             </li>
             @endrole
@@ -277,7 +310,7 @@
         }
     }, '.modal');
 
-    toastr.options = {
+    /*toastr.options = {
         "closeButton": true,
         "debug": false,
         "progressBar": true,
@@ -292,17 +325,19 @@
         "hideEasing": "linear",
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut",
-    };
+    };*/
 
     @role('ouvidoria|admin')
         verificarNovasDemandas();
     @endrole
     verificarDemandasEncaminhadas();
+    verificarDemandasEmAnalise();
+    verificarDemandasConcluidas();
     verificarDemandasAAtrasar();
     verificarDemandasAtrasadas();
 
     // Verificar noas demandas
-    function verificarNovasDemandas() {
+    /*function verificarNovasDemandas() {
         //Combobox pesquisa turmas por serie via ajax
         $(document).ready(function () {
 
@@ -322,9 +357,29 @@
             };
 
         });
+    }*/
+
+    function verificarNovasDemandas() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.novosDemandas') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg']) {
+                    var html = "<i class='him-counts novas-demandas-qtd'>"+json['msg']+"</i>"
+                    $('.novas-demandas-qtd').remove();
+                    $('#novas-demandas').append(html);
+                }
+            });
+
+        });
     }
 
-    // Verificar noas demandas
+
+    // Verificar novas demandas
     function verificarDemandasEncaminhadas() {
         //Combobox pesquisa turmas por serie via ajax
         $(document).ready(function () {
@@ -334,15 +389,52 @@
                 url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasEncaminhadas') !!}",
                 datatype: 'json'
             }).done(function (json) {
-                if (json['msg'] === "sucesso") {
-                    toastr.info('Você tem novas demandas a serem analisadas','Demandas Encaminhadas!');
-                    //toastr.clear();
+                if (json['msg']) {
+                    var html = "<i class='him-counts demandas-encaminhadas-qtd'>"+json['msg']+"</i>"
+                    $('.demandas-encaminhadas-qtd').remove();
+                    $('#demandas-encaminhadas').append(html);
                 }
             });
 
-            toastr.options.onclick = function () {
-                window.location.href = '{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}'
-            };
+        });
+    }
+
+    // Verificar em análise
+    function verificarDemandasEmAnalise() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasEmAnalise') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg']) {
+                    var html = "<i class='him-counts demandas-analise-qtd'>"+json['msg']+"</i>"
+                    $('.demandas-analise-qtd').remove();
+                    $('#demandas-analise').append(html);
+                }
+            });
+
+        });
+    }
+
+    // Verificar concluidas
+    function verificarDemandasConcluidas() {
+        //Combobox pesquisa turmas por serie via ajax
+        $(document).ready(function () {
+
+            jQuery.ajax({
+                type: 'POST',
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasConcluidas') !!}",
+                datatype: 'json'
+            }).done(function (json) {
+                if (json['msg']) {
+                    var html = "<i class='him-counts demandas-concluidas-qtd'>"+json['msg']+"</i>"
+                    $('.demandas-concluidas-qtd').remove();
+                    $('#demandas-concluidas').append(html);
+                }
+            });
 
         });
     }
@@ -357,16 +449,12 @@
                 url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAAtrasar') !!}",
                 datatype: 'json'
             }).done(function (json) {
-                if (json['msg'] === "sucesso") {
-                    toastr.warning('Você tem demandas a atrasar em 15 dias','Demandas a Atrasar!');
-                    //toastr.clear();
+                if (json['msg']) {
+                    var html = "<i class='him-counts demandas-para-atrasar-qtd'>" + json['msg'] + "</i>"
+                    $('.demandas-para-atrasar-qtd').remove();
+                    $('#demandas-para-atrasar').append(html);
                 }
             });
-
-            toastr.options.onclick = function () {
-                window.location.href = '{!! route('seracademico.ouvidoria.encaminhamento.encaminhados') !!}'
-            };
-
         });
     }
 
@@ -380,16 +468,12 @@
                 url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAtrasadas') !!}",
                 datatype: 'json'
             }).done(function (json) {
-                if (json['msg'] === "sucesso") {
-                    toastr.error('Você tem demandas em atraso','Demandas Atrasadas!');
-                    //toastr.clear();
+                if (json['msg']) {
+                    var html = "<i class='him-counts demandas-atrasadas-qtd'>" + json['msg'] + "</i>"
+                    $('.demandas-atrasadas-qtd').remove();
+                    $('#demandas-atrasadas').append(html);
                 }
             });
-
-            toastr.options.onclick = function () {
-                window.location.href = '{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}'
-            };
-
         });
     }
 
@@ -400,9 +484,10 @@
                 verificarNovasDemandas();
             @endrole
             verificarDemandasEncaminhadas();
+            verificarDemandasEmAnalise();
+            verificarDemandasConcluidas();
             verificarDemandasAAtrasar();
             verificarDemandasAtrasadas();
-            toastr.clear();
 
         }, 16000)
     }

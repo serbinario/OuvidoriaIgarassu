@@ -446,12 +446,11 @@ class TabelasController extends Controller
      */
     public function viewMelhorias()
     {
-
-        $query = $this->melhoriasQuery(array());
+        
         $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.tabelas.melhorias', $query, compact('loadFields'));
+        return view('ouvidoria.tabelas.melhorias', compact('loadFields'));
     }
 
     /**
@@ -482,7 +481,7 @@ class TabelasController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.id as melhoria',
@@ -505,7 +504,11 @@ class TabelasController extends Controller
             $totalMelhorias += $row->qtd;
         }
 
-        $melhorias = \DB::table('ouv_melhorias')->get();
+        $melhorias = \DB::table('ouv_melhorias')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
+            ->where('ouv_area.id', '=', $secretaria)
+            ->select('ouv_melhorias.nome', 'ouv_melhorias.id')
+            ->get();
 
         return compact('rows', 'totalMelhorias', 'melhorias', 'loadFields');
     }

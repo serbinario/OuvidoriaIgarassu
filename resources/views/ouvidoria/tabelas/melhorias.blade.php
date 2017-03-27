@@ -136,38 +136,40 @@
                                         <th style="text-align: center">%</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @foreach($melhorias as $melhoria)
-                                        <tr>
-                                            <td>{{$melhoria->nome}} </td>
-                                            <td>
-                                                @foreach($rows as $row)
-                                                    @if($row->melhoria == $melhoria->id)
-                                                        {{$row->qtd}}
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                            <td>
-                                                @foreach($rows as $row)
-                                                    @if($row->melhoria == $melhoria->id)
-                                                        <?php
-                                                        $valor = $row->qtd / $totalMelhorias;
-                                                        $porcentagem = $valor * 100;
-                                                        echo number_format($porcentagem, 2, ',', '.') . "%";
-                                                        ?>
-                                                    @endif
-                                                @endforeach
-                                            </td>
+                                    @if(isset($melhorias))
+                                        <tbody>
+                                            @foreach($melhorias as $melhoria)
+                                                <tr>
+                                                    <td>{{$melhoria->nome}} </td>
+                                                    <td>
+                                                        @foreach($rows as $row)
+                                                            @if($row->melhoria == $melhoria->id)
+                                                                {{$row->qtd}}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td>
+                                                        @foreach($rows as $row)
+                                                            @if($row->melhoria == $melhoria->id)
+                                                                <?php
+                                                                $valor = $row->qtd / $totalMelhorias;
+                                                                $porcentagem = $valor * 100;
+                                                                echo number_format($porcentagem, 2, ',', '.') . "%";
+                                                                ?>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                        <tr style="background-color: #f1f3f2">
+                                            <td>Total geral</td>
+                                            <td>{{$totalMelhorias}}</td>
+                                            <td>100%</td>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                    <tr style="background-color: #f1f3f2">
-                                        <td>Total geral</td>
-                                        <td>{{$totalMelhorias}}</td>
-                                        <td>100%</td>
-                                    </tr>
-                                    </tfoot>
+                                        </tfoot>
+                                    @endif
                                 </table>
                             </div>
                         </div>

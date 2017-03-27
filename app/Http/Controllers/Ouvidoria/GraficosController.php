@@ -660,7 +660,7 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', "=", "ouv_demanda.melhoria_id")
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.nome as nome',

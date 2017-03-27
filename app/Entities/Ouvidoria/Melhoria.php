@@ -14,6 +14,23 @@ class Melhoria extends Model implements Transformable
 
     protected $fillable = [ 
 		'nome',
+        'area_id'
 	];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function secretaria()
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function demanda()
+    {
+        return $this->hasOne(Demanda::class, 'melhoria_id', 'id');
+    }
+    
 }

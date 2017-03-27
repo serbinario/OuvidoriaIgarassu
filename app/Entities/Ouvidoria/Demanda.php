@@ -40,7 +40,8 @@ class Demanda extends Model implements Transformable
 		'subassunto_id',
 		'melhoria_id',
 		'comunidade_id',
-		'user_id'
+		'user_id',
+		'tipo_resposta_id'
 	];
 
 	/**

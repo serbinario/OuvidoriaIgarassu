@@ -188,6 +188,9 @@ return [
          */
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
 
+        // Envio de sms
+        SimpleSoftwareIO\SMS\SMSServiceProvider::class
+
 
     ],
 
@@ -254,7 +257,10 @@ return [
         'Datatables' => Yajra\Datatables\Datatables::class,
 
         //https://github.com/mcamara/laravel-localization
-        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class
+        'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+
+        // Envio de sms
+        'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class
 
     ],
 

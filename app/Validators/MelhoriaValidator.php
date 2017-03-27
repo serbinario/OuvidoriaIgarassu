@@ -13,11 +13,13 @@ class MelhoriaValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE => [
             
 			'nome' =>  '' ,
+            'area_id' =>  '' ,
 
         ],
         ValidatorInterface::RULE_UPDATE => [
             
 			'nome' =>  '' ,
+            'area_id' =>  '' ,
 
         ],
    ];

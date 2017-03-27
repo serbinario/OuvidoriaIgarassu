@@ -202,7 +202,7 @@ class EncaminhamentoService
         }
 
         #retorno
-        return $encaminhamento;
+        return ['demanda' => $demanda, 'encaminhamento' => $encaminhamento];
     }
 
     /**

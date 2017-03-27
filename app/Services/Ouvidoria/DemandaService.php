@@ -99,7 +99,8 @@ class DemandaService
             'escolaridade',
             'tipoDemanda',
             'subassunto.assunto',
-            'encaminhamento'
+            'encaminhamento',
+            'melhoria.secretaria'
         ];
 
         #Recuperando o registro no banco de dados
@@ -127,20 +128,24 @@ class DemandaService
         $data = $this->tratamentoCampos($data);
 
         $dataObj  = new \DateTime('now');
+        $dataObj->setTimezone( new \DateTimeZone('BRT') );
         $this->anoAtual = $dataObj->format('Y');
         
         //recupera o maior código ja registrado
         $codigo = \DB::table('ouv_demanda')
             ->where('ouv_demanda.codigo', 'like', '%'.$this->anoAtual)
             ->max('codigo');
-        
+
+        // Gerando o código da demanda
         $codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
         $codigoAtual = $codigo != null ?  substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
         $this->ultimoAno = substr($codigo, -4);
 
-        $data['data'] = $dataObj->format('Y-m-d');
+        // Complementando os dados da demanda
+        $data['data'] = $dataObj->format('Y-m-d H:i:s');
         $data['codigo'] = $this->tratarCodigo($codigoAtual);
         $data['user_id'] = $user->id;
+        $data['status_id'] = '5';
 
         #Salvando o registro pincipal
         $demanda =  $this->repository->create($data);
@@ -157,7 +162,7 @@ class DemandaService
             $data['encaminhamento']['status_id'] = '1';
             $data['encaminhamento']['user_id'] = $user->id;
 
-            $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
+            $this->encaminhamentoRepository->create($data['encaminhamento']);
         }
         
         #Verificando se foi criado no banco de dados

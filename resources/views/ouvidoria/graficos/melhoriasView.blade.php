@@ -92,17 +92,6 @@
     <script src="{{ asset('/js/plugins/highcharts_theme.js')  }}"></script>
     <script type="text/javascript">
 
-        $(document).ready(function(){
-
-            jQuery.ajax({
-                type: 'POST',
-                url: '{{route('seracademico.ouvidoria.graficos.melhoriasAjax')}}',
-                datatype: 'json'
-            }).done(function (json) {
-                grafico(json)
-            });
-        });
-
         $(document).on('click', '#search', function(event){
 
             event.preventDefault();

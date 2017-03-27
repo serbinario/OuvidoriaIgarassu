@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Services\Ouvidoria\DemandaService;
 use Yajra\Datatables\Datatables;
@@ -53,11 +54,17 @@ class DemandaController extends Controller
         'Ouvidoria\Prioridade',
         'Ouvidoria\Destinatario',
         'Ouvidoria\Comunidade',
+        'Ouvidoria\TipoResposta'
     ];
 
     private $loadFields2 = [
         'Ouvidoria\Idade',
     ];
+
+    /**
+     * @var
+     */
+    private $user;
 
     /**
     * @param DemandaService $service
@@ -68,14 +75,20 @@ class DemandaController extends Controller
         $this->service   =  $service;
         $this->validator =  $validator;
         $this->repository =  $repository;
+        $this->user = Auth::user();
     }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('ouvidoria.demanda.index');
+        //Pega o status por acesso a página via get
+        $status = $request->has('status') ? $request->get('status') : "0";
+
+        $usuarios = \DB::table('users')->select(['name', 'id'])->get();
+        
+        return view('ouvidoria.demanda.index', compact('usuarios', 'status'));
     }
 
     /**
@@ -85,13 +98,107 @@ class DemandaController extends Controller
     {
 
         $dados = $request->request->all();
-
+        $data  = new \DateTime('now');
+        
         //Tratando as datas
         $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
         $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
-        
+
         #Criando a consulta
-        $rows = \DB::table('ouv_demanda')
+        $rows = \DB::table('ouv_demanda');
+
+        # Buscanco as demandas pelos últimos encaminhamentos
+        if($request->has('status') && ($request->get('status') == 0 && $request->get('statusGet') == "0" )) {
+            $rows->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+
+        }
+
+        # Buscanco apenas as demandas encaminhadas e reencaminhadas
+        if($request->has('status') && ($request->get('status') == '1' || $request->get('statusGet') == '1')) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas em análise
+        if($request->has('status') && ($request->get('status') == '2' || $request->get('statusGet') == '2')) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 2 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas concluídas
+        if($request->has('status') && ($request->get('status') == '3' || $request->get('statusGet') == '3')) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 4 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas finalizadas
+        if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '4') {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id = 6 ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            });
+        }
+
+        # Buscanco apenas as demandas a atrasar em 15 dias
+        if($request->has('status') && ($request->get('status') == '5' || $request->get('statusGet') == '5')) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })->where(\DB::raw('DATEDIFF(ouv_encaminhamento.previsao, CURDATE())'), '<=', '15');
+
+        }
+
+        # Buscanco apenas as demandas atrasadas
+        if($request->has('status') && ($request->get('status') == '6' || $request->get('statusGet') == '6')) {
+            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'));
+
+        }
+
+        # Buscanco apenas as novas demandas
+        if($request->has('status') && ($request->get('status') == '7' || $request->get('statusGet') == '7')) {
+            $rows->leftJoin('ouv_encaminhamento', 'ouv_encaminhamento.demanda_id', '=', 'ouv_demanda.id')
+            ->where('ouv_status.id', '=', '5');
+        }
+
+        // Estrutura da query em geral
+        $rows->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->join('users', 'users.id', '=', 'ouv_demanda.user_id')
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area as area_destino', 'area_destino.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('ouv_area as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
@@ -101,12 +208,20 @@ class DemandaController extends Controller
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
-            ->select('ouv_demanda.id',
+            ->select(
+                'ouv_demanda.id',
                 'ouv_demanda.nome',
+                'ouv_encaminhamento.id as encaminhamento_id',
+                'ouv_prioridade.nome as prioridade',
+                'ouv_destinatario.nome as destino',
+                'area_destino.nome as area_destino',
+                'area_ouvidoria.nome as area_ouvidoria',
+                'users.name as responsavel',
                 'ouv_informacao.nome as informacao',
                 'ouv_idade.nome as idade',
                 'ouv_tipo_demanda.nome as tipo_demanda',
                 'ouv_status.nome as status',
+                'ouv_status.id as status_id',
                 'ouv_exclusividade_sus.nome as exclusividade',
                 'ouv_demanda.relato',
                 'ouv_demanda.endereco',
@@ -115,28 +230,67 @@ class DemandaController extends Controller
                 'ouv_melhorias.nome as melhoria',
                 'ouv_comunidade.nome as comunidade',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
-                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data')
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao')
             );
 
         if($dataIni && $dataFim) {
             $rows->whereBetween('ouv_demanda.data', array($dataIni, $dataFim));
         }
 
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $rows->where('area_destino.id', '=', $this->user->secretaria->id);
+        }
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if($this->user->is('admin|ouvidoria') && $request->get('responsavel') != 0) {
+            $rows->where('users.id', '=', $request->get('responsavel'));
+        }
+
+        
         #Editando a grid
-        return Datatables::of($rows)->addColumn('action', function ($row) {
+        return Datatables::of($rows)
+            ->filter(function ($query) use ($request) {
+                // Filtrando Global
+                if ($request->has('globalSearch')) {
+                    # recuperando o valor da requisição
+                    $search = $request->get('globalSearch');
 
-            # Recuperando a calendario
-            $demanda = $this->repository->find($row->id);
-            
-            $html = '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a> ';
-            $html .= '<a href="registro/'.$row->id.'" class="btn btn-xs btn-success" target="__blanck"><i class="fa fa-edit"></i> Registro</a>';
-            $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck"><i class="fa fa-edit"></i> Documento</a>';
+                    #condição
+                    $query->where(function ($where) use ($search) {
+                        $where->orWhere('ouv_demanda.codigo', 'like', "%$search%")
+                            ->orWhere('ouv_prioridade.nome', 'like', "%$search%")
+                            ->orWhere('ouv_informacao.nome', 'like', "%$search%")
+                            ->orWhere('ouv_tipo_demanda.nome', 'like', "%$search%")
+                            ->orWhere('ouv_demanda.nome', 'like', "%$search%")
+                            ->orWhere('ouv_comunidade.nome', 'like', "%$search%")
+                            ->orWhere('area_destino.nome', 'like', "%$search%")
+                            ->orWhere('ouv_destinatario.nome', 'like', "%$search%")
+                        ;
+                    });
 
-            if(count($demanda->encaminhamento) == 0) {
-                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger"><i class="fa fa-edit"></i> Deletar</a>';
-                $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info"><i class="fa fa-edit"></i> Encaminhar</a>';
-            }
-            return $html;
+                }
+            })->addColumn('action', function ($row) {
+
+                # Recuperando a calendario
+                $demanda = $this->repository->find($row->id);
+                $html   = "";
+
+                if($this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
+                    $html .= '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary waves-effect"><i class="zmdi zmdi-edit" title="Editar"></i></a> ';
+                    $html .= '<a href="registro/'.$row->id.'" class="btn btn-xs btn-success waves-effect" target="__blanck" title="Registro"><i class="zmdi zmdi-file"></i></a> ';
+                    $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck" title="Documento"><i class="zmdi zmdi-file-text"></i></a> ';
+                }
+
+                if(count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
+                    $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir" title="Deletar"><i class="zmdi zmdi-plus-circle-o"></i></a> ';
+                    $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info" title="Encaminhar"><i class="zmdi zmdi-mail-send"></i></a>';
+                } else {
+                    $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a>';
+                }
+
+                return $html;
         })->make(true);
     }
 

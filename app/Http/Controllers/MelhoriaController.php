@@ -10,6 +10,7 @@ use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Seracademico\Validators\MelhoriaValidator;
+use Seracademico\Repositories\Ouvidoria\MelhoriaRepository;
 
 class MelhoriaController extends Controller
 {
@@ -24,18 +25,30 @@ class MelhoriaController extends Controller
     private $validator;
 
     /**
-    * @var array
-    */
-    private $loadFields = [];
+     * @var MelhoriaRepository
+     */
+    protected $repository;
 
     /**
-    * @param MelhoriaService $service
-    * @param MelhoriaValidator $validator
-    */
-    public function __construct(MelhoriaService $service, MelhoriaValidator $validator)
+     * @var array
+     */
+    private $loadFields = [
+        'Ouvidoria\Secretaria'
+    ];
+
+    /**
+     * MelhoriasController constructor.
+     * @param MelhoriaService $service
+     * @param MelhoriaValidator $validator
+     * @param MelhoriaRepository $repository
+     */
+    public function __construct(MelhoriaService $service,
+                                MelhoriaValidator $validator,
+                                MelhoriaRepository $repository)
     {
         $this->service   =  $service;
         $this->validator =  $validator;
+        $this->repository = $repository;
     }
 
     /**
@@ -52,11 +65,29 @@ class MelhoriaController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_melhorias')->select(['id', 'nome']);
+        $rows = \DB::table('ouv_melhorias')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
+            ->select([
+                'ouv_melhorias.id',
+                'ouv_melhorias.nome',
+                'ouv_area.nome as area'
+            ]);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
-            return '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            # Recuperando a calendario
+            $melhoria = $this->repository->find($row->id);
+
+            $html = "";
+            $html .= '<a style="margin-right: 5%;" href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+            if(count($melhoria->demanda) == 0) {
+                $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir"><i class="fa fa-edit"></i> Deletar</a>';
+            }
+
+            return $html;
+
         })->make(true);
     }
 
@@ -83,7 +114,7 @@ class MelhoriaController extends Controller
             $data = $request->all();
 
             #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
+            //$this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
@@ -132,7 +163,7 @@ class MelhoriaController extends Controller
             $data = $request->all();
 
             #tratando as rules
-            $this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
+            //$this->validator->replaceRules(ValidatorInterface::RULE_UPDATE, ":id", $id);
 
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
@@ -145,6 +176,24 @@ class MelhoriaController extends Controller
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         } catch (\Throwable $e) { dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            #Executando a ação
+            $this->service->destroy($id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Remoção realizada com sucesso!");
+        } catch (\Throwable $e) {
+            dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }
     }

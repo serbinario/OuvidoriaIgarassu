@@ -19,8 +19,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btnSaveHistorico">Salvar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="btnCancelHistorico">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
             {!! Form::close() !!}
         </div>

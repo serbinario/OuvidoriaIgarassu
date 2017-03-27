@@ -18,7 +18,8 @@
         "nesbot/carbon": "~1.14",
         "mariuzzo/laravel-js-localization": "^1.2",
         "khill/lavacharts" : "3.0.*",
-        "guzzlehttp/guzzle": "~4.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "simplesoftwareio/simple-sms": "3.1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

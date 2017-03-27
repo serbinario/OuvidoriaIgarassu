@@ -5,6 +5,7 @@ namespace Seracademico\Http\Controllers\Ouvidoria;
 use Illuminate\Http\Request;
 
 use Mail;
+use Mockery\Exception;
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
 use Illuminate\Support\Facades\Auth;
@@ -219,8 +220,9 @@ class EncaminhamentoController extends Controller
         $this->service->visualizar($id);
 
         $detalheEncaminhamento = $this->queryParaDetalheEncaminhamento($id);
+        $loadFields = $this->service->load($this->loadFields);
 
-        return view('encaminhamento.detalheDoEncaminhamento', compact('detalheEncaminhamento'));
+        return view('encaminhamento.detalheDoEncaminhamento', compact('detalheEncaminhamento', 'loadFields'));
     }
 
     /**
@@ -231,7 +233,8 @@ class EncaminhamentoController extends Controller
     {
         $query = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->leftJoin('users', 'users.id', '=', 'ouv_demanda.user_id')
+            ->leftJoin('users as users_demanda', 'users_demanda.id', '=', 'ouv_demanda.user_id')
+            ->leftJoin('users as users_encaminhamento', 'users_encaminhamento.id', '=', 'ouv_encaminhamento.user_id')
             ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
@@ -246,6 +249,7 @@ class EncaminhamentoController extends Controller
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 'ouv_prioridade.nome as prioridade',
                 'ouv_destinatario.nome as destinatario',
+                'ouv_destinatario.id as destinatario_id',
                 'ouv_area.nome as area',
                 'ouv_area.id as area_id',
                 'ouv_status.nome as status',
@@ -259,7 +263,8 @@ class EncaminhamentoController extends Controller
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
                 'ouv_demanda.relato',
-                'users.name as responsavel'
+                'users_demanda.name as responsavel',
+                'users_encaminhamento.name as responsavel_resposta'
             ])->first();
 
         return $query;
@@ -317,6 +322,70 @@ class EncaminhamentoController extends Controller
 
     /**
      * @param $id
+     * @return mixed
+     */
+    public function historicoEncamihamentosGrid($id)
+    {
+        $rows = \DB::table('ouv_encaminhamento')
+            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->where('ouv_demanda.id', '=', $id)
+            ->select([
+                'ouv_encaminhamento.id as id',
+                'ouv_demanda.id as demanda_id',
+                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
+                'ouv_prioridade.nome as prioridade',
+                'ouv_destinatario.nome as destinatario',
+                'ouv_area.nome as area',
+                'ouv_status.nome as status',
+                'ouv_encaminhamento.parecer',
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                'ouv_encaminhamento.encaminhado',
+                'ouv_encaminhamento.resposta',
+            ]);
+        
+        return Datatables::of($rows)->make(true);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function demandasAgrupadasGrid($id)
+    {
+        $rows = \DB::table('demandas_agrupadas')
+            ->join('ouv_demanda as principal', 'principal.id', '=', 'demandas_agrupadas.demanda_principal_id')
+            ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+            ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'agrupada.subassunto_id')
+            ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'agrupada.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'agrupada.status_id')
+            ->where('principal.id', '=', $id)
+            ->select([
+                'demandas_agrupadas.id as id',
+                \DB::raw('CONCAT (SUBSTRING(agrupada.codigo, 4, 4), "/", SUBSTRING(agrupada.codigo, -4, 4)) as codigo'),
+                'ouv_assunto.nome as assunto',
+                'ouv_subassunto.nome as subassunto',
+                'ouv_area.nome as area',
+                'ouv_status.nome as status',
+                \DB::raw('DATE_FORMAT(agrupada.data,"%d/%m/%Y") as data'),
+            ]);
+
+        #Editando a grid
+        return Datatables::of($rows)->addColumn('action', function ($row) {
+           
+            $html = '<a data="'.$row->id.'" class="btn btn-xs btn-danger excluir-agrupamento" title="Deletar"><i class="zmdi zmdi-plus-circle-o"></i></a> ';
+
+            return $html;
+        })->make(true);
+    }
+
+    /**
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function reencaminar($id)
@@ -356,7 +425,7 @@ class EncaminhamentoController extends Controller
             }
 
             #Retorno para a view
-            return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Reencaminhamento realizado com sucesso!");
+            return redirect()->route('seracademico.ouvidoria.demanda.index')->with("message", "Reencaminhamento realizado com sucesso!");
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
         }
@@ -414,13 +483,8 @@ class EncaminhamentoController extends Controller
                 SerbinarioSendEmail::sendEmailMultiplo($detalhe);
             }
 
-            if($request->has('primeiro_encaminhamento') && $request->get('primeiro_encaminhamento') == '1') {
-                #Retorno para a view
-                return redirect()->route('seracademico.ouvidoria.demanda.index')->with("message", "Encaminhamento realizado com sucesso!");
-            } else {
-                #Retorno para a view
-                return redirect()->route('seracademico.ouvidoria.encaminhamento.encaminhados')->with("message", "Encaminhamento realizado com sucesso!");
-            }
+            #Retorno para a view
+            return redirect()->route('seracademico.ouvidoria.demanda.index')->with("message", "Encaminhamento realizado com sucesso!");
 
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
@@ -435,7 +499,27 @@ class EncaminhamentoController extends Controller
     {
         try {
             #Recuperando a empresa
-            $this->service->finalizar($id);
+            $retorno = $this->service->finalizar($id);
+
+            try {
+
+                /*\SMS::driver('email');
+
+                \SMS::send('Your SMS Message', null, function($sms) {
+                    $sms->to('+5581986733592', 'att');
+                });*/
+
+                Mail::send('emails.paginaDeNotificacaoParaUsuario', ['detalhe' => $retorno['demanda']], function ($m) {
+                    $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de demanda');
+
+                    $m->to("fabinhobarreto2@gmail.com", 'Fabio');
+
+                    $m->subject('E-mail de teste!');
+                });
+                
+            } catch (\Throwable $e) {
+                dd($e->getMessage());
+            }
 
             #Retorno para a view
             return redirect()->back()->with("message", "Demanda finalizada com sucesso!");
@@ -455,13 +539,13 @@ class EncaminhamentoController extends Controller
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
             ->where('ouv_status.id', '=','5')
             ->select([
-                'ouv_demanda.id as id',
-            ]);
+                \DB::raw('COUNT(ouv_demanda.id) as qtd'),
+            ])->first();
 
-        if(count($encaminhamentos->get()) > 0) {
-            $msg = "sucesso";
+        if($encaminhamentos) {
+            $msg = $encaminhamentos->qtd;
         } else {
-            $msg = "nao";
+            $msg = false;
         }
 
         return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
@@ -481,7 +565,7 @@ class EncaminhamentoController extends Controller
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->whereIn('ouv_status.id', [1,7])
             ->select([
-                'ouv_encaminhamento.id as id',
+                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
             ]);
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
@@ -489,10 +573,78 @@ class EncaminhamentoController extends Controller
             $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
         }
 
-        if(count($encaminhamentos->get()) > 0) {
-            $msg = "sucesso";
+        $result = $encaminhamentos->first();
+
+        if($result) {
+            $msg = $result->qtd;
         } else {
-            $msg = "nao";
+            $msg = false;
+        }
+
+        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function demandasEmAnalise(Request $request)
+    {
+
+        $encaminhamentos = \DB::table('ouv_encaminhamento')
+            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->whereIn('ouv_status.id', [2])
+            ->select([
+                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
+            ]);
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
+
+        $result = $encaminhamentos->first();
+
+        if($result) {
+            $msg = $result->qtd;
+        } else {
+            $msg = false;
+        }
+
+        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function demandasConcluidas(Request $request)
+    {
+
+        $encaminhamentos = \DB::table('ouv_encaminhamento')
+            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->whereIn('ouv_status.id', [4])
+            ->select([
+                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
+            ]);
+
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
+            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
+        }
+
+        $result = $encaminhamentos->first();
+
+        if($result) {
+            $msg = $result->qtd;
+        } else {
+            $msg = false;
         }
 
         return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
@@ -521,17 +673,20 @@ class EncaminhamentoController extends Controller
             ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
             ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
             ->select([
-                'ouv_encaminhamento.id as id',
+                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
             ]);
+
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
             $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
         }
 
-        if(count($encaminhamentos->get()) > 0) {
-            $msg = "sucesso";
+        $result = $encaminhamentos->first();
+
+        if($result) {
+            $msg = $result->qtd;
         } else {
-            $msg = "nao";
+            $msg = false;
         }
 
         return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
@@ -558,7 +713,7 @@ class EncaminhamentoController extends Controller
             ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
             ->where(\DB::raw('DATEDIFF(ouv_encaminhamento.previsao, CURDATE())'), '<=', '15')
             ->select([
-                'ouv_encaminhamento.id as id',
+                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
             ]);
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
@@ -566,13 +721,80 @@ class EncaminhamentoController extends Controller
             $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
         }
 
-        if(count($encaminhamentos->get()) > 0) {
-            $msg = "sucesso";
+        $result = $encaminhamentos->first();
+
+        if($result) {
+            $msg = $result->qtd;
         } else {
-            $msg = "nao";
+            $msg = false;
         }
 
         return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
     }
 
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function agruparDemanda(Request $request)
+    {
+
+        //Limpando o código
+        $codigo = str_replace("/", '', $request->get('codigo'));
+
+        // Pega a demanda a ser agrupada
+        $demanda = \DB::table('ouv_demanda')->where('ouv_demanda.codigo', '=', $codigo)
+            ->select(['id'])->first();
+
+        if($demanda) {
+
+            // Pega a demanda a ser agrupada
+            $validarAgrupamento = \DB::table('demandas_agrupadas')->where('demanda_principal_id', '=', $request->get('id'))
+                ->where('demanda_agrupada_id', '=', $demanda->id)
+                ->select(['id'])->first();
+
+            // Valida se essa demanda já foi agrupada
+            if(!$validarAgrupamento) {
+
+                \DB::table('demandas_agrupadas')->insert(
+                    ['demanda_principal_id' => $request->get('id'), 'demanda_agrupada_id' => $demanda->id]
+                );
+
+                $retorno = true;
+                $msg     = "Demanda agrupada com sucesso!";
+            } else {
+                $retorno = false;
+                $msg     = "Esta demanda já foi agrupada!";
+            }
+
+
+        } else {
+            $retorno = false;
+            $msg     = "Demanda não encontrada!";
+        }
+
+
+        return \Illuminate\Support\Facades\Response::json(['retorno' => $retorno, 'msg' => $msg]);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function deletarDemandaAgrupada(Request $request)
+    {
+        
+        $result  = \DB::table('demandas_agrupadas')->where('id', '=', $request->get('id'))->delete();
+
+        if($result) {
+            $retorno = true;
+            $msg     = "Agrupamento deletado!";
+        } else {
+            $retorno = false;
+            $msg     = "Falha ao deletar!";
+        }
+        
+        return \Illuminate\Support\Facades\Response::json(['retorno' => $retorno, 'msg' => $msg]);
+    }
 }

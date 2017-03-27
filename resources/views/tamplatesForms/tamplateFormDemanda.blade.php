@@ -47,6 +47,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-3">
+                                    <div class=" fg-line">
+                                        <label for="tipo_resposta_id">Tipo de resposta</label>
+                                        <div class="select">
+                                            {!! Form::select('tipo_resposta_id', (["" => "Selecione"] + $loadFields['ouvidoria\tiporesposta']->toArray()), null, array('class'=> 'form-control' , 'id' => 'tipo_resposta_id')) !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
@@ -75,12 +83,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="comunidade_id">Comunidade</label>
-                                            {!! Form::text('comunidade_id', Session::getOldInput('comunidade_id'), array('class' => 'form-control input-sm', 'placeholder' => 'Nome da Comunidade')) !!}
-                                        </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('comunidade_id', 'Comunidade') !!}
+                                        {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
                             </div>
@@ -119,14 +125,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
+                                {{--<div class="form-group col-md-3">
                                     <div class=" fg-line">
                                         <label for="status_id">Status</label>
                                         <div class="select">
                                             {!! Form::select('status_id', $loadFields['ouvidoria\status'], null, array('class'=> 'form-control', 'id' => 'situacao')) !!}
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
                                         <label for="tipo_demanda_id">Meio de Registro</label>
@@ -230,9 +236,25 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
+                                        <label for="melhoria_secretaria">Secretaria</label>
+                                        <div class="select">
+                                            @if(isset($model->melhoria->secretaria->id))
+                                                {!! Form::select('melhoria_secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), $model->melhoria->secretaria->id, array('class' => 'form-control', 'id' => 'melhoria_secretaria')) !!}
+                                            @else
+                                                {!! Form::select('melhoria_secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('area_id'), array('class' => 'form-control', 'id' => 'melhoria_secretaria')) !!}
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <div class=" fg-line">
                                         <label for="melhoria_id">Melhoria</label>
                                         <div class="select">
-                                            {!! Form::select('melhoria_id', (["" => "Selecione"] + $loadFields['ouvidoria\melhoria']->toArray()), null, array('class'=> 'form-control')) !!}
+                                            @if(isset($model->melhoria->id))
+                                                {!! Form::select('melhoria_id', array($model->melhoria->id => $model->melhoria->nome), $model->melhoria->id,array('class' => 'form-control', 'id' => 'melhoria_id')) !!}
+                                            @else
+                                                {!! Form::select('melhoria_id', array(), Session::getOldInput('subassunto_id'),array('class' => 'form-control', 'id' => 'melhoria_id')) !!}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -293,16 +315,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    {{--<div class="form-group col-md-3">
                                         <div class=" fg-line">
                                             <label for="encaminhamento[status_id]">Status</label>
                                             <div class="select">
                                                 {!! Form::select('encaminhamento[status_id]', (["" => "Selecione"] + $loadFields['ouvidoria\status']->toArray()), Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>--}}
                                 </div>
-                                <div class="row">
+                                {{--<div class="row">
                                     <div class="form-group col-md-5">
                                         <div class="fg-line">
                                             <div class="fg-line">
@@ -319,7 +341,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <div class="form-group">
@@ -328,19 +350,6 @@
                                                 <div class="textarea">
                                                     {!! Form::textarea('encaminhamento[parecer]', Session::getOldInput('encaminhamento[parecer]'),
                                                         array('class' => 'form-control', 'rows' => '5')) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col-md-8">
-                                        <div class="form-group">
-                                            <div class="fg-line">
-                                                <label for="encaminhamento[resposta]">Resposta</label>
-                                                <div class="textarea">
-                                                    {!! Form::textarea('encaminhamento[resposta]', Session::getOldInput('encaminhamento[resposta]'),
-                                                        array('class' => 'form-control', 'rows' => '5', 'placeholder' => 'Let us type some lorem ipsum....')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -492,52 +501,42 @@
             }
         });
 
+        //Carregando as melhorias
+        $(document).on('change', "#melhoria_secretaria", function () {
+            //Removendo as assuntos
+            $('#melhoria_id option').remove();
 
-        //Carregando os bairros
-        /*$(document).on('change', "#encaminhamento", function () {
+            //Recuperando a secretaria
+            var secretaria = $(this).val();
 
-         //Recuperando a cidade
-         var encaminhamento = $(this).val();
+            if (secretaria !== "") {
+                var dados = {
+                    'table' : 'ouv_melhorias',
+                    'field_search' : 'area_id',
+                    'value_search': secretaria,
+                };
 
-         if (encaminhamento !== "") {
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
 
-         jQuery.ajax({
-         type: 'POST',
-         url: '{{ route('seracademico.ouvidoria.demanda.situacaoAjax')  }}',
-         headers: {
-         'X-CSRF-TOKEN': '{{  csrf_token() }}'
-         },
-         datatype: 'json'
-         }).done(function (json) {
+                    option += '<option value="">Selecione</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
 
-         var option = "";
+                    $('#melhoria_id option').remove();
+                    $('#melhoria_id').append(option);
+                });
+            }
+        });
 
-         option += '<option value="">Selecione</option>';
-         for (var i = 0; i < json['situacao'].length; i++) {
-         if(encaminhamento == '1' && json['situacao'][i]['id'] == 2) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else if (encaminhamento == '2' && json['situacao'][i]['id'] == 3) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else if (encaminhamento == '3' && json['situacao'][i]['id'] == 6) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else if (encaminhamento == '4' && json['situacao'][i]['id'] == 4) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else if (encaminhamento == '5' && json['situacao'][i]['id'] == 1) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else if (encaminhamento == '6' && json['situacao'][i]['id'] == 7) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else if (encaminhamento == '7' && json['situacao'][i]['id'] == 5) {
-         option += '<option selected value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         } else {
-         option += '<option value="' + json['situacao'][i]['id'] + '">' + json['situacao'][i]['nome'] + '</option>';
-         }
-
-         }
-
-         $('#situacao option').remove();
-         $('#situacao').append(option);
-         });
-         }
-         });*/
     </script>
 @stop
