@@ -186,7 +186,7 @@ class DemandaService
         $user = Auth::user();
         
         $data = $this->tratamentoCampos($data);
-        
+
         #Atualizando no banco de dados
         $data['user_id'] = $user->id;
         $demanda = $this->repository->update($data, $id);
@@ -362,7 +362,7 @@ class DemandaService
     public function tratamentoDatas(array &$data) : array
     {
          #tratando as datas
-         //$data[''] = $data[''] ? Carbon::createFromFormat("d/m/Y", $data['']) : "";
+         $data['data_da_ocorrencia'] = $data['data_da_ocorrencia'] ? \DateTime::createFromFormat("d/m/Y", $data['data_da_ocorrencia']) : "";
 
          #retorno
          return $data;

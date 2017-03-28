@@ -31,7 +31,7 @@
                         {{--#1--}}
                         <div role="tabpanel" class="tab-pane active" id="dados">
                             <div class="row">
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="sigilo_id">Sigilo</label>
                                         <div class="select">
@@ -39,7 +39,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="anonimo_id">Anônimo</label>
                                         <div class="select">
@@ -47,11 +47,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="tipo_resposta_id">Tipo de resposta</label>
                                         <div class="select">
                                             {!! Form::select('tipo_resposta_id', (["" => "Selecione"] + $loadFields['ouvidoria\tiporesposta']->toArray()), null, array('class'=> 'form-control' , 'id' => 'tipo_resposta_id')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="data_da_ocorrencia">Data da ocorrência</label>
+                                            {!! Form::text('data_da_ocorrencia', Session::getOldInput('data_da_ocorrencia'), array('class' => 'form-control input-sm date', 'id' => 'data_da_ocorrencia', 'placeholder' => 'Data da ocorrência')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="hora_da_ocorrencia">Hora da ocorrência</label>
+                                            {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control input-sm time', 'placeholder' => 'Hora da ocorrência')) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -198,9 +214,9 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
-                                        <label for="sexo_id">Sexo</label>
+                                        <label for="sexos_id">Sexo</label>
                                         <div class="select">
-                                            {!! Form::select('sexo_id', $loadFields['sexo'], null, array('class'=> 'form-control')) !!}
+                                            {!! Form::select('sexos_id', $loadFields['sexo'], null, array('class'=> 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -384,8 +400,10 @@
                 var value = $('#anonimo').val();
                 if(value == '2') {
                     $('#nome').prop('readonly', true);
+                    $('#tipo_resposta_id').prop('disabled', true);
                 } else {
                     $('#nome').prop('readonly', false);
+                    $('#tipo_resposta_id').prop('disabled', false);
                 }
             });
         });

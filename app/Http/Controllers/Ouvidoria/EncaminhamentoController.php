@@ -242,6 +242,7 @@ class EncaminhamentoController extends Controller
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->where('ouv_encaminhamento.id', '=', $id)
             ->select([
                 'ouv_encaminhamento.id as id',
@@ -263,6 +264,7 @@ class EncaminhamentoController extends Controller
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
                 'ouv_demanda.relato',
+                'tipo_resposta.nome as tipo_resposta',
                 'users_demanda.name as responsavel',
                 'users_encaminhamento.name as responsavel_resposta'
             ])->first();
@@ -412,9 +414,6 @@ class EncaminhamentoController extends Controller
         try {
             #Recuperando os dados da requisição
             $data = $request->all();
-
-            //$detalhe = $this->queryParaDetalheEncaminhamento($data['id']);
-            //return view('emails.paginaDeNotificacao', compact('detalhe'));
             
             #Executando a ação
             $returno = $this->service->reencaminarStore($data);

@@ -23,7 +23,7 @@
                                 <div>{{ $error }}</div>
                             @endforeach
                         </div>
-                @endif
+                    @endif
 
                 <!-- Botão novo -->
                     <div class="row">

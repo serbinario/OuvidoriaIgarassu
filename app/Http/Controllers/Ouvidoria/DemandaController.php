@@ -329,8 +329,6 @@ class DemandaController extends Controller
             #Recuperando os dados da requisição
             $data = $request->all();
 
-            #tratando as rules
-
             #Validando a requisição
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
@@ -428,9 +426,54 @@ class DemandaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function registro(Request $request, $id)
+    public function registro($id)
     {
-        $demanda = $this->service->find($id);
+        $demanda = \DB::table('ouv_demanda')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
+                        where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
+            ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
+            ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
+            ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
+            ->where('ouv_demanda.id', '=', $id)
+            ->select([
+                'ouv_encaminhamento.id as encaminhamento_id',
+                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                'ouv_destinatario.nome as destino',
+                'ouv_area.nome as area',
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                'ouv_informacao.nome as informacao',
+                'ouv_assunto.nome as assunto',
+                'ouv_subassunto.nome as subassunto',
+                'ouv_demanda.nome as nome',
+                'ouv_comunidade.nome as comunidade',
+                'ouv_demanda.endereco',
+                'ouv_demanda.numero_end',
+                'ouv_demanda.fone',
+                'ouv_demanda.relato',
+                'ouv_demanda.obs',
+                'ouv_encaminhamento.resposta',
+                'ouv_encaminhamento.parecer',
+                'ouv_demanda.sigilo_id',
+                'ouv_demanda.anonimo_id',
+                'ouv_idade.nome as idade',
+                'sexos.nome as sexo',
+                'escolaridade.nome as escolaridade',
+                'ouv_demanda.exclusividade_sus_id',
+                'ouv_tipo_demanda.nome as tipo_demanda'
+            ])->first();
 
         return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
     }
@@ -548,7 +591,7 @@ class DemandaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function cartaEcaminhamento(Request $request, $id)
+    public function cartaEcaminhamento($id)
     {
 
         // Estrutura da query em geral

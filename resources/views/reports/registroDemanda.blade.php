@@ -1,15 +1,6 @@
 <?php
-
-//Pegando o código
-$cod = str_pad($demanda['codigo'],8,"0",STR_PAD_LEFT);
-$codigo =  substr($cod, 0, -4);
-$ano = substr($cod, -4);
-$codFull = $codigo."/".$ano;
-
 //formatando data
-$date = explode('T', $demanda['data']);
-$data = \DateTime::createFromFormat('Y-m-d', $date[0]);
-$dataFromat = $data->format('d/m/Y');
+//$data = \DateTime::createFromFormat('Y-m-d', $date[0]);
 
 ?>
 <html>
@@ -45,67 +36,70 @@ $dataFromat = $data->format('d/m/Y');
     </center>
 
     <h4>REGISTRO DE DEMANDAS DA OUVIDORIA</h4>
-    <span class="text">Data: {{$dataFromat}}</span> --
-    <span class="text">Demanda n.º {{$codFull}}</span><br />
-    <span class="text">Sigilo @if($demanda['sigilo']['id'] == '2') ( X ) @elseif ($demanda['sigilo']['id'] == '1') ( ) @endif</span>
-    <span class="text">Anônimo @if($demanda['anonimo']['id'] == '2')( X ) @elseif ($demanda['anonimo']['id'] == '1') ( ) @endif</span><br />
+    <span class="text">Data: {{$demanda->data}}</span> --
+    <span class="text">Demanda n.º {{$demanda->codigo}}</span><br />
+    <span class="text">Sigilo @if($demanda->sigilo_id == '2') ( X ) @elseif ($demanda->sigilo_id == '1') ( ) @endif</span>
+    <span class="text">Anônimo @if($demanda->anonimo_id == '2')( X ) @elseif ($demanda->anonimo_id == '1') ( ) @endif</span><br />
     {{--<span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />--}}
 
     <h4>1. DADOS PESSOAIS</h4>
     <table style="width: 100%">
         <tr>
-            <td style="width: 340px"><span class="text">Nome: {{$demanda['nome']}}</span></td>
+            <td style="width: 340px"><span class="text">Nome: {{$demanda->nome}}</span></td>
         </tr>
         <tr>
-            <td style="width: 100px"><span class="text">Endreço: {{$demanda['endereco']}}</span></td>
-            <td style="width: 100px"><span class="text">Número: {{$demanda['numero_end']}}</span></td>
-        </tr>
-        <tr>
-            <td style="width: 100px">
-                <span class="text">Comunidade: {{$demanda['minicipio']}}</span>
-            </td>
-            <td>
-                <span class="text">Telefone: {{$demanda['fone']}}</span>
-            </td>
+            <td style="width: 100px"><span class="text">Endreço: {{$demanda->endereco}}</span></td>
+            <td style="width: 100px"><span class="text">Número: {{$demanda->numero_end}}</span></td>
         </tr>
         <tr>
             <td style="width: 100px">
-                <span class="text">Idade: {{$demanda['idade']['nome']}}</span>
+                <span class="text">Comunidade: {{$demanda->comunidade}}</span>
             </td>
             <td>
-                <span class="text">Sexo: {{$demanda['sexo']['nome']}}</span>
+                <span class="text">Telefone: {{$demanda->fone}}</span>
             </td>
         </tr>
         <tr>
             <td style="width: 100px">
-                <span class="text">Escolaridade: {{$demanda['escolaridade']['nome']}}</span>
+                <span class="text">Idade: {{$demanda->idade}}</span>
             </td>
             <td>
-                <span class="text">Usa exclusivamente SUS? ( <?php if($demanda['exclusividadeSUS']['id'] == '2') { ?> X <?php }?> ) Sim ( <?php if($demanda['exclusividadeSUS']['id'] == '3') { ?> X <?php }?> ) Não </span>
+                <span class="text">Sexo: {{$demanda->sexo}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100px">
+                <span class="text">Escolaridade: {{$demanda->escolaridade}}</span>
+            </td>
+            <td>
+                <span class="text">Usa exclusivamente SUS? ( <?php if($demanda->exclusividade_sus_id == '2') { ?> X <?php }?> ) Sim ( <?php if($demanda->exclusividade_sus_id == '3') { ?> X <?php }?> ) Não </span>
             </td>
         </tr>
     </table>
 
     <h4>2. RELATO (com data aproximada)</h4>
-    <p class="text" style="text-align: justify">{{$demanda['relato']}}</p>
+    <p class="text" style="text-align: justify">{{$demanda->relato}}</p>
 
     <h4>3. Dados da demanda</h4>
     <table style="width: 100%">
         <tr>
-            <td colspan="2" ><span class="text">Origem: {{$demanda['tipoDemanda']['nome']}}</span></td>
+            <td colspan="2" ><span class="text">Origem: {{$demanda->tipo_demanda}}</span></td>
         </tr>
         <tr>
-            <td style="width: 80px"><span class="text">Assunto: {{$demanda['subassunto']['assunto']['nome']}}</span></td>
-            <td style="width: 50px"><span class="text">Subassunto: {{$demanda['subassunto']['nome']}}</span></td>
+            <td style="width: 80px"><span class="text">Assunto: {{$demanda->assunto}}</span></td>
+            <td style="width: 50px"><span class="text">Subassunto: {{$demanda->subassunto}}</span></td>
         </tr>
         <tr>
-            <td colspan="2" style="width: 500px"><span class="text">Destino: {{$demanda['encaminhamento']['destinatario']['nome']}}</span></td>
+            <td colspan="2" style="width: 500px"><span class="text">Área: {{$demanda->area}}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width: 500px"><span class="text">Destino: {{$demanda->destino}}</span></td>
         </tr>
         <tr>
             <td colspan="2" style="width: 340px"><span class="text">Comentário\Parecer:</span></td>
         </tr>
         <tr>
-            <td colspan="2" style="width: 340px"><span class="text">{{$demanda['encaminhamento']['parecer']}}</span></td>
+            <td colspan="2" style="width: 340px"><span class="text">{{$demanda->parecer}}</span></td>
         </tr>
     </table>
 

@@ -5,7 +5,8 @@ namespace Seracademico\Entities\Ouvidoria;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
-use Seracademico\Entities\OuvPessoa;
+use Seracademico\Uteis\SerbinarioDateFormat;
+use Seracademico\Entities\Pessoa;
 use Seracademico\Entities\Sexo;
 
 class Demanda extends Model implements Transformable
@@ -41,8 +42,27 @@ class Demanda extends Model implements Transformable
 		'melhoria_id',
 		'comunidade_id',
 		'user_id',
-		'tipo_resposta_id'
+		'tipo_resposta_id',
+		'data_da_ocorrencia',
+		'hora_da_ocorrencia'
 	];
+
+	/**
+	 * @return string
+	 */
+	public function getDataDaOcorrenciaAttribute()
+	{
+		return SerbinarioDateFormat::toBrazil($this->attributes['data_da_ocorrencia']);
+	}
+
+	/**
+	 *
+	 * @return \DateTime
+	 */
+	public function setDataDaOcorrenciaAttribute($value)
+	{
+		$this->attributes['data_da_ocorrencia'] = SerbinarioDateFormat::toUsa($value);
+	}
 
 	/**
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -129,7 +149,7 @@ class Demanda extends Model implements Transformable
 	 */
 	public function pessoa()
 	{
-		return $this->belongsTo(OuvPessoa::class, 'pessoa_id');
+		return $this->belongsTo(Pessoa::class, 'pessoa_id');
 	}
 
 	/**
