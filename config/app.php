@@ -189,7 +189,7 @@ return [
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
 
         // Envio de sms
-        SimpleSoftwareIO\SMS\SMSServiceProvider::class
+        //SimpleSoftwareIO\SMS\SMSServiceProvider::class
 
 
     ],
@@ -260,7 +260,7 @@ return [
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
 
         // Envio de sms
-        'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class
+        //'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class
 
     ],
 
