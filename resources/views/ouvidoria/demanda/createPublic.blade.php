@@ -8,18 +8,18 @@
 </head>
 <body>
 <div class="conteiner">
-    <br />
     <div class="row">
         <center>
             <div class="topo" style="background-color: #213a53">
-                <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 220px; height: 200px">
-                    <img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">
+                <center>
+                    <img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 500px; height: 150px">
+                    {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
                 </center>
             </div>
         </center>
     </div>
     <br />
-    <center><h2>REGISTRO DE DEMANDA OUVIDORIA SÁUDE IGARASSU</h2></center>
+    <center><h2>REGISTRO DE DEMANDA OUVIDORIA</h2></center>
     <hr style="width: 100%">
     <br />
     <div class="row">
@@ -62,11 +62,127 @@
             var value = $('#anonimo').val();
             if(value == '2') {
                 $('#nome').prop('readonly', true);
+                $('#tipo_resposta_id').prop('disabled', true);
+                $('.dados-pessoas').hide();
             } else {
                 $('#nome').prop('readonly', false);
+                $('#tipo_resposta_id').prop('disabled', false);
+                $('.dados-pessoas').show();
             }
         });
     });
+
+    //Carregando os assuntos
+    $(document).on('change', "#area_id", function () {
+        //Removendo as assuntos
+        $('#assunto_id option').remove();
+
+        //Recuperando a secretaria
+        var secretaria = $(this).val();
+
+        if (secretaria !== "") {
+            var dados = {
+                'table' : 'ouv_assunto',
+                'field_search' : 'area_id',
+                'value_search': secretaria,
+            };
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '{{ route('seracademico.util.search')  }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                },
+                data: dados,
+                datatype: 'json'
+            }).done(function (json) {
+                var option = "";
+
+                option += '<option value="">Selecione um assunto</option>';
+                for (var i = 0; i < json.length; i++) {
+                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                }
+
+                $('#assunto_id option').remove();
+                $('#assunto_id').append(option);
+            });
+        }
+    });
+
+    //Carregando os bairros
+    $(document).on('change', "#assunto_id", function () {
+        //Removendo as Bairros
+        $('#subassunto_id option').remove();
+
+        //Recuperando a cidade
+        var assunto = $(this).val();
+
+        if (assunto !== "") {
+            var dados = {
+                'table' : 'ouv_subassunto',
+                'field_search' : 'assunto_id',
+                'value_search': assunto,
+            };
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '{{ route('seracademico.util.search')  }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                },
+                data: dados,
+                datatype: 'json'
+            }).done(function (json) {
+                var option = "";
+
+                option += '<option value="">Selecione um subassunto</option>';
+                for (var i = 0; i < json.length; i++) {
+                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                }
+
+                $('#subassunto_id option').remove();
+                $('#subassunto_id').append(option);
+            });
+        }
+    });
+
+    //Carregando as melhorias
+    $(document).on('change', "#melhoria_secretaria", function () {
+        //Removendo as assuntos
+        $('#melhoria_id option').remove();
+
+        //Recuperando a secretaria
+        var secretaria = $(this).val();
+
+        if (secretaria !== "") {
+            var dados = {
+                'table' : 'ouv_melhorias',
+                'field_search' : 'area_id',
+                'value_search': secretaria,
+            };
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '{{ route('seracademico.util.search')  }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                },
+                data: dados,
+                datatype: 'json'
+            }).done(function (json) {
+                var option = "";
+
+                option += '<option value="">Selecione</option>';
+                for (var i = 0; i < json.length; i++) {
+                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                }
+
+                $('#melhoria_id option').remove();
+                $('#melhoria_id').append(option);
+            });
+        }
+    });
+
 </script>
 
 </body>

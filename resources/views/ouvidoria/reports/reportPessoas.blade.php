@@ -21,7 +21,7 @@
 <body>
 <center>
     <div class="topo" style="">
-        <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 120px; height: 100px"></center>
+        <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 320px; height: 100px"></center>
     </div>
 </center>
 

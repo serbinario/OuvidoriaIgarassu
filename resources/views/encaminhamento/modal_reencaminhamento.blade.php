@@ -27,7 +27,7 @@
                                 <div class=" fg-line">
                                     <label for="secretaria">Secretaria *</label>
                                     <div class="select">
-                                        {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), $detalheEncaminhamento->area_id, array('class' => 'form-control', 'id' => 'secretaria', 'readonly' => 'readonly')) !!}
+                                        {!! Form::select('secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), $detalheEncaminhamento->area_id, array('class' => 'form-control', 'id' => 'secretaria', 'disabled' => 'disabled')) !!}
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 <div class=" fg-line">
                                     <label for="destinatario_id">Destino *</label>
                                     <div class="select">
-                                        {!! Form::select('destinatario_id', array($detalheEncaminhamento->destinatario_id => $detalheEncaminhamento->destinatario), $detalheEncaminhamento->destinatario_id, array('class' => 'form-control', 'id' => 'destinatario_id', 'readonly' => 'readonly')) !!}
+                                        {!! Form::select('destinatario_id', array($detalheEncaminhamento->destinatario_id => $detalheEncaminhamento->destinatario), $detalheEncaminhamento->destinatario_id, array('class' => 'form-control', 'id' => 'destinatario_id', 'disabled' => 'disabled')) !!}
                                     </div>
                                 </div>
                             </div>

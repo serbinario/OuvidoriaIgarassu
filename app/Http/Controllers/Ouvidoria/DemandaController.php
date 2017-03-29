@@ -314,9 +314,10 @@ class DemandaController extends Controller
     {
         #Carregando os dados para o cadastro
         $loadFields = $this->service->load($this->loadFields);
+        $loadFields2 = $this->service->load2($this->loadFields2);
 
         #Retorno para view
-        return view('ouvidoria.demanda.createPublic', compact('loadFields'));
+        return view('ouvidoria.demanda.createPublic', compact('loadFields', 'loadFields2'));
     }
 
     /**

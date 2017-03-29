@@ -7,6 +7,7 @@ use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Entities\Ouvidoria\Demanda;
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
 use Illuminate\Support\Facades\Auth;
+use Seracademico\Uteis\SerbinarioGerarCodigoSenha;
 
 //use Carbon\Carbon;
 
@@ -130,7 +131,7 @@ class DemandaService
         $dataObj  = new \DateTime('now');
         $dataObj->setTimezone( new \DateTimeZone('BRT') );
         $this->anoAtual = $dataObj->format('Y');
-        
+
         //recupera o maior código ja registrado
         $codigo = \DB::table('ouv_demanda')
             ->where('ouv_demanda.codigo', 'like', '%'.$this->anoAtual)
@@ -144,6 +145,7 @@ class DemandaService
         // Complementando os dados da demanda
         $data['data'] = $dataObj->format('Y-m-d H:i:s');
         $data['codigo'] = $this->tratarCodigo($codigoAtual);
+        $data['n_protocolo'] = SerbinarioGerarCodigoSenha::gerarProtocolo();
         $data['user_id'] = $user->id;
         $data['status_id'] = '5';
 

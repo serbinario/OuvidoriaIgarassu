@@ -51,12 +51,17 @@ $dataFromat = $data->format('d/m/Y');*/
 <body>
 <div class="page">
 
-    <center>
+    {{--<center>
         <div class="topo" style="">
             <center><img src="{{asset('/img/timbre.jpg')}}" style="width: 90px; height: 90px"></center>
         </div><br />
         <span style="font-size: 10px"><b>Secretaria Municipal de Saúde</b></span><br />
         <span style="font-size: 10px">Ouvidoria da Saúde</span>
+    </center>--}}
+    <center>
+        <div class="topo" style="">
+            <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 320px; height: 100px"></center>
+        </div>
     </center>
 
     <h5 style="font-size: 15px">Demanda N.º: {{$demanda->codigo}}</h5>
@@ -122,11 +127,11 @@ $dataFromat = $data->format('d/m/Y');*/
     <p class="text" style="text-align: justify">{{$demanda->resposta}}</p>
 </div>
 
-<center>
+{{--<center>
     <div class="rodape" style="">
         <center><img src="{{asset('/img/pf.png')}}" style="width: 210px; height: 50px"></center>
     </div>
-</center>
+</center>--}}
 
 </body>
 </html>

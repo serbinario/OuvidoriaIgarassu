@@ -31,7 +31,7 @@
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 120px; height: 100px"></center>
+            <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 320px; height: 100px"></center>
         </div>
     </center>
 
@@ -111,11 +111,11 @@
     <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>--}}
 </div>
 
-<center>
+{{--<center>
     <div class="rodape" style="">
         <center><img src="{{asset('/img/pf.png')}}" style="width: 230px; height: 70px"></center>
     </div>
-</center>
+</center>--}}
 
 </body>
 </html>

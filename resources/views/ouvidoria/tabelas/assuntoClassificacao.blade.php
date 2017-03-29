@@ -48,7 +48,7 @@
             padding-right:2px;
             font-family:Verdana, Geneva, sans-serif;
             font-size:12px;
-            white-space:nowrap;
+          /*  white-space:nowrap;*/
             border-bottom:solid 1px #E1E1E1;
         }
     </style>
@@ -131,8 +131,7 @@
                                     <thead>
                                     <tr>
                                         <th colspan="1"></th>
-                                        <th colspan="6" style="text-align: center;background-color: #e7ebe9">Classificação
-                                        </th>
+                                        <th colspan="6" style="text-align: center;background-color: #e7ebe9">Classificação</th>
                                     </tr>
                                     <tr class="info">
                                         <th>Assunto</th>
@@ -150,7 +149,7 @@
                                         <tbody>
                                         @foreach($array as $item)
                                             <tr>
-                                                <td>{{$item['assunto']}}</td>
+                                                <td >{{$item['assunto']}}</td>
                                                 <td>
                                                     @if(isset($item['Denúncia']))
                                                         {{$item['Denúncia']}}
@@ -186,9 +185,9 @@
                                                 </td>
                                                 <td>
                                                     <?php
-                                                    $valor = $item['totalGeral'] / $totalDemandas;
-                                                    $porcentagem = $valor * 100;
-                                                    echo number_format($porcentagem, 2, ',', '.') . "%";
+                                                        $valor = $item['totalGeral'] / $totalDemandas;
+                                                        $porcentagem = $valor * 100;
+                                                        echo number_format($porcentagem, 2, ',', '.') . "%";
                                                     ?>
                                                 </td>
                                             </tr>

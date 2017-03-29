@@ -48,7 +48,7 @@
             padding-right:2px;
             font-family:Verdana, Geneva, sans-serif;
             font-size:12px;
-            white-space:nowrap;
+           /* white-space:nowrap;*/
             border-bottom:solid 1px #E1E1E1;
         }
     </style>

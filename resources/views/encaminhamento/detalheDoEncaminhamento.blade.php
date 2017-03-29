@@ -138,6 +138,19 @@
                                                             <td class="titulo"><b>Subassunto</b></td>
                                                             <td colspan="3">{{$detalheEncaminhamento->subassunto}}</td>
                                                         </tr>
+                                                        @if($detalheEncaminhamento->sigilo_id == '2')
+                                                            @role('ouvidoria|admin')
+                                                                <tr>
+                                                                    <td class="titulo"><b>Manisfestante</b></td>
+                                                                    <td colspan="8">{{$detalheEncaminhamento->manifestante}}</td>
+                                                                </tr>
+                                                            @endrole
+                                                        @else
+                                                            <tr>
+                                                                <td class="titulo"><b>Manisfestante</b></td>
+                                                                <td colspan="8">{{$detalheEncaminhamento->manifestante}}</td>
+                                                            </tr>
+                                                        @endif
                                                         <tr>
                                                             <td class="titulo"><b>Responsável</b></td>
                                                             <td colspan="8">{{$detalheEncaminhamento->responsavel}}</td>
@@ -455,6 +468,8 @@
                         swal("Ok!", json['msg'], "warning");
                     }
                 });
+            } else {
+                swal("Ops!", "Você deve informar o código de uma demanda para o agrupamento!", "warning");
             }
         });
 

@@ -44,7 +44,8 @@ class Demanda extends Model implements Transformable
 		'user_id',
 		'tipo_resposta_id',
 		'data_da_ocorrencia',
-		'hora_da_ocorrencia'
+		'hora_da_ocorrencia',
+		'n_protocolo'
 	];
 
 	/**

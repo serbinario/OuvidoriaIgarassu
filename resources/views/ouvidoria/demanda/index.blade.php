@@ -186,20 +186,25 @@
                 html += "<td class='info' style='width: 15%;'>Nome</td><td>"+d.nome+"</td>";
                 html += "</tr>";
                 html += "<tr>";
-                html += "<td class='info'>Comunidade</td><td>"+d.comunidade+"</td>";
+                var comunidade = d.comunidade != null ? d.comunidade : '';
+                html += "<td class='info'>Comunidade</td><td>"+ comunidade +"</td>";
                 html += "</tr>";
                 html += "<tr>";
-                html += "<td class='info'>Assunto</td><td>"+d.assunto+"</td>";
+                var assunto = d.assunto != null ? d.assunto : '';
+                html += "<td class='info'>Assunto</td><td>"+ assunto +"</td>";
                 html += "</tr>";
                 html += "<tr>";
                 html += "<tr>";
-                html += "<td class='info'>Melhoria</td><td>"+d.melhoria+"</td>";
+                var melhoria = d.melhoria != null ? d.melhoria : '';
+                html += "<td class='info'>Melhoria</td><td>"+ melhoria +"</td>";
                 html += "</tr>";
                 html += "<tr>";
-                html += "<td class='info'>Secretaria</td><td>"+d.area_destino+"</td>";
+                var area = d.area_destino != null ? d.area_destino : '';
+                html += "<td class='info'>Secretaria</td><td>"+ area + "</td>";
                 html += "</tr>";
                 html += "<tr>";
-                html += "<td class='info'>Departamento</td><td>"+d.destino+"</td>";
+                var destino = d.destino != null ? d.destino : '';
+                html += "<td class='info'>Departamento</td><td>"+ destino +"</td>";
                 html += "</tr>";
                 html += "<td colspan='2' class='info'>Relato</td>";
                 html += "</tr>";
@@ -208,8 +213,6 @@
                 html += "</tr>";
                 html += "</tbody>";
                 html += "</table>";
-
-                //html += '<p style="text-align: justify">"'+d.relato+'"</p>';
 
                 return html;
             }
