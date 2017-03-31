@@ -228,7 +228,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn btn-primary btn-sm m-t-10">Enviar</button>
+                <button type="submit" class="btn btn-primary btn-sm m-t-10">Enviar</button>
                 <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
             </div>
 		</div>

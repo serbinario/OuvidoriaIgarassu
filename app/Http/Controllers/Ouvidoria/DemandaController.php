@@ -387,10 +387,10 @@ class DemandaController extends Controller
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             #Executando a ação
-            $this->service->store($data);
+            $result = $this->service->store($data);
 
             #Retorno para a view
-            return redirect()->back()->with("message", "Cadastro realizado com sucesso!");
+            return redirect()->back()->with("message", "Cadastro realizado com sucesso! PROTOCOLO DA MENIFESTAÇÂO: ".$result->n_protocolo);
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
