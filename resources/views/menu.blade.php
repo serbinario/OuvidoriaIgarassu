@@ -57,11 +57,13 @@
         <li class="pull-right">
             <ul class="hi-menu">
 
-                <li class="dropdown hidden-xs">
-                    <a title="Novas demandas" id="novas-demandas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '7' ])}}">
-                        <i class="him-icon zmdi zmdi-assignment-o"></i>
-                    </a>
-                </li>
+                @role('ouvidoria|admin')
+                    <li class="dropdown hidden-xs">
+                        <a title="Novas demandas" id="novas-demandas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '7' ])}}">
+                            <i class="him-icon zmdi zmdi-assignment-o"></i>
+                        </a>
+                    </li>
+                @endrole
 
                 <li class="dropdown hidden-xs">
                     <a title="Demandas encaminhadas" id="demandas-encaminhadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
@@ -145,6 +147,7 @@
         </div>
 
         <ul class="main-menu">
+            <li><a href="{{ route('seracademico.indexPublico')  }}" target="_blank"><i class="zmdi zmdi-home"></i> acesso publico</a></li>
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
             @role('ouvidoria|admin|secretaria')
                 <li class="sub-menu">
@@ -310,185 +313,59 @@
         }
     }, '.modal');
 
-    /*toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "progressBar": true,
-        "preventDuplicates": false,
-        "positionClass": "toast-top-right",
-        "onclick": null,
-        "showDuration": "400",
-        "hideDuration": "1000",
-        "timeOut": "10000",
-        "extendedTimeOut": "10000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut",
-    };*/
 
-    @role('ouvidoria|admin')
-        verificarNovasDemandas();
-    @endrole
-    verificarDemandasEncaminhadas();
-    verificarDemandasEmAnalise();
-    verificarDemandasConcluidas();
-    verificarDemandasAAtrasar();
-    verificarDemandasAtrasadas();
+    verificarAlertasDeDemandas();
 
-    // Verificar noas demandas
-    /*function verificarNovasDemandas() {
-        //Combobox pesquisa turmas por serie via ajax
+    // Função para alerta das demandas
+    function verificarAlertasDeDemandas() {
         $(document).ready(function () {
 
             jQuery.ajax({
                 type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.novosDemandas') !!}",
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.verificarAlertasDeDemandas') !!}",
                 datatype: 'json'
             }).done(function (json) {
-                if (json['msg'] === "sucesso") {
-                    toastr.success('Você tem novas demandas a serem encaminhadas','Novas Demandas!');
-                    //toastr.clear();
-                }
-            });
 
-            toastr.options.onclick = function () {
-                window.location.href = '{{ route('seracademico.ouvidoria.demanda.index') }}'
-            };
-
-        });
-    }*/
-
-    function verificarNovasDemandas() {
-        //Combobox pesquisa turmas por serie via ajax
-        $(document).ready(function () {
-
-            jQuery.ajax({
-                type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.novosDemandas') !!}",
-                datatype: 'json'
-            }).done(function (json) {
-                if (json['msg']) {
-                    var html = "<i class='him-counts novas-demandas-qtd'>"+json['msg']+"</i>"
+                if(json['novas']) {
+                    var html = "<i class='him-counts novas-demandas-qtd'>"+ json['novas'] +"</i>"
                     $('.novas-demandas-qtd').remove();
                     $('#novas-demandas').append(html);
                 }
-            });
-
-        });
-    }
-
-
-    // Verificar novas demandas
-    function verificarDemandasEncaminhadas() {
-        //Combobox pesquisa turmas por serie via ajax
-        $(document).ready(function () {
-
-            jQuery.ajax({
-                type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasEncaminhadas') !!}",
-                datatype: 'json'
-            }).done(function (json) {
-                if (json['msg']) {
-                    var html = "<i class='him-counts demandas-encaminhadas-qtd'>"+json['msg']+"</i>"
+                if(json['encaminhadas']) {
+                    var html = "<i class='him-counts demandas-encaminhadas-qtd'>"+ json['encaminhadas'] +"</i>"
                     $('.demandas-encaminhadas-qtd').remove();
                     $('#demandas-encaminhadas').append(html);
                 }
-            });
-
-        });
-    }
-
-    // Verificar em análise
-    function verificarDemandasEmAnalise() {
-        //Combobox pesquisa turmas por serie via ajax
-        $(document).ready(function () {
-
-            jQuery.ajax({
-                type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasEmAnalise') !!}",
-                datatype: 'json'
-            }).done(function (json) {
-                if (json['msg']) {
-                    var html = "<i class='him-counts demandas-analise-qtd'>"+json['msg']+"</i>"
+                if(json['emAnalise']) {
+                    var html = "<i class='him-counts demandas-analise-qtd'>"+ json['emAnalise'] +"</i>"
                     $('.demandas-analise-qtd').remove();
                     $('#demandas-analise').append(html);
                 }
-            });
-
-        });
-    }
-
-    // Verificar concluidas
-    function verificarDemandasConcluidas() {
-        //Combobox pesquisa turmas por serie via ajax
-        $(document).ready(function () {
-
-            jQuery.ajax({
-                type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasConcluidas') !!}",
-                datatype: 'json'
-            }).done(function (json) {
-                if (json['msg']) {
-                    var html = "<i class='him-counts demandas-concluidas-qtd'>"+json['msg']+"</i>"
+                if(json['concluidas']) {
+                    var html = "<i class='him-counts demandas-concluidas-qtd'>"+json['concluidas']+"</i>"
                     $('.demandas-concluidas-qtd').remove();
                     $('#demandas-concluidas').append(html);
                 }
-            });
-
-        });
-    }
-
-    // Verificar demandas a atrasar
-    function verificarDemandasAAtrasar() {
-        //Combobox pesquisa turmas por serie via ajax
-        $(document).ready(function () {
-
-            jQuery.ajax({
-                type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAAtrasar') !!}",
-                datatype: 'json'
-            }).done(function (json) {
-                if (json['msg']) {
-                    var html = "<i class='him-counts demandas-para-atrasar-qtd'>" + json['msg'] + "</i>"
+                if(json['aAtrasar']) {
+                    var html = "<i class='him-counts demandas-para-atrasar-qtd'>" + json['aAtrasar'] + "</i>"
                     $('.demandas-para-atrasar-qtd').remove();
                     $('#demandas-para-atrasar').append(html);
                 }
-            });
-        });
-    }
-
-    // Verificar demandas atrasadas
-    function verificarDemandasAtrasadas() {
-        //Combobox pesquisa turmas por serie via ajax
-        $(document).ready(function () {
-
-            jQuery.ajax({
-                type: 'POST',
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAtrasadas') !!}",
-                datatype: 'json'
-            }).done(function (json) {
-                if (json['msg']) {
-                    var html = "<i class='him-counts demandas-atrasadas-qtd'>" + json['msg'] + "</i>"
+                if(json['atrasadas']) {
+                    var html = "<i class='him-counts demandas-atrasadas-qtd'>" + json['atrasadas'] + "</i>"
                     $('.demandas-atrasadas-qtd').remove();
                     $('#demandas-atrasadas').append(html);
                 }
+
             });
+
         });
     }
 
     // Faz um refresh para os alertas
     function myLoop () {           //  vamos criar uma função de loop
         setTimeout(function () {    //  Chama a função a cada 3 segundos
-            @role('ouvidoria|admin')
-                verificarNovasDemandas();
-            @endrole
-            verificarDemandasEncaminhadas();
-            verificarDemandasEmAnalise();
-            verificarDemandasConcluidas();
-            verificarDemandasAAtrasar();
-            verificarDemandasAtrasadas();
-
+            verificarAlertasDeDemandas();
         }, 16000)
     }
     myLoop();

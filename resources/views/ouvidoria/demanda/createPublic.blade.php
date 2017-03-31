@@ -20,11 +20,10 @@
     </div>
     <br />
     <center><h2>REGISTRO DE DEMANDA OUVIDORIA</h2></center>
-    <hr style="width: 100%">
+
     <br />
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-md-offset-2">
             @if(Session::has('message'))
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -41,7 +40,7 @@
                 </div>
             @endif
             {!! Form::open(['route'=>'storePublico', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
-            @include('tamplatesForms.tamplateFormDemandaPublic')
+                @include('tamplatesForms.tamplateFormDemandaPublic')
             {!! Form::close() !!}
         </div>
         <div class="col-md-2"></div>

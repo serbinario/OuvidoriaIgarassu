@@ -125,6 +125,7 @@ class EncaminhamentoService
         // Alterando a situação da demanda para reecaminhado
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
         $demanda->status_id = 7;
+        $demanda->user_id = $this->user->id;
         $demanda->save();
 
         #Verificando se foi criado no banco de dados
@@ -168,6 +169,7 @@ class EncaminhamentoService
         // Alterando a situação da demanda para reecaminhado
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
         $demanda->status_id = 1;
+        $demanda->user_id = $this->user->id;
         $demanda->save();
 
         #Verificando se foi criado no banco de dados
@@ -189,11 +191,12 @@ class EncaminhamentoService
         #Recuperando o registro no banco de dados
         $encaminhamento = $this->repository->find($id);
         $encaminhamento->status_id = 6;
-        $encaminhamento->user_id = $this->user->id;
+        //$encaminhamento->user_id = $this->user->id;
         $encaminhamento->save();
 
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
         $demanda->status_id = 6;
+        $demanda->user_id = $this->user->id;
         $demanda->save();
 
         #Verificando se o registro foi encontrado

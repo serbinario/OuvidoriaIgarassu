@@ -11,6 +11,7 @@ use Seracademico\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Seracademico\Services\Ouvidoria\EncaminhamentoService;
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
+use Seracademico\Uteis\SerbinarioAlertaDemanda;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
@@ -504,12 +505,6 @@ class EncaminhamentoController extends Controller
 
             try {
 
-                /*\SMS::driver('email');
-
-                \SMS::send('Your SMS Message', null, function($sms) {
-                    $sms->to('+5581986733592', 'att');
-                });*/
-
                 Mail::send('emails.paginaDeNotificacaoParaUsuario', ['detalhe' => $retorno['demanda']], function ($m) {
                     $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de demanda');
 
@@ -530,207 +525,13 @@ class EncaminhamentoController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return mixed
      */
-    public function novosDemandas(Request $request)
+    public function verificarAlertasDeDemandas()
     {
-        
-        $encaminhamentos = \DB::table('ouv_demanda')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
-            ->where('ouv_status.id', '=','5')
-            ->select([
-                \DB::raw('COUNT(ouv_demanda.id) as qtd'),
-            ])->first();
+        $alertas = SerbinarioAlertaDemanda::alertaDeDemanda();
 
-        if($encaminhamentos) {
-            $msg = $encaminhamentos->qtd;
-        } else {
-            $msg = false;
-        }
-
-        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function demandasEncaminhadas(Request $request)
-    {
-
-        $encaminhamentos = \DB::table('ouv_encaminhamento')
-            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->whereIn('ouv_status.id', [1,7])
-            ->select([
-                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
-            ]);
-
-        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
-        }
-
-        $result = $encaminhamentos->first();
-
-        if($result) {
-            $msg = $result->qtd;
-        } else {
-            $msg = false;
-        }
-
-        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function demandasEmAnalise(Request $request)
-    {
-
-        $encaminhamentos = \DB::table('ouv_encaminhamento')
-            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->whereIn('ouv_status.id', [2])
-            ->select([
-                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
-            ]);
-
-        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
-        }
-
-        $result = $encaminhamentos->first();
-
-        if($result) {
-            $msg = $result->qtd;
-        } else {
-            $msg = false;
-        }
-
-        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function demandasConcluidas(Request $request)
-    {
-
-        $encaminhamentos = \DB::table('ouv_encaminhamento')
-            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->whereIn('ouv_status.id', [4])
-            ->select([
-                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
-            ]);
-
-        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
-        }
-
-        $result = $encaminhamentos->first();
-
-        if($result) {
-            $msg = $result->qtd;
-        } else {
-            $msg = false;
-        }
-
-        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function demandasAtrasadas(Request $request)
-    {
-
-        $data  = new \DateTime('now');
-
-        $encaminhamentos = \DB::table('ouv_demanda')
-            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
-                $join->on(
-                    'ouv_encaminhamento.id', '=',
-                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
-                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2)  ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
-                );
-            })
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
-            ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
-            ->select([
-                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
-            ]);
-
-        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
-        }
-
-        $result = $encaminhamentos->first();
-
-        if($result) {
-            $msg = $result->qtd;
-        } else {
-            $msg = false;
-        }
-
-        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
-    }
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function demandasAAtrasar(Request $request)
-    {
-
-        $encaminhamentos = \DB::table('ouv_demanda')
-            ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
-                $join->on(
-                    'ouv_encaminhamento.id', '=',
-                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
-                    where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2)  ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
-                );
-            })
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
-            ->where(\DB::raw('DATEDIFF(ouv_encaminhamento.previsao, CURDATE())'), '<=', '15')
-            ->select([
-                \DB::raw('COUNT(ouv_encaminhamento.id) as qtd'),
-            ]);
-
-        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $encaminhamentos->where('ouv_area.id', '=', $this->user->secretaria->id);
-        }
-
-        $result = $encaminhamentos->first();
-
-        if($result) {
-            $msg = $result->qtd;
-        } else {
-            $msg = false;
-        }
-
-        return \Illuminate\Support\Facades\Response::json(['msg' => $msg]);
+        return \Illuminate\Support\Facades\Response::json($alertas);
     }
 
 

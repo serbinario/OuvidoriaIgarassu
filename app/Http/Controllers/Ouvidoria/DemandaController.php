@@ -92,6 +92,32 @@ class DemandaController extends Controller
     }
 
     /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function indexPublico()
+    {
+        return view('ouvidoria.demanda.indexPublico');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function buscarDemanda()
+    {
+        return view('ouvidoria.demanda.buscarDemanda');
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getDemanda(Request $request)
+    {
+        $dados = $this->service->detalheDaDemanda($request);
+
+        return view('ouvidoria.demanda.buscarDemanda', compact('dados'));
+    }
+
+    /**
      * @return mixed
      */
     public function grid(Request $request)
@@ -195,7 +221,7 @@ class DemandaController extends Controller
 
         // Estrutura da query em geral
         $rows->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('users', 'users.id', '=', 'ouv_demanda.user_id')
+            ->leftJoin('users', 'users.id', '=', 'ouv_demanda.user_id')
             ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('ouv_area as area_destino', 'area_destino.id', '=', 'ouv_destinatario.area_id')
             ->leftJoin('ouv_area as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')

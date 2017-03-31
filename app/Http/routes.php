@@ -12,6 +12,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         //Rotas gerais
         Route::get('index'  , ['as' => 'index', 'uses' => 'DefaultController@index']);
+        Route::get('indexPublico'  , ['as' => 'indexPublico', 'uses' => 'Ouvidoria\DemandaController@indexPublico']);
 
         Route::group(['prefix' => 'ouvidoria', 'as' => 'ouvidoria.'], function () {
 
@@ -45,12 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('finalizar/{id}', ['as' => 'finalizar', 'uses' => 'Ouvidoria\EncaminhamentoController@finalizar']);
 
                 #notificações
-                Route::post('novosDemandas', ['as' => 'novosDemandas', 'uses' => 'Ouvidoria\EncaminhamentoController@novosDemandas']);
-                Route::post('demandasEncaminhadas', ['as' => 'demandasEncaminhadas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasEncaminhadas']);
-                Route::post('demandasAtrasadas', ['as' => 'demandasAtrasadas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAtrasadas']);
-                Route::post('demandasAAtrasar', ['as' => 'demandasAAtrasar', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAAtrasar']);
-                Route::post('demandasEmAnalise', ['as' => 'demandasEmAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasEmAnalise']);
-                Route::post('demandasConcluidas', ['as' => 'demandasConcluidas', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasConcluidas']);
+                Route::post('verificarAlertasDeDemandas', ['as' => 'verificarAlertasDeDemandas', 'uses' => 'Ouvidoria\EncaminhamentoController@verificarAlertasDeDemandas']);
 
                 #Demandas agrupadas
                 Route::get('demandasAgrupadasGrid/{id}', ['as' => 'demandasAgrupadasGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAgrupadasGrid']);
@@ -222,4 +218,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     //Ouvidoria
     Route::get('createPublico', ['as' => 'createPublico', 'uses' => 'Ouvidoria\DemandaController@createPublic']);
     Route::post('storePublico', ['as' => 'storePublico', 'uses' => 'Ouvidoria\DemandaController@storePublic']);
+    Route::get('buscarDemanda', ['as' => 'buscarDemanda', 'uses' => 'Ouvidoria\DemandaController@buscarDemanda']);
+    Route::post('getDemanda', ['as' => 'getDemanda', 'uses' => 'Ouvidoria\DemandaController@getDemanda']);
 });
