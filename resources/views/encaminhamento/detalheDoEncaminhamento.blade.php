@@ -97,11 +97,11 @@
                                                             <button type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento" class="btn btn-primary">
                                                                 <i class="zmdi zmdi-check"></i>  Responder</button>
                                                         </div>
-                                                        <div class="btn-group" role="group">
-                                                            <a href="{!! route('seracademico.ouvidoria.encaminhamento.historico', ['id' => $detalheEncaminhamento->demanda_id]) !!}"
-                                                               class="btn btn-primary"><i class="zmdi zmdi-storage"></i> Histórico</a>
-                                                        </div>
                                                         @role('ouvidoria|admin')
+                                                            <div class="btn-group" role="group">
+                                                                <button type="button" data-toggle="modal" data-target="#modal_resposta_ouvidor_encaminhamento"
+                                                                        class="btn btn-primary"><i class="zmdi zmdi-check"></i> Resposta ouvidoria</button>
+                                                            </div>
                                                             <div class="btn-group" role="group">
                                                                 <button type="button" data-toggle="modal" data-target="#modal_reencaminhamento"
                                                                    class="btn btn-primary"><i class="zmdi zmdi-mail-reply"></i> Reenchaminhar</button>
@@ -280,6 +280,7 @@
                             </div>
                         </div><br/>
                         @include('encaminhamento.modal_responder_encaminhamento')
+                        @include('encaminhamento.modal_resposta_ouvidor_encaminhamento')
                         @include('encaminhamento.modal_encaminhamento')
                         @include('encaminhamento.modal_reencaminhamento')
                 </div>

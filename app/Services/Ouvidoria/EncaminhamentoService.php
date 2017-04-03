@@ -69,18 +69,28 @@ class EncaminhamentoService
      */
     public function responder(array $data) : Encaminhamento
     {
-        $id         = isset($data['id']) ? $data['id'] : "";
-        $Resposta   = isset($data['resposta']) ? $data['resposta'] : "";
+        $id                 = isset($data['id']) ? $data['id'] : "";
+        $Resposta           = isset($data['resposta']) ? $data['resposta'] : "";
+        $RespostaOuvidor    = isset($data['resposta_ouvidor']) ? $data['resposta_ouvidor'] : "";
+        $tipoResposta       = isset($data['tipo_resposta']) ? $data['tipo_resposta'] : "";
 
         $date  = new \DateTime('now');
 
-        if($id && $Resposta) {
+        if($id && ($Resposta || $RespostaOuvidor)) {
 
             $encaminhamento = $this->find($id);
-            $encaminhamento->resposta = $Resposta;
-            $encaminhamento->status_id = 4;
-            $encaminhamento->data_resposta = $date->format('Y-m-d');
-            $encaminhamento->user_id = $this->user->id;
+            if($tipoResposta == '1') {
+                $encaminhamento->resposta           = $Resposta;
+            } else {
+                $encaminhamento->resposta_ouvidor   = $RespostaOuvidor;
+            }
+            $encaminhamento->status_id              = 4;
+            $encaminhamento->data_resposta          = $date->format('Y-m-d');
+            $encaminhamento->resp_publica           = isset($data['resp_publica']) ? $data['resp_publica'] : '0';
+            $encaminhamento->resp_ouvidor_publica   = isset($data['resp_ouvidor_publica']) ? $data['resp_ouvidor_publica'] : "0";
+            if($tipoResposta == '1') {
+                $encaminhamento->user_id = $this->user->id;
+            }
             $encaminhamento->save();
 
             // Alterando a situação da demanda para concluído

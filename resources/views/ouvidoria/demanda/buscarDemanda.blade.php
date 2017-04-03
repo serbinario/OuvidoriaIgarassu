@@ -10,6 +10,7 @@
         body {
             font-family: arial;
         }
+
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
@@ -36,6 +37,7 @@
             padding-right:5px;
 
         }
+
         tr:nth-child(odd) {
             background-color:#F3F3F3;
         }
@@ -153,9 +155,15 @@
                         <tr>
                             <td colspan="3">Resposta</td>
                         </tr>
-                        <tr>
-                            <td colspan="3">{{$dados->resposta}} </td>
-                        </tr>
+                        @if($dados->resp_publica == '1')
+                            <tr>
+                                <td colspan="3">{{$dados->resposta}} </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td colspan="3">{{$dados->resposta_ouvidor}} </td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>
