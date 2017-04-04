@@ -257,7 +257,8 @@ class DemandaController extends Controller
                 'ouv_comunidade.nome as comunidade',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao')
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                'ouv_demanda.n_protocolo'
             );
 
         if($dataIni && $dataFim) {
@@ -301,6 +302,13 @@ class DemandaController extends Controller
 
                 # Recuperando a calendario
                 $demanda = $this->repository->find($row->id);
+
+                // Validando se a demanda está agrupada
+                $demandaAgrupada = \DB::table('demandas_agrupadas')
+                    ->join('ouv_demanda', 'ouv_demanda.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+                    ->where('ouv_demanda.id', '=', $row->id)
+                    ->select('ouv_demanda.id')->first();
+
                 $html   = "";
 
                 if($this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
@@ -311,13 +319,29 @@ class DemandaController extends Controller
 
                 if(count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
                     $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir" title="Deletar"><i class="zmdi zmdi-plus-circle-o"></i></a> ';
+                } else if (count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria') && !$demandaAgrupada) {
                     $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info" title="Encaminhar"><i class="zmdi zmdi-mail-send"></i></a>';
-                } else {
+                } else if (!$demandaAgrupada) {
                     $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a>';
                 }
 
                 return $html;
-        })->make(true);
+        })->addColumn('demandaAgrupada', function ($row) {
+
+                // Validando se a demanda está agrupada
+                $demandaAgrupada = \DB::table('demandas_agrupadas')
+                    ->join('ouv_demanda', 'ouv_demanda.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+                    ->where('ouv_demanda.id', '=', $row->id)
+                    ->select('ouv_demanda.id')->first();
+                
+                if($demandaAgrupada) {
+                    $return = '1';
+                } else {
+                    $return = '0';
+                }
+                
+                return $return;
+            })->make(true);
     }
 
     /**

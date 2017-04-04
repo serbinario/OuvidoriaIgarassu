@@ -183,6 +183,9 @@
                 html += "<table class='table table-border'>";
                 html += "<tbody>";
                 html += "<tr>";
+                html += "<td class='info'>Protocolo</td><td>"+d.n_protocolo+"</td>";
+                html += "</tr>";
+                html += "<tr>";
                 html += "<td class='info' style='width: 15%;'>Nome</td><td>"+d.nome+"</td>";
                 html += "</tr>";
                 html += "<tr>";
@@ -221,6 +224,12 @@
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],
+                fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    if ( aData['demandaAgrupada'] == "1" )
+                    {
+                        $('td', nRow).css('background-color', '#a9d4e9');
+                    }
+                },
                 ajax: {
                     url: "{!! route('seracademico.ouvidoria.demanda.grid') !!}",
                     method: 'POST',

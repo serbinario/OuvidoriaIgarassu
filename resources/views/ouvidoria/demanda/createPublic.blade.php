@@ -54,7 +54,7 @@
 <script src="{{ asset('/js/mascaras.js')}}"></script>
 <script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/validacoes/validation_form_demanda.js')}}"></script>
+<script src="{{ asset('/js/validacoes/validation_form_demanda_publico.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#anonimo').on('change', function(){

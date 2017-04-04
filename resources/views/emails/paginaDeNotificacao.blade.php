@@ -75,7 +75,6 @@
         padding-right:2px;
         font-family:Verdana, Geneva, sans-serif;
         font-size:12px;
-        white-space:nowrap;
         border-bottom:solid 1px #E1E1E1;" colspan="3"><b>Parecer: </b></span>{{$detalhe->parecer}}</td>
         </tr>
         </tbody>

@@ -300,6 +300,8 @@
     <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
     <script type="text/javascript">
 
+        var idDemanda = "{{$detalheEncaminhamento->demanda_id}}";
+
         function format(d) {
 
             var html = "";
@@ -328,8 +330,9 @@
                 bLengthChange: false,
                 order: [[ 1, "asc" ]],
                 ajax: {
-                    url: "{!! route('seracademico.ouvidoria.encaminhamento.historicoGrid', ['id' => $detalheEncaminhamento->demanda_id]) !!}",
-                    method: 'GET'
+                    url: "{!! route('seracademico.ouvidoria.encaminhamento.historicoGrid') !!}",
+                    method: 'POST',
+                    data: {'id' : idDemanda},
                 },
                 columns: [
                     {
@@ -398,9 +401,6 @@
                 jQuery.ajax({
                     type: 'POST',
                     url: '{{ route('seracademico.util.search')  }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                    },
                     data: dados,
                     datatype: 'json'
                 }).done(function (json) {
@@ -426,8 +426,9 @@
             bLengthChange: false,
             order: [[ 1, "asc" ]],
             ajax: {
-                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAgrupadasGrid', ['id' => $detalheEncaminhamento->demanda_id]) !!}",
-                method: 'GET'
+                url: "{!! route('seracademico.ouvidoria.encaminhamento.demandasAgrupadasGrid') !!}",
+                method: 'POST',
+                data: {'id' : idDemanda},
             },
             columns: [
                 {data: 'codigo', name: 'agrupada.codigo'},

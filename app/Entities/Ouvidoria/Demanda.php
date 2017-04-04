@@ -184,4 +184,5 @@ class Demanda extends Model implements Transformable
 	{
 		return $this->belongsTo(Comunidade::class, 'comunidade_id', 'id');
 	}
+	
 }

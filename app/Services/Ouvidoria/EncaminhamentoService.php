@@ -170,7 +170,6 @@ class EncaminhamentoService
 
         #alterando o status do encaminhamento anterior para fechado
         if($data['id']) {
-
             $encaminhamentoAnterior = $this->find($data['id']);
             $encaminhamentoAnterior->status_id = 3;
             $encaminhamentoAnterior->save();
@@ -206,8 +205,62 @@ class EncaminhamentoService
 
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
         $demanda->status_id = 6;
-        $demanda->user_id = $this->user->id;
+        $demanda->user_id   = $this->user->id;
         $demanda->save();
+
+        // Pegando demandas está agrupada
+        $demandaAgrupada = \DB::table('demandas_agrupadas')
+            ->join('ouv_demanda as principal', 'principal.id', '=', 'demandas_agrupadas.demanda_principal_id')
+            ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+            ->where('principal.id', '=',$demanda->id)
+            ->select([
+                    'demandas_agrupadas.demanda_agrupada_id',
+                    'agrupada.n_protocolo',
+                    'agrupada.tipo_resposta_id'
+                ]
+            )->get();
+
+        // Percorre as demandas que estão agrupadas
+        foreach ($demandaAgrupada as $value) {
+
+            // Pegas a demanda agrupada
+            $dm = $this->demandaPepository->with(['encaminhamento'])->find($value->demanda_agrupada_id);
+            $dm->status_id = 6;
+            $dm->user_id   = $this->user->id;
+            $dm->save();
+
+            // Valida se a demanda teve algum encaminhamento
+            // Caso tenha é feita a edição do mesmo, caso não, é criado um encaminhamento para a demanda
+            if($dm->encaminhamento) {
+                $enc = $this->repository->find($dm->encaminhamento->id);
+                $enc->resposta              = $encaminhamento->resposta;
+                $enc->resposta_ouvidor      = $encaminhamento->resposta_ouvidor;
+                $enc->resp_publica          = $encaminhamento->resp_publica;
+                $enc->resp_ouvidor_publica  = $encaminhamento->resp_ouvidor_publica;
+                $enc->status_id             = 6;
+                $enc->user_id               = $encaminhamento->user_id;
+                $enc->save();
+            } else {
+                $array = [];
+                $array['resposta']              = $encaminhamento->resposta;
+                $array['resposta_ouvidor']      = $encaminhamento->resposta_ouvidor;
+                $array['resp_publica']          = $encaminhamento->resp_publica;
+                $array['resp_ouvidor_publica']  = $encaminhamento->resp_ouvidor_publica;
+                $array['status_id']             = 6;
+                $array['data']                  = $encaminhamento->data;
+                $array['previsao']              = $encaminhamento->previsao;
+                $array['parecer']               = $encaminhamento->parecer;
+                $array['destinatario_id']       = $encaminhamento->destinatario_id;
+                $array['prioridade_id']         = $encaminhamento->prioridade_id;
+                $array['demanda_id']            = $dm->id;
+                $array['user_id']               = $encaminhamento->user_id;
+                $array['data_recebimento']      = $encaminhamento->demanda_id;
+                $array['data_resposta']         = $encaminhamento->user_id;
+
+                $enc =  $this->repository->create($array);
+            }
+
+        }
 
         #Verificando se o registro foi encontrado
         if(!$encaminhamento || !$demanda) {
@@ -215,7 +268,7 @@ class EncaminhamentoService
         }
 
         #retorno
-        return ['demanda' => $demanda, 'encaminhamento' => $encaminhamento];
+        return ['demanda' => $demanda, 'encaminhamento' => $encaminhamento, 'demandasAgrupadas' => $demandaAgrupada];
     }
 
     /**

@@ -134,7 +134,7 @@
                             <td colspan="3" style="background-color: #213a53; color: white">Dados da manifestação</td>
                         </tr>
                         <tr>
-                            <td colspan="3">Situação: {{$dados->status}} </td>
+                            <td colspan="3">Situação: @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
                         </tr>
                         <tr>
                             <td>Perfil: {{$dados->perfil}} </td>
@@ -155,11 +155,11 @@
                         <tr>
                             <td colspan="3">Resposta</td>
                         </tr>
-                        @if($dados->resp_publica == '1')
+                        @if($dados->resp_publica == '1' && $dados->status_id == '6')
                             <tr>
                                 <td colspan="3">{{$dados->resposta}} </td>
                             </tr>
-                        @else
+                        @elseif($dados->status_id == '6')
                             <tr>
                                 <td colspan="3">{{$dados->resposta_ouvidor}} </td>
                             </tr>

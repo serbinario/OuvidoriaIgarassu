@@ -99,14 +99,14 @@ class EncaminhamentoController extends Controller
     private function queryParaDetalheEncaminhamento($id)
     {
         $query = \DB::table('ouv_encaminhamento')
-            ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->leftJoin('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
             ->leftJoin('users as users_demanda', 'users_demanda.id', '=', 'ouv_demanda.user_id')
             ->leftJoin('users as users_encaminhamento', 'users_encaminhamento.id', '=', 'ouv_encaminhamento.user_id')
-            ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
@@ -167,7 +167,7 @@ class EncaminhamentoController extends Controller
      * @param $id
      * @return mixed
      */
-    public function historicoEncamihamentosGrid($id)
+    public function historicoEncamihamentosGrid(Request $request)
     {
         $rows = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
@@ -175,7 +175,7 @@ class EncaminhamentoController extends Controller
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->where('ouv_demanda.id', '=', $id)
+            ->where('ouv_demanda.id', '=', $request->get('id'))
             ->select([
                 'ouv_encaminhamento.id as id',
                 'ouv_demanda.id as demanda_id',
@@ -198,7 +198,7 @@ class EncaminhamentoController extends Controller
      * @param $id
      * @return mixed
      */
-    public function demandasAgrupadasGrid($id)
+    public function demandasAgrupadasGrid(Request $request)
     {
         $rows = \DB::table('demandas_agrupadas')
             ->join('ouv_demanda as principal', 'principal.id', '=', 'demandas_agrupadas.demanda_principal_id')
@@ -207,7 +207,7 @@ class EncaminhamentoController extends Controller
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'agrupada.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'agrupada.status_id')
-            ->where('principal.id', '=', $id)
+            ->where('principal.id', '=', $request->get('id'))
             ->select([
                 'demandas_agrupadas.id as id',
                 \DB::raw('CONCAT (SUBSTRING(agrupada.codigo, 4, 4), "/", SUBSTRING(agrupada.codigo, -4, 4)) as codigo'),
@@ -343,13 +343,31 @@ class EncaminhamentoController extends Controller
 
             try {
 
-                Mail::send('emails.paginaDeNotificacaoParaUsuario', ['detalhe' => $retorno['demanda']], function ($m) {
-                    $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de demanda');
+                if($retorno['demanda']->tipo_resposta_id == '1') {
 
-                    $m->to("fabinhobarreto2@gmail.com", 'Fabio');
+                    Mail::send('emails.paginaDeNotificacaoParaUsuario', ['demanda' => $retorno['demanda']], function ($m) {
+                        $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de reposta');
 
-                    $m->subject('E-mail de teste!');
-                });
+                        $m->to("fabinhobarreto2@gmail.com", 'Fabio');
+
+                        $m->subject('Reposta da manifestação!');
+                    });
+
+                }
+                
+                // Enviando e-mail para as demandas agrupadas
+                foreach ($retorno['demandasAgrupadas'] as $demanda) {
+
+                    if($demanda->tipo_resposta_id == '1') {
+                        Mail::send('emails.paginaDeNotificacaoParaUsuario', ['demanda' => $demanda], function ($m) {
+                            $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de reposta');
+
+                            $m->to("fabinhobarreto2@gmail.com", 'Fabio');
+
+                            $m->subject('Reposta da manifestação!');
+                        });
+                    }
+                }
                 
             } catch (\Throwable $e) {
                 dd($e->getMessage());

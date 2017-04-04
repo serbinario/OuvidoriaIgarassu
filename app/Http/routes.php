@@ -37,7 +37,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('encaminhadosGrid', ['as' => 'encaminhadosGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhadosGrid']);
                 Route::post('responder', ['as' => 'responder', 'uses' => 'Ouvidoria\EncaminhamentoController@responder']);
                 Route::get('historico/{id}', ['as' => 'historico', 'uses' => 'Ouvidoria\EncaminhamentoController@historicoEncamihamentos']);
-                Route::get('historicoGrid/{id}', ['as' => 'historicoGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@historicoEncamihamentosGrid']);
+                Route::post('historicoGrid', ['as' => 'historicoGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@historicoEncamihamentosGrid']);
                 Route::get('reencaminar/{id}', ['as' => 'reencaminar', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminar']);
                 Route::post('reencaminarStore', ['as' => 'reencaminarStore', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminarStore']);
                 //Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
@@ -49,7 +49,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('verificarAlertasDeDemandas', ['as' => 'verificarAlertasDeDemandas', 'uses' => 'Ouvidoria\EncaminhamentoController@verificarAlertasDeDemandas']);
 
                 #Demandas agrupadas
-                Route::get('demandasAgrupadasGrid/{id}', ['as' => 'demandasAgrupadasGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAgrupadasGrid']);
+                Route::post('demandasAgrupadasGrid', ['as' => 'demandasAgrupadasGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@demandasAgrupadasGrid']);
                 Route::post('agruparDemanda', ['as' => 'agruparDemanda', 'uses' => 'Ouvidoria\EncaminhamentoController@agruparDemanda']);
                 Route::post('deleteAgrupamento', ['as' => 'deleteAgrupamento', 'uses' => 'Ouvidoria\EncaminhamentoController@deletarDemandaAgrupada']);
 

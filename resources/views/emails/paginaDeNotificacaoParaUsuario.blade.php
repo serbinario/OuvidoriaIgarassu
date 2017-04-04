@@ -5,83 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </header>
 <body>
+<h4>Olá caro manifestante!</h4>
 
-
-{{--<center>
-    <table style="width: 50%; border-collapse: collapse;" cellspacing="0" cellpadding="0" border="1" width="50%">
-        <tbody>
-        <tr>
-            <td style="height:60px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:23px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;
-        text-align: center; color: white;
-        background-color: #59b1f6" colspan="3">
-
-                Nova demanda para análise
-
-            </td>
-        </tr>
-        <tr style="background-color: #e0e5ef">
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;"><b>Data:</b> {{$detalhe->data}}</td>
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;"><b>Previsão:</b> {{$detalhe->previsao}}</td>
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;"><b>Prioridade:</b> {{$detalhe->prioridade}}</td>
-        </tr>
-        <tr>
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;"><b>Secretaria:</b> {{$detalhe->area}}</td>
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;"><b>Departamento/Destinatário:</b> {{$detalhe->destinatario}}</td>
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;"><b>Status:</b> {{$detalhe->status}}</td>
-        </tr>
-        <tr>
-            <td style="height:26px;
-        padding-left:4px;
-        padding-right:2px;
-        font-family:Verdana, Geneva, sans-serif;
-        font-size:12px;
-        white-space:nowrap;
-        border-bottom:solid 1px #E1E1E1;" colspan="3"><b>Parecer: </b></span>{{$detalhe->parecer}}</td>
-        </tr>
-        </tbody>
-    </table>
-</center>--}}
-
-Recebimento de resposta
+<p>
+    Somos da ouvidoria, estamos entrando em contato para informar que sua manifestação foi ouvida e te retornamos com uma reposta para você!
+</p>
+<p>
+    Clique no link abaixo para consultar as informações da sua manifestação, use este
+    <b>Número de protocolo: {{$demanda->n_protocolo}}, para realizar a consulta</b><br />
+    <b>Link: </b> <a href="{{ route('buscarDemanda')  }}">Clique aqui para acessar</a>
+</p>
 </body>
 </html>

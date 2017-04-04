@@ -33,9 +33,10 @@
                             </div>
                             <div class="form-group col-md-5">
                                 <div class=" fg-line">
-                                    <label for="destinatario_id">Destino *</label>
+                                    <label for="destinatario">Destino *</label>
                                     <div class="select">
-                                        {!! Form::select('destinatario_id', array($detalheEncaminhamento->destinatario_id => $detalheEncaminhamento->destinatario), $detalheEncaminhamento->destinatario_id, array('class' => 'form-control', 'id' => 'destinatario_id', 'disabled' => 'disabled')) !!}
+                                        {!! Form::select('destinatario', array($detalheEncaminhamento->destinatario_id => $detalheEncaminhamento->destinatario), $detalheEncaminhamento->destinatario_id, array('class' => 'form-control', 'id' => 'destinatario', 'disabled' => 'disabled')) !!}
+                                        <input type="hidden" name="destinatario_id" value="{{$detalheEncaminhamento->destinatario_id}}">
                                     </div>
                                 </div>
                             </div>

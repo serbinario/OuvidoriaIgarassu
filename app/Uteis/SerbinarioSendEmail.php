@@ -17,7 +17,7 @@ class SerbinarioSendEmail
             ->join('ouv_area', 'ouv_area.id', '=', 'users.area_id')
             ->where('ouv_area.id', '=', $detalhe->area_id)
             ->select(['email', 'name'])->get();
-
+        
 
             Mail::send('emails.paginaDeNotificacao', ['detalhe' => $detalhe], function ($m) use ($usuarios) {
                 $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de demanda');
