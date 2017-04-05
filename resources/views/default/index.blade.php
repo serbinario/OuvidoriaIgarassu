@@ -8,7 +8,7 @@
             <div class="mini-charts">
                 <div class="row">
                     <div class="col-sm-6 col-md-3">
-                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '1']) }}">
+                        <a href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
                             <div class="mini-charts-item bgm-cyan ">
                                 <div class="clearfix">
                                     <div class=""></div>
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '2']) }}">
+                        <a href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '2' ])}}">
                             <div class="mini-charts-item bgm-orange">
                                 <div class="clearfix">
                                     <div class=""></div>
@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '3']) }}">
+                        <a href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '3' ])}}">
                             <div class="mini-charts-item bgm-lightgreen">
                                 <div class="clearfix">
                                     <div class=""></div>
@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="col-sm-6 col-md-3">
-                        <a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados', ['status' => '6']) }}">
+                        <a href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '6' ])}}">
                             <div class="mini-charts-item bgm-red">
                                 <div class="clearfix">
                                     <div class=""></div>
