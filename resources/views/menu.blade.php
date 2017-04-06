@@ -146,7 +146,7 @@
         </div>
 
         <ul class="main-menu">
-            <li><a href="{{ route('seracademico.indexPublico')  }}" target="_blank"><i class="zmdi zmdi-home"></i> acesso publico</a></li>
+            <li><a href="{{ route('seracademico.indexPublico')  }}" target="_blank"><i class="zmdi zmdi-globe-alt"></i> Acesso Público</a></li>
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
             @role('ouvidoria|admin|secretaria')
                 <li class="sub-menu">
