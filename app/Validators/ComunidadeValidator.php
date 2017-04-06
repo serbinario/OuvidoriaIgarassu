@@ -4,6 +4,7 @@ namespace Seracademico\Validators;
 
 use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\LaravelValidator;
+use Seracademico\Validators\TraitReplaceRulesValidator;
 
 class ComunidadeValidator extends LaravelValidator
 {

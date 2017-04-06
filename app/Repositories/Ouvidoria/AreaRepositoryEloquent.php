@@ -24,19 +24,6 @@ class AreaRepositoryEloquent extends BaseRepository implements AreaRepository
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return AreaValidator::class;
-    }
-
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

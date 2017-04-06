@@ -8,7 +8,6 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "prettus/l5-repository": "^2.1",
-        "prettus/laravel-validation": "1.1.*",
         "yajra/laravel-datatables-oracle": "^6.7",
         "laravelcollective/html": "5.1.*",
         "bican/roles": "2.1.*",
@@ -19,7 +18,8 @@
         "mariuzzo/laravel-js-localization": "^1.2",
         "khill/lavacharts" : "3.0.*",
         "guzzlehttp/guzzle": "~6.0",
-        "simplesoftwareio/simple-sms": "3.1.*"
+        "simplesoftwareio/simple-sms": "3.1.*",
+        "prettus/laravel-validation": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

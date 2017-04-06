@@ -5,7 +5,7 @@ namespace Seracademico\Repositories\Ouvidoria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Seracademico\Repositories\Ouvidoria\ExclusividadeSUSRepository;
-use Seracademico\Entities\ExclusividadeSUS;
+use Seracademico\Entities\Ouvidoria\ExclusividadeSUS;
 
 /**
  * Class ExclusividadeSUSRepositoryEloquent
@@ -22,19 +22,6 @@ class ExclusividadeSUSRepositoryEloquent extends BaseRepository implements Exclu
     {
         return ExclusividadeSUS::class;
     }
-
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return ExclusividadeSUSValidator::class;
-    }
-
-
 
     /**
      * Boot up the repository, pushing criteria

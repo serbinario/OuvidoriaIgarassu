@@ -25,19 +25,6 @@ class DemandaRepositoryEloquent extends BaseRepository implements DemandaReposit
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return DemandaValidator::class;
-    }
-
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

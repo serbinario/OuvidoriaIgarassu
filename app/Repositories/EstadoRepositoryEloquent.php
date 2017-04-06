@@ -25,18 +25,6 @@ class EstadoRepositoryEloquent extends BaseRepository implements EstadoRepositor
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return EstadoValidator::class;
-    }
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

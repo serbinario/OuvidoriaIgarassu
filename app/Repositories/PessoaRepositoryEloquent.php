@@ -24,17 +24,6 @@ class PessoaRepositoryEloquent extends BaseRepository implements PessoaRepositor
         return Pessoa::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return PessoaValidator::class;
-    }
-
 
     /**
      * Boot up the repository, pushing criteria

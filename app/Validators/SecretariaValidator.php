@@ -10,14 +10,14 @@ class SecretariaValidator extends LaravelValidator
 
     use TraitReplaceRulesValidator;
 
+    protected $messages   = [
+    ];
+
+    protected $attributes = [
+    ];
+
     protected $rules = [
-        ValidatorInterface::RULE_CREATE => [
-            
-
-        ],
-        ValidatorInterface::RULE_UPDATE => [
-            
-
-        ],
+        ValidatorInterface::RULE_CREATE => [],
+        ValidatorInterface::RULE_UPDATE => [],
     ];
 }

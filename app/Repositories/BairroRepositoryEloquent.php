@@ -24,17 +24,6 @@ class BairroRepositoryEloquent extends BaseRepository implements BairroRepositor
         return Bairro::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return BairroValidator::class;
-    }
-
 
     /**
      * Boot up the repository, pushing criteria

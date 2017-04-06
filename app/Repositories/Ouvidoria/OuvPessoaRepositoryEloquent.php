@@ -23,18 +23,6 @@ class OuvPessoaRepositoryEloquent extends BaseRepository implements OuvPessoaRep
         return OuvPessoa::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return OuvPessoaValidator::class;
-    }
-
-
 
     /**
      * Boot up the repository, pushing criteria

@@ -46,6 +46,7 @@ class PsfService
      */
     public function store(array $data) : Psf
     {
+
         #Salvando o registro pincipal
         $psf =  $this->repository->create($data);
 

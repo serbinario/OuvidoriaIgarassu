@@ -24,19 +24,6 @@ class SituacaoRepositoryEloquent extends BaseRepository implements SituacaoRepos
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return SituacaoValidator::class;
-    }
-
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

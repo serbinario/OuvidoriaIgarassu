@@ -25,18 +25,6 @@ class SexoRepositoryEloquent extends BaseRepository implements SexoRepository
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return SexoValidator::class;
-    }
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

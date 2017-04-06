@@ -24,17 +24,6 @@ class CidadeRepositoryEloquent extends BaseRepository implements CidadeRepositor
         return Cidade::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-        return CidadeValidator::class;
-    }
-
 
     /**
      * Boot up the repository, pushing criteria

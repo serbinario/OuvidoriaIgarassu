@@ -23,18 +23,6 @@ class AnonimoRepositoryEloquent extends BaseRepository implements AnonimoReposit
         return Anonimo::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return AnonimoValidator::class;
-    }
-
-
 
     /**
      * Boot up the repository, pushing criteria

@@ -24,18 +24,6 @@ class AssuntoRepositoryEloquent extends BaseRepository implements AssuntoReposit
         return Assunto::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return AssuntoValidator::class;
-    }
-
-
 
     /**
      * Boot up the repository, pushing criteria

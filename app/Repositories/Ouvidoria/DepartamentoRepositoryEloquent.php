@@ -24,18 +24,6 @@ class DepartamentoRepositoryEloquent extends BaseRepository implements Departame
         return Destinatario::class;
     }
 
-    /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return DepartamentoValidator::class;
-    }
-
-
 
     /**
      * Boot up the repository, pushing criteria

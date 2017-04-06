@@ -25,19 +25,6 @@ class EncaminhamentoRepositoryEloquent extends BaseRepository implements Encamin
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return EncaminhamentoValidator::class;
-    }
-
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

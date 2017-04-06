@@ -25,19 +25,6 @@ class MelhoriaRepositoryEloquent extends BaseRepository implements MelhoriaRepos
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return MelhoriaValidator::class;
-    }
-
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()

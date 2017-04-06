@@ -24,19 +24,6 @@ class IdadeRepositoryEloquent extends BaseRepository implements IdadeRepository
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
-    public function validator()
-    {
-
-         return IdadeValidator::class;
-    }
-
-
-
-    /**
      * Boot up the repository, pushing criteria
      */
     public function boot()
