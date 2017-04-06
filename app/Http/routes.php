@@ -1,9 +1,14 @@
 <?php
 
+Route::get('/', function () {
+    return redirect()->route('auth.login');
+});
+
+
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
-    Route::group(['prefix' => 'auth'], function () {
-        Route::get('login', 'Auth\AuthController@getLogin');
+    Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
+        Route::get('login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
         Route::post('login', 'Auth\AuthController@postLogin');
         Route::get('logout', 'Auth\AuthController@getLogout');
     });
