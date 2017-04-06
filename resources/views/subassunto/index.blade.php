@@ -42,7 +42,7 @@
                         <tr>
                             <th>Secretaria</th>
                             <th>Assunto</th>
-                            <th>Nome</th>
+                            <th>Subassunto</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
@@ -50,7 +50,7 @@
                         <tr>
                             <th>Secretaria</th>
                             <th>Assunto</th>
-                            <th>Nome</th>
+                            <th>Subassunto</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>
                         </tfoot>

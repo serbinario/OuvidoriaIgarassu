@@ -40,13 +40,13 @@
                     <table id="psf-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>Nome</th>
+                            <th>PSF</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Nome</th>
+                            <th>PSF</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>
                         </tfoot>

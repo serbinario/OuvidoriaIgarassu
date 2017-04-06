@@ -41,14 +41,14 @@
                         <thead>
                         <tr>
                             <th>Secretaria</th>
-                            <th>Nome</th>
+                            <th>Departamento</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>Secretaria</th>
-                            <th>Nome</th>
+                            <th>Departamento</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>
                         </tfoot>

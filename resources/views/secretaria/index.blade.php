@@ -40,13 +40,13 @@
                     <table id="secretaria-grid" class="table table-hover" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>Nome</th>
+                            <th>Secretaria</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Nome</th>
+                            <th>Secretaria</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>
                         </tfoot>

@@ -40,14 +40,14 @@
                     <table id="comunidade-grid" class="table table-hover" cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th>Nome</th>
+                            <th>Comunidade</th>
                             <th>Psf</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Nome</th>
+                            <th>Comunidade</th>
                             <th>Psf</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>

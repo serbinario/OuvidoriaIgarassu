@@ -9,7 +9,7 @@
                     <div class="form-group col-md-6">
                         <div class="fg-line">
                             <div class="fg-line">
-                                <label for="nome">Nome *</label>
+                                <label for="nome">Secretaria *</label>
                                 {!! Form::text('nome', Session::getOldInput('nome') , array('class' => 'form-control')) !!}
                             </div>
                         </div>
