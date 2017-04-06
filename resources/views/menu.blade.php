@@ -115,11 +115,10 @@
         <div class="s-profile">
             <a href="#" data-ma-action="profile-menu-toggle">
                 <div class="sp-pic">
-                   {{-- <img src="{{ asset ('/dist/img/demo/profile-pics/1.jpg') }}" alt="">--}}
-                    <img src="" alt="">
+                   <img src="{{ asset ('/dist/img/demo/profile-pics/Untitled-1.png') }}" alt="">
                     {{--{{dd(Auth::user())}}--}}
                     {{--{{Auth::user()->operador()->get()->first()->nome_operadores}}--}}
-                </div> <br /><br />
+                </div>
 
                 <div class="sp-info">
                     {{ Auth::user()->name }}
