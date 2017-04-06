@@ -91,7 +91,7 @@
                                     <div class="fg-line">
                                         <div class="fg-line">
                                             <label for="secretaria">Secretaria *</label>
-                                            {!! Form::select('secretaria',$loadFields['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control', 'id' => 'secretaria')) !!}
+                                            {!! Form::select('secretaria',(["" => "Selecione uma secretaria"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control', 'id' => 'secretaria')) !!}
                                         </div>
                                     </div>
                                 </div>
