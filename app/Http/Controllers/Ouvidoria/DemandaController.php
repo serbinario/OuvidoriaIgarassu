@@ -319,7 +319,7 @@ class DemandaController extends Controller
 
                 if(count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
                     $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir" title="Deletar"><i class="zmdi zmdi-plus-circle-o"></i></a> ';
-                } else if (count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria') && !$demandaAgrupada) {
+                }  if (count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria') && !$demandaAgrupada) {
                     $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info" title="Encaminhar"><i class="zmdi zmdi-mail-send"></i></a>';
                 } else if (!$demandaAgrupada) {
                     $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a>';

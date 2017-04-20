@@ -1,8 +1,13 @@
 <html>
 <head>
-    <link href="{{ asset('/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900,300" rel="stylesheet">
-    <link href="{{ asset('/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+    <link href="{{ asset('/lib/chosen/chosen.css') }}" rel="stylesheet">
+    <link href="{{ asset('/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/app_1.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/app_2.min.css') }}"  media="screen,projection"/>
+
+    {{-- CSS personalizados--}}
+    <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/demo.css') }}"  media="screen,projection"/>
     <link href="{{ asset('/css/bootstrapValidation.mim.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.datetimepicker.css')}}" rel="stylesheet"/>
 </head>
