@@ -15,8 +15,8 @@
                     <ul id="tabs" class="tab-nav" role="tablist" data-tab-color="cyan">
                         <li class="active"><a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados Principais</a>
                         </li>
-                        <li><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Perfil</a>
-                        </li>
+                       {{-- <li><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Perfil</a>
+                        </li>--}}
                         <li><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outras Informações</a>
                         </li>
                         @if(!isset($model))
@@ -47,14 +47,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-2">
+                                {{--<div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="tipo_resposta_id">Tipo de resposta</label>
                                         <div class="select">
                                             {!! Form::select('tipo_resposta_id', (["" => "Selecione"] + $loadFields['ouvidoria\tiporesposta']->toArray()), null, array('class'=> 'form-control' , 'id' => 'tipo_resposta_id')) !!}
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
@@ -81,6 +81,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group col-md-3">
+                                    <div class=" fg-line">
+                                        <label for="idade_id">Idade</label>
+                                        <div class="select">
+                                            {!! Form::select('idade_id', $loadFields2['ouvidoria\idade'], null, array('class'=> 'form-control')) !!}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group col-md-4">
                                     <div class="fg-line">
                                         <div class="fg-line">
@@ -101,7 +109,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        {!! Form::label('comunidade_id', 'Comunidade') !!}
+                                        {!! Form::label('comunidade_id', 'Bairro') !!}
                                         {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
@@ -127,7 +135,7 @@
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
-                                        <label for="informacao_id">O Que Deseja?</label>
+                                        <label for="informacao_id">Tipo de manifestação</label>
                                         <div class="select">
                                             {!! Form::select('informacao_id', $loadFields['ouvidoria\informacao'], null, array('class'=> 'form-control')) !!}
                                         </div>
@@ -135,7 +143,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
-                                        <label for="pessoa_id">Perfil</label>
+                                        <label for="pessoa_id">Autor da manifestação</label>
                                         <div class="select">
                                             {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], null, array('class'=> 'form-control')) !!}
                                         </div>
@@ -143,7 +151,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
-                                        <label for="tipo_demanda_id">Meio de Registro</label>
+                                        <label for="tipo_demanda_id">Origem da manifestação</label>
                                         <div class="select">
                                             {!! Form::select('tipo_demanda_id', $loadFields['ouvidoria\tipodemanda'], null, array('class'=> 'form-control')) !!}
                                         </div>
@@ -202,7 +210,7 @@
                         </div>
                         {{--#1--}}
                         {{--#2--}}
-                        <div role="tabpanel" class="tab-pane" id="perfil">
+                        {{--<div role="tabpanel" class="tab-pane" id="perfil">
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
@@ -237,7 +245,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                         {{--#2--}}
                         {{--#3--}}
                         <div role="tabpanel" class="tab-pane" id="outros">
