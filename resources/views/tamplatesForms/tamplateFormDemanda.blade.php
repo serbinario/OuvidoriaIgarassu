@@ -198,7 +198,7 @@
                                 <div class="form-group col-md-8">
                                     <div class="form-group">
                                         <div class="fg-line">
-                                            <label for="relato">Relato</label>
+                                            <label for="relato">Descrição da manifestação</label>
                                             <div class="textarea">
                                                 {!! Form::textarea('relato', Session::getOldInput('relato'),
                                                     array('class' => 'form-control', 'rows' => '5')) !!}
