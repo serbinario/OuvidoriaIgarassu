@@ -31,7 +31,7 @@
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/pf.png')}}" style="width: 230px; height: 70px"></center>
+            <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 70px"></center>
         </div>
     </center>
 
@@ -113,7 +113,7 @@
 
 <center>
     <div class="rodape" style="">
-        <center><img src="{{asset('/img/pf.png')}}" style="width: 230px; height: 70px"></center>
+        <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 70px"></center>
     </div>
 </center>
 

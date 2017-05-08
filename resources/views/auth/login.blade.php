@@ -48,7 +48,7 @@
                 @endif
 
                 <center>
-                    <img src="{{ asset('/img/pf.png')}}" style="width: 35%;"/>
+                    <img src="{{ asset('/img/logoabreulimasad.png')}}" style="width: 35%;"/>
                 </center>
 
                {{-- <p class="text-muted text-center">

@@ -53,7 +53,7 @@ $dataFromat = $data->format('d/m/Y');*/
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/timbre.jpg')}}" style="width: 90px; height: 90px"></center>
+            <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 90px"></center>
         </div><br />
         <span style="font-size: 10px"><b>Secretaria Municipal de Saúde</b></span><br />
         <span style="font-size: 10px">Ouvidoria da Saúde</span>
@@ -129,7 +129,7 @@ $dataFromat = $data->format('d/m/Y');*/
 
 <center>
     <div class="rodape" style="">
-        <center><img src="{{asset('/img/pf.png')}}" style="width: 210px; height: 65px"></center>
+        <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 65px"></center>
     </div>
 </center>
 
