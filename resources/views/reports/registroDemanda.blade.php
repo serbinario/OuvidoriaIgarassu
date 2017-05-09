@@ -1,7 +1,6 @@
 <?php
 //formatando data
 //$data = \DateTime::createFromFormat('Y-m-d', $date[0]);
-
 ?>
 <html>
 <head>

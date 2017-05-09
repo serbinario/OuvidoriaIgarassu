@@ -644,7 +644,6 @@ class DemandaController extends Controller
      */
     public function cartaEcaminhamento($id)
     {
-
         // Estrutura da query em geral
         $rows = \DB::table('ouv_demanda')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
@@ -662,12 +661,15 @@ class DemandaController extends Controller
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
+            ->join('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->where('ouv_demanda.id', '=', $id)
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 'ouv_prioridade.nome as prioridade',
+                'ouv_prioridade.dias as prazo',
                 'ouv_destinatario.nome as destino',
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
@@ -684,7 +686,10 @@ class DemandaController extends Controller
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
                 'ouv_encaminhamento.resposta',
-                'ouv_demanda.sigilo_id'
+                'ouv_demanda.sigilo_id',
+                'ouv_informacao.nome as tipoManifestacao',
+                'ouv_tipo_demanda.nome as origem',
+                'ouv_pessoa.nome as tipoUsuario'
             ])->first();
 
         return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows])->stream();

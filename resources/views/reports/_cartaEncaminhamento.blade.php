@@ -1,4 +1,3 @@
-{{--{{dd($demanda)}}--}}
 <?php
 //Pegando o código
 /*$cod = str_pad($demanda['codigo'],8,"0",STR_PAD_LEFT);
@@ -35,8 +34,7 @@ $dataFromat = $data->format('d/m/Y');*/
             margin-top: 785px;
         }
         span, p {
-            font-size: 13px;
-            margin-left: 20px;
+            font-size: 11px;
         }
     </style>
     <link href="" rel="stylesheet" media="screen">
@@ -60,64 +58,79 @@ $dataFromat = $data->format('d/m/Y');*/
 
     <h5 style="font-size: 15px">Demanda N.º: {{$demanda->codigo}}</h5>
 
-    <span><b>Ao secretário</b></span></br>
-    <span><b>Dra. Sônia Arruda</b></span></br>
+    <div>Ao secretário</div>
+    <div>Dra. Sônia Arruda</div></br>
 
-    <span style="position: absolute; top: 180px; left: 480px;">Abreu e Lima, 03 de Maio de 2017.</span></br>
+    <div>Abreu e Lima, 03 de Maio de 2017.</div>
 
-    <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
+    <div>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</div></br>
 
-    <span><b>Prezado(a) Senhor(a),</b></span></br>
-    <span><b>Cumprimentando Cordialmente, encaminhamos a V.S.a a $reclamação $via da ouvidoria,</b> para fins de
-        conhecimento e para que semam tomadas as decidas providências cabíveis.</span>
-    <span>Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
+    <div><b>Prezado(a) Senhor(a),</b></div></br>
+    <div><b>Cumprimentando Cordialmente, encaminhamos a V.S.a a $reclamação $via da ouvidoria,</b> para fins de
+        conhecimento e para que semam tomadas as decidas providências cabíveis.</div>
+    <div>Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
         epígrafe, solicito informar a este setor no prazo especifico através de <b>comunicação interna</b> as providencias
-    adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordila para a satisfação do cidadão.</span></br></br>
+    adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordila para a satisfação do cidadão.</div>
 
     {{--<span class="text"><b>Data do encaminhamento:</b> {{$demanda->data}}</span> <br />
     <span class="text"><b>Secretaria:</b> {{$demanda->area}}</span><br />
     <span class="text"><b>Destino:</b> {{$demanda->destino}}</span><br />--}}
     {{--<span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />--}}
 
-    <table border rules=none style="width: 100%;">
+    {{--<h4>1. DETALHES DA DEMANDA</h4>
+    <table style="width: 100%">
         <tr>
-            <td style="width: 340px"><span class="text"><b>Protocolo Nº. 0215446864 </b></span></td>
+            <td style="width: 340px"><span class="text"><b>Característica da demanda:</b> {{$demanda->informacao}}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Tipo de manifestação: </b>{{ $demanda->tipoManifestacao }}</span></td>
+            <td style="width: 340px"><span class="text"><b>Prioridade :</b> {{$demanda->prioridade}}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Assunto: </b>{{ $demanda->assunto  }}</span></td>
+            <td style="width: 340px"><span class="text"><b>Assunto:</b> {{$demanda->assunto}}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Origem: </b>{{ $demanda->origem }}</span></td>
-        </tr>
-        <tr>
-            <td style="width: 340px"><span class="text"><b>Usuário: </b>{{ $demanda->tipoUsuario }}</span></td>
-        </tr>
-        <tr>
-            <td style="width: 340px"><span class="text"><b>Nome: </b>{{ ($demanda->sigilo_id == 2) ? 'Confidencial' : $demanda->nome }}</span></td>
-        </tr>
-        <tr>
-            <td style="width: 340px"><span class="text"><b>Celular: </b>{{ $demanda->fone  }}</span></td>
-        </tr>
-        <tr>
-            <td style="width: 340px"><span class="text"><b>Classificação: </b>{{ $demanda->prioridade  }}</span></td>
-        </tr>
-        <tr>
-            <td style="width: 340px"><span class="text"><b>Prazo de Resposta: </b>{{ $demanda->prazo  }}</span></td>
-        </tr>
-    </table></br>
-
-    <table border rules=none style="width: 100%;">
-        <tr>
-            <td><span><b>Tradução da Manifestação</b></span></td>
-        </tr>
-        <tr>
-            <td rowspan="5"><span>{{ $demanda->relato }}</span></td>
+            <td style="width: 340px"><span class="text"><b>Subassunto:</b> {{$demanda->subassunto}}</span></td>
         </tr>
     </table>
 
+    <h4>2. DADOS DO CIDADÃO</h4>
+    <table style="width: 100%">
+        @if($demanda->sigilo_id == 1)
+            <tr>
+                <td style="width: 340px"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
+            </tr>
+        @endif
+        <tr>
+            <td>
+                <span class="text"><b>Comunidade:</b> {{$demanda->comunidade}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100px"><span class="text"><b>Endreço:</b> {{$demanda->endereco}}</span></td>
+        </tr>
+        <tr>
+            <td style="width: 100px"><span class="text"><b>Número:</b> {{$demanda->numero_end}}</span></td>
+        </tr>
+        @if($demanda->sigilo_id == 1)
+            <tr>
+                <td>
+                    <span class="text"><b>Telefone:</b> {{$demanda->fone}}</span>
+                </td>
+            </tr>
+        @endif
+    </table>
+
+    <h4>3. RELATO</h4>
+    <p class="text" style="text-align: justify">{{$demanda->relato}}</p>
+
+    <h4>4. OBSERVAÇÃO</h4>
+    <p class="text" style="text-align: justify">{{$demanda->obs}}</p>
+
+    <h4>5. COMENTÁRIO/PARECER</h4>
+    <p class="text" style="text-align: justify">Encaminhamos Manifestação para análise e providências cabíveis</p>
+
+    <h4>6. RESPOSTA</h4>
+    <p class="text" style="text-align: justify">{{$demanda->resposta}}</p>--}}
 </div>
 
 <center>
