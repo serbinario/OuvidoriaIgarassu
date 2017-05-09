@@ -1,5 +1,11 @@
-<html>
+<!DOCTYPE html>
+
+<html class="ie9">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="{{ asset('/lib/chosen/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
 
@@ -24,7 +30,7 @@
         </center>
     </div>
     <br />
-    <center><h2>REGISTRO DE DEMANDA OUVIDORIA</h2></center>
+    <center><h2><?php echo "REGISTRO DE DEMANDA DA OUVIDORIA"; ?></h2></center>
 
     <br />
     <div class="row">

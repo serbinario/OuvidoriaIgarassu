@@ -19,7 +19,6 @@ class Demanda extends Model implements Transformable
 		'nome',
 		'email',
 		'fone',
-		'minicipio',
 		'endereco',
 		'relato',
 		'data',
@@ -45,7 +44,11 @@ class Demanda extends Model implements Transformable
 		'tipo_resposta_id',
 		'data_da_ocorrencia',
 		'hora_da_ocorrencia',
-		'n_protocolo'
+		'n_protocolo',
+		'rg',
+		'cpf',
+		'profissao',
+		'cep',
 	];
 
 	/**

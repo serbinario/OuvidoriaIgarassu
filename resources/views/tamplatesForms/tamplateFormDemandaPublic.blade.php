@@ -19,20 +19,20 @@
                                     {!! Form::select('sigilo_id', $loadFields['ouvidoria\sigilo'], Session::getOldInput('sigilo_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            {{--<div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('anonimo_id', 'Anônimo') !!}
                                     {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], Session::getOldInput('anonimo_id'), array('class' => 'form-control', 'id' => 'anonimo')) !!}
                                 </div>
-                            </div>
-                            <div class="form-group col-md-4">
+                            </div>--}}
+                            {{--<div class="form-group col-md-4">
                                 <div class=" fg-line">
                                     <label for="tipo_resposta_id">Tipo de resposta</label>
                                     <div class="select">
                                         {!! Form::select('tipo_resposta_id', (["" => "Selecione"] + $loadFields['ouvidoria\tiporesposta']->toArray()), null, array('class'=> 'form-control' , 'id' => 'tipo_resposta_id')) !!}
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -56,16 +56,40 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    {!! Form::label('fone', 'Fone') !!}
-                                    {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
+                                    {!! Form::label('sexos_id', 'Sexo') !!}
+                                    {!! Form::select('sexos_id', (["" => "Selecione"] + $loadFields['sexo']->toArray()), Session::getOldInput('sexos_id'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('idade_id', 'Idade') !!}
+                                    {!! Form::select('idade_id', $loadFields2['ouvidoria\idade'], Session::getOldInput('idade_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('cpf', 'CPF') !!}
+                                    {!! Form::text('cpf', Session::getOldInput('cpf'), array('class' => 'form-control input-sm cpf', 'placeholder' => 'CPF')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('rg', 'RG') !!}
+                                    {!! Form::text('rg', Session::getOldInput('rg'), array('class' => 'form-control input-sm', 'placeholder' => 'RG')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('fone', 'Fone') !!}
+                                    {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     {!! Form::label('email', 'E-mail') !!}
                                     {!! Form::text('email', Session::getOldInput('email')  , array('class' => 'form-control')) !!}
@@ -74,7 +98,16 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {!! Form::label('profissao', 'Profissão') !!}
+                                    {!! Form::text('profissao', Session::getOldInput('profissao')  , array('class' => 'form-control', 'id' => 'profissao')) !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('endereco', 'Endereço') !!}
                                     {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
@@ -88,38 +121,34 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('comunidade_id', 'Comunidade') !!}
+                                    {!! Form::label('comunidade_id', 'Bairro') !!}
                                     {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control input-sm')) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    {!! Form::label('cep', 'CEP') !!}
+                                    {!! Form::text('cep', Session::getOldInput('cep'), array('class' => 'form-control input-sm', 'placeholder' => 'CEP')) !!}
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('sexos_id', 'Sexo') !!}
-                                    {!! Form::select('sexos_id', (["" => "Selecione"] + $loadFields['sexo']->toArray()), Session::getOldInput('sexos_id'), array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('exclusividade_sus_id', 'Utiliza exclusivamente o SUS?') !!}
-                                    {!! Form::select('exclusividade_sus_id', $loadFields['ouvidoria\exclusividadesus'], Session::getOldInput('exclusividade_sus_id'), array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('idade_id', 'Idade') !!}
-                                    {!! Form::select('idade_id', $loadFields2['ouvidoria\idade'], Session::getOldInput('idade_id'), array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+
+                            {{--<div class="col-md-4">--}}
+                                {{--<div class="form-group">--}}
+                                    {{--{!! Form::label('exclusividade_sus_id', 'Utiliza exclusivamente o SUS?') !!}--}}
+                                    {{--{!! Form::select('exclusividade_sus_id', $loadFields['ouvidoria\exclusividadesus'], Session::getOldInput('exclusividade_sus_id'), array('class' => 'form-control')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+
+                            {{--<div class="col-md-3">
                                 <div class="form-group">
                                     {!! Form::label('escolaridade_id', 'Escolaridade') !!}
                                     {!! Form::select('escolaridade_id', (["" => "Selecione"] + $loadFields['ouvidoria\escolaridade']->toArray()), Session::getOldInput('escolaridade_id'), array('class' => 'form-control')) !!}
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -138,13 +167,13 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('pessoa_id', 'Perfil') !!}
+                                    {!! Form::label('pessoa_id', 'Autor da manifestação') !!}
                                     {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    {!! Form::label('informacao_id', 'O que deseja?') !!}
+                                    {!! Form::label('informacao_id', 'Tipo de manifestação') !!}
                                     {!! Form::select('informacao_id', (["" => "Selecione"] + $loadFields['ouvidoria\informacao']->toArray()), Session::getOldInput('informacao_id'), array('class' => 'form-control')) !!}
                                 </div>
                             </div>

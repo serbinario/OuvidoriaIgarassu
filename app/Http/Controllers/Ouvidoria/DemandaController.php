@@ -497,11 +497,14 @@ class DemandaController extends Controller
             ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
             ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
+            ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->where('ouv_demanda.id', '=', $id)
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data_da_ocorrencia,"%d/%m/%Y") as data_da_ocorrencia'),
+                'ouv_demanda.hora_da_ocorrencia',
                 'ouv_destinatario.nome as destino',
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
@@ -515,6 +518,12 @@ class DemandaController extends Controller
                 'ouv_demanda.fone',
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
+                'ouv_demanda.email',
+                'ouv_demanda.rg',
+                'ouv_demanda.cpf',
+                'ouv_demanda.profissao',
+                'ouv_demanda.cep',
+                'ouv_pessoa.nome as autor',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.parecer',
                 'ouv_demanda.sigilo_id',
