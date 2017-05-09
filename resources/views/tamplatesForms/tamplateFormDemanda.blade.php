@@ -39,14 +39,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-2">
+                                {{--<div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="anonimo_id">Anônimo</label>
                                         <div class="select">
                                             {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], null, array('class'=> 'form-control' , 'id' => 'anonimo')) !!}
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 {{--<div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="tipo_resposta_id">Tipo de resposta</label>
@@ -81,7 +81,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-2">
+                                    <div class=" fg-line">
+                                        <label for="sexos_id">Sexo</label>
+                                        <div class="select">
+                                            {!! Form::select('sexos_id', $loadFields['sexo'], null, array('class'=> 'form-control')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
                                     <div class=" fg-line">
                                         <label for="idade_id">Idade</label>
                                         <div class="select">
@@ -99,7 +107,23 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="cpf">CPF</label>
+                                            {!! Form::text('cpf', Session::getOldInput('cpf'), array('class' => 'form-control input-sm cpf', 'placeholder' => 'CPF')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="rg">RG</label>
+                                            {!! Form::text('rg', Session::getOldInput('rg'), array('class' => 'form-control input-sm', 'placeholder' => 'RG')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
                                             <label for="fone">Telefone</label>
@@ -107,10 +131,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('comunidade_id', 'Bairro') !!}
-                                        {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control')) !!}
+                                <div class="form-group col-md-4">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="profissao">Profissão</label>
+                                            {!! Form::text('profissao', Session::getOldInput('profissao'), array('class' => 'form-control input-sm', 'placeholder' => 'Profissão')) !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -123,11 +149,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
                                             <label for="numero">Número</label>
                                             {!! Form::text('numero', Session::getOldInput('numero'), array('class' => 'form-control input-sm', 'placeholder' => 'Número')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {!! Form::label('comunidade_id', 'Bairro') !!}
+                                        {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="cep">CEP</label>
+                                            {!! Form::text('cep', Session::getOldInput('cep'), array('class' => 'form-control input-sm', 'placeholder' => 'CEP')) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +297,7 @@
                                             @if(isset($model->melhoria->secretaria->id))
                                                 {!! Form::select('melhoria_secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), $model->melhoria->secretaria->id, array('class' => 'form-control', 'id' => 'melhoria_secretaria')) !!}
                                             @else
-                                                {!! Form::select('melhoria_secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('area_id'), array('class' => 'form-control', 'id' => 'melhoria_secretaria')) !!}
+                                                {!! Form::select('melhoria_secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('melhoria_secretaria'), array('class' => 'form-control', 'id' => 'melhoria_secretaria')) !!}
                                             @endif
                                         </div>
                                     </div>
@@ -269,7 +309,7 @@
                                             @if(isset($model->melhoria->id))
                                                 {!! Form::select('melhoria_id', array($model->melhoria->id => $model->melhoria->nome), $model->melhoria->id,array('class' => 'form-control', 'id' => 'melhoria_id')) !!}
                                             @else
-                                                {!! Form::select('melhoria_id', array(), Session::getOldInput('subassunto_id'),array('class' => 'form-control', 'id' => 'melhoria_id')) !!}
+                                                {!! Form::select('melhoria_id', array(), Session::getOldInput('melhoria_id'),array('class' => 'form-control', 'id' => 'melhoria_id')) !!}
                                             @endif
                                         </div>
                                     </div>
@@ -279,9 +319,9 @@
                                 <div class="form-group col-md-8">
                                     <div class="form-group">
                                         <div class="fg-line">
-                                            <label for="melhorias">Quais melhorias você identifica na saúde de Igarassu?</label>
+                                            <label for="melhorias">Quais melhorias você identifica para o município?</label>
                                             <div class="textarea">
-                                                {!! Form::textarea('melhorias', Session::getOldInput('relato'),
+                                                {!! Form::textarea('melhorias', Session::getOldInput('melhorias'),
                                                     array('class' => 'form-control', 'rows' => '5')) !!}
                                             </div>
                                         </div>
@@ -294,7 +334,7 @@
                                         <div class="fg-line">
                                             <label for="obs">Observações</label>
                                             <div class="textarea">
-                                                {!! Form::textarea('obs', Session::getOldInput('relato'),
+                                                {!! Form::textarea('obs', Session::getOldInput('obs'),
                                                     array('class' => 'form-control', 'rows' => '5')) !!}
                                             </div>
                                         </div>
@@ -325,7 +365,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <div class=" fg-line">
-                                            <label for="encaminhamento[prioridade_id]">Prioridade *</label>
+                                            <label for="encaminhamento[prioridade_id]">Classificação *</label>
                                             <div class="select">
                                                 {!! Form::select('encaminhamento[prioridade_id]',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
                                             </div>
