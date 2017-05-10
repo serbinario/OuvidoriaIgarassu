@@ -432,7 +432,7 @@ class DemandaService
             ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->join('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
-            ->join('ouv_anonimo', 'ouv_anonimo.id', '=', 'ouv_demanda.anonimo_id')
+            ->leftJoin('ouv_anonimo', 'ouv_anonimo.id', '=', 'ouv_demanda.anonimo_id')
             ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
