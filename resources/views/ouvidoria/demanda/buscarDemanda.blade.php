@@ -105,7 +105,7 @@
                         </tr>
                         <tr>
                             <td>Sigilo: {{$dados->sigilo}} </td>
-                            <td>Anônimo: {{$dados->anonimo}} </td>
+                            {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
                             <td>Tipo de resposta: {{$dados->tipo_resposta}} </td>
                         </tr>
                         @if($dados->anonimo_id == '1')
