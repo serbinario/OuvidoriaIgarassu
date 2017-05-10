@@ -259,10 +259,10 @@ class EncaminhamentoController extends Controller
             #Executando a ação
             $returno = $this->service->reencaminarStore($data);
 
-            if($returno) {
+            /*if($returno) {
                 $detalhe = $this->queryParaDetalheEncaminhamento($returno->id);
                 SerbinarioSendEmail::sendEmailMultiplo($detalhe);
-            }
+            }*/
 
             #Retorno para a view
             return redirect()->route('seracademico.ouvidoria.demanda.index')->with("message", "Reencaminhamento realizado com sucesso!");
@@ -318,10 +318,10 @@ class EncaminhamentoController extends Controller
             #Executando a ação
             $returno = $this->service->encaminharStore($data);
 
-            if($returno) {
+            /*if($returno) {
                 $detalhe = $this->queryParaDetalheEncaminhamento($returno->id);
                 SerbinarioSendEmail::sendEmailMultiplo($detalhe);
-            }
+            }*/
 
             #Retorno para a view
             return redirect()->route('seracademico.ouvidoria.demanda.index')->with("message", "Encaminhamento realizado com sucesso!");
@@ -343,7 +343,7 @@ class EncaminhamentoController extends Controller
 
             try {
 
-                if($retorno['demanda']->tipo_resposta_id == '1') {
+                /*if($retorno['demanda']->tipo_resposta_id == '1') {
 
                     Mail::send('emails.paginaDeNotificacaoParaUsuario', ['demanda' => $retorno['demanda']], function ($m) {
                         $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de reposta');
@@ -353,10 +353,10 @@ class EncaminhamentoController extends Controller
                         $m->subject('Reposta da manifestação!');
                     });
 
-                }
+                }*/
                 
                 // Enviando e-mail para as demandas agrupadas
-                foreach ($retorno['demandasAgrupadas'] as $demanda) {
+                /*foreach ($retorno['demandasAgrupadas'] as $demanda) {
 
                     if($demanda->tipo_resposta_id == '1') {
                         Mail::send('emails.paginaDeNotificacaoParaUsuario', ['demanda' => $demanda], function ($m) {
@@ -367,7 +367,7 @@ class EncaminhamentoController extends Controller
                             $m->subject('Reposta da manifestação!');
                         });
                     }
-                }
+                }*/
                 
             } catch (\Throwable $e) {
                 dd($e->getMessage());
