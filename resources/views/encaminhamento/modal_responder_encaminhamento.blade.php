@@ -12,12 +12,12 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             {!! Form::label('resposta', 'Resposta') !!}
-                            @role('secretaria')
+                            {{--@role('secretaria')--}}
                                 {!! Form::textarea('resposta', $detalheEncaminhamento->resposta ,['size' => '80x5'] , array('class' => 'form-control')) !!}
-                            @endrole
-                            @role('ouvidoria|admin')
+                            {{--@endrole--}}
+                            {{--@role('ouvidoria|admin')
                                 <textarea class="form-control" name="resposta" rows="5" readonly>{{$detalheEncaminhamento->resposta}}</textarea>
-                            @endrole
+                            @endrole--}}
                             <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
                             <input type="hidden" name="tipo_resposta" value="1">
                         </div>
