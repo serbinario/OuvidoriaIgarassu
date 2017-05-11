@@ -30,7 +30,7 @@
         </center>
     </div>
     <br />
-    <center><h2><?php echo "REGISTRO DE DEMANDA DA OUVIDORIA"; ?></h2></center>
+    <center><h2><?php echo "REGISTRO DE MANIFESTAÃ‡ÃƒO DA OUVIDORIA"; ?></h2></center>
 
     <br />
     <div class="row">
@@ -51,7 +51,7 @@
                 </div>
             @endif
             {!! Form::open(['route'=>'storePublico', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
-                @include('tamplatesForms.tamplateFormDemandaPublic')
+            @include('tamplatesForms.tamplateFormDemandaPublic')
             {!! Form::close() !!}
         </div>
         <div class="col-md-2"></div>
@@ -71,7 +71,7 @@
     $(document).ready(function(){
         $('#msg-sigilo').hide();
 
-        // Exibi a mensagem de informação para caso da opção de "Deseja sigilo" esta marcada
+        // Exibi a mensagem de informaÃ§Ã£o para caso da opÃ§Ã£o de "Deseja sigilo" esta marcada
         $('#sigilo-2, #sigilo-1').on('click', function(){
             if($("#sigilo-2").prop( "checked")) {
                 $('#msg-sigilo').show();

@@ -20,10 +20,12 @@
                         @endforeach
                     </div>
                 @endif
+
             </div>
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}
             {!! Form::open(['route'=>'seracademico.ouvidoria.secretaria.store', 'method' => "POST", 'id'=> 'formSecretaria' ]) !!}
+            <center><h2>REGISTRO DE MANIFESTAÇÂO DA OUVIDORIA</h2></center>
             @include('tamplatesForms.tamplateFormSecretaria')
             {!! Form::close() !!}
             {{--Fim formulario--}}
