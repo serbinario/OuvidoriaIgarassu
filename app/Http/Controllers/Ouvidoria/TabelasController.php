@@ -26,6 +26,7 @@ class TabelasController extends Controller
      */
     private $loadFields = [
         'Ouvidoria\Secretaria',
+        'Cidade|byEstado,16'
     ];
 
     /**
@@ -357,11 +358,11 @@ class TabelasController extends Controller
      */
     public function viewComunidadeClassificacao()
     {
-        $query = $this->comunidadeClassificacaoQuery(array());
+        //$query = $this->comunidadeClassificacaoQuery(array());
         $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('ouvidoria.tabelas.comunidadeClassificacao', $query, compact('loadFields'));
+        return view('ouvidoria.tabelas.comunidadeClassificacao', compact('loadFields'));
     }
 
     /**
@@ -389,17 +390,18 @@ class TabelasController extends Controller
         $dataIni = isset($dados['data_inicio']) ? SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date') : "";
         $dataFim = isset($dados['data_fim']) ? SerbinarioDateFormat::toUsa($dados['data_fim'], 'date') : "";
         $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
+        $cidade     = isset($dados['cidade']) ? $dados['cidade'] : '';
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->join('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
-            ->groupBy('ouv_comunidade.id', 'ouv_informacao.id')
+            ->groupBy('bairros.id', 'ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as info',
-                'ouv_comunidade.nome as comunidade',
-                'ouv_comunidade.id as comunidade_id',
+                'bairros.nome as bairro',
+                'bairros.id as bairro_id',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
@@ -411,6 +413,10 @@ class TabelasController extends Controller
             $rows->where('ouv_area.id', '=', $secretaria);
         }
 
+        if($cidade) {
+            $rows->where('bairros.cidades_id', $cidade);
+        }
+
         $rows = $rows->get();
 
         $array = [];
@@ -419,14 +425,14 @@ class TabelasController extends Controller
         $totalDemandas = 0;
 
         foreach ($rows as $row) {
-            if(in_array($row->comunidade, $arrayComunidade)) {
+            if(in_array($row->bairro, $arrayComunidade)) {
                 continue;
             }
-            $array[$count]['comunidade'] = $row->comunidade;
-            $arrayComunidade[$count]  = $row->comunidade;
+            $array[$count]['bairro'] = $row->bairro;
+            $arrayComunidade[$count]  = $row->bairro;
             $totalGeral = 0;
             foreach ($rows as $row2) {
-                if($row2->comunidade_id == $row->comunidade_id) {
+                if($row2->bairro_id == $row->bairro_id) {
                     $array[$count][$row2->info] = $row2->qtd;
                     $totalGeral += $row2->qtd;
                 }

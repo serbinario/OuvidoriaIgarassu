@@ -131,7 +131,8 @@
                                     <thead>
                                     <tr>
                                         <th colspan="1"></th>
-                                        <th colspan="6" style="text-align: center;background-color: #e7ebe9">Classificação</th>
+                                        <th colspan="7" style="text-align: center;background-color: #e7ebe9">Classificação</th>
+                                        <th colspan="2"></th>
                                     </tr>
                                     <tr class="info">
                                         <th>Assunto</th>
@@ -141,6 +142,7 @@
                                         <th>Reclamação</th>
                                         <th>Solicitação</th>
                                         <th>Sugestão</th>
+                                        <th>Crítica</th>
                                         <th>Total Geral</th>
                                         <th>%</th>
                                     </tr>
@@ -178,6 +180,11 @@
                                                 <td>
                                                     @if(isset($item['Sugestão']))
                                                         {{$item['Sugestão']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Crítica']))
+                                                        {{$item['Crítica']}}
                                                     @endif
                                                 </td>
                                                 <td>
@@ -260,6 +267,17 @@
                                                     }
                                                 }
                                                 echo $sugestao;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $critica = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Crítica'])) {
+                                                        $critica += $i['Crítica'];
+                                                    }
+                                                }
+                                                echo $critica;
                                                 ?>
                                             </th>
                                             <th>

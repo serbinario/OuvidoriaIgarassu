@@ -22,7 +22,7 @@
 <body>
 <center>
     <div class="topo" style="">
-        <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 320px; height: 100px"></center>
+        <center><img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 360px; height: 100px"></center>
     </div>
 </center>
 
@@ -34,7 +34,7 @@
         <th>Numeração</th>
         <th>Nome</th>
         <th>Endereço</th>
-        <th>Comunidade</th>
+        <th>Bairro</th>
         <th>Telefone</th>
         <th>Subassunto</th>
     </tr>
@@ -49,7 +49,7 @@
             </td>
             <td>{{$demanda->nome}}</td>
             <td>{{$demanda->endereco}}</td>
-            <td>{{$demanda->comunidade}}</td>
+            <td>{{$demanda->bairro}}</td>
             <td>{{$demanda->fone}}</td>
             <td>@if(isset($demanda->subassunto)) {{$demanda->subassunto}} @endif</td>
         </tr>

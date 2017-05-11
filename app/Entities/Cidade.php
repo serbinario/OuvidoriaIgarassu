@@ -26,4 +26,13 @@ class Cidade extends Model implements Transformable
     {
         return $this->belongsTo(Estado::class, "estados_id");
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeByEstado($query, $value)
+    {
+        return $query->where('estados_id', $value);
+    }
 }

@@ -104,9 +104,8 @@
                             <td colspan="3" style="background-color: #213a53; color: white">Identificação</td>
                         </tr>
                         <tr>
-                            <td>Sigilo: {{$dados->sigilo}} </td>
+                            <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
                             {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
-                            <td colspan="2">Tipo de resposta: {{$dados->tipo_resposta}} </td>
                         </tr>
                         @if($dados->anonimo_id == '1')
                             <tr>

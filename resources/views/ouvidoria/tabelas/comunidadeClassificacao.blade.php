@@ -87,16 +87,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
-
-                                <div class="form-group col-md-6">
-                                    <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="secretaria">Secretaria *</label>
-                                            {!! Form::select('secretaria',(["" => "Selecione uma secretaria"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
@@ -116,24 +106,49 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="margin-top: 22px" class="form-group col-md-2">
-                                    <div class="fg-line">
-                                        <div class="fg-line">
-                                            <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
-                                        </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <div class="fg-line">
+                                    <label for="secretaria">Secretaria *</label>
+                                    {!! Form::select('secretaria',(["" => "Selecione uma secretaria"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <div class="fg-line">
+                                    <label class="control-label" for="cidade">Cidade</label>
+                                    <div class="select">
+                                        {!! Form::select('cidade', (["" => "Selecione"] + $loadFields['cidade']->toArray()), Session::getOldInput('cidade'),array('class' => 'form-control', 'id' => 'cidade')) !!}
                                     </div>
                                 </div>
-
                             </div>
-
+                            {{--<div class="form-group col-sm-3">
+                                <div class="fg-line">
+                                    <label class="control-label" for="bairro">Bairro</label>
+                                    <div class="select">
+                                        {!! Form::select('bairro', array(), Session::getOldInput('bairro'),array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                    </div>
+                                </div>
+                            </div>--}}
+                            <div style="margin-top: 22px" class="form-group col-md-2">
+                                <div class="fg-line">
+                                    <div class="fg-line">
+                                        <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table compact table-condensed">
                                     <thead>
                                     <tr>
                                         <th colspan="1"></th>
-                                        <th colspan="6" style="text-align: center;background-color: #e7ebe9">Classificação</th>
+                                        <th colspan="7" style="text-align: center;background-color: #e7ebe9">Classificação</th>
+                                        <th colspan="2"></th>
                                     </tr>
                                     <tr class="info">
                                         <th>Comunidade</th>
@@ -143,134 +158,153 @@
                                         <th>Reclamação</th>
                                         <th>Solicitação</th>
                                         <th>Sugestão</th>
+                                        <th>Crítica</th>
                                         <th>Total Geral</th>
                                         <th>%</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @foreach($array as $item)
-                                        <tr>
-                                            <td>{{$item['comunidade']}}</td>
-                                            <td>
-                                                @if(isset($item['Denúncia']))
-                                                    {{$item['Denúncia']}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($item['Elogio']))
-                                                    {{$item['Elogio']}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($item['Informação']))
-                                                    {{$item['Informação']}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($item['Reclamação']))
-                                                    {{$item['Reclamação']}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($item['Solicitação']))
-                                                    {{$item['Solicitação']}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(isset($item['Sugestão']))
-                                                    {{$item['Sugestão']}}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                {{$item['totalGeral']}}
-                                            </td>
-                                            <td>
+                                    @if(isset($array))
+                                        <tbody>
+                                        @foreach($array as $item)
+                                            <tr>
+                                                <td>{{$item['bairro']}}</td>
+                                                <td>
+                                                    @if(isset($item['Denúncia']))
+                                                        {{$item['Denúncia']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Elogio']))
+                                                        {{$item['Elogio']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Informação']))
+                                                        {{$item['Informação']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Reclamação']))
+                                                        {{$item['Reclamação']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Solicitação']))
+                                                        {{$item['Solicitação']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Sugestão']))
+                                                        {{$item['Sugestão']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if(isset($item['Crítica']))
+                                                        {{$item['Crítica']}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{$item['totalGeral']}}
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    $valor = $item['totalGeral'] / $totalDemandas;
+                                                    $porcentagem = $valor * 100;
+                                                    echo number_format($porcentagem, 2, ',', '.') . "%";
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                        <tr style="background-color: #f1f3f2">
+                                            <th></th>
+                                            <th>
                                                 <?php
-                                                $valor = $item['totalGeral'] / $totalDemandas;
-                                                $porcentagem = $valor * 100;
-                                                echo number_format($porcentagem, 2, ',', '.') . "%";
+                                                $denuncia = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Denúncia'])) {
+                                                        $denuncia += $i['Denúncia'];
+                                                    }
+                                                }
+                                                echo $denuncia;
                                                 ?>
-                                            </td>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $elogio = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Elogio'])) {
+                                                        $elogio += $i['Elogio'];
+                                                    }
+                                                }
+                                                echo $elogio;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $informacao = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Informação'])) {
+                                                        $informacao += $i['Informação'];
+                                                    }
+                                                }
+                                                echo $informacao;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $reclamacao = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Reclamação'])) {
+                                                        $reclamacao += $i['Reclamação'];
+                                                    }
+                                                }
+                                                echo $reclamacao;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $solicitacao = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Solicitação'])) {
+                                                        $solicitacao += $i['Solicitação'];
+                                                    }
+                                                }
+                                                echo $solicitacao;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $sugestao = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Sugestão'])) {
+                                                        $sugestao += $i['Sugestão'];
+                                                    }
+                                                }
+                                                echo $sugestao;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                <?php
+                                                $critica = 0;
+                                                foreach ($array as $i) {
+                                                    if (isset($i['Crítica'])) {
+                                                        $critica += $i['Crítica'];
+                                                    }
+                                                }
+                                                echo $critica;
+                                                ?>
+                                            </th>
+                                            <th>
+                                                {{$totalDemandas}}
+                                            </th>
+                                            <th>
+                                                100%
+                                            </th>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
-                                    <tfoot>
-                                    <tr style="background-color: #f1f3f2">
-                                        <th></th>
-                                        <th>
-                                            <?php
-                                            $denuncia = 0;
-                                            foreach ($array as $i) {
-                                                if(isset($i['Denúncia'])) {
-                                                    $denuncia += $i['Denúncia'];
-                                                }
-                                            }
-                                            echo $denuncia;
-                                            ?>
-                                        </th>
-                                        <th>
-                                            <?php
-                                            $elogio = 0;
-                                            foreach ($array as $i) {
-                                                if(isset($i['Elogio'])) {
-                                                    $elogio += $i['Elogio'];
-                                                }
-                                            }
-                                            echo $elogio;
-                                            ?>
-                                        </th>
-                                        <th>
-                                            <?php
-                                            $informacao = 0;
-                                            foreach ($array as $i) {
-                                                if(isset($i['Informação'])) {
-                                                    $informacao += $i['Informação'];
-                                                }
-                                            }
-                                            echo $informacao;
-                                            ?>
-                                        </th>
-                                        <th>
-                                            <?php
-                                            $reclamacao = 0;
-                                            foreach ($array as $i) {
-                                                if(isset($i['Reclamação'])) {
-                                                    $reclamacao += $i['Reclamação'];
-                                                }
-                                            }
-                                            echo $reclamacao;
-                                            ?>
-                                        </th>
-                                        <th>
-                                            <?php
-                                            $solicitacao = 0;
-                                            foreach ($array as $i) {
-                                                if(isset($i['Solicitação'])) {
-                                                    $solicitacao += $i['Solicitação'];
-                                                }
-                                            }
-                                            echo $solicitacao;
-                                            ?>
-                                        </th>
-                                        <th>
-                                            <?php
-                                            $sugestao = 0;
-                                            foreach ($array as $i) {
-                                                if(isset($i['Sugestão'])) {
-                                                    $sugestao += $i['Sugestão'];
-                                                }
-                                            }
-                                            echo $sugestao;
-                                            ?>
-                                        </th>
-                                        <th>
-                                            {{$totalDemandas}}
-                                        </th>
-                                        <th>
-                                            100%
-                                        </th>
-                                    </tr>
-                                    </tfoot>
+                                        </tfoot>
+                                    @endif
                                 </table>
                             </div>
                         </div>
@@ -282,4 +316,45 @@
             {{--Fim formulario--}}
         </section>
     </div>
+@stop
+
+@section('javascript')
+    <script type="text/javascript">
+        //Carregando os bairros
+        $(document).on('change', "#cidade", function () {
+            //Removendo as Bairros
+            $('#bairro option').remove();
+
+            //Recuperando a cidade
+            var cidade = $(this).val();
+
+            if (cidade !== "") {
+                var dados = {
+                    'table' : 'bairros',
+                    'field_search' : 'cidades_id',
+                    'value_search': cidade,
+                }
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um bairro</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#bairro option').remove();
+                    $('#bairro').append(option);
+                });
+            }
+        });
+    </script>
 @stop

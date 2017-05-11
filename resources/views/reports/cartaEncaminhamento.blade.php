@@ -31,7 +31,7 @@ $dataFromat = $data->format('d/m/Y');*/
             position:absolute;
             bottom:0;
             width: 100%;
-            height: 65px;
+            height: 90px;
             margin-top: 785px;
         }
         span, p {
@@ -47,7 +47,7 @@ $dataFromat = $data->format('d/m/Y');*/
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 90px"></center>
+            <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
         </div><br />
         <span style="font-size: 10px"><b>Secretaria Municipal de Saúde</b></span><br />
         <span style="font-size: 10px">Ouvidoria da Saúde</span>
@@ -122,7 +122,7 @@ $dataFromat = $data->format('d/m/Y');*/
 
 <center>
     <div class="rodape" style="">
-        <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 65px"></center>
+        <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
     </div>
 </center>
 

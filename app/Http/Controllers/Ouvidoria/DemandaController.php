@@ -54,7 +54,8 @@ class DemandaController extends Controller
         'Ouvidoria\Prioridade',
         'Ouvidoria\Destinatario',
         'Ouvidoria\Comunidade',
-        'Ouvidoria\TipoResposta'
+        'Ouvidoria\TipoResposta',
+        'Cidade|byEstado,16'
     ];
 
     private $loadFields2 = [
@@ -490,7 +491,8 @@ class DemandaController extends Controller
             ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('cidades', 'cidades.id', '=', 'bairros.cidades_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
@@ -512,7 +514,8 @@ class DemandaController extends Controller
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_demanda.nome as nome',
-                'ouv_comunidade.nome as comunidade',
+                'bairros.nome as bairro',
+                'cidades.nome as cidade',
                 'ouv_demanda.endereco',
                 'ouv_demanda.numero_end',
                 'ouv_demanda.fone',
@@ -667,7 +670,7 @@ class DemandaController extends Controller
             ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
@@ -688,7 +691,7 @@ class DemandaController extends Controller
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_demanda.nome as nome',
-                'ouv_comunidade.nome as comunidade',
+                'bairros.nome as bairro',
                 'ouv_demanda.endereco',
                 'ouv_demanda.numero_end',
                 'ouv_demanda.fone',
@@ -747,19 +750,20 @@ class DemandaController extends Controller
         //Tratando as datas
         $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
         $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
-        $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
+        $secretaria  = isset($dados['secretaria']) ? $dados['secretaria'] : '';
+        $bairro      = isset($dados['bairro']) ? $dados['bairro'] : '';
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
-            ->where('ouv_comunidade.id', '=', $dados['comunidade'])
+            ->where('bairros.id', '=', $bairro)
             ->select([
                 'ouv_demanda.id',
                 'ouv_demanda.nome as nome',
                 'ouv_demanda.endereco',
-                'ouv_comunidade.nome as comunidade',
+                'bairros.nome as bairro',
                 'ouv_demanda.fone',
                 'ouv_subassunto.nome as subassunto',
             ]);

@@ -67,72 +67,35 @@
 <script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/validacoes/validation_form_demanda_publico.js')}}"></script>
 <script type="text/javascript">
+
     $(document).ready(function(){
-        $('#anonimo').on('change', function(){
-            var value = $('#anonimo').val();
-            if(value == '2') {
-                $('#nome').prop('readonly', true);
-                $('#tipo_resposta_id').prop('disabled', true);
-                $('.dados-pessoas').hide();
-            } else {
-                $('#nome').prop('readonly', false);
-                $('#tipo_resposta_id').prop('disabled', false);
-                $('.dados-pessoas').show();
+        $('#msg-sigilo').hide();
+
+        // Exibi a mensagem de informação para caso da opção de "Deseja sigilo" esta marcada
+        $('#sigilo-2, #sigilo-1').on('click', function(){
+            if($("#sigilo-2").prop( "checked")) {
+                $('#msg-sigilo').show();
+            } else if ($("#sigilo-1").prop( "checked")) {
+                $('#msg-sigilo').hide();
             }
         });
-    });
 
-    //Carregando os assuntos
-    $(document).on('change', "#area_id", function () {
-        //Removendo as assuntos
-        $('#assunto_id option').remove();
-
-        //Recuperando a secretaria
-        var secretaria = $(this).val();
-
-        if (secretaria !== "") {
-            var dados = {
-                'table' : 'ouv_assunto',
-                'field_search' : 'area_id',
-                'value_search': secretaria,
-            };
-
-            jQuery.ajax({
-                type: 'POST',
-                url: '{{ route('seracademico.util.search')  }}',
-                headers: {
-                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                },
-                data: dados,
-                datatype: 'json'
-            }).done(function (json) {
-                var option = "";
-
-                option += '<option value="">Selecione um assunto</option>';
-                for (var i = 0; i < json.length; i++) {
-                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
-                }
-
-                $('#assunto_id option').remove();
-                $('#assunto_id').append(option);
-            });
-        }
     });
 
     //Carregando os bairros
-    $(document).on('change', "#assunto_id", function () {
+    $(document).on('change', "#cidade", function () {
         //Removendo as Bairros
-        $('#subassunto_id option').remove();
+        $('#bairro option').remove();
 
         //Recuperando a cidade
-        var assunto = $(this).val();
+        var cidade = $(this).val();
 
-        if (assunto !== "") {
+        if (cidade !== "") {
             var dados = {
-                'table' : 'ouv_subassunto',
-                'field_search' : 'assunto_id',
-                'value_search': assunto,
-            };
+                'table' : 'bairros',
+                'field_search' : 'cidades_id',
+                'value_search': cidade,
+            }
 
             jQuery.ajax({
                 type: 'POST',
@@ -145,50 +108,13 @@
             }).done(function (json) {
                 var option = "";
 
-                option += '<option value="">Selecione um subassunto</option>';
+                option += '<option value="">Selecione um bairro</option>';
                 for (var i = 0; i < json.length; i++) {
                     option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
                 }
 
-                $('#subassunto_id option').remove();
-                $('#subassunto_id').append(option);
-            });
-        }
-    });
-
-    //Carregando as melhorias
-    $(document).on('change', "#melhoria_secretaria", function () {
-        //Removendo as assuntos
-        $('#melhoria_id option').remove();
-
-        //Recuperando a secretaria
-        var secretaria = $(this).val();
-
-        if (secretaria !== "") {
-            var dados = {
-                'table' : 'ouv_melhorias',
-                'field_search' : 'area_id',
-                'value_search': secretaria,
-            };
-
-            jQuery.ajax({
-                type: 'POST',
-                url: '{{ route('seracademico.util.search')  }}',
-                headers: {
-                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                },
-                data: dados,
-                datatype: 'json'
-            }).done(function (json) {
-                var option = "";
-
-                option += '<option value="">Selecione</option>';
-                for (var i = 0; i < json.length; i++) {
-                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
-                }
-
-                $('#melhoria_id option').remove();
-                $('#melhoria_id').append(option);
+                $('#bairro option').remove();
+                $('#bairro').append(option);
             });
         }
     });

@@ -23,7 +23,7 @@
             </div>
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}
-            {!! Form::open(['route'=>'seracademico.ouvidoria.report.comunidade', 'method' => "POST", 'target' => '_blank' ]) !!}
+            {!! Form::open(['route'=>'seracademico.ouvidoria.report.comunidade', 'id' => 'reportBairro', 'method' => "POST", 'target' => '_blank' ]) !!}
 
             <div class="block-header">
                 <h2>Relatório por comunidade</h2>
@@ -33,41 +33,43 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
-
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-2">
                                     <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="secretaria">Secretaria</label>
-                                            {!! Form::select('secretaria',(["" => "Selecione uma secretaria"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="comunidade">Comunidade</label>
-                                            {!! Form::select('comunidade', $loadFields['ouvidoria\comunidade'], null, array('class' => 'form-control')) !!}
-                                        </div>
+                                        <label for="data_inicio">Início</label>
+                                        {!! Form::text('data_inicio', null , array('class' => 'form-control date')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="data_inicio">Início</label>
-                                            {!! Form::text('data_inicio', null , array('class' => 'form-control date')) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="data_fim">Fim</label>
-                                            {!! Form::text('data_fim', null , array('class' => 'form-control date')) !!}
-                                        </div>
+                                        <label for="data_fim">Fim</label>
+                                        {!! Form::text('data_fim', null , array('class' => 'form-control date')) !!}
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <div class="fg-line">
+                                        <label for="secretaria">Secretaria</label>
+                                        {!! Form::select('secretaria',(["" => "Selecione uma secretaria"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <div class="fg-line">
+                                        <label class="control-label" for="cidade">Cidade</label>
+                                        <div class="select">
+                                            {!! Form::select('cidade', (["" => "Selecione"] + $loadFields['cidade']->toArray()), Session::getOldInput('cidade'),array('class' => 'form-control', 'id' => 'cidade')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <div class="fg-line">
+                                        <label class="control-label" for="bairro">Bairro</label>
+                                        <div class="select">
+                                            {!! Form::select('bairro', array(), Session::getOldInput('bairro'),array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
                         </div>
@@ -79,4 +81,44 @@
             {{--Fim formulario--}}
         </section>
     </div>
+@stop
+@section('javascript')
+    <script type="text/javascript">
+        //Carregando os bairros
+        $(document).on('change', "#cidade", function () {
+            //Removendo as Bairros
+            $('#bairro option').remove();
+
+            //Recuperando a cidade
+            var cidade = $(this).val();
+
+            if (cidade !== "") {
+                var dados = {
+                    'table' : 'bairros',
+                    'field_search' : 'cidades_id',
+                    'value_search': cidade,
+                }
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um bairro</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#bairro option').remove();
+                    $('#bairro').append(option);
+                });
+            }
+        });
+    </script>
 @stop

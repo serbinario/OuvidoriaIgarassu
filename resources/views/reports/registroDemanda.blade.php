@@ -17,8 +17,8 @@
             position:absolute;
             bottom:0;
             width: 100%;
-            height: 82px;
-            margin-top: 550px;
+            height: 90px;
+            margin-top: 530px;
 
         }
     </style>
@@ -30,7 +30,7 @@
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 70px"></center>
+            <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
         </div>
     </center>
 
@@ -87,8 +87,9 @@
             <td style="width: 100px"><span class="text"><b>Número:</b> {{$demanda->numero_end}}</span></td>
         </tr>
         <tr>
-            <td style="width: 100px"><span class="text"><b>Bairro:</b> {{$demanda->comunidade}}</span></td>
-            <td style="width: 100px"><span class="text"><b>CEP:</b> {{$demanda->cep}}</span></td>
+            <td style=""><span class="text"><b>Cidade:</b> {{$demanda->cidade}}</span></td>
+            <td style="width: 300px"><span class="text"><b>Bairro:</b> {{$demanda->bairro}}</span></td>
+            <td style=""><span class="text"><b>CEP:</b> {{$demanda->cep}}</span></td>
         </tr>
     </table>
 
@@ -128,8 +129,8 @@
 </div>
 
 <center>
-    <div class="rodape" style="">
-        <center><img src="{{asset('/img/logoabreulimasad.png')}}" style="width: 130px; height: 70px"></center>
+    <div class="rodape">
+        <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
     </div>
 </center>
 

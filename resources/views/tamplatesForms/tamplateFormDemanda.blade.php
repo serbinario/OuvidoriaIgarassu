@@ -39,22 +39,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{--<div class="form-group col-md-2">
-                                    <div class=" fg-line">
-                                        <label for="anonimo_id">Anônimo</label>
-                                        <div class="select">
-                                            {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], null, array('class'=> 'form-control' , 'id' => 'anonimo')) !!}
-                                        </div>
-                                    </div>
-                                </div>--}}
-                                {{--<div class="form-group col-md-2">
-                                    <div class=" fg-line">
-                                        <label for="tipo_resposta_id">Tipo de resposta</label>
-                                        <div class="select">
-                                            {!! Form::select('tipo_resposta_id', (["" => "Selecione"] + $loadFields['ouvidoria\tiporesposta']->toArray()), null, array('class'=> 'form-control' , 'id' => 'tipo_resposta_id')) !!}
-                                        </div>
-                                    </div>
-                                </div>--}}
                                 <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
@@ -157,17 +141,37 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        {!! Form::label('comunidade_id', 'Bairro') !!}
-                                        {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control')) !!}
-                                    </div>
-                                </div>
                                 <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
                                             <label for="cep">CEP</label>
                                             {!! Form::text('cep', Session::getOldInput('cep'), array('class' => 'form-control input-sm', 'placeholder' => 'CEP')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-3">
+                                    <div class="fg-line">
+                                        <label class="control-label" for="cidade">Cidade</label>
+                                        <div class="select">
+                                            @if(isset($model->bairro->cidade->id))
+                                                {!! Form::select('cidade', (["" => "Selecione"] + $loadFields['cidade']->toArray()), $model->bairro->cidade->id,array('class' => 'form-control', 'id' => 'cidade')) !!}
+                                            @else
+                                                {!! Form::select('cidade', (["" => "Selecione"] + $loadFields['cidade']->toArray()), Session::getOldInput('cidade'),array('class' => 'form-control', 'id' => 'cidade')) !!}
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <div class="fg-line">
+                                        <label class="control-label" for="bairro">Bairro</label>
+                                        <div class="select">
+                                            @if(isset($model->bairro->id))
+                                                {!! Form::select('bairro_id', array($model->bairro->id => $model->bairro->nome), $model->bairro->id,array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                            @else
+                                                {!! Form::select('bairro_id', array(), Session::getOldInput('bairro_id'),array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -592,6 +596,43 @@
 
                     $('#melhoria_id option').remove();
                     $('#melhoria_id').append(option);
+                });
+            }
+        });
+
+        //Carregando os bairros
+        $(document).on('change', "#cidade", function () {
+            //Removendo as Bairros
+            $('#bairro option').remove();
+
+            //Recuperando a cidade
+            var cidade = $(this).val();
+
+            if (cidade !== "") {
+                var dados = {
+                    'table' : 'bairros',
+                    'field_search' : 'cidades_id',
+                    'value_search': cidade,
+                }
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '{{ route('seracademico.util.search')  }}',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                    },
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione um bairro</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#bairro option').remove();
+                    $('#bairro').append(option);
                 });
             }
         });

@@ -5,6 +5,7 @@ namespace Seracademico\Entities\Ouvidoria;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Seracademico\Entities\Bairro;
 use Seracademico\Uteis\SerbinarioDateFormat;
 use Seracademico\Entities\Pessoa;
 use Seracademico\Entities\Sexo;
@@ -49,6 +50,7 @@ class Demanda extends Model implements Transformable
 		'cpf',
 		'profissao',
 		'cep',
+		'bairro_id'
 	];
 
 	/**
@@ -66,6 +68,14 @@ class Demanda extends Model implements Transformable
 	public function setDataDaOcorrenciaAttribute($value)
 	{
 		$this->attributes['data_da_ocorrencia'] = SerbinarioDateFormat::toUsa($value);
+	}
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function bairro()
+	{
+		return $this->belongsTo(Bairro::class, 'bairro_id');
 	}
 
 	/**

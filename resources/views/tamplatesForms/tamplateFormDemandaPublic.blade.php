@@ -14,17 +14,27 @@
                         <br >
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('sigilo_id', 'Sigilo') !!}
-                                    {!! Form::select('sigilo_id', $loadFields['ouvidoria\sigilo'], Session::getOldInput('sigilo_id'), array('class' => 'form-control')) !!}
+                                <div class="radio m-b-15">
+                                    <label>
+                                        <input type="radio" id="sigilo-1" name="sigilo_id" value="2">
+                                        <i class="input-helper"></i>
+                                        "Desejo me identificar"
+                                    </label>
+                                </div>
+                                <div class="radio m-b-15">
+                                    <label>
+                                        <input type="radio" id="sigilo-2" name="sigilo_id" value="1">
+                                        <i class="input-helper"></i>
+                                        "Desejo sigilo"
+                                    </label>
                                 </div>
                             </div>
-                            {{--<div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('anonimo_id', 'Anônimo') !!}
-                                    {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], Session::getOldInput('anonimo_id'), array('class' => 'form-control', 'id' => 'anonimo')) !!}
-                                </div>
-                            </div>--}}
+                            <div class="col-md-12" id="msg-sigilo">
+                                <span style="color: red">
+                                        * Para garantir o sigilo, Não coloque seu nome no teor da manifestação ou em
+                                        qualquer outro lugar, além desta tela de identificação, seus dados ficarão restritos só a ouvidoria
+                                </span>
+                            </div>
                             {{--<div class="form-group col-md-4">
                                 <div class=" fg-line">
                                     <label for="tipo_resposta_id">Tipo de resposta</label>
@@ -119,12 +129,6 @@
                                     {!! Form::text('numero_end', Session::getOldInput('numero_end')  , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('comunidade_id', 'Bairro') !!}
-                                    {!! Form::select('comunidade_id',(["" => "Selecione"] + $loadFields['ouvidoria\comunidade']->toArray()), Session::getOldInput('comunidade_id'), array('class' => 'form-control input-sm')) !!}
-                                </div>
-                            </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     {!! Form::label('cep', 'CEP') !!}
@@ -132,23 +136,23 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row">
-
-
-                            {{--<div class="col-md-4">--}}
-                                {{--<div class="form-group">--}}
-                                    {{--{!! Form::label('exclusividade_sus_id', 'Utiliza exclusivamente o SUS?') !!}--}}
-                                    {{--{!! Form::select('exclusividade_sus_id', $loadFields['ouvidoria\exclusividadesus'], Session::getOldInput('exclusividade_sus_id'), array('class' => 'form-control')) !!}--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="col-md-3">
-                                <div class="form-group">
-                                    {!! Form::label('escolaridade_id', 'Escolaridade') !!}
-                                    {!! Form::select('escolaridade_id', (["" => "Selecione"] + $loadFields['ouvidoria\escolaridade']->toArray()), Session::getOldInput('escolaridade_id'), array('class' => 'form-control')) !!}
+                            <div class="form-group col-sm-3">
+                                <div class="fg-line">
+                                    <label class="control-label" for="cidade">Cidade</label>
+                                    <div class="select">
+                                        {!! Form::select('cidade', (["" => "Selecione"] + $loadFields['cidade']->toArray()), Session::getOldInput('cidade'),array('class' => 'form-control', 'id' => 'cidade')) !!}
+                                    </div>
                                 </div>
-                            </div>--}}
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <div class="fg-line">
+                                    <label class="control-label" for="bairro">Bairro</label>
+                                    <div class="select">
+                                        {!! Form::select('bairro_id', array(), Session::getOldInput('bairro_id'),array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -196,81 +200,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-3">
-                                <div class=" fg-line">
-                                    <label for="area_id">Secretaria</label>
-                                    <div class="select">
-                                        {!! Form::select('area_id', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('area_id'), array('class' => 'form-control', 'id' => 'area_id')) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class=" fg-line">
-                                    <label for="assunto_id">Assunto</label>
-                                    <div class="select">
-                                        {!! Form::select('assunto_id', array(), Session::getOldInput('assunto_id'), array('class' => 'form-control', 'id' => 'assunto_id')) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <div class=" fg-line">
-                                    <label for="assunto_id">Subassunto</label>
-                                    {!! Form::select('subassunto_id', array(), Session::getOldInput('subassunto_id'),array('class' => 'form-control', 'id' => 'subassunto_id')) !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    {!! Form::label('relato', 'Relato') !!}
+                                    {!! Form::label('relato', 'Descrição da manifestação') !!}
                                     {!! Form::textarea('relato', Session::getOldInput('relato') , array('class' => 'form-control', 'rows' => '5')) !!}
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-3">
-                                <div class=" fg-line">
-                                    <label for="melhoria_secretaria">Secretaria</label>
-                                    <div class="select">
-                                        {!! Form::select('melhoria_secretaria', (["" => "Selecione"] + $loadFields['ouvidoria\secretaria']->toArray()), Session::getOldInput('area_id'), array('class' => 'form-control', 'id' => 'melhoria_secretaria')) !!}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <div class=" fg-line">
-                                    <label for="melhoria_id">Melhoria</label>
-                                    <div class="select">
-                                        {!! Form::select('melhoria_id', array(), Session::getOldInput('subassunto_id'),array('class' => 'form-control', 'id' => 'melhoria_id')) !!}
-                                    </div>
-                                </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-sm m-t-10 submit">Registrar Manifestação</button>
+                                <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    {!! Form::label('melhorias', 'Quais melhorias você identifica?') !!}
-                                    {!! Form::textarea('melhorias', Session::getOldInput('melhorias') , array('class' => 'form-control', 'rows' => '5')) !!}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    {!! Form::label('obs', 'Observações') !!}
-                                    {!! Form::textarea('obs', Session::getOldInput('obs') , array('class' => 'form-control', 'rows' => '5')) !!}
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
-
-                <button type="submit" class="btn btn-primary btn-sm m-t-10 submit">Enviar</button>
-                <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
 
             </div>
 		</div>
