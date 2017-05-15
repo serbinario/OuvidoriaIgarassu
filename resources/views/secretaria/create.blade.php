@@ -25,7 +25,7 @@
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}
             {!! Form::open(['route'=>'seracademico.ouvidoria.secretaria.store', 'method' => "POST", 'id'=> 'formSecretaria' ]) !!}
-            @include('tamplatesForms.tamplateFormSecretaria')
+                @include('tamplatesForms.tamplateFormSecretaria')
             {!! Form::close() !!}
             {{--Fim formulario--}}
         </section>

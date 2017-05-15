@@ -68,20 +68,16 @@ $dataFromat = $data->format('d/m/Y');*/
     <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
 
     <span><b>Prezado(a) Senhor(a),</b></span></br>
-    <span><b>Cumprimentando Cordialmente, encaminhamos a V.S.a a $reclamação $via da ouvidoria,</b> para fins de
-        conhecimento e para que semam tomadas as decidas providências cabíveis.</span>
+    <span><b>Cumprimentando Cordialmente, encaminhamos a V.S.a a {{ $demanda->tipoManifestacao }} via {{$demanda->origem}} da ouvidoria,</b> para fins de
+        conhecimento e para que sejam tomadas as devidas providências cabíveis.</span>
     <span>Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
-        epígrafe, solicito informar a este setor no prazo especifico através de <b>comunicação interna</b> as providencias
-    adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordila para a satisfação do cidadão.</span></br></br>
+        epígrafe, solicito informar a este setor no prazo específico através de <b>comunicação interna</b> as providências
+    adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial para a satisfação do cidadão.</span></br></br>
 
-    {{--<span class="text"><b>Data do encaminhamento:</b> {{$demanda->data}}</span> <br />
-    <span class="text"><b>Secretaria:</b> {{$demanda->area}}</span><br />
-    <span class="text"><b>Destino:</b> {{$demanda->destino}}</span><br />--}}
-    {{--<span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />--}}
 
     <table border rules=none style="width: 100%;">
         <tr>
-            <td style="width: 340px"><span class="text"><b>Protocolo Nº. 0215446864 </b></span></td>
+            <td style="width: 340px"><span class="text"><b>Protocolo Nº. {{$demanda->n_protocolo}} </b></span></td>
         </tr>
         <tr>
             <td style="width: 340px"><span class="text"><b>Tipo de manifestação: </b>{{ $demanda->tipoManifestacao }}</span></td>
@@ -105,16 +101,25 @@ $dataFromat = $data->format('d/m/Y');*/
             <td style="width: 340px"><span class="text"><b>Classificação: </b>{{ $demanda->prioridade  }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Prazo de Resposta: </b>{{ $demanda->prazo  }}</span></td>
+            <td style="width: 340px"><span class="text"><b>Prazo de Resposta: </b>{{ $demanda->prazo  }} dias úteis</span></td>
         </tr>
-    </table></br>
+    </table><br />
+
+    <table border rules=none style="width: 100%;">
+        <tr>
+            <td><span><b>Descrição da Manifestação</b></span></td>
+        </tr>
+        <tr>
+            <td rowspan="5"><span>{{ $demanda->relato }}</span></td>
+        </tr>
+    </table> <br />
 
     <table border rules=none style="width: 100%;">
         <tr>
             <td><span><b>Tradução da Manifestação</b></span></td>
         </tr>
         <tr>
-            <td rowspan="5"><span>{{ $demanda->relato }}</span></td>
+            <td rowspan="5"><span>{{ $demanda->parecer }}</span></td>
         </tr>
     </table>
 

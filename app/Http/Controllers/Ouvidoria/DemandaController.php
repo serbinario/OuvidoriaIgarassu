@@ -14,6 +14,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Seracademico\Validators\DemandaValidator;
 use Seracademico\Uteis\SerbinarioDateFormat;
+use Seracademico\Uteis\ReCaptcha;
 
 class DemandaController extends Controller
 {
@@ -406,6 +407,21 @@ class DemandaController extends Controller
             #Recuperando os dados da requisição
             $data = $request->all();
 
+            $secret = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe";
+
+            // resposta vazia
+            $response = null;
+
+
+            // verifique a chave secreta
+            $reCaptcha = new ReCaptcha($secret);
+
+            dd($reCaptcha);
+
+            $response = $reCaptcha->verifyResponse($_SERVER["REMOTE_ADDR"], $data['g-recaptcha-response']);
+
+            dd($response);
+
             #tratando as rules
 
             #Validando a requisição
@@ -697,7 +713,9 @@ class DemandaController extends Controller
                 'ouv_demanda.fone',
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
+                'ouv_demanda.n_protocolo',
                 'ouv_encaminhamento.resposta',
+                'ouv_encaminhamento.parecer',
                 'ouv_demanda.sigilo_id',
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',

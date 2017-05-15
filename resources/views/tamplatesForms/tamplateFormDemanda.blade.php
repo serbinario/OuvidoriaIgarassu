@@ -202,7 +202,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{--<div class="row">
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
                                         <label for="area_id">Área</label>
@@ -237,7 +237,7 @@
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="row">
                                 <div class="form-group col-md-8">
                                     <div class="form-group">
