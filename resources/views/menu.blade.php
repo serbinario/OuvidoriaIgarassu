@@ -268,7 +268,7 @@
 <script src="{{ asset('/lib/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/lib/select2/dist/js/select2.full.js') }}"></script>
 <script src="{{ asset('/js/plugins/toastr.min.js')}}"></script>
-<script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
+{{--<script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>--}}
 <script src="{{ asset('/js/jquery.tree.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>

@@ -65,9 +65,9 @@
 <script src="{{ asset('/js/mascaras.js')}}"></script>
 <script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
-<script src="{{ asset('/js/validacoes/validation_form_demanda_publico.js')}}"></script>
+{{--<script src="{{ asset('/js/validacoes/validation_form_demanda_publico.js')}}"></script>--}}
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
-<script src='https://www.google.com/recaptcha/api.js?hl=pt-BR'></script>
+
 <script type="text/javascript">
 
     $("#formDemanda").validate({
