@@ -24,7 +24,7 @@
         <center>
             <div class="topo" style="background-color: #213a53">
                 <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
+                    <img class="img-responsive" src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
                     {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
                 </center>
             </div>
