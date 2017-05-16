@@ -269,6 +269,7 @@
 <script src="{{ asset('/lib/select2/dist/js/select2.full.js') }}"></script>
 <script src="{{ asset('/js/plugins/toastr.min.js')}}"></script>
 {{--<script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>--}}
+{{--<script src="{{ asset('/js/reCaptcha2.min.js')}}" type="text/javascript"></script>--}}
 <script src="{{ asset('/js/jquery.tree.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>

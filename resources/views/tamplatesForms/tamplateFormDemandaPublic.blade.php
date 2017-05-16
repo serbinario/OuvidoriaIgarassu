@@ -217,7 +217,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary btn-sm m-t-10 submit">Registrar Manifestação</button>
+                                <button type="submit" id="submit"  class="btn btn-primary btn-sm m-t-10 submit">Registrar Manifestação</button>
                                 <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
                             </div>
                         </div>

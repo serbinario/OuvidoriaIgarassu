@@ -8,6 +8,7 @@
 
     <link href="{{ asset('/lib/chosen/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('/lib/summernote/dist/summernote.css') }}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ asset('/lib/sweetalert2/dist/sweetalert2.min.css') }}"  media="screen,projection"/>
 
     <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/app_1.min.css') }}"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/app_2.min.css') }}"  media="screen,projection"/>
@@ -63,30 +64,16 @@
 <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('/js/jquery.mask.js')}}"></script>
 <script src="{{ asset('/js/mascaras.js')}}"></script>
-<script src="{{ asset('/js/bootstrapvalidator.js')}}" type="text/javascript"></script>
+<script src="{{ asset('/lib/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
+<script src="{{ asset('/lib/jquery-validation/src/localization/messages_pt_BR.js') }}"></script>
 <script src="{{ asset('/js/jquery.datetimepicker.js')}}" type="text/javascript"></script>
-{{--<script src="{{ asset('/js/validacoes/validation_form_demanda_publico.js')}}"></script>--}}
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+<script src="{{ asset('/dist/js/validacao/demanda_public.js')}}"></script>
 
 <script type="text/javascript">
 
-    $("#formDemanda").validate({
-        submitHandler: function (form) {
-            var response = grecaptcha.getResponse();
-            //recaptcha failed validation
-            if (response.length == 0) {
-                $('#recaptcha-error').show();
-                return false;
-            }
-            //recaptcha passed validation
-            else {
-                $('#recaptcha-error').hide();
-                return true;
-            }
-        }
-    });
-
     $(document).ready(function(){
+
         $('#msg-sigilo').hide();
 
         // Exibi a mensagem de informação para caso da opção de "Deseja sigilo" esta marcada
