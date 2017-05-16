@@ -13,8 +13,8 @@ use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Seracademico\Validators\DemandaValidator;
+use Seracademico\Validators\DemandaPublicValidator;
 use Seracademico\Uteis\SerbinarioDateFormat;
-use Seracademico\Uteis\ReCaptcha;
 
 class DemandaController extends Controller
 {
@@ -32,6 +32,11 @@ class DemandaController extends Controller
     * @var DemandaValidator
     */
     private $validator;
+
+    /**
+     * @var DemandaPublicValidator
+     */
+    private $validatorPublic;
 
     /**
     * @var array
@@ -72,12 +77,16 @@ class DemandaController extends Controller
     * @param DemandaService $service
     * @param DemandaValidator $validator
     */
-    public function __construct(DemandaService $service, DemandaValidator $validator, DemandaRepository $repository)
+    public function __construct(DemandaService $service,
+                                DemandaValidator $validator,
+                                DemandaRepository $repository,
+                                DemandaPublicValidator $validatorPublic)
     {
-        $this->service   =  $service;
-        $this->validator =  $validator;
-        $this->repository =  $repository;
-        $this->user = Auth::user();
+        $this->service          =  $service;
+        $this->validator        =  $validator;
+        $this->repository       =  $repository;
+        $this->validatorPublic  =  $validatorPublic;
+        $this->user             = Auth::user();
     }
 
     /**
@@ -404,28 +413,12 @@ class DemandaController extends Controller
     public function storePublic(Request $request)
     {
         try {
+
             #Recuperando os dados da requisição
             $data = $request->all();
 
-            $secret = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe";
-
-            // resposta vazia
-            $response = null;
-
-
-            // verifique a chave secreta
-            $reCaptcha = new ReCaptcha($secret);
-
-            dd($reCaptcha);
-
-            $response = $reCaptcha->verifyResponse($_SERVER["REMOTE_ADDR"], $data['g-recaptcha-response']);
-
-            dd($response);
-
-            #tratando as rules
-
             #Validando a requisição
-            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+            $this->validatorPublic->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             #Executando a ação
             $result = $this->service->store($data);

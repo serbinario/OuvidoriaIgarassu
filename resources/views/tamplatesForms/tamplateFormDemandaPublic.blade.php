@@ -209,8 +209,9 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+                            <div class="col-md-offset-4 col-md-12">
+                                {!! App('captcha')->display() !!}
+                                {{--<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>--}}
                             </div>
                         </div>
 

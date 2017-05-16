@@ -191,6 +191,9 @@ return [
         // Envio de sms
         //SimpleSoftwareIO\SMS\SMSServiceProvider::class
 
+        // reCAPTCHA
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
+
 
     ],
 
@@ -261,6 +264,9 @@ return [
 
         // Envio de sms
         //'SMS' => SimpleSoftwareIO\SMS\Facades\SMS::class
+
+        // reCAPTCHA
+        'NoCaptcha' => 'Anhskohbo\NoCaptcha\Facades\NoCaptcha'
 
     ],
 

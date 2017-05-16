@@ -61,7 +61,7 @@ class ReCaptcha
             die("To use reCAPTCHA you must get an API key from <a href='"
                 . self::$_signupUrl . "'>" . self::$_signupUrl . "</a>");
         }
-        dd($secret);
+
         $this->_secret=$secret;
     }
 
