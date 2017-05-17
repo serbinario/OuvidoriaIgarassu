@@ -13,11 +13,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         Route::get('logout', 'Auth\AuthController@getLogout');
     });
 
+    Route::get('seracademico/indexPublico'  , ['as' => 'seracademico.indexPublico', 'uses' => 'Ouvidoria\DemandaController@indexPublico']);
+
     Route::group(['prefix' => 'seracademico', 'middleware' => 'auth', 'as' => 'seracademico.'], function () {
 
         //Rotas gerais
         Route::get('index'  , ['as' => 'index', 'uses' => 'DefaultController@index']);
-        Route::get('indexPublico'  , ['as' => 'indexPublico', 'uses' => 'Ouvidoria\DemandaController@indexPublico']);
 
         Route::group(['prefix' => 'ouvidoria', 'as' => 'ouvidoria.'], function () {
 
