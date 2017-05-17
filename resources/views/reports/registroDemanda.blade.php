@@ -92,7 +92,7 @@
         </tr>
         <tr>
             <td style=""><span class="text"><b>Cidade:</b> {{$demanda->cidade}}</span></td>
-            <td style="width: 300px"><span class="text"><b>Bairro:</b> {{$demanda->bairro}}</span></td>
+            <td style="width: 200px"><span class="text"><b>Bairro:</b> {{$demanda->bairro}}</span></td>
             <td style=""><span class="text"><b>CEP:</b> {{$demanda->cep}}</span></td>
         </tr>
     </table>
