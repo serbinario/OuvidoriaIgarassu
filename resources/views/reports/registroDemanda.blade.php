@@ -21,6 +21,10 @@
             margin-top: 530px;
 
         }
+        span, p {
+            font-size: 13px;
+            margin-left: 20px;
+        }
     </style>
     <link href="" rel="stylesheet" media="screen">
 </head>
