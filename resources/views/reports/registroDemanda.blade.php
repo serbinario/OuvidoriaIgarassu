@@ -71,7 +71,7 @@
     <h4>1. DADOS PESSOAIS</h4>
     <table style="width: 100%">
         <tr>
-            <td style="width: 340px"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
+            <td style="width: 300px"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
             <td><span class="text"><b>Sexo:</b> {{$demanda->sexo}}</span></td>
             <td><span class="text"><b>Idade:</b> {{$demanda->idade}}</span></td>
         </tr>
