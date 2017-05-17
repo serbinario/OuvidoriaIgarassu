@@ -117,11 +117,11 @@
             <td colspan="2" style="width: 500px"><span class="text"><b>Destino:</b> {{$demanda->destino}}</span></td>
         </tr>
         <tr>
-            <td colspan="2" style="width: 340px"><span class="text"><b>Comentário\Parecer: {{$demanda->parecer}}</b></span></td>
+            <td colspan="2" style="width: 340px"><span class="text"><b>Comentário\Parecer:</b></span></td>
         </tr>
-        {{--<tr>
+        <tr>
             <td colspan="2" style="width: 340px"><span class="text">{{$demanda->parecer}}</span></td>
-        </tr>--}}
+        </tr>
     </table>
 
     {{--<h4>4. Dados da demanda</h4>--}}
