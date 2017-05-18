@@ -688,7 +688,8 @@ class DemandaController extends Controller
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                //\DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                'ouv_encaminhamento.data',
                 'ouv_prioridade.nome as prioridade',
                 'ouv_prioridade.dias as prazo',
                 'ouv_destinatario.nome as destino',
@@ -712,7 +713,8 @@ class DemandaController extends Controller
                 'ouv_demanda.sigilo_id',
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',
-                'ouv_pessoa.nome as tipoUsuario'
+                'ouv_pessoa.nome as tipoUsuario',
+                'ouv_area.secretario as secretario'
             ])->first();
 
         return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows])->stream();

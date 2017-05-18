@@ -14,6 +14,7 @@ class Secretaria extends Model implements Transformable
 
     protected $fillable = [
         'nome',
+        'secretario'
     ];
 
     /**

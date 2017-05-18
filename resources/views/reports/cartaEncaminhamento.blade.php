@@ -1,23 +1,54 @@
-{{--{{dd($demanda)}}--}}
 <?php
-//Pegando o código
-/*$cod = str_pad($demanda['codigo'],8,"0",STR_PAD_LEFT);
-$codigo =  substr($cod, 0, -4);
-$ano = substr($cod, -4);
-$codFull = $codigo."/".$ano;*/
-//formatando data
-/*$date = explode('T', $demanda['data']);
-$data = \DateTime::createFromFormat('Y-m-d', $date[0]);
-$dataFromat = $data->format('d/m/Y');*/
-//formatando data
-/*if(isset($demanda['encaminhamento']['data'])) {
-    $dateEncaminhamento = explode('T', $demanda['encaminhamento']['data']);
-    $dataEncaminhamento = \DateTime::createFromFormat('Y-m-d', $dateEncaminhamento[0]);
-    $dataEncaminhamentoFormat = $dataEncaminhamento->format('d/m/Y');
-} else {
-    $dataEncaminhamentoFormat = "";
-}*/
+// leitura das datas automaticamente
+
+function data($dia, $mes, $ano, $semana) {
+
+    /*$dia = date('d');
+    $mes = date('m');
+    $ano = date('Y');
+    $semana = date('w');*/
+//$cidade = "Digite aqui sua cidade";
+
+// configuração mes
+
+    switch ($mes){
+
+        case 1: $mes = "Janeiro"; break;
+        case 2: $mes = "Fevereiro"; break;
+        case 3: $mes = "Março"; break;
+        case 4: $mes = "Abril"; break;
+        case 5: $mes = "Maio"; break;
+        case 6: $mes = "Junho"; break;
+        case 7: $mes = "Julho"; break;
+        case 8: $mes = "Agosto"; break;
+        case 9: $mes = "Setembro"; break;
+        case 10: $mes = "Outubro"; break;
+        case 11: $mes = "Novembro"; break;
+        case 12: $mes = "Dezembro"; break;
+
+    }
+
+
+// configuração semana
+
+    switch ($semana) {
+
+        case 0: $semana = "Domingo"; break;
+        case 1: $semana = "Segunda Feira"; break;
+        case 2: $semana = "Terça Feira"; break;
+        case 3: $semana = "Quarta Feira"; break;
+        case 4: $semana = "Quinta Feira"; break;
+        case 5: $semana = "Sexta Feira"; break;
+        case 6: $semana = "Sábado"; break;
+
+    }
+
+    echo ("$semana, $dia de $mes de $ano");
+}
+//Agora basta imprimir na tela...
+//echo ("$cidade, $semana, $dia de $mes de $ano");
 ?>
+
 <html>
 <head>
     <meta charset="UTF-8" />
@@ -60,17 +91,19 @@ $dataFromat = $data->format('d/m/Y');*/
 
     <h5 style="font-size: 15px">Demanda N.º: {{$demanda->codigo}}</h5>
 
-    <span><b>Ao secretário</b></span></br>
-    <span><b>Dra. Sônia Arruda</b></span></br>
+    <span><b>Ao secretário(a)</b></span></br>
+    <span><b>Dr(a). {{$demanda->secretario}}</b></span></br>
 
-    <span style="position: absolute; top: 180px; left: 480px;">Abreu e Lima, 03 de Maio de 2017.</span></br>
+    <?php $data = \DateTime::createFromFormat('Y-m-d', $demanda->data); ?>
+    <span style="position: absolute; top: 180px; left: 480px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
 
     <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
 
     <span><b>Prezado(a) Senhor(a),</b></span></br>
-    <span><b>Cumprimentando Cordialmente, encaminhamos a V.S.a a {{ $demanda->tipoManifestacao }} via {{$demanda->origem}} da ouvidoria,</b> para fins de
+    <span>
+        <b>Cumprimentando Cordialmente, encaminhamos a V.S.a a {{ $demanda->tipoManifestacao }} via {{$demanda->origem}} da ouvidoria,</b> para fins de
         conhecimento e para que sejam tomadas as devidas providências cabíveis.</span>
-    <span>Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
+    <span style="margin-left: 0px">Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
         epígrafe, solicito informar a este setor no prazo específico através de <b>comunicação interna</b> as providências
     adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial para a satisfação do cidadão.</span></br></br>
 
