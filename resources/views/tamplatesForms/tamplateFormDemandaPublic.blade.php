@@ -210,7 +210,7 @@
 
                         <div class="row">
                             <div class="col-md-offset-4 col-md-12">
-                                {!! App('captcha')->display() !!}
+                                {!! App('captcha')->display($attributes = [], $lang = 'pt-BR') !!}
                                 {{--<div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>--}}
                             </div>
                         </div>

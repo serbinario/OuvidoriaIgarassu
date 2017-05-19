@@ -544,7 +544,8 @@ class DemandaController extends Controller
                 'sexos.nome as sexo',
                 'escolaridade.nome as escolaridade',
                 'ouv_demanda.exclusividade_sus_id',
-                'ouv_tipo_demanda.nome as tipo_demanda'
+                'ouv_tipo_demanda.nome as tipo_demanda',
+                'ouv_area.secretario'
             ])->first();
 
         return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
@@ -714,7 +715,7 @@ class DemandaController extends Controller
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',
                 'ouv_pessoa.nome as tipoUsuario',
-                'ouv_area.secretario as secretario'
+                'ouv_area.secretario'
             ])->first();
 
         return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows])->stream();

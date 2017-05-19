@@ -41,12 +41,14 @@
                         <thead>
                         <tr>
                             <th>Secretaria</th>
+                            <th>Secretário</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>Secretaria</th>
+                            <th>Secretário</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>
                         </tfoot>
@@ -72,6 +74,7 @@
                 },
                 columns: [
                     {data: 'nome', name: 'nome'},
+                    {data: 'secretario', name: 'secretario'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

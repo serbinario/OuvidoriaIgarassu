@@ -111,7 +111,8 @@
             <td style="width: 50px"><span class="text"><b>Subassunto:</b> {{$demanda->subassunto}}</span></td>
         </tr>
         <tr>
-            <td colspan="2" style="width: 500px"><span class="text"><b>Área:</b> {{$demanda->area}}</span></td>
+            <td style="width: 500px"><span class="text"><b>Secretaria:</b> {{$demanda->area}}</span></td>
+            <td><span class="text"><b>Secretário:</b> {{$demanda->secretario}}</span></td>
         </tr>
         <tr>
             <td colspan="2" style="width: 500px"><span class="text"><b>Destino:</b> {{$demanda->destino}}</span></td>
