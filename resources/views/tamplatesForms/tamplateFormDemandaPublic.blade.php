@@ -57,25 +57,32 @@
                     <div class="card-body card-padding dados-pessoas">
                         <br >
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('nome', 'Nome') !!}
+
+                            <div class="form-group col-md-8">
+                                <div class=" fg-line">
+                                    <label for="nome">Nome *</label>
                                     {!! Form::text('nome', Session::getOldInput('nome')  , array('class' => 'form-control', 'id' => 'nome')) !!}
                                     @if(!isset($model->id))
                                         {!! Form::hidden('tipo_demanda_id', '1') !!}
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('sexos_id', 'Sexo') !!}
-                                    {!! Form::select('sexos_id', (["" => "Selecione"] + $loadFields['sexo']->toArray()), Session::getOldInput('sexos_id'), array('class' => 'form-control')) !!}
+
+                            <div class="form-group col-md-2">
+                                <div class=" fg-line">
+                                    <label for="sexos_id">Sexo *</label>
+                                    <div class="select">
+                                        {!! Form::select('sexos_id', (["" => "Selecione"] + $loadFields['sexo']->toArray()), Session::getOldInput('sexos_id'), array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('idade_id', 'Idade') !!}
-                                    {!! Form::select('idade_id', $loadFields2['ouvidoria\idade'], Session::getOldInput('idade_id'), array('class' => 'form-control')) !!}
+
+                            <div class="form-group col-md-2">
+                                <div class=" fg-line">
+                                    <label for="idade_id">Idade *</label>
+                                    <div class="select">
+                                        {!! Form::select('idade_id', $loadFields2['ouvidoria\idade'], Session::getOldInput('idade_id'), array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -169,18 +176,25 @@
                     <div class="card-body card-padding">
                         <br >
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('pessoa_id', 'Autor da manifestação') !!}
-                                    {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
+
+                            <div class="form-group col-md-4">
+                                <div class=" fg-line">
+                                    <label for="pessoa_id">Autor da manifestação *</label>
+                                    <div class="select">
+                                        {!! Form::select('pessoa_id', $loadFields['ouvidoria\ouvpessoa'], Session::getOldInput('pessoa_id'), array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('informacao_id', 'Tipo de manifestação') !!}
-                                    {!! Form::select('informacao_id', (["" => "Selecione"] + $loadFields['ouvidoria\informacao']->toArray()), Session::getOldInput('informacao_id'), array('class' => 'form-control')) !!}
+
+                            <div class="form-group col-md-4">
+                                <div class=" fg-line">
+                                    <label for="informacao_id">Tipo de manifestação *</label>
+                                    <div class="select">
+                                        {!! Form::select('informacao_id', (["" => "Selecione"] + $loadFields['ouvidoria\informacao']->toArray()), Session::getOldInput('informacao_id'), array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="form-group col-md-2">
                                 <div class="fg-line">
                                     <div class="fg-line">
@@ -200,9 +214,9 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    {!! Form::label('relato', 'Descrição da manifestação') !!}
+                            <div class="form-group col-md-12">
+                                <div class=" fg-line">
+                                    <label for="relato">Descrição da manifestação *</label>
                                     {!! Form::textarea('relato', Session::getOldInput('relato') , array('class' => 'form-control', 'rows' => '5')) !!}
                                 </div>
                             </div>
