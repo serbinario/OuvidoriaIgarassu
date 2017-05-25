@@ -19,11 +19,6 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}" rel="stylesheet"/>
 
-    <!-- Selectize -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/lib/selectize/dist/css/selectize.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('/lib/selectize/dist/css/selectize.bootstrap3.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('/css/selectize/dimenssoesSelectize.css')}}" />
-
     <!-- Datepicker -->
     <link type="text/css" rel="stylesheet" href="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/validate.css') }}"  media="screen,projection"/>
@@ -286,12 +281,6 @@
 
 {{-- Mascaras https://igorescobar.github.io/jQuery-Mask-Plugin/ --}}
 <script src="{{ asset('/lib/jquery-mask-plugin/dist/jquery.mask.js') }}"></script>
-
-<!-- Selectize -->
-<script src="{{ asset('/lib/microplugin/src/microplugin.js')  }}"></script>
-<script src="{{ asset('/lib/sifter/sifter.js')  }}"></script>
-<script src="{{ asset('lib/selectize/dist/js/selectize.js')  }}"></script>
-<script src="{{ asset('/lib/selectize-infinite_scroll/infinite_scroll/plugin.js')  }}"></script>
 
 <!-- Placeholder for IE9 -->
 <script type="text/javascript" src={{ asset('/lib/jquery-placeholder/jquery.placeholder.min.js') }}></script>
