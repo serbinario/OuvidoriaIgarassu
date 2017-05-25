@@ -138,7 +138,8 @@ class EncaminhamentoController extends Controller
                 'users_demanda.name as responsavel',
                 'users_encaminhamento.name as responsavel_resposta',
                 'ouv_demanda.nome as manifestante',
-                'ouv_demanda.sigilo_id'
+                'ouv_demanda.sigilo_id',
+                'ouv_demanda.n_protocolo',
             ])->first();
 
         return $query;

@@ -3,6 +3,7 @@
 		<div class="row">
             <div class="col-md-12">
 
+
                 <div class="card">
                     <div class="card-header" style="background-color: #213a53;">
                         <h2 style="color: white">Identificação
@@ -29,12 +30,6 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-12" id="msg-sigilo">
-                                <span style="color: red">
-                                        * Para garantir o sigilo, Não coloque seu nome no teor da manifestação ou em
-                                        qualquer outro lugar, além desta tela de identificação, seus dados ficarão restritos só a ouvidoria
-                                </span>
-                            </div>
                             {{--<div class="form-group col-md-4">
                                 <div class=" fg-line">
                                     <label for="tipo_resposta_id">Tipo de resposta</label>
@@ -49,7 +44,7 @@
 
                 <div class="card dados-pessoas">
                     <div class="card-header dados-pessoas" style="background-color: #213a53;">
-                        <h2 style="color: white">Dados pessoas
+                        <h2 style="color: white">Dados pessoais
                             {{--<small>Multi-colored: red, blue, green, yellow</small>--}}
                         </h2>
                     </div>
@@ -88,21 +83,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('cpf', 'CPF') !!}
+                            <div class="form-group col-md-2">
+                                <div class="fg-line">
+                                    {!! Form::label('cpf', 'CPF *') !!}
                                     {!! Form::text('cpf', Session::getOldInput('cpf'), array('class' => 'form-control input-sm cpf', 'placeholder' => 'CPF')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('rg', 'RG') !!}
+                            <div class="form-group col-md-2">
+                                <div class="fg-line">
+                                    {!! Form::label('rg', 'RG *') !!}
                                     {!! Form::text('rg', Session::getOldInput('rg'), array('class' => 'form-control input-sm', 'placeholder' => 'RG')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('fone', 'Fone') !!}
+                            <div class="form-group col-md-2">
+                                <div class="fg-line">
+                                    {!! Form::label('fone', 'Fone *') !!}
                                     {!! Form::text('fone', Session::getOldInput('fone')  , array('class' => 'form-control telefone')) !!}
                                 </div>
                             </div>
@@ -115,29 +110,29 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    {!! Form::label('profissao', 'Profissão') !!}
+                            <div class="form-group col-md-8">
+                                <div class="fg-line">
+                                    {!! Form::label('profissao', 'Profissão *') !!}
                                     {!! Form::text('profissao', Session::getOldInput('profissao')  , array('class' => 'form-control', 'id' => 'profissao')) !!}
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {!! Form::label('endereco', 'Endereço') !!}
+                            <div class="form-group col-md-4">
+                                <div class="fg-line">
+                                    {!! Form::label('endereco', 'Endereço *') !!}
                                     {!! Form::text('endereco', Session::getOldInput('endereco')  , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    {!! Form::label('numero_end', 'Número') !!}
+                            <div class="form-group col-md-2">
+                                <div class="fg-line">
+                                    {!! Form::label('numero_end', 'Número *') !!}
                                     {!! Form::text('numero_end', Session::getOldInput('numero_end')  , array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
+                            <div class="form-group col-md-2">
+                                <div class="fg-line">
                                     {!! Form::label('cep', 'CEP') !!}
                                     {!! Form::text('cep', Session::getOldInput('cep'), array('class' => 'form-control input-sm', 'placeholder' => 'CEP')) !!}
                                 </div>
@@ -146,7 +141,7 @@
                         <div class="row">
                             <div class="form-group col-sm-3">
                                 <div class="fg-line">
-                                    <label class="control-label" for="cidade">Cidade</label>
+                                    <label class="control-label" for="cidade">Cidade *</label>
                                     <div class="select">
                                         {!! Form::select('cidade', (["" => "Selecione"] + $loadFields['cidade']->toArray()), Session::getOldInput('cidade'),array('class' => 'form-control', 'id' => 'cidade')) !!}
                                     </div>
@@ -154,7 +149,7 @@
                             </div>
                             <div class="form-group col-sm-3">
                                 <div class="fg-line">
-                                    <label class="control-label" for="bairro">Bairro</label>
+                                    <label class="control-label" for="bairro">Bairro *</label>
                                     <div class="select">
                                         {!! Form::select('bairro_id', array(), Session::getOldInput('bairro_id'),array('class' => 'form-control', 'id' => 'bairro')) !!}
                                     </div>
@@ -163,7 +158,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 <div class="card">
@@ -214,6 +208,11 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-md-12" id="msg-sigilo">
+                                <span style="color: red">
+                                        * Para garantir o sigilo, Não coloque seu nome no campo de descrição da manifestação , seus dados ficarão restritos só a ouvidoria
+                                </span>
+                            </div>
                             <div class="form-group col-md-12">
                                 <div class=" fg-line">
                                     <label for="relato">Descrição da manifestação *</label>

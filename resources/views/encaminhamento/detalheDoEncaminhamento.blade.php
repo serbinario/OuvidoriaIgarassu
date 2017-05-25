@@ -73,7 +73,7 @@
                                     </h2>
                                     <div class="mail-tools tooltip-demo m-t-md">
                                         <h3>
-                                            <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}}
+                                            <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
                                         </h3>
                                         <h4>
                                             <span class="font-noraml">Tipo da demanda: </span>{{$detalheEncaminhamento->informacao}}

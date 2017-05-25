@@ -18,6 +18,12 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}" rel="stylesheet"/>
+
+    <!-- Selectize -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('/lib/selectize/dist/css/selectize.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('/lib/selectize/dist/css/selectize.bootstrap3.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/selectize/dimenssoesSelectize.css')}}" />
+
     <!-- Datepicker -->
     <link type="text/css" rel="stylesheet" href="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/validate.css') }}"  media="screen,projection"/>
@@ -149,12 +155,7 @@
             <li><a href="{{ route('seracademico.indexPublico')  }}" target="_blank"><i class="zmdi zmdi-globe-alt"></i> Acesso Público</a></li>
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
             @role('ouvidoria|admin|secretaria')
-                <li class="sub-menu">
-                    <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment-o"></i> Ouvidoria</a>
-                    <ul>
-                        <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}">Demanda</a></li>
-                    </ul>
-                </li>
+                <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}"><i class="zmdi zmdi-assignment-o"></i> Manifestação</a></li>
             @endrole
             {{--@role('ouvidoria|secretaria|admin')
                 <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>
@@ -285,6 +286,12 @@
 
 {{-- Mascaras https://igorescobar.github.io/jQuery-Mask-Plugin/ --}}
 <script src="{{ asset('/lib/jquery-mask-plugin/dist/jquery.mask.js') }}"></script>
+
+<!-- Selectize -->
+<script src="{{ asset('/lib/microplugin/src/microplugin.js')  }}"></script>
+<script src="{{ asset('/lib/sifter/sifter.js')  }}"></script>
+<script src="{{ asset('lib/selectize/dist/js/selectize.js')  }}"></script>
+<script src="{{ asset('/lib/selectize-infinite_scroll/infinite_scroll/plugin.js')  }}"></script>
 
 <!-- Placeholder for IE9 -->
 <script type="text/javascript" src={{ asset('/lib/jquery-placeholder/jquery.placeholder.min.js') }}></script>

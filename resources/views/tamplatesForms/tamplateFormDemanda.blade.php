@@ -17,8 +17,8 @@
                         </li>
                        {{-- <li><a href="#perfil" aria-controls="perfil" role="tab" data-toggle="tab">Perfil</a>
                         </li>--}}
-                        <li><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outras Informações</a>
-                        </li>
+                        {{--<li><a href="#outros" aria-controls="outros" role="tab" data-toggle="tab">Outras Informações</a>
+                        </li>--}}
                         @if(!isset($model))
                             <li><a href="#encaminhamento" aria-controls="encaminhamento" role="tab" data-toggle="tab">Encaminhamento</a>
                             </li>
@@ -292,7 +292,7 @@
                         </div>--}}
                         {{--#2--}}
                         {{--#3--}}
-                        <div role="tabpanel" class="tab-pane" id="outros">
+                        {{--<div role="tabpanel" class="tab-pane" id="outros">
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
@@ -345,7 +345,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
                         {{--#3--}}
                         {{--#4--}}
                         @if(!isset($model))
@@ -375,33 +375,39 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{--<div class="form-group col-md-3">
-                                        <div class=" fg-line">
-                                            <label for="encaminhamento[status_id]">Status</label>
-                                            <div class="select">
-                                                {!! Form::select('encaminhamento[status_id]', (["" => "Selecione"] + $loadFields['ouvidoria\status']->toArray()), Session::getOldInput('encaminhamento[status_id]'), array('class' => 'form-control', 'id' => 'encaminhamento')) !!}
-                                            </div>
-                                        </div>
-                                    </div>--}}
                                 </div>
-                                {{--<div class="row">
-                                    <div class="form-group col-md-5">
-                                        <div class="fg-line">
-                                            <div class="fg-line">
-                                                <label for="encaminhamento[encaminhado]">Documento Encaminhamento</label>
-                                                {!! Form::text('encaminhamento[encaminhado]', Session::getOldInput('encaminhamento[encaminhado]')  , array('class' => 'form-control')) !!}
+
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <div class=" fg-line">
+                                            <label for="assunto_id">Assunto</label>
+                                            <div class="select">
+                                                {!! Form::select('assunto_id', array(), Session::getOldInput('assunto_id'), array('class' => 'form-control', 'id' => 'assunto_id')) !!}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-5">
-                                        <div class="fg-line">
-                                            <div class="fg-line">
-                                                <label for="encaminhamento[copia]">Cópia Para</label>
-                                                {!! Form::text('encaminhamento[copia]', Session::getOldInput('encaminhamento[copia]')  , array('class' => 'form-control')) !!}
-                                            </div>
+                                    <div class="col-md-1">
+                                        <label for="assunto_id"></label>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-sm m-t-10"  data-toggle="modal" data-target="#modal_assunto" id="add-assunto" style="margin-left: -31px;" type="button">+
+                                            </button>
                                         </div>
                                     </div>
-                                </div>--}}
+                                    <div class="form-group col-md-4">
+                                        <div class=" fg-line">
+                                            <label for="assunto_id">Subassunto</label>
+                                                {!! Form::select('subassunto_id', array(), Session::getOldInput('subassunto_id'),array('class' => 'form-control', 'id' => 'subassunto_id')) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label for="assunto_id"></label>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-sm m-t-10" data-toggle="modal" data-target="#modal_subassunto" id="add-subassunto" style="margin-left: -31px;" type="button">+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <div class="form-group">
@@ -429,6 +435,9 @@
     </div>
 </div>
 
+@include('modals.modal_cadastro_assunto')
+@include('modals.modal_cadastro_subassunto')
+
 @section('javascript')
     {{--Mensagens personalizadas--}}
     <script type="text/javascript" src="{{ asset('/dist/js/messages_pt_BR.js')  }}"></script>
@@ -437,93 +446,90 @@
     <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
     <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
-
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('#anonimo').on('change', function(){
-                var value = $('#anonimo').val();
-                if(value == '2') {
-                    $('#nome').prop('readonly', true);
-                    $('#tipo_resposta_id').prop('disabled', true);
-                } else {
-                    $('#nome').prop('readonly', false);
-                    $('#tipo_resposta_id').prop('disabled', false);
-                }
-            });
-        });
 
-        //Carregando os assuntos
-        $(document).on('change', "#area_id", function () {
-            //Removendo as assuntos
-            $('#assunto_id option').remove();
+        // Cadastrar assunto
+        $(document).on('click', "#salvar-assunto", function(){
 
-            //Recuperando a secretaria
-            var secretaria = $(this).val();
+            var nome = $("#nome-assunto").val();
+            var area = $("#secretaria").val();
 
-            if (secretaria !== "") {
+            if(nome && area) {
+
                 var dados = {
-                    'table' : 'ouv_assunto',
-                    'field_search' : 'area_id',
-                    'value_search': secretaria,
+                    'nome': nome,
+                    'area_id' : area
                 };
 
                 jQuery.ajax({
                     type: 'POST',
-                    url: '{{ route('seracademico.util.search')  }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                    },
+                    url: '{{ route('seracademico.ouvidoria.assunto.storeAjax')  }}',
                     data: dados,
                     datatype: 'json'
                 }).done(function (json) {
-                    var option = "";
 
-                    option += '<option value="">Selecione um assunto</option>';
-                    for (var i = 0; i < json.length; i++) {
-                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    if(json['success']) {
+                        swal("Ops!", "Assunto cadastrado com sucesso!", "success");
+                        $('#modal_assunto').modal('toggle');
+                        $("#nome-assunto").val("");
+
+                        var dados = {
+                            'table' : 'ouv_assunto',
+                            'field_search' : 'area_id',
+                            'value_search': area,
+                        };
+
+                        loadAssuntos(dados);
                     }
 
-                    $('#assunto_id option').remove();
-                    $('#assunto_id').append(option);
                 });
+
+            } else {
+                swal("Ops!", "Você deve ter selecionado uma secretaria e informa o nome do assunto!", "warning");
             }
+
         });
 
-        //Carregando os bairros
-        $(document).on('change', "#assunto_id", function () {
-            //Removendo as Bairros
-            $('#subassunto_id option').remove();
+        // Cadastrar subassunto
+        $(document).on('click', "#salvar-subassunto", function(){
 
-            //Recuperando a cidade
-            var assunto = $(this).val();
+            var nome    = $("#nome-subassunto").val();
+            var assunto = $("#assunto_id").val();
 
-            if (assunto !== "") {
+            if(nome && assunto) {
+
                 var dados = {
-                    'table' : 'ouv_subassunto',
-                    'field_search' : 'assunto_id',
-                    'value_search': assunto,
+                    'nome': nome,
+                    'assunto_id' : assunto
                 };
 
                 jQuery.ajax({
                     type: 'POST',
-                    url: '{{ route('seracademico.util.search')  }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                    },
+                    url: '{{ route('seracademico.ouvidoria.subassunto.storeAjax')  }}',
                     data: dados,
                     datatype: 'json'
                 }).done(function (json) {
-                    var option = "";
 
-                    option += '<option value="">Selecione um subassunto</option>';
-                    for (var i = 0; i < json.length; i++) {
-                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    if(json['success']) {
+                        swal("Ops!", "Subassunto cadastrado com sucesso!", "success");
+                        $('#modal_subassunto').modal('toggle');
+                        $("#nome-subassunto").val("");
+
+                        var dados = {
+                            'table' : 'ouv_subassunto',
+                            'field_search' : 'assunto_id',
+                            'value_search': assunto,
+                        };
+
+                        loadSubassuntos(dados);
                     }
 
-                    $('#subassunto_id option').remove();
-                    $('#subassunto_id').append(option);
                 });
+
+            } else {
+                swal("Ops!", "Você deve ter selecionado um assunto e informa o nome do subassunto!", "warning");
             }
+
         });
 
         //Carregando os bairros
@@ -535,6 +541,7 @@
             var secretaria = $(this).val();
 
             if (secretaria !== "") {
+
                 var dados = {
                     'table' : 'ouv_destinatario',
                     'field_search' : 'area_id',
@@ -544,9 +551,6 @@
                 jQuery.ajax({
                     type: 'POST',
                     url: '{{ route('seracademico.util.search')  }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                    },
                     data: dados,
                     datatype: 'json'
                 }).done(function (json) {
@@ -563,40 +567,95 @@
             }
         });
 
-        //Carregando as melhorias
-        $(document).on('change', "#melhoria_secretaria", function () {
+        // Funcção para carregar os assunto
+        function loadAssuntos(dados) {
+
             //Removendo as assuntos
-            $('#melhoria_id option').remove();
+            $('#assunto_id option').remove();
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '{{ route('seracademico.util.search')  }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                },
+                data: dados,
+                datatype: 'json'
+            }).done(function (json) {
+                var option = "";
+
+                option += '<option value="">Selecione um assunto</option>';
+                for (var i = 0; i < json.length; i++) {
+                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                }
+
+                $('#assunto_id option').remove();
+                $('#assunto_id').append(option);
+            });
+
+        }
+
+        //Carregando os assuntos
+        $(document).on('change', "#secretaria", function () {
 
             //Recuperando a secretaria
             var secretaria = $(this).val();
 
             if (secretaria !== "") {
+
                 var dados = {
-                    'table' : 'ouv_melhorias',
+                    'table' : 'ouv_assunto',
                     'field_search' : 'area_id',
                     'value_search': secretaria,
                 };
 
-                jQuery.ajax({
-                    type: 'POST',
-                    url: '{{ route('seracademico.util.search')  }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                    },
-                    data: dados,
-                    datatype: 'json'
-                }).done(function (json) {
-                    var option = "";
+                loadAssuntos(dados);
+            }
+        });
 
-                    option += '<option value="">Selecione</option>';
-                    for (var i = 0; i < json.length; i++) {
-                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
-                    }
 
-                    $('#melhoria_id option').remove();
-                    $('#melhoria_id').append(option);
-                });
+        // Função para carregar os subassuntos
+        function loadSubassuntos(dados) {
+
+            //Removendo as Bairros
+            $('#subassunto_id option').remove();
+
+            jQuery.ajax({
+                type: 'POST',
+                url: '{{ route('seracademico.util.search')  }}',
+                headers: {
+                    'X-CSRF-TOKEN': '{{  csrf_token() }}'
+                },
+                data: dados,
+                datatype: 'json'
+            }).done(function (json) {
+                var option = "";
+
+                option += '<option value="">Selecione um subassunto</option>';
+                for (var i = 0; i < json.length; i++) {
+                    option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                }
+
+                $('#subassunto_id option').remove();
+                $('#subassunto_id').append(option);
+            });
+
+        }
+
+        //Carregando os subassunto
+        $(document).on('change', "#assunto_id", function () {
+
+            //Recuperando a cidade
+            var assunto = $(this).val();
+
+            if (assunto !== "") {
+                var dados = {
+                    'table' : 'ouv_subassunto',
+                    'field_search' : 'assunto_id',
+                    'value_search': assunto,
+                };
+
+                loadSubassuntos(dados);
             }
         });
 

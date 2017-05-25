@@ -341,4 +341,35 @@ class UtilController extends Controller
             ]);
         }
     }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function selectsize(Request $request) {
+
+        $searchValue = $request->get('nome');
+        $fieldWhere  = $request->get('fieldWhere');
+        $valueWhere  = $request->get('valueWhere');
+        $table       = $request->get('table');
+
+
+        try{
+
+            $query = \DB::table("{$table}")
+                ->where('nome', 'like', "%$searchValue%")
+                ->select(['id', 'nome']);
+
+            if($fieldWhere && $valueWhere) {
+                $query->where("{$fieldWhere}", '=', "{$valueWhere}");
+            }
+
+            $query = $query->get();
+
+            return \Illuminate\Support\Facades\Response::json($query);
+        } catch (\Throwable $e) {
+             return \Illuminate\Support\Facades\Response::json(['error' => $e->getMessage()]);
+        }
+
+    }
 }

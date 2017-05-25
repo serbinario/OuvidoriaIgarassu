@@ -177,6 +177,7 @@ class EncaminhamentoService
 
         // Alterando a situação da demanda para reecaminhado
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+        if (isset($data['subassunto_id'])) {$demanda->subassunto_id = $data['subassunto_id'];}
         $demanda->status_id = 1;
         $demanda->user_id = $this->user->id;
         $demanda->save();

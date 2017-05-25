@@ -165,6 +165,13 @@ class DemandaService
             $data['encaminhamento']['user_id'] = $user->id;
 
             $this->encaminhamentoRepository->create($data['encaminhamento']);
+
+            if(isset($data['subassunto_id'])) {
+                $demanda =  $this->repository->find($demanda->id);
+                $demanda->subassunto_id = $data['subassunto_id'];
+                $demanda->save();
+            }
+
         }
         
         #Verificando se foi criado no banco de dados

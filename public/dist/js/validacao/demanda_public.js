@@ -20,6 +20,38 @@ $(document).ready(function () {
                 required: true
             },
 
+            cpf: {
+                required: true
+            },
+
+            rg: {
+                required: true
+            },
+
+            fone: {
+                required: true
+            },
+
+            profissao: {
+                required: true
+            },
+
+            endereco: {
+                required: true
+            },
+
+            numero_end: {
+                required: true
+            },
+
+            cidade: {
+                required: true
+            },
+
+            bairro_id: {
+                required: true
+            },
+
             informacao_id: {
                 required: true
             },
