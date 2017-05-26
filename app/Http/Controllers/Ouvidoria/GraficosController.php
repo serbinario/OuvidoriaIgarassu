@@ -69,7 +69,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_demanda.informacao_id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -133,7 +141,15 @@ class GraficosController extends Controller
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_subassunto.assunto_id')
             ->select([
                 'ouv_assunto.nome as nome',
@@ -240,7 +256,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_demanda.tipo_demanda_id')
             ->select([
                 'ouv_tipo_demanda.nome as nome',
@@ -295,7 +319,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_demanda.pessoa_id')
             ->select([
                 'ouv_pessoa.nome as nome',
@@ -350,7 +382,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_demanda.escolaridade_id')
             ->select([
                 'escolaridade.nome as nome',
@@ -441,7 +481,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', "=", "ouv_demanda.tipo_demanda_id")
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_tipo_demanda.id')
             ->select([
                 'ouv_tipo_demanda.nome as nome',
@@ -495,7 +543,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -511,6 +567,8 @@ class GraficosController extends Controller
         }
 
         $rows = $rows->get();
+
+        //dd($rows);
 
         $dados = [];
 
@@ -550,7 +608,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_status', 'ouv_status.id', "=", "ouv_demanda.status_id")
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_status.id')
             ->select([
                 'ouv_status.nome as nome',
@@ -604,7 +670,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->whereIn('ouv_demanda.informacao_id', [2,4])
             ->groupBy('ouv_informacao.id')
             ->select([
@@ -660,7 +734,15 @@ class GraficosController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', "=", "ouv_demanda.melhoria_id")
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.nome as nome',
@@ -713,7 +795,15 @@ class GraficosController extends Controller
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->select([
                 \DB::raw('month(ouv_demanda.data) as mes'),
                 \DB::raw('year(ouv_demanda.data) as ano'),
