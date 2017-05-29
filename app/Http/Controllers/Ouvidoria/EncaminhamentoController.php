@@ -84,12 +84,13 @@ class EncaminhamentoController extends Controller
      */
     public function detalheParaAnaliseDoEncaminhamento($id)
     {
-        $this->service->visualizar($id);
+        $respostasPassadas = $this->service->visualizar($id);
 
         $detalheEncaminhamento = $this->queryParaDetalheEncaminhamento($id);
         $loadFields = $this->service->load($this->loadFields);
 
-        return view('encaminhamento.detalheDoEncaminhamento', compact('detalheEncaminhamento', 'loadFields'));
+        return view('encaminhamento.detalheDoEncaminhamento',
+            compact('detalheEncaminhamento', 'loadFields', 'respostasPassadas'));
     }
 
     /**

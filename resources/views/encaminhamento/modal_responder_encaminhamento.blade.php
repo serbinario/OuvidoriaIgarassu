@@ -6,18 +6,31 @@
                 <button class="close" type="button" data-dismiss="modal">×</button>
                 <h4 class="modal-title">Responder ao encaminhamento</h4>
             </div>
-            {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
+
             <div class="modal-body" style="alignment-baseline: central">
+
+                {{-- Resposta de encaminhamentos passados --}}
+                <div class="row">
+                    <h4>Respostas de encaminhamentos anteriores</h4>
+                    @if(count($respostasPassadas) > 0)
+                        @foreach($respostasPassadas as $resposta)
+                            <div style="width: 100%; background-color: #eee; border-style: groove; margin-top: 2px">
+                                <span><b>Data da resposta: </b>{{$resposta->data}}</span>
+                                <p><b>Resposta:</b> {{$resposta->resposta}}</p>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>Nenhuma resposta anterior. Você está no primeiro encaminhamento dessa manifestação</p>
+                    @endif
+                </div> <br />
+
+                {{-- Campo para resposta --}}
+                {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
                 <div class="row">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            {!! Form::label('resposta', 'Resposta') !!}
-                            {{--@role('secretaria')--}}
+                            {!! Form::label('resposta', 'Resposta ao encaminhamento atual') !!}
                                 {!! Form::textarea('resposta', $detalheEncaminhamento->resposta ,['size' => '80x5'] , array('class' => 'form-control')) !!}
-                            {{--@endrole--}}
-                            {{--@role('ouvidoria|admin')
-                                <textarea class="form-control" name="resposta" rows="5" readonly>{{$detalheEncaminhamento->resposta}}</textarea>
-                            @endrole--}}
                             <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
                             <input type="hidden" name="tipo_resposta" value="1">
                         </div>
@@ -31,7 +44,7 @@
                                         {!! Form::checkbox('resp_publica', 1, null, []) !!}
                                     @endif
                                     <i class="input-helper"></i>
-                                    Tornar essa resposta pública?
+                                    Tornar resposta pública?
                                 </label>
                             </div>
                         @endrole

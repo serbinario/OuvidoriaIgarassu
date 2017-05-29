@@ -293,14 +293,25 @@ class EncaminhamentoService
             $encaminhamento->save();
             $demanda->save();
         }
-        
+
+        // Pegando as repostas dos encaminhamentos passados
+        $repostasPassadas = \DB::table('ouv_encaminhamento')
+            ->where('ouv_encaminhamento.demanda_id', '=', $encaminhamento->demanda_id)
+            ->whereNotIn('ouv_encaminhamento.id', [$id])
+            ->select([
+                'ouv_encaminhamento.resposta',
+                'ouv_encaminhamento.resposta_ouvidor',
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data'),
+            ])
+            ->get();
+
         #Verificando se o registro foi encontrado
         if(!$encaminhamento || !$demanda) {
             throw new \Exception('Não fio possível visualizar a demanda!');
         }
 
         #retorno
-        return $encaminhamento;
+        return $repostasPassadas;
     }
 
     /**
