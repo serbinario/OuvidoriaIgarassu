@@ -21,7 +21,7 @@ class SerbinarioGerarCodigoSenha
 
         $retorno = '';
         $caracteres = '';
-        $caracteres .= $lmin;
+        //$caracteres .= $lmin;
 
         if ($maiusculas) $caracteres    .= $lmai;
         if ($numeros) $caracteres       .= $num;

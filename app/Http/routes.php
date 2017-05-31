@@ -85,6 +85,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('index', ['as' => 'index', 'uses' => 'AssuntoController@index']);
                 Route::post('grid', ['as' => 'grid', 'uses' => 'AssuntoController@grid']);
                 Route::get('create', ['as' => 'create', 'uses' => 'AssuntoController@create']);
+                Route::post('storeAjax', ['as' => 'storeAjax', 'uses' => 'AssuntoController@storeAjax']);
                 Route::post('store', ['as' => 'store', 'uses' => 'AssuntoController@store']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'AssuntoController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'AssuntoController@update']);
@@ -96,6 +97,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('grid', ['as' => 'grid', 'uses' => 'SubassuntoController@grid']);
                 Route::get('create', ['as' => 'create', 'uses' => 'SubassuntoController@create']);
                 Route::post('store', ['as' => 'store', 'uses' => 'SubassuntoController@store']);
+                Route::post('storeAjax', ['as' => 'storeAjax', 'uses' => 'SubassuntoController@storeAjax']);
                 Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SubassuntoController@edit']);
                 Route::post('update/{id}', ['as' => 'update', 'uses' => 'SubassuntoController@update']);
                 Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'SubassuntoController@destroy']);
@@ -218,6 +220,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('select2', ['as' => 'select2', 'uses' => 'UtilController@queryByselect2']);
             Route::post('select2Obra', ['as' => 'select2Obra', 'uses' => 'UtilController@queryByselect2Obra']);
             Route::post('select2personalizado', ['as' => 'select2personalizado', 'uses' => 'UtilController@queryByselect2Personalizado']);
+            Route::post('selectsize', ['as' => 'selectsize', 'uses' => 'UtilController@selectsize']);
         });
 
         // Rotas de configurações

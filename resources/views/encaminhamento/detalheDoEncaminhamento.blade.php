@@ -73,7 +73,7 @@
                                     </h2>
                                     <div class="mail-tools tooltip-demo m-t-md">
                                         <h3>
-                                            <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}}
+                                            <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
                                         </h3>
                                         <h4>
                                             <span class="font-noraml">Tipo da demanda: </span>{{$detalheEncaminhamento->informacao}}
@@ -88,14 +88,39 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="table-responsive">
-                                                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+
+                                                    <a href="{!! route('seracademico.ouvidoria.demanda.index') !!}" class="btn bgm-bluegray waves-effect">
+                                                        <i class="zmdi zmdi-arrow-back"></i> Voltar
+                                                    </a>
+                                                    <button type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento" class="btn btn-primary">
+                                                        <i class="zmdi zmdi-check"></i> Resposta
+                                                    </button>
+                                                    @role('ouvidoria|admin')
+                                                        <button type="button" data-toggle="modal" data-target="#modal_resposta_ouvidor_encaminhamento"
+                                                                class="btn btn-primary">
+                                                            <i class="zmdi zmdi-check"></i> Resposta ouvidoria
+                                                        </button>
+                                                    <button type="button" data-toggle="modal" data-target="#modal_reencaminhamento"
+                                                            class="btn btn-primary">
+                                                        <i class="zmdi zmdi-mail-reply"></i> Reenchaminhar
+                                                    </button>
+                                                    <button type="button" data-toggle="modal" data-target="#modal_encaminhamento"
+                                                            class="btn btn-primary">
+                                                        <i class="zmdi zmdi-mail-send"></i> Encaminhar
+                                                    </button>
+                                                    <button type="button" id="finalizarDemanda" class="btn btn bgm-deeporange waves-effect">
+                                                        <i class="zmdi zmdi-close-circle-o"></i> Finalizar
+                                                    </button>
+                                                    @endrole
+
+                                                    {{--<div class="btn-group btn-group-justified" role="group" aria-label="...">
                                                         <div class="btn-group" role="group">
                                                             <a href="{!! route('seracademico.ouvidoria.demanda.index') !!}" class="btn bgm-bluegray waves-effect">
                                                                 <i class="zmdi zmdi-arrow-back"></i> Voltar</a>
                                                         </div>
                                                         <div class="btn-group" role="group">
                                                             <button type="button" data-toggle="modal" data-target="#modal_responder_encaminhamento" class="btn btn-primary">
-                                                                <i class="zmdi zmdi-check"></i>  Responder</button>
+                                                                <i class="zmdi zmdi-check"></i>  Resposta</button>
                                                         </div>
                                                         @role('ouvidoria|admin')
                                                             <div class="btn-group" role="group">
@@ -106,10 +131,6 @@
                                                                 <button type="button" data-toggle="modal" data-target="#modal_reencaminhamento"
                                                                    class="btn btn-primary"><i class="zmdi zmdi-mail-reply"></i> Reenchaminhar</button>
                                                             </div>
-                                                            {{--<div class="btn-group" role="group">
-                                                                <a href="{!! route('seracademico.ouvidoria.encaminhamento.encaminhar', ['id' => $detalheEncaminhamento->id]) !!}"
-                                                                   class="btn btn-primary"><i class="zmdi zmdi-mail-send"></i> Encaminhar</a>
-                                                            </div>--}}
                                                             <div class="btn-group" role="group">
                                                                 <button type="button" data-toggle="modal" data-target="#modal_encaminhamento"
                                                                    class="btn btn-primary"><i class="zmdi zmdi-mail-send"></i> Encaminhar</button>
@@ -119,7 +140,7 @@
                                                                     <i class="zmdi zmdi-close-circle-o"></i> Finalizar</button>
                                                             </div>
                                                         @endrole
-                                                    </div>
+                                                    </div>--}}
                                                     <table id="encaminhamento-grid" class=" table compact table-bordered table-condensed" cellspacing="0" width="100%">
                                                         <tbody>
                                                         <tr>

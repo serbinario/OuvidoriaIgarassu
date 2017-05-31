@@ -18,6 +18,7 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/datatables.net-dt/css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}" rel="stylesheet"/>
+
     <!-- Datepicker -->
     <link type="text/css" rel="stylesheet" href="{{ asset('lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/validate.css') }}"  media="screen,projection"/>
@@ -149,12 +150,7 @@
             <li><a href="{{ route('seracademico.indexPublico')  }}" target="_blank"><i class="zmdi zmdi-globe-alt"></i> Acesso Público</a></li>
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
             @role('ouvidoria|admin|secretaria')
-                <li class="sub-menu">
-                    <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment-o"></i> Ouvidoria</a>
-                    <ul>
-                        <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}">Demanda</a></li>
-                    </ul>
-                </li>
+                <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}"><i class="zmdi zmdi-assignment-o"></i> Manifestação</a></li>
             @endrole
             {{--@role('ouvidoria|secretaria|admin')
                 <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>

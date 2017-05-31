@@ -6,12 +6,30 @@
                 <button class="close" type="button" data-dismiss="modal">×</button>
                 <h4 class="modal-title">Responder como ouvidor ao encaminhamento</h4>
             </div>
-            {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
+
             <div class="modal-body" style="alignment-baseline: central">
+
+                {{-- Resposta de encaminhamentos passados --}}
+                <div class="row">
+                    <h4>Respostas de encaminhamentos anteriores</h4>
+                    @if(count($respostasPassadas) > 0)
+                        @foreach($respostasPassadas as $resposta)
+                            <div style="width: 100%; background-color: #eee; border-style: groove; margin-top: 2px">
+                                <span><b>Data da resposta: </b>{{$resposta->data}}</span>
+                                <p><b>Resposta:</b> {{$resposta->resposta_ouvidor}}</p>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>Nenhuma resposta anterior. Você está no primeiro encaminhamento dessa manifestação</p>
+                    @endif
+                </div> <br />
+
+                {{-- Campo para resposta --}}
+                {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
                 <div class="row">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            {!! Form::label('resposta_ouvidor', 'Resposta do ouvidor') !!}
+                            {!! Form::label('resposta_ouvidor', 'Resposta do ouvidor ao encaminhamento atual') !!}
                             {!! Form::textarea('resposta_ouvidor', $detalheEncaminhamento->resposta_ouvidor ,['size' => '80x5'] , array('class' => 'form-control')) !!}
                             <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
                             <input type="hidden" name="tipo_resposta" value="2">

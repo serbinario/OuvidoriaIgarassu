@@ -84,12 +84,13 @@ class EncaminhamentoController extends Controller
      */
     public function detalheParaAnaliseDoEncaminhamento($id)
     {
-        $this->service->visualizar($id);
+        $respostasPassadas = $this->service->visualizar($id);
 
         $detalheEncaminhamento = $this->queryParaDetalheEncaminhamento($id);
         $loadFields = $this->service->load($this->loadFields);
 
-        return view('encaminhamento.detalheDoEncaminhamento', compact('detalheEncaminhamento', 'loadFields'));
+        return view('encaminhamento.detalheDoEncaminhamento',
+            compact('detalheEncaminhamento', 'loadFields', 'respostasPassadas'));
     }
 
     /**
@@ -138,7 +139,8 @@ class EncaminhamentoController extends Controller
                 'users_demanda.name as responsavel',
                 'users_encaminhamento.name as responsavel_resposta',
                 'ouv_demanda.nome as manifestante',
-                'ouv_demanda.sigilo_id'
+                'ouv_demanda.sigilo_id',
+                'ouv_demanda.n_protocolo',
             ])->first();
 
         return $query;
