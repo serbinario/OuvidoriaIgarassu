@@ -73,10 +73,10 @@
                                     </h2>
                                     <div class="mail-tools tooltip-demo m-t-md">
                                         <h3>
-                                            <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
+                                            <span class="font-noraml">Assunto: </span>Manifestação de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
                                         </h3>
                                         <h4>
-                                            <span class="font-noraml">Tipo da demanda: </span>{{$detalheEncaminhamento->informacao}}
+                                            <span class="font-noraml">Tipo da manifestação: </span>{{$detalheEncaminhamento->informacao}}
                                         </h4>
                                         <h5>
                                             <span class="font-noraml">Status: </span>{{$detalheEncaminhamento->status}}
@@ -201,7 +201,7 @@
                                             <div class="col-md-12">
 
                                                 <ul id="tabs" class="tab-nav" role="tablist" data-tab-color="cyan">
-                                                    <li class="active"><a href="#historico" aria-controls="historico" role="tab" data-toggle="tab">Histórico da demanda</a>
+                                                    <li class="active"><a href="#historico" aria-controls="historico" role="tab" data-toggle="tab">Histórico da manifestação</a>
                                                     </li>
                                                     @role('ouvidoria|admin')
                                                         {{--<li><a href="#agrupar" aria-controls="agrupar" role="tab" data-toggle="tab">Agrupar demanda</a>--}}

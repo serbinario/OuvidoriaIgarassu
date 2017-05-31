@@ -160,7 +160,7 @@
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
                 <ul>
                     <li><a href="{{ route('seracademico.ouvidoria.psf.index')  }}">PSF</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>
+                    <!--<li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>-->
                     <li><a href="{{ route('seracademico.ouvidoria.secretaria.index')  }}">Secretarias</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.assunto.index')  }}">Assunto</a></li>
@@ -175,7 +175,7 @@
                 <ul>
                     <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas')  }}">Pessoas</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus')  }}">Status</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView')  }}">Comunidade</a></li>
+                <!--<li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView')  }}">Comunidade</a></li>-->
                 </ul>
             </li>
             @endrole
@@ -188,7 +188,7 @@
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo')  }}">Sexo</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade')  }}">Escolaridade</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias')  }}">Melhoria</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao')  }}">Comunidade class.</a></li>
+                        <!--<li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao')  }}">Comunidade class.</a></li>-->
                     </ul>
                 </li>
             @endrole
