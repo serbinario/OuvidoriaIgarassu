@@ -45,8 +45,8 @@
         <thead>
             <tr style="background-color: #B5B4B4">
                 <th>Tipo da manifestação</th>
-                <th>Data</th>
-                <th>Hora</th>
+                <th>Data da ocorrência</th>
+                <th>Hora da ocorrência</th>
                 <th>Nº da Demanda</th>
                 <th>Origem</th>
             </tr>
