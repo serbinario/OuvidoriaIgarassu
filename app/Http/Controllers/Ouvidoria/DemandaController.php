@@ -8,6 +8,7 @@ use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Seracademico\Repositories\Ouvidoria\DemandaRepository;
+use Seracademico\Services\Configuracao\ConfiguracaoGeralService;
 use Seracademico\Services\Ouvidoria\DemandaService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -74,19 +75,30 @@ class DemandaController extends Controller
     private $user;
 
     /**
-    * @param DemandaService $service
-    * @param DemandaValidator $validator
-    */
+     * @var ConfiguracaoGeralService
+     */
+    private $configuracaoGeralService;
+
+    /**
+     * DemandaController constructor.
+     * @param DemandaService $service
+     * @param DemandaValidator $validator
+     * @param DemandaRepository $repository
+     * @param DemandaPublicValidator $validatorPublic
+     * @param ConfiguracaoGeralService $configuracaoGeralService
+     */
     public function __construct(DemandaService $service,
                                 DemandaValidator $validator,
                                 DemandaRepository $repository,
-                                DemandaPublicValidator $validatorPublic)
+                                DemandaPublicValidator $validatorPublic,
+                                ConfiguracaoGeralService $configuracaoGeralService)
     {
         $this->service          =  $service;
         $this->validator        =  $validator;
         $this->repository       =  $repository;
         $this->validatorPublic  =  $validatorPublic;
         $this->user             = Auth::user();
+        $this->configuracaoGeralService = $configuracaoGeralService;
     }
 
     /**
@@ -423,11 +435,16 @@ class DemandaController extends Controller
             #Executando a ação
             $result = $this->service->store($data);
 
+            $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
+
+            $mensagem = "{$configuracaoGeral->texto_agradecimento} <br><br>
+                <b>PROTOCOLO DA MENIFESTAÇÂO: {$result->n_protocolo}</b>";
+
             #Retorno para a view
-            return redirect()->back()->with("message", "Cadastro realizado com sucesso! PROTOCOLO DA MENIFESTAÇÂO: ".$result->n_protocolo);
+            return redirect()->back()->with("message", $mensagem);
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {print_r($e->getMessage()); exit;
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }
