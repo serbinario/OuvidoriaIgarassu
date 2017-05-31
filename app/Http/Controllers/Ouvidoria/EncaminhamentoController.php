@@ -337,11 +337,11 @@ class EncaminhamentoController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function finalizar($id)
+    public function finalizar(Request $request, $id)
     {
         try {
             #Recuperando a empresa
-            $retorno = $this->service->finalizar($id);
+            $retorno = $this->service->finalizar($id, $request->get('statusExterno'));
 
             try {
 

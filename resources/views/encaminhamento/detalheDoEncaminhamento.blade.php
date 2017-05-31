@@ -108,7 +108,8 @@
                                                             class="btn btn-primary">
                                                         <i class="zmdi zmdi-mail-send"></i> Encaminhar
                                                     </button>
-                                                    <button type="button" id="finalizarDemanda" class="btn btn bgm-deeporange waves-effect">
+                                                    <button type="button" data-toggle="modal" data-target="#modal-finalizar-manifestacao"
+                                                            class="btn btn bgm-deeporange waves-effect">
                                                         <i class="zmdi zmdi-close-circle-o"></i> Finalizar
                                                     </button>
                                                     @endrole
@@ -308,6 +309,8 @@
             </div>
         </div>
     </section>
+
+    @include('encaminhamento.modal_finalizar_manifestacao')
 @stop
 
 @section('javascript')
@@ -392,16 +395,13 @@
 
 
         //Finalizar demanda
-        $('#finalizarDemanda').click(function(){
-            swal({
-                title: "Alerta",
-                text: "Tem certeza que deseja finalizar essa demanda?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Sim, desejo finalizar!",
-            }).then(function(){
-                location.href = '{!! route('seracademico.ouvidoria.encaminhamento.finalizar', ['id' => $detalheEncaminhamento->id]) !!}'
-            });
+        $('#btnFinalizarManifestacao').click(function() {
+
+            var statusExterno = $('#status_externo_id option:selected').val();
+
+            location.href = '{!! route('seracademico.ouvidoria.encaminhamento.finalizar',
+                                    ['id' => $detalheEncaminhamento->id]) !!}?statusExterno=' + statusExterno;
+
         });
 
         //Carregando os departamentos
