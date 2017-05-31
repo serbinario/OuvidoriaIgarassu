@@ -204,8 +204,8 @@
                                                     <li class="active"><a href="#historico" aria-controls="historico" role="tab" data-toggle="tab">Histórico da demanda</a>
                                                     </li>
                                                     @role('ouvidoria|admin')
-                                                        <li><a href="#agrupar" aria-controls="agrupar" role="tab" data-toggle="tab">Agrupar demanda</a>
-                                                        </li>
+                                                        {{--<li><a href="#agrupar" aria-controls="agrupar" role="tab" data-toggle="tab">Agrupar demanda</a>--}}
+                                                        {{--</li>--}}
                                                     @endrole
                                                 </ul>
 
