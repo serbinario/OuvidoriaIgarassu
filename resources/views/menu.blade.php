@@ -224,6 +224,12 @@
                 </ul>
             </li>
             @endrole
+            <li class="sub-menu">
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
+                <ul>
+                    <li><a href="{{ route('seracademico.configuracao.configuracaoGeral.edit')  }}">Geral</a></li>
+                </ul>
+            </li>
         </ul>
     </aside>
     {{--FIM Menu Lateral--}}

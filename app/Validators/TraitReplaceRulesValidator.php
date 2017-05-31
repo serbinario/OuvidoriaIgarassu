@@ -25,11 +25,31 @@ trait TraitReplaceRulesValidator
         foreach ($rules as &$rule) {
             $rule = str_replace($param, $id, $rule);
         }
-        //dd($rules);
+
         #setando as rules
         $this->setRules($rules);
 
         #retorno
+        return true;
+    }
+
+    /**
+     * Pass the data and the rules to the validator
+     *
+     * @param string $action
+     * @return bool
+     */
+    public function passes($action = null)
+    {
+        $rules     = $this->getRules($action);
+        $messages   = $this->messages;
+        $attributes = $this->attributes;
+        $validator  = $this->validator->make($this->data, $rules, $messages, $attributes);
+        if( $validator->fails() )
+        {
+            $this->errors = $validator->messages();
+            return false;
+        }
         return true;
     }
 }
