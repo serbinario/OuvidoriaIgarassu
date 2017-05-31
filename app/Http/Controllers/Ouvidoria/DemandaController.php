@@ -506,6 +506,8 @@ class DemandaController extends Controller
      */
     public function registro($id)
     {
+        $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
+
         $demanda = \DB::table('ouv_demanda')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
@@ -565,7 +567,8 @@ class DemandaController extends Controller
                 'ouv_area.secretario'
             ])->first();
 
-        return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
+        return \PDF::loadView('reports.registroDemanda',
+            ['demanda' =>  $demanda, 'configuracaoGeral' => $configuracaoGeral])->stream();
     }
 
     /**

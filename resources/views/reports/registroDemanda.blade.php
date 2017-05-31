@@ -38,7 +38,7 @@
         </div>
     </center>
 
-    <center><h4>OGMAL - Ouvidoria Geral do Município de Abreu e Lima</h4></center>
+    <center><h4>{{ $configuracaoGeral->nome }}</h4></center>
 
     <center><h4>REGISTRO DE MANIFESTAÇÃO DA OUVIDORIA</h4></center>
     <table style="width: 100%">
