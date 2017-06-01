@@ -41,26 +41,20 @@
     <center><h4>{{ $configuracaoGeral->nome }}</h4></center>
 
     <center><h4>REGISTRO DE MANIFESTAÇÃO DA OUVIDORIA</h4></center>
+
+    <h4>DADOS DA MANIFESTAÇÃO</h4>
     <table style="width: 100%">
-        <thead>
-            <tr style="background-color: #B5B4B4">
-                <th>Tipo da manifestação</th>
-                <th>Data da ocorrência</th>
-                <th>Hora da ocorrência</th>
-                <th>Nº da Demanda</th>
-                <th>Origem</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr style="background-color: #dfdfdf">
-                <td style="text-align: center">{{$demanda->informacao}}</td>
-                <td style="text-align: center">{{$demanda->data_da_ocorrencia}}</td>
-                <td style="text-align: center">{{$demanda->hora_da_ocorrencia}}</td>
-                <td style="text-align: center">{{$demanda->codigo}}</td>
-                <td style="text-align: center">{{$demanda->tipo_demanda}}</td>
-            </tr>
-        </tbody>
+        <tr>
+            <td style="width: 300px"><span class="text"><b>Tipo: </b>{{$demanda->informacao}}</span></td>
+            <td><span class="text"><b>Data: </b>{{$demanda->data_cadastro}}</span></td>
+            <td><span class="text"><b>Hora: </b>{{$demanda->hora_cadastro}}</span></td>
+        </tr>
+        <tr>
+            <td><span class="text"><b>Protocolo: </b>{{$demanda->n_protocolo}}</span></td>
+            <td><span class="text"><b>Registro: </b>{{$demanda->tipo_demanda}}</span></td>
+        </tr>
     </table>
+
     {{--<span class="text">Data: {{$demanda->data_da_ocorrencia}}</span> --
     <span class="text">Hora: {{$demanda->hora_da_ocorrencia}}</span> --
     <span class="text">Demanda n.º {{$demanda->codigo}}</span><br />--}}
@@ -68,18 +62,18 @@
     <span class="text">Anônimo @if($demanda->anonimo_id == '2')( X ) @elseif ($demanda->anonimo_id == '1') ( ) @endif</span><br />--}}
     {{--<span class="text">Utiliza exclusivamente o SUS? @if($demanda['exclusividadeSUS']['id'] == '2')( X ) @elseif ($demanda['exclusividadeSUS']['id'] == '3' || $demanda['exclusividadeSUS']['id'] == '1') ( ) @endif</span> <br />--}}
 
-    <h4>1. DADOS PESSOAIS</h4>
+    <h4>DADOS PESSOAIS</h4>
     <table style="width: 100%">
         <tr>
-            <td style="width: 300px"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
-            <td><span class="text"><b>Sexo:</b> {{$demanda->sexo}}</span></td>
-            <td><span class="text"><b>Idade:</b> {{$demanda->idade}}</span></td>
+            <td colspan="3"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
         </tr>
         <tr>
+            <td><span class="text"><b>Sexo:</b> {{$demanda->sexo}}</span></td>
             <td><span class="text"><b>Telefone:</b> {{$demanda->fone}}</span></td>
             <td><span class="text"><b>E-mail:</b> {{$demanda->email}}</span></td>
         </tr>
         <tr>
+            <td><span class="text"><b>Idade:</b> {{$demanda->idade}}</span></td>
             <td><span class="text"><b>RG:</b> {{$demanda->rg}}</span></td>
             <td><span class="text"><b>CPF:</b> {{$demanda->cpf}}</span></td>
         </tr>
@@ -87,7 +81,7 @@
             <td><span class="text"><b>Profissão:</b> {{$demanda->profissao}}</span></td>
         </tr>
         <tr>
-            <td style="width: 100px"><span class="text"><b>Endreço:</b> {{$demanda->endereco}}</span></td>
+            <td colspan="2"><span class="text"><b>Endreço:</b> {{$demanda->endereco}}</span></td>
             <td style="width: 100px"><span class="text"><b>Número:</b> {{$demanda->numero_end}}</span></td>
         </tr>
         <tr>
@@ -97,14 +91,20 @@
         </tr>
     </table>
 
-    <h4>2. AUTOR DA MANIFESTAÇÃO</h4>
+    <h4>DADOS DA OCCORÊNCIA</h4>
 
-    <p class="text" style="text-align: justify">{{$demanda->autor}}</p>
+    <table style="width: 100%">
+        <tr>
+            <td><span class="text"><b>DATA:</b> {{$demanda->data_da_ocorrencia}}</span></td>
+            <td><span class="text"><b>HORA:</b> {{$demanda->hora_da_ocorrencia}}</span></td>
+        </tr>
+        <tr>
+            <td><span class="text"><b>Descrição:</b> {{$demanda->relato}}</span></td>
+        </tr>
+    </table>
 
-    <h4>3. RELATO</h4>
-    <p class="text" style="text-align: justify">{{$demanda->relato}}</p>
 
-    <h4>4. DADOS DA DEMANDA</h4>
+    <h4>DADOS DO ENCAMINHAMENTO</h4>
     <table style="width: 100%">
         <tr>
             <td style="width: 80px"><span class="text"><b>Assunto:</b> {{$demanda->assunto}}</span></td>
@@ -118,10 +118,7 @@
             <td colspan="2" style="width: 300px"><span class="text"><b>Destino:</b> {{$demanda->destino}}</span></td>
         </tr>
         <tr>
-            <td colspan="2" style="width: 340px"><span class="text"><b>Comentário\Parecer:</b></span></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="width: 340px"><span class="text">{{$demanda->parecer}}</span></td>
+            <td colspan="2" style="width: 340px"><span class="text"><b>Comentário\Parecer: </b>{{$demanda->parecer}}</span></td>
         </tr>
     </table>
 
@@ -131,6 +128,14 @@
 
     {{--<h4>4. Observações</h4>
     <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>--}}
+
+    <h4 style="margin-top: 10%">Assinaturas</h4>
+    <table  style="width: 100%">
+        <tr>
+            <td><span class="text"><b>Assinatura Manifestante:</b></span></td>
+            <td><span class="text"><b>Ouvidor Geral:</b></span></td>
+        </tr>
+    </table>
 </div>
 
 <center>
