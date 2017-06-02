@@ -43,7 +43,7 @@ class DemandaPublicValidator extends LaravelValidator
 			'pessoa_id' =>  'required',
 			'informacao_id' =>  'required',
 			'relato' =>  'required',
-			'g-recaptcha-response' => 'required|captcha'
+			//'g-recaptcha-response' => 'required|captcha'
 
         ],
         ValidatorInterface::RULE_UPDATE => [
@@ -64,7 +64,7 @@ class DemandaPublicValidator extends LaravelValidator
 			'pessoa_id' =>  'required',
 			'informacao_id' =>  'required',
 			'relato' =>  'required',
-			'g-recaptcha-response' => 'required|captcha'
+			//'g-recaptcha-response' => 'required|captcha'
 
         ],
    ];
