@@ -10,18 +10,18 @@ class DemandaPublicValidator extends LaravelValidator
 	use TraitReplaceRulesValidator;
 
 	protected $attributes = [
-		'g-recaptcha-response' => 'Você precisa marcar'
+		'g-recaptcha-response' => 'Vocï¿½ precisa marcar'
 	];
 
 	protected $messages = [
-		'required' => ':attribute é requerido',
-		'max' => ':attribute só pode ter no máximo :max caracteres',
-		'serbinario_alpha_space' => ' :attribute deve conter apenas letras e espaços entre palavras',
-		'numeric' => ':attribute deve conter apenas números',
+		'required' => ':attribute ï¿½ requerido',
+		'max' => ':attribute sï¿½ pode ter no mï¿½ximo :max caracteres',
+		'serbinario_alpha_space' => ' :attribute deve conter apenas letras e espaï¿½os entre palavras',
+		'numeric' => ':attribute deve conter apenas nï¿½meros',
 		'email' => ':attribute deve seguir esse exemplo: exemplo@dominio.com',
 		'digits_between' => ':attribute deve ter entre :min - :max.',
-		'cpf_br' => ':attribute deve ser um número de CPF válido',
-		'unique' => ':attribute já se encontra cadastrado'
+		'cpf_br' => ':attribute deve ser um nï¿½mero de CPF vï¿½lido',
+		'unique' => ':attribute jï¿½ se encontra cadastrado'
 	];
 
     protected $rules = [
@@ -32,7 +32,7 @@ class DemandaPublicValidator extends LaravelValidator
 			'sexos_id' =>  'required',
 			'idade_id' =>  'required',
 			'cpf' =>  'required',
-			'rg' =>  'required',
+			//'rg' =>  'required',
 			'fone' =>  'required',
 			'profissao' =>  'required',
 			'endereco' =>  'required',
@@ -43,7 +43,7 @@ class DemandaPublicValidator extends LaravelValidator
 			'pessoa_id' =>  'required',
 			'informacao_id' =>  'required',
 			'relato' =>  'required',
-			'g-recaptcha-response' => 'required|captcha'
+			//'g-recaptcha-response' => 'required|captcha'
 
         ],
         ValidatorInterface::RULE_UPDATE => [
@@ -53,7 +53,7 @@ class DemandaPublicValidator extends LaravelValidator
 			'sexos_id' =>  'required',
 			'idade_id' =>  'required',
 			'cpf' =>  'required',
-			'rg' =>  'required',
+			//'rg' =>  'required',
 			'fone' =>  'required',
 			'profissao' =>  'required',
 			'endereco' =>  'required',
@@ -64,7 +64,7 @@ class DemandaPublicValidator extends LaravelValidator
 			'pessoa_id' =>  'required',
 			'informacao_id' =>  'required',
 			'relato' =>  'required',
-			'g-recaptcha-response' => 'required|captcha'
+			//'g-recaptcha-response' => 'required|captcha'
 
         ],
    ];

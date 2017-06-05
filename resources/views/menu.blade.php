@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SerOuvidoria</title>
+    <title>SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</title>
 
     {{--<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">--}}
 
@@ -160,7 +160,7 @@
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
                 <ul>
                     <li><a href="{{ route('seracademico.ouvidoria.psf.index')  }}">PSF</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>
+                    <!--<li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>-->
                     <li><a href="{{ route('seracademico.ouvidoria.secretaria.index')  }}">Secretarias</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.assunto.index')  }}">Assunto</a></li>
@@ -175,7 +175,7 @@
                 <ul>
                     <li><a href="{{ route('seracademico.ouvidoria.report.viewReportPessoas')  }}">Pessoas</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.report.viewReportStatus')  }}">Status</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView')  }}">Comunidade</a></li>
+                <!--<li><a href="{{ route('seracademico.ouvidoria.report.comunidadeView')  }}">Comunidade</a></li>-->
                 </ul>
             </li>
             @endrole
@@ -188,7 +188,7 @@
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo')  }}">Sexo</a></li>
                         {{--<li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade')  }}">Escolaridade</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias')  }}">Melhoria</a></li>--}}
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao')  }}">Comunidade class.</a></li>
+                        {{--<li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao')  }}">Comunidade class.</a></li>--}}
                     </ul>
                 </li>
             @endrole
@@ -201,7 +201,7 @@
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView')  }}">Subassuntos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView')  }}">Tipo de manifestação</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView')  }}">Perfis</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView')  }}">Escolaridade</a></li>
+                    {{--<li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView')  }}">Escolaridade</a></li>--}}
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento')  }}">Meio de registro</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao')  }}">Calss. Manifestação</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.status')  }}">Status demanda</a></li>
@@ -220,6 +220,12 @@
                 </ul>
             </li>
             @endrole
+            <li class="sub-menu">
+                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
+                <ul>
+                    <li><a href="{{ route('seracademico.configuracao.configuracaoGeral.edit')  }}">Geral</a></li>
+                </ul>
+            </li>
         </ul>
     </aside>
     {{--FIM Menu Lateral--}}

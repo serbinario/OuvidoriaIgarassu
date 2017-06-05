@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SerAcadêmico - Login</title>
+    <title>SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</title>
 
     <link href="{{ asset('/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ asset('/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-sm-4 col-md-6">
 
-            <h2 class="text-center">Bem Vindo ao <b class="text-success">Sistema de Ouvidoria</b></h2>
+            <h2 class="text-center">Bem Vindo ao <b class="text-success">SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</b></h2>
 
             <p class="text-center">
                 Faça login para ter acesso. Caso não esteja cadastrado, increva-se.

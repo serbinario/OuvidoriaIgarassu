@@ -50,7 +50,8 @@ class Demanda extends Model implements Transformable
 		'cpf',
 		'profissao',
 		'cep',
-		'bairro_id'
+		'bairro_id',
+        'status_externo_id'
 	];
 
 	/**

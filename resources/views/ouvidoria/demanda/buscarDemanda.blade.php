@@ -63,9 +63,9 @@
 <div class="conteiner">
     <div class="row">
         <center>
-            <div class="topo" style="background-color: #213a53">
+            <div class="topo" style="background-color: #0b8345">
                 <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
+                    <img src="{{asset('/img/LOGO_OUVIDORIA_3.jpg')}}" style="width: 500px; height: 150px">
                     {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
                 </center>
             </div>
@@ -101,7 +101,7 @@
                     <table class="table compact table-condensed">
                         <tbody>
                         <tr>
-                            <td colspan="3" style="background-color: #213a53; color: white">Identificação</td>
+                            <td colspan="3" style="background-color: #0b8345; color: white">Identificação</td>
                         </tr>
                         <tr>
                             <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
@@ -130,7 +130,7 @@
                             </tr>
                         @endif
                         <tr>
-                            <td colspan="3" style="background-color: #213a53; color: white">Dados da manifestação</td>
+                            <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
                         </tr>
                         <tr>
                             <td colspan="3">Situação: @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>

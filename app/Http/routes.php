@@ -222,6 +222,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('select2personalizado', ['as' => 'select2personalizado', 'uses' => 'UtilController@queryByselect2Personalizado']);
             Route::post('selectsize', ['as' => 'selectsize', 'uses' => 'UtilController@selectsize']);
         });
+
+        // Rotas de configurações
+        Route::group(['prefix' => 'configuracao', 'as' => 'configuracao.'], function () {
+
+            // Confirugação geral
+            Route::group(['prefix' => 'configuracaoGeral', 'as' => 'configuracaoGeral.'], function () {
+                Route::get('edit', ['as' => 'edit', 'uses' => 'Configuracao\ConfiguracaoGeralController@edit']);
+                Route::post('update/{id}', ['as' => 'update', 'uses' => 'Configuracao\ConfiguracaoGeralController@update']);
+            });
+
+        });
     });
 
     //Ouvidoria

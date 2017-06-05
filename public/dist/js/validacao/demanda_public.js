@@ -24,10 +24,6 @@ $(document).ready(function () {
                 required: true
             },
 
-            rg: {
-                required: true
-            },
-
             fone: {
                 required: true
             },

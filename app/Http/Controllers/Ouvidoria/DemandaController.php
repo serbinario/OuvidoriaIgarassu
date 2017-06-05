@@ -8,6 +8,7 @@ use Seracademico\Http\Controllers\Controller;
 use Seracademico\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Seracademico\Repositories\Ouvidoria\DemandaRepository;
+use Seracademico\Services\Configuracao\ConfiguracaoGeralService;
 use Seracademico\Services\Ouvidoria\DemandaService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -74,19 +75,30 @@ class DemandaController extends Controller
     private $user;
 
     /**
-    * @param DemandaService $service
-    * @param DemandaValidator $validator
-    */
+     * @var ConfiguracaoGeralService
+     */
+    private $configuracaoGeralService;
+
+    /**
+     * DemandaController constructor.
+     * @param DemandaService $service
+     * @param DemandaValidator $validator
+     * @param DemandaRepository $repository
+     * @param DemandaPublicValidator $validatorPublic
+     * @param ConfiguracaoGeralService $configuracaoGeralService
+     */
     public function __construct(DemandaService $service,
                                 DemandaValidator $validator,
                                 DemandaRepository $repository,
-                                DemandaPublicValidator $validatorPublic)
+                                DemandaPublicValidator $validatorPublic,
+                                ConfiguracaoGeralService $configuracaoGeralService)
     {
         $this->service          =  $service;
         $this->validator        =  $validator;
         $this->repository       =  $repository;
         $this->validatorPublic  =  $validatorPublic;
         $this->user             = Auth::user();
+        $this->configuracaoGeralService = $configuracaoGeralService;
     }
 
     /**
@@ -423,11 +435,16 @@ class DemandaController extends Controller
             #Executando a ação
             $result = $this->service->store($data);
 
+            $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
+
+            $mensagem = "{$configuracaoGeral->texto_agradecimento} <br><br>
+                <b>PROTOCOLO DA MENIFESTAÇÂO: {$result->n_protocolo}</b>";
+
             #Retorno para a view
-            return redirect()->back()->with("message", "Cadastro realizado com sucesso! PROTOCOLO DA MENIFESTAÇÂO: ".$result->n_protocolo);
+            return redirect()->back()->with("message", $mensagem);
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {print_r($e->getMessage()); exit;
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }
@@ -489,6 +506,8 @@ class DemandaController extends Controller
      */
     public function registro($id)
     {
+        $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
+
         $demanda = \DB::table('ouv_demanda')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
@@ -515,6 +534,8 @@ class DemandaController extends Controller
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data_da_ocorrencia,"%d/%m/%Y") as data_da_ocorrencia'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data_cadastro'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%H:%m:%s") as hora_cadastro'),
                 'ouv_demanda.hora_da_ocorrencia',
                 'ouv_destinatario.nome as destino',
                 'ouv_area.nome as area',
@@ -526,6 +547,7 @@ class DemandaController extends Controller
                 'bairros.nome as bairro',
                 'cidades.nome as cidade',
                 'ouv_demanda.endereco',
+                'ouv_demanda.n_protocolo',
                 'ouv_demanda.numero_end',
                 'ouv_demanda.fone',
                 'ouv_demanda.relato',
@@ -548,7 +570,8 @@ class DemandaController extends Controller
                 'ouv_area.secretario'
             ])->first();
 
-        return \PDF::loadView('reports.registroDemanda', ['demanda' =>  $demanda])->stream();
+        return \PDF::loadView('reports.registroDemanda',
+            ['demanda' =>  $demanda, 'configuracaoGeral' => $configuracaoGeral])->stream();
     }
 
     /**
@@ -666,6 +689,9 @@ class DemandaController extends Controller
      */
     public function cartaEcaminhamento($id)
     {
+
+        $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
+
         // Estrutura da query em geral
         $rows = \DB::table('ouv_demanda')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
@@ -718,7 +744,8 @@ class DemandaController extends Controller
                 'ouv_area.secretario'
             ])->first();
 
-        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows])->stream();
+        return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows,
+            'configuracaoGeral' => $configuracaoGeral])->stream();
     }
 
     /**

@@ -8,8 +8,8 @@ use Seracademico\Entities\Ouvidoria\Demanda;
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
 use Illuminate\Support\Facades\Auth;
 use Seracademico\Uteis\SerbinarioGerarCodigoSenha;
-
-//use Carbon\Carbon;
+use Seracademico\Uteis\SerbinarioSendEmail;
+use Seracademico\Services\Configuracao\ConfiguracaoGeralService;
 
 class DemandaService
 {
@@ -39,12 +39,20 @@ class DemandaService
     private $tombo;
 
     /**
+     * @var
+     */
+    private $configuracaoGeralService;
+
+    /**
      * @param DemandaRepository $repository
      */
-    public function __construct(DemandaRepository $repository, EncaminhamentoRepository $encaminhamentoRepository)
+    public function __construct(DemandaRepository $repository,
+                                EncaminhamentoRepository $encaminhamentoRepository,
+                                ConfiguracaoGeralService $configuracaoGeralService)
     {
         $this->repository = $repository;
         $this->encaminhamentoRepository = $encaminhamentoRepository;
+        $this->configuracaoGeralService = $configuracaoGeralService;
     }
 
     /**
@@ -118,7 +126,8 @@ class DemandaService
 
     /**
      * @param array $data
-     * @return array
+     * @return Demanda
+     * @throws \Exception
      */
     public function store(array $data) : Demanda
     {
@@ -151,6 +160,7 @@ class DemandaService
 
         #Salvando o registro pincipal
         $demanda =  $this->repository->create($data);
+        $encaminhamento = null;
 
         #### Encaminhamento ###
         if(isset($data['encaminhamento']) && $data['encaminhamento']['prioridade_id'] && $data['encaminhamento']['destinatario_id']) {
@@ -164,7 +174,7 @@ class DemandaService
             $data['encaminhamento']['status_id'] = '1';
             $data['encaminhamento']['user_id'] = $user->id;
 
-            $this->encaminhamentoRepository->create($data['encaminhamento']);
+            $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
 
             if(isset($data['subassunto_id'])) {
                 $demanda =  $this->repository->find($demanda->id);
@@ -179,6 +189,15 @@ class DemandaService
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
+        $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
+
+        # Envio de email de confirmação de cadastro
+        SerbinarioSendEmail::enviarEmailCom("emails.paginaDeConfirmacaoDeCadastro",
+            compact("demanda"), [
+                "destinatario" => $demanda->email,
+                "assunto" => "Registro da Manifestação"
+            ]);
+
         #Retorno
         return $demanda;
     }
@@ -186,7 +205,8 @@ class DemandaService
     /**
      * @param array $data
      * @param int $id
-     * @return mixed
+     * @return Demanda
+     * @throws \Exception
      */
     public function update(array $data, int $id) : Demanda
     {

@@ -5,7 +5,7 @@
 
 
                 <div class="card">
-                    <div class="card-header" style="background-color: #213a53;">
+                    <div class="card-header" style="background-color: #0b8345;">
                         <h2 style="color: white">Identificação
                             {{--<small>Multi-colored: red, blue, green, yellow</small>--}}
                         </h2>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="card dados-pessoas">
-                    <div class="card-header dados-pessoas" style="background-color: #213a53;">
+                    <div class="card-header dados-pessoas" style="background-color: #0b8345;">
                         <h2 style="color: white">Dados pessoais
                             {{--<small>Multi-colored: red, blue, green, yellow</small>--}}
                         </h2>
@@ -161,7 +161,7 @@
 
 
                 <div class="card">
-                    <div class="card-header " style="background-color: #213a53;">
+                    <div class="card-header " style="background-color: #0b8345;">
                         <h2 style="color: white">Dados da manifestação
                             {{--<small>Multi-colored: red, blue, green, yellow</small>--}}
                         </h2>

@@ -11,6 +11,7 @@
         .titulo {
             background-color: #f8f8f8;
             width: 16%;
+            font-weight: 900;
         }
 
         td.details-control {
@@ -73,10 +74,10 @@
                                     </h2>
                                     <div class="mail-tools tooltip-demo m-t-md">
                                         <h3>
-                                            <span class="font-noraml">Assunto: </span>Demanda de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
+                                            <span class="font-noraml">Assunto: </span>Manifestação de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
                                         </h3>
                                         <h4>
-                                            <span class="font-noraml">Tipo da demanda: </span>{{$detalheEncaminhamento->informacao}}
+                                            <span class="font-noraml">Tipo da manifestação: </span>{{$detalheEncaminhamento->informacao}}
                                         </h4>
                                         <h5>
                                             <span class="font-noraml">Status: </span>{{$detalheEncaminhamento->status}}
@@ -108,7 +109,8 @@
                                                             class="btn btn-primary">
                                                         <i class="zmdi zmdi-mail-send"></i> Encaminhar
                                                     </button>
-                                                    <button type="button" id="finalizarDemanda" class="btn btn bgm-deeporange waves-effect">
+                                                    <button type="button" data-toggle="modal" data-target="#modal-finalizar-manifestacao"
+                                                            class="btn btn bgm-deeporange waves-effect">
                                                         <i class="zmdi zmdi-close-circle-o"></i> Finalizar
                                                     </button>
                                                     @endrole
@@ -141,8 +143,155 @@
                                                             </div>
                                                         @endrole
                                                     </div>--}}
-                                                    <table id="encaminhamento-grid" class=" table compact table-bordered table-condensed" cellspacing="0" width="100%">
+                                                    <br><br>
+                                                    <table id="encaminhamento-grid" class=" table compact table-bordered table-condensed" cellspacing="0" width="50%">
                                                         <tbody>
+                                                            <tr>
+                                                                <td colspan="6" style="font-size: 16px;" class="titulo">Dados do Manifestante</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Manifestante:</b></td>
+                                                                <td colspan="3" style="width: 50%;">{{$detalheEncaminhamento->manifestante}}</td>
+                                                                <td><b>CPF:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->cpf}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Sexo:</b></td>
+                                                                <td style="width : 20%">{{$detalheEncaminhamento->sexo}}</td>
+                                                                <td><b>Idade:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->idade}}</td>
+                                                                <td><b>Telefone:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->fone}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Profissão</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->profissao}}</td>
+                                                                <td><b>Email:</b></td>
+                                                                <td  style="width : 30%">{{$detalheEncaminhamento->email}}</td>
+                                                                <td><b>RG:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->rg}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Endereço:</b></td>
+                                                                <td colspan="3" style="width : 50%">{{$detalheEncaminhamento->endereco}}</td>
+                                                                <td><b>Número:</b></td>
+                                                                <td style="width : 20%">{{$detalheEncaminhamento->numero_end}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Cidade:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->cidade}}</td>
+                                                                <td><b>Bairro:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->bairro}}</td>
+                                                                <td><b>CEP:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->cep}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="6" style="font-size: 16px;" class="titulo">Dados da Manifestação</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Protocolo:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->codigo}}</td>
+                                                                <td><b>Número:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->n_protocolo}}</td>
+                                                                <td><b>Prioridade:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->prioridade}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Registro:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->tipo_demanda }}</td>
+                                                                <td><b>Tipo:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->informacao}}</td>
+                                                                <td><b>Data:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->dataCadastro}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Identificação:</b></td>
+                                                                <td colspan="3" style="width: 50%;">{{$detalheEncaminhamento->identificacao}}</td>
+                                                                <td><b>HORA:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->horaCadastro}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Assunto:</b></td>
+                                                                <td colspan="5">{{$detalheEncaminhamento->assunto}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Sub Assunto:</b></td>
+                                                                <td colspan="5">{{$detalheEncaminhamento->subassunto}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="6" style="font-size: 16px;" class="titulo">Dados da ocorrência do fato</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>DATA:</b></td>
+                                                                <td colspan="1" style="width : 50%">{{ $detalheEncaminhamento->dataOcorrencia }}</td>
+                                                                <td><b>HORA:</b></td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->horaOcorrencia }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Descrição:</b></td>
+                                                                <td colspan="5">{{ $detalheEncaminhamento->relato }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="6" style="font-size: 16px;" class="titulo">Encaminhamento</td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td><b>DE:</b></td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->responsavel_resposta }}</td>
+                                                                <td><b>DATA:</b></td>
+                                                                <td style="width : 50%">{{ $detalheEncaminhamento->data }}</td>
+                                                            </tr>
+
+
+                                                            <tr>
+                                                                <td><b>PARA:</b></td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->destinatario }}</td>
+                                                                <td><b>PRAZO:</b></td>
+                                                                <td style="width : 50%">{{ $detalheEncaminhamento->previsao }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td colspan="6" style="font-size: 16px;" class="titulo">Situação Atual</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Situação:</b></td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->status }}</td>
+                                                                <td><b>DATA:</b></td>
+                                                                <td style="width : 50%">{{ $detalheEncaminhamento->data }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Secretaria:</b></td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->destinatario }}</td>
+                                                                <td><b>PRAZO:</b></td>
+                                                                <td style="width : 50%">{{ $detalheEncaminhamento->previsao }}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td><b>Resposta:</b></td>
+                                                                <td colspan="5">{{ $detalheEncaminhamento->resposta }}</td>
+                                                            </tr>
+
+
+                                                        </tbody>
+                                                        {{--<tbody>
                                                         <tr>
                                                             <td class="titulo"><b>Prioridade</b></td>
                                                             <td style="width: 15%">{{$detalheEncaminhamento->prioridade}}</td>
@@ -194,18 +343,18 @@
                                                                 <td colspan="8">{{$detalheEncaminhamento->resposta}}</td>
                                                             </tr>
                                                         @endif
-                                                        </tbody>
+                                                        </tbody>--}}
                                                     </table>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
 
                                                 <ul id="tabs" class="tab-nav" role="tablist" data-tab-color="cyan">
-                                                    <li class="active"><a href="#historico" aria-controls="historico" role="tab" data-toggle="tab">Histórico da demanda</a>
+                                                    <li class="active"><a href="#historico" aria-controls="historico" role="tab" data-toggle="tab">Histórico da manifestação</a>
                                                     </li>
                                                     @role('ouvidoria|admin')
-                                                        <li><a href="#agrupar" aria-controls="agrupar" role="tab" data-toggle="tab">Agrupar demanda</a>
-                                                        </li>
+                                                        {{--<li><a href="#agrupar" aria-controls="agrupar" role="tab" data-toggle="tab">Agrupar demanda</a>--}}
+                                                        {{--</li>--}}
                                                     @endrole
                                                 </ul>
 
@@ -308,6 +457,8 @@
             </div>
         </div>
     </section>
+
+    @include('encaminhamento.modal_finalizar_manifestacao')
 @stop
 
 @section('javascript')
@@ -392,16 +543,13 @@
 
 
         //Finalizar demanda
-        $('#finalizarDemanda').click(function(){
-            swal({
-                title: "Alerta",
-                text: "Tem certeza que deseja finalizar essa demanda?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Sim, desejo finalizar!",
-            }).then(function(){
-                location.href = '{!! route('seracademico.ouvidoria.encaminhamento.finalizar', ['id' => $detalheEncaminhamento->id]) !!}'
-            });
+        $('#btnFinalizarManifestacao').click(function() {
+
+            var statusExterno = $('#status_externo_id option:selected').val();
+
+            location.href = '{!! route('seracademico.ouvidoria.encaminhamento.finalizar',
+                                    ['id' => $detalheEncaminhamento->id]) !!}?statusExterno=' + statusExterno;
+
         });
 
         //Carregando os departamentos

@@ -84,8 +84,8 @@ function data($dia, $mes, $ano, $semana) {
         <div class="topo" style="">
             <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
         </div><br />
-        <span style="font-size: 10px"><b>Secretaria Municipal de Saúde</b></span><br />
-        <span style="font-size: 10px">Ouvidoria da Saúde</span>
+        <span style="font-size: 10px"><b>{{ $configuracaoGeral->nome }}</b></span><br />
+        {{--<span style="font-size: 10px">Ouvidoria da Saúde</span>--}}
     </center>
     {{--<center>
         <div class="topo" style="">
@@ -93,7 +93,7 @@ function data($dia, $mes, $ano, $semana) {
         </div>
     </center>--}}
 
-    <h5 style="font-size: 15px">Demanda N.º: {{$demanda->codigo}}</h5>
+    <h5 style="font-size: 15px">Manifestação N.º: {{$demanda->codigo}}</h5>
 
     <span><b>Ao secretário(a)</b></span></br>
     <span><b>Dr(a). {{$demanda->secretario}}</b></span></br>

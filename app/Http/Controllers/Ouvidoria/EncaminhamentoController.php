@@ -101,6 +101,12 @@ class EncaminhamentoController extends Controller
     {
         $query = \DB::table('ouv_encaminhamento')
             ->leftJoin('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
+            ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
+            ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
+            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('cidades', 'cidades.id', '=', 'bairros.cidades_id')
+            ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
+            ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->leftJoin('users as users_demanda', 'users_demanda.id', '=', 'ouv_demanda.user_id')
             ->leftJoin('users as users_encaminhamento', 'users_encaminhamento.id', '=', 'ouv_encaminhamento.user_id')
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
@@ -124,6 +130,9 @@ class EncaminhamentoController extends Controller
                 'ouv_status.nome as status',
                 'ouv_encaminhamento.parecer',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as dataCadastro'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data_da_ocorrencia,"%d/%m/%Y") as dataOcorrencia'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%H:%m:%s") as horaCadastro'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_encaminhamento.encaminhado',
                 'ouv_encaminhamento.resposta',
@@ -139,6 +148,21 @@ class EncaminhamentoController extends Controller
                 'users_demanda.name as responsavel',
                 'users_encaminhamento.name as responsavel_resposta',
                 'ouv_demanda.nome as manifestante',
+                'ouv_tipo_demanda.nome as tipo_demanda',
+                'ouv_demanda.cpf',
+                'ouv_demanda.hora_da_ocorrencia as horaOcorrencia',
+                'ouv_demanda.fone',
+                'ouv_demanda.profissao',
+                'ouv_demanda.email',
+                'ouv_demanda.rg',
+                'ouv_demanda.endereco',
+                'ouv_demanda.numero_end',
+                'ouv_demanda.cep',
+                'ouv_pessoa.nome as identificacao',
+                'bairros.nome as bairro',
+                'cidades.nome as cidade',
+                'ouv_idade.nome as idade',
+                'sexos.nome as sexo',
                 'ouv_demanda.sigilo_id',
                 'ouv_demanda.n_protocolo',
             ])->first();
@@ -337,11 +361,11 @@ class EncaminhamentoController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function finalizar($id)
+    public function finalizar(Request $request, $id)
     {
         try {
             #Recuperando a empresa
-            $retorno = $this->service->finalizar($id);
+            $retorno = $this->service->finalizar($id, $request->get('statusExterno'));
 
             try {
 

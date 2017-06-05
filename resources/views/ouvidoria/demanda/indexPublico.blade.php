@@ -10,9 +10,9 @@
 <div class="conteiner">
     <div class="row">
         <center>
-            <div class="topo" style="background-color: #213a53">
+            <div class="topo" style="background-color: #0b8345">
                 <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
+                    <img src="{{asset('/img/LOGO_OUVIDORIA_3.jpg')}}" style="width: 500px; height: 150px">
                     {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
                 </center>
             </div>
@@ -23,10 +23,10 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <a href="{{ route('createPublico')  }}" title="cadastro da manifestação">
-                <img src="{{asset('/img/TagInicial_02.png')}}" style="margin-left: 25px">
+                <img src="{{asset('/img/TagInicial_04.png')}}" style="margin-left: 25px">
             </a>
             <a href="{{ route('buscarDemanda')  }}" title="consultar da manifestação">
-                <img src="{{asset('/img/TagInicial_03.png')}}" >
+                <img src="{{asset('/img/TagInicial_05.png')}}" >
             </a>
         </div>
         <div class="col-md-2"></div>
