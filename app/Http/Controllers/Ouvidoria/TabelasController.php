@@ -252,7 +252,15 @@ class TabelasController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('sexos.id')
             ->select([
                 'sexos.nome as sexo',
@@ -322,7 +330,15 @@ class TabelasController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('escolaridade.id')
             ->select([
                 'escolaridade.id as escolaridade',
@@ -396,7 +412,15 @@ class TabelasController extends Controller
         $rows = \DB::table('ouv_demanda')
             ->join('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('bairros.id', 'ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as info',
@@ -487,7 +511,15 @@ class TabelasController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                    where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.id as melhoria',

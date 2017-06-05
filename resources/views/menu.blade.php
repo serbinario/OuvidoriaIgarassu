@@ -165,7 +165,7 @@
                     <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.assunto.index')  }}">Assunto</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.subassunto.index')  }}">Subassunto</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.melhoria.index')  }}">Melhorias</a></li>
+                    {{--<li><a href="{{ route('seracademico.ouvidoria.melhoria.index')  }}">Melhorias</a></li>--}}
                 </ul>
             </li>
             @endrole
@@ -186,8 +186,8 @@
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewAssuntoClassificacao')  }}">Assunto class.</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.assuntoView')  }}">Assuntos x Subass.</a></li>
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewSexo')  }}">Sexo</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade')  }}">Escolaridade</a></li>
-                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias')  }}">Melhoria</a></li>
+                        {{--<li><a href="{{ route('seracademico.ouvidoria.tabelas.viewEscolaridade')  }}">Escolaridade</a></li>
+                        <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewMelhorias')  }}">Melhoria</a></li>--}}
                         <li><a href="{{ route('seracademico.ouvidoria.tabelas.viewComunidadeClassificacao')  }}">Comunidade class.</a></li>
                     </ul>
                 </li>
@@ -199,14 +199,14 @@
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.caracteristicasView')  }}">Características</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.assuntoView')  }}">Assuntos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.subassuntoView')  }}">Subassuntos</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView')  }}">Meios de registro</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.meioRegistroView')  }}">Tipo de manifestação</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.perfilView')  }}">Perfis</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.escolaridadeView')  }}">Escolaridade</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento')  }}">Meio Atendi.</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.atendimento')  }}">Meio de registro</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.informacao')  }}">Calss. Manifestação</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.status')  }}">Status demanda</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias')  }}">Melhorias</a></li>
-                    <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria')  }}">Recla. x Melhoria</a></li>
+                    {{--<li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias')  }}">Melhorias</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria')  }}">Recla. x Melhoria</a></li>--}}
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView')  }}">Demandas</a></li>
                 </ul>
             </li>
