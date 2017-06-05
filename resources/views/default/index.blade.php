@@ -13,7 +13,7 @@
                                 <div class="clearfix">
                                     <div class=""></div>
                                     <div class="count">
-                                        <small>Demandas a serem analisadas</small>
+                                        <small>Manifestações a serem analisadas</small>
                                         <h2>{{$novas->novas}}</h2>
                                     </div>
                                 </div>
@@ -27,7 +27,7 @@
                                 <div class="clearfix">
                                     <div class=""></div>
                                     <div class="count">
-                                        <small>Demandas em análise</small>
+                                        <small>Manifestações em análise</small>
                                         <h2>{{$analises->analises}}</h2>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                                 <div class="clearfix">
                                     <div class=""></div>
                                     <div class="count">
-                                        <small>Demandas concluídas</small>
+                                        <small>Manifestações concluídas</small>
                                         <h2>{{$concluidas->concluidas}}</h2>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="clearfix">
                                     <div class=""></div>
                                     <div class="count">
-                                        <small>Demandas atrasadas</small>
+                                        <small>Manifestações atrasadas</small>
                                         <h2>{{$atrasadas->atrasadas}}</h2>
                                     </div>
                                 </div>
@@ -146,7 +146,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: 'DEMANDA POR STATUS'
+                    text: 'MANIFESTAÇÃO POR STATUS'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -182,7 +182,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: 'DEMANDA POR CLASSIFICAÇÃO DAS MANIFESTAÇÕES'
+                    text: 'MANIFESTAÇÃO POR CLASSIFICAÇÃO DAS MANIFESTAÇÕES'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
