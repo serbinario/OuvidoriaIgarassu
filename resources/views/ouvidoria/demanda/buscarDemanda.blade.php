@@ -65,7 +65,7 @@
         <center>
             <div class="topo" style="background-color: #0b8345">
                 <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_3.jpg')}}" style="width: 500px; height: 150px">
+                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
                     {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
                 </center>
             </div>
@@ -171,6 +171,13 @@
         <div class="col-md-2"></div>
     </div>
 </div>
+
+<footer id="footer" class="p-t-0" style="margin-top: 90px">
+    <center>
+        <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
+        <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
+    </center>
+</footer>
 
 <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
 <script src="{{ asset('/js/jquery-ui.js')}}"></script>
