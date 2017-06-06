@@ -369,7 +369,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <div class=" fg-line">
-                                            <label for="encaminhamento[prioridade_id]">Classificação *</label>
+                                            <label for="encaminhamento[prioridade_id]">Prioridade *</label>
                                             <div class="select">
                                                 {!! Form::select('encaminhamento[prioridade_id]',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
                                             </div>

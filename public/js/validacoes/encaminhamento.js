@@ -12,10 +12,6 @@ $(document).ready(function () {
                 required: true,
             },
             
-            prioridade_id: {
-                required: true,
-            },
-            
             parecer: {
                 required: true,
             },

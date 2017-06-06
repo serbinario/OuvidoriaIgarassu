@@ -4,10 +4,6 @@ $(document).ready(function () {
     $("#formReencaminhamento").validate({
         rules: {
 
-            prioridade_id: {
-                required: true,
-            },
-
             parecer: {
                 required: true,
             },

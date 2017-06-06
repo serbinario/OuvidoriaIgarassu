@@ -39,14 +39,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            {{--<div class="form-group col-md-4">
                                 <div class=" fg-line">
                                     <label for="prioridade_id">Prioridade *</label>
                                     <div class="select">
                                         {!! Form::select('prioridade_id',  (["" => "Selecione"] + $loadFields['ouvidoria\prioridade']->toArray()), Session::getOldInput('encaminhamento[prioridade_id]'), array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                         {{--<div class="row">
                             <div class="form-group col-md-5">

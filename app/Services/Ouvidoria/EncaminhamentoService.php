@@ -7,6 +7,7 @@ use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Entities\Ouvidoria\Encaminhamento;
 use Seracademico\Entities\Ouvidoria\Prioridade;
 use Illuminate\Support\Facades\Auth;
+use Seracademico\Services\Configuracao\ValidarDataDePrevisao;
 
 class EncaminhamentoService
 {
@@ -115,22 +116,23 @@ class EncaminhamentoService
         $date  = new \DateTime('now');
         $dataAtual = $date->format('Y-m-d');
 
-        $prioridade = Prioridade::where('id', "=", $data['prioridade_id'])->first();
-        $previsao = $date->add(new \DateInterval("P{$prioridade->dias}D"));
-
-        # preenchendo os dados para o reecaminhamento
-        $data['data'] = $dataAtual;
-        $data['previsao'] = $previsao->format('Y-m-d');
-        $data['status_id'] = 7;
-        $data['user_id'] = $this->user->id;
-
-        #Salvando o registro pincipal
-        $encaminhamento =  $this->repository->create($data);
-
         #alterando o status do encaminhamento anterior para fechado
         $encaminhamentoAnterior = $this->find($data['id']);
         $encaminhamentoAnterior->status_id = 3;
         $encaminhamentoAnterior->save();
+
+        $prioridade = Prioridade::where('id', "=", $encaminhamentoAnterior->prioridade_id)->first();
+        $previsao = ValidarDataDePrevisao::getResult($date, $prioridade->dias);
+
+        # preenchendo os dados para o reecaminhamento
+        $data['data'] = $dataAtual;
+        $data['previsao'] = $previsao;
+        $data['status_id'] = 7;
+        $data['user_id'] = $this->user->id;
+        $data['prioridade_id'] = $encaminhamentoAnterior->prioridade_id;
+
+        #Salvando o registro principal
+        $encaminhamento =  $this->repository->create($data);
 
         // Alterando a situação da demanda para reecaminhado
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
@@ -156,24 +158,33 @@ class EncaminhamentoService
         $date  = new \DateTime('now');
         $dataAtual = $date->format('Y-m-d');
 
-        $prioridade = Prioridade::where('id', "=", $data['prioridade_id'])->first();
-        $previsao = $date->add(new \DateInterval("P{$prioridade->dias}D"));
-
-        # preenchendo os dados para o reecaminhamento
-        $data['data'] = $dataAtual;
-        $data['previsao'] = $previsao->format('Y-m-d');
-        $data['status_id'] = 1;
-        $data['user_id'] = $this->user->id;
-
-        #Salvando o registro pincipal
-        $encaminhamento =  $this->repository->create($data);
-
         #alterando o status do encaminhamento anterior para fechado
         if($data['id']) {
+
             $encaminhamentoAnterior = $this->find($data['id']);
             $encaminhamentoAnterior->status_id = 3;
             $encaminhamentoAnterior->save();
+
+            $prioridade = Prioridade::where('id', "=", $encaminhamentoAnterior->prioridade_id)->first();
+
+        } else {
+
+            $prioridade = Prioridade::where('id', "=", $data['prioridade_id'])->first();
+
         }
+
+        # Pegando a data de previsão
+        $previsao = ValidarDataDePrevisao::getResult($date, $prioridade->dias);
+
+        # preenchendo os dados para o reecaminhamento
+        $data['data'] = $dataAtual;
+        $data['previsao'] = $previsao;
+        $data['status_id'] = 1;
+        $data['user_id'] = $this->user->id;
+        $data['prioridade_id'] = $prioridade->id;
+
+        #Salvando o registro pincipal
+        $encaminhamento =  $this->repository->create($data);
 
         // Alterando a situação da demanda para reecaminhado
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);

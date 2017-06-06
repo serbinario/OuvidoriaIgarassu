@@ -7,6 +7,7 @@ use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Entities\Ouvidoria\Demanda;
 use Seracademico\Repositories\Ouvidoria\EncaminhamentoRepository;
 use Illuminate\Support\Facades\Auth;
+use Seracademico\Services\Configuracao\ValidarDataDePrevisao;
 use Seracademico\Uteis\SerbinarioGerarCodigoSenha;
 use Seracademico\Uteis\SerbinarioSendEmail;
 use Seracademico\Services\Configuracao\ConfiguracaoGeralService;
@@ -166,9 +167,9 @@ class DemandaService
         if(isset($data['encaminhamento']) && $data['encaminhamento']['prioridade_id'] && $data['encaminhamento']['destinatario_id']) {
 
             $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
-            $previsao = $dataObj->add(new \DateInterval("P{$prioridade->dias}D"));
+            $previsao = ValidarDataDePrevisao::getResult($dataObj, $prioridade->dias);
 
-            $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
+            $data['encaminhamento']['previsao'] = $previsao;
             $data['encaminhamento']['data'] = $data['data'];
             $data['encaminhamento']['demanda_id'] = $demanda->id;
             $data['encaminhamento']['status_id'] = '1';
@@ -219,27 +220,6 @@ class DemandaService
         #Atualizando no banco de dados
         $data['user_id'] = $user->id;
         $demanda = $this->repository->update($data, $id);
-
-        /*$enc = $this->encaminhamentoRepository->findWhere(['demanda_id' => $demanda->id]);
-
-        if(count($enc) > 0) {
-            $encaminhamento = $this->encaminhamentoRepository->update($data['encaminhamento'], $enc[0]->id);
-        } else if (count($enc) <= 0 && $data['encaminhamento']['prioridade_id'] != ""
-            && $data['encaminhamento']['destinatario_id'] != "") {
-
-            $dataObj  = new \DateTime('now');
-            $date     = $dataObj->format('Y-m-d');
-
-            $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
-            $previsao = $dataObj->add(new \DateInterval("P{$prioridade->dias}D"));
-
-            $data['encaminhamento']['previsao'] = $previsao->format('Y-m-d');
-            $data['encaminhamento']['data'] = $date;
-            $data['encaminhamento']['demanda_id'] = $demanda->id;
-
-            $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
-        }*/
-
 
         #Verificando se foi atualizado no banco de dados
         if(!$demanda) {
