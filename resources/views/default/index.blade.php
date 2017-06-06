@@ -27,7 +27,7 @@
                                 <div class="clearfix">
                                     <div class=""></div>
                                     <div class="count">
-                                        <small>Manifestações em análise</small>
+                                        <small>Manifestações aguardando resposta</small>
                                         <h2>{{$analises->analises}}</h2>
                                     </div>
                                 </div>
@@ -41,7 +41,7 @@
                                 <div class="clearfix">
                                     <div class=""></div>
                                     <div class="count">
-                                        <small>Manifestações concluídas</small>
+                                        <small>Manifestações respondidas</small>
                                         <h2>{{$concluidas->concluidas}}</h2>
                                     </div>
                                 </div>

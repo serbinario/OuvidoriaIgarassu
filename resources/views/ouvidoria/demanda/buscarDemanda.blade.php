@@ -137,8 +137,8 @@
                         </tr>
                         <tr>
                             <td>Perfil: {{$dados->perfil}} </td>
-                            <td>Tipo da manifestação: {{$dados->informacao}} </td>
-                            <td>Data/Hora da ocorrência: <br /> {{$dados->data_da_ocorrencia}} - {{$dados->hora_da_ocorrencia}} </td>
+                            <td colspan="2">Tipo da manifestação: {{$dados->informacao}} </td>
+                            {{--<td>Data/Hora da ocorrência: <br /> {{$dados->data_da_ocorrencia}} - {{$dados->hora_da_ocorrencia}} </td>--}}
                         </tr>
                         <tr>
                             <td>Área: {{$dados->area}} </td>

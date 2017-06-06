@@ -189,7 +189,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-2">
+                            {{--<div class="form-group col-md-2">
                                 <div class="fg-line">
                                     <div class="fg-line">
                                         <label for="data_da_ocorrencia">Data da ocorrência</label>
@@ -204,7 +204,7 @@
                                         {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control time', 'placeholder' => 'Hora da ocorrência')) !!}
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
 
                         <div class="row">

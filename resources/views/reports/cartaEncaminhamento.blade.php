@@ -154,7 +154,7 @@ function data($dia, $mes, $ano, $semana) {
 
     <table border rules=none style="width: 100%;">
         <tr>
-            <td><span><b>Tradução da Manifestação</b></span></td>
+            <td><span><b>Interpretação da Manifestação</b></span></td>
         </tr>
         <tr>
             <td rowspan="5"><p>{{ $demanda->parecer }}</p></td>

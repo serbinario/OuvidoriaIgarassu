@@ -74,7 +74,7 @@
                                     </h2>
                                     <div class="mail-tools tooltip-demo m-t-md">
                                         <h3>
-                                            <span class="font-noraml">Assunto: </span>Manifestação de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
+                                            <span class="font-noraml"></span>Manifestação de número - {{$detalheEncaminhamento->codigo}} (Protocolo - {{$detalheEncaminhamento->n_protocolo}})
                                         </h3>
                                         <h4>
                                             <span class="font-noraml">Tipo da manifestação: </span>{{$detalheEncaminhamento->informacao}}
@@ -197,9 +197,9 @@
 
                                                             <tr>
                                                                 <td><b>Protocolo:</b></td>
-                                                                <td style="width : 30%">{{$detalheEncaminhamento->codigo}}</td>
-                                                                <td><b>Número:</b></td>
                                                                 <td style="width : 30%">{{$detalheEncaminhamento->n_protocolo}}</td>
+                                                                <td><b>Número:</b></td>
+                                                                <td style="width : 30%">{{$detalheEncaminhamento->codigo}}</td>
                                                                 <td><b>Prioridade:</b></td>
                                                                 <td style="width : 30%">{{$detalheEncaminhamento->prioridade}}</td>
                                                             </tr>
@@ -234,12 +234,12 @@
                                                                 <td colspan="6" style="font-size: 16px;" class="titulo">Dados da ocorrência do fato</td>
                                                             </tr>
 
-                                                            <tr>
+                                                            {{--<tr>
                                                                 <td><b>DATA:</b></td>
                                                                 <td colspan="1" style="width : 50%">{{ $detalheEncaminhamento->dataOcorrencia }}</td>
                                                                 <td><b>HORA:</b></td>
                                                                 <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->horaOcorrencia }}</td>
-                                                            </tr>
+                                                            </tr>--}}
 
                                                             <tr>
                                                                 <td><b>Descrição:</b></td>
@@ -261,7 +261,7 @@
 
                                                             <tr>
                                                                 <td><b>PARA:</b></td>
-                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->destinatario }}</td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->area }}</td>
                                                                 <td><b>PRAZO:</b></td>
                                                                 <td style="width : 50%">{{ $detalheEncaminhamento->previsao }}</td>
                                                             </tr>
@@ -279,7 +279,7 @@
 
                                                             <tr>
                                                                 <td><b>Secretaria:</b></td>
-                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->destinatario }}</td>
+                                                                <td colspan="3" style="width : 50%">{{ $detalheEncaminhamento->area }}</td>
                                                                 <td><b>PRAZO:</b></td>
                                                                 <td style="width : 50%">{{ $detalheEncaminhamento->previsao }}</td>
                                                             </tr>
