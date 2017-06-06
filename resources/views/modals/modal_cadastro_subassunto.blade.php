@@ -14,8 +14,8 @@
                             <div class="form-group col-md-5">
                                 <div class="fg-line">
                                     <div class="fg-line">
-                                        <label for="nome">Subassunto</label>
-                                        {!! Form::text('nome', Session::getOldInput('nome')  , array('class' => 'form-control', 'id' => 'nome-subassunto')) !!}
+                                        <label for="nome-subassunto">Subassunto</label>
+                                        {!! Form::text('nome-subassunto', Session::getOldInput('nome-subassunto')  , array('class' => 'form-control', 'id' => 'nome-subassunto')) !!}
                                     </div>
                                 </div>
                             </div>

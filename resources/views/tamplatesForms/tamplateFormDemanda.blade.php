@@ -59,10 +59,8 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="nome">Nome</label>
-                                            {!! Form::text('nome', Session::getOldInput('nome'), array('class' => 'form-control input-sm', 'id' => 'nome', 'placeholder' => 'Nome Completo')) !!}
-                                        </div>
+                                        <label for="nome">Nome</label>
+                                        {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -451,13 +449,13 @@
         // Cadastrar assunto
         $(document).on('click', "#salvar-assunto", function(){
 
-            var nome = $("#nome-assunto").val();
+            var assunto = $("#nome-assunto").val();
             var area = $("#secretaria").val();
 
-            if(nome && area) {
+            if(assunto && area) {
 
                 var dados = {
-                    'nome': nome,
+                    'nome': assunto,
                     'area_id' : area
                 };
 
@@ -493,13 +491,13 @@
         // Cadastrar subassunto
         $(document).on('click', "#salvar-subassunto", function(){
 
-            var nome    = $("#nome-subassunto").val();
+            var subassunto    = $("#nome-subassunto").val();
             var assunto = $("#assunto_id").val();
 
-            if(nome && assunto) {
+            if(subassunto && assunto) {
 
                 var dados = {
-                    'nome': nome,
+                    'nome': subassunto,
                     'assunto_id' : assunto
                 };
 

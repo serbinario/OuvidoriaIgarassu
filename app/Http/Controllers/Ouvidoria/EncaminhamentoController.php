@@ -458,7 +458,6 @@ class EncaminhamentoController extends Controller
             $msg     = "Demanda não encontrada!";
         }
 
-
         return \Illuminate\Support\Facades\Response::json(['retorno' => $retorno, 'msg' => $msg]);
     }
 

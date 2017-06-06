@@ -5,7 +5,6 @@ namespace Seracademico\Http\Controllers\Ouvidoria;
 use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
-use Seracademico\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Seracademico\Repositories\Ouvidoria\DemandaRepository;
 use Seracademico\Services\Configuracao\ConfiguracaoGeralService;

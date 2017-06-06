@@ -14,8 +14,8 @@
                             <div class="form-group col-md-5">
                                 <div class="fg-line">
                                     <div class="fg-line">
-                                        <label for="nome">Assunto</label>
-                                        {!! Form::text('nome', Session::getOldInput('nome')  , array('class' => 'form-control', 'id' => 'nome-assunto')) !!}
+                                        <label for="nome-assunto">Assunto</label>
+                                        {!! Form::text('nome-assunto', Session::getOldInput('nome-assunto')  , array('class' => 'form-control', 'id' => 'nome-assunto')) !!}
                                         <input type="hidden" value="" id="add-assunto-area_id" name="area_id">
                                     </div>
                                 </div>
