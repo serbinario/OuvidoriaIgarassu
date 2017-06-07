@@ -60,6 +60,14 @@
 
         </div>
     </div>
+    <div class="row">
+        <footer class="p-t-0" style="margin-top: 0px">
+            <center>
+                <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
+                <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
+            </center>
+        </footer>
+    </div>
 </div>
 
 <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>

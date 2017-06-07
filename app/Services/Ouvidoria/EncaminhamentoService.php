@@ -75,24 +75,45 @@ class EncaminhamentoService
         $RespostaOuvidor    = isset($data['resposta_ouvidor']) ? $data['resposta_ouvidor'] : "";
         $tipoResposta       = isset($data['tipo_resposta']) ? $data['tipo_resposta'] : "";
 
+        //Pegando um objeto da data de solução
+        $dataSolucao = \DateTime::createFromFormat('d/m/Y', $data['data']);
+        $dataSolucao = $dataSolucao->format('Y-m-d');
+
+        # Pegando a data atual
         $date  = new \DateTime('now');
 
         if($id && ($Resposta || $RespostaOuvidor)) {
 
+            // Pegando o encaminhamento
             $encaminhamento = $this->find($id);
+
+            # Validando se a resposta foi de uma secretaria ou da própria ouvidoria
             if($tipoResposta == '1') {
                 $encaminhamento->resposta           = $Resposta;
             } else {
                 $encaminhamento->resposta_ouvidor   = $RespostaOuvidor;
             }
+
+            # Alterando os dados do encaminhamento como situação de respondida
             $encaminhamento->status_id              = 4;
             $encaminhamento->data_resposta          = $date->format('Y-m-d');
             $encaminhamento->resp_publica           = isset($data['resp_publica']) ? $data['resp_publica'] : '0';
             $encaminhamento->resp_ouvidor_publica   = isset($data['resp_ouvidor_publica']) ? $data['resp_ouvidor_publica'] : "0";
+
+            # Setando o usuário se caso a resposta foi da secretaria
             if($tipoResposta == '1') {
                 $encaminhamento->user_id = $this->user->id;
             }
+
+            // Salvando o encaminhamento
             $encaminhamento->save();
+
+            #Salvando o prazo de solução
+            $prazo = \DB::table('prazo_solucao')->insert([
+                'data' => $dataSolucao,
+                'encaminhamento_id' => $encaminhamento->id
+            ]);
+
 
             // Alterando a situação da demanda para concluído
             $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
@@ -213,7 +234,6 @@ class EncaminhamentoService
         #Recuperando o registro no banco de dados
         $encaminhamento = $this->repository->find($id);
         $encaminhamento->status_id = 6;
-        //$encaminhamento->user_id = $this->user->id;
         $encaminhamento->save();
 
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
@@ -283,6 +303,73 @@ class EncaminhamentoService
 
         #retorno
         return ['demanda' => $demanda, 'encaminhamento' => $encaminhamento, 'demandasAgrupadas' => $demandaAgrupada];
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function prorrogarPrazo(array $data)
+    {
+
+        #alterando o status do encaminhamento para prorrogado
+        $encaminhamento = $this->find($data['id']);
+
+        #Pegando os dias de prioridade do encaminhamento
+        $prioridade = Prioridade::where('id', "=", $encaminhamento->prioridade_id)->first();
+
+        //Pegando um objeto da data de previsão para gerar uma nova data
+        $dataPrevisao = \DateTime::createFromFormat('Y-m-d', $encaminhamento->previsao);
+
+        # Pegando a data de previsão
+        $previsao = ValidarDataDePrevisao::getResult($dataPrevisao, $prioridade->dias);
+
+        #alterando a situação do encaminhamento de acordo com a manifestação
+        $encaminhamento->status_prorrogacao = 1;
+        $encaminhamento->previsao = $previsao;
+        $encaminhamento->justificativa_prorrogacao = $data['justificativa'];
+        $encaminhamento->save();
+
+        #Verificando se foi criado no banco de dados
+        if(!$encaminhamento) {
+            throw new \Exception('Ocorreu um erro ao cadastrar!');
+        }
+
+        #Retorno
+        return $encaminhamento;
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
+    public function prorrogarPrazoSolucao(array $data)
+    {
+
+        #alterando o status do encaminhamento para prorrogado
+        $encaminhamento = $this->find($data['id']);
+
+        //Pegando um objeto da data de previsão para gerar uma nova data
+        $novoPrazo = \DateTime::createFromFormat('d/m/Y', $data['data']);
+        $novoPrazo = $novoPrazo->format('Y-m-d');
+
+        #Salvando o prazo de solução
+        $prazo = \DB::table('prazo_solucao')->insert([
+            'data' => $novoPrazo,
+            'encaminhamento_id' => $encaminhamento->id,
+            'status' => '1',
+            'justificativa' => $data['justificativa']
+        ]);
+
+        #Verificando se foi criado no banco de dados
+        if(!$prazo) {
+            throw new \Exception('Ocorreu um erro ao cadastrar!');
+        }
+
+        #Retorno
+        return $prazo;
     }
 
     /**

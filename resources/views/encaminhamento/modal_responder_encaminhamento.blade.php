@@ -27,14 +27,27 @@
                 {{-- Campo para resposta --}}
                 {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
                 <div class="row">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            {!! Form::label('resposta', 'Resposta ao encaminhamento atual') !!}
-                                {!! Form::textarea('resposta', $detalheEncaminhamento->resposta ,['size' => '80x5'] , array('class' => 'form-control')) !!}
-                            <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
-                            <input type="hidden" name="tipo_resposta" value="1">
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                {!! Form::label('resposta', 'Resposta ao encaminhamento atual') !!}
+                                {!! Form::textarea('resposta', $detalheEncaminhamento->resposta , array('class' => 'form-control', 'rows' => '4')) !!}
+                                <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
+                                <input type="hidden" name="tipo_resposta" value="1">
+                            </div>
                         </div>
-                        @role('ouvidoria|admin')
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <div class="fg-line">
+                                    <div class="fg-line">
+                                        <label for="data">Prazo para solução</label>
+                                        {!! Form::text('data', null, array('class' => 'form-control input-sm', 'id' => 'data', 'placeholder' => 'Data')) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @role('ouvidoria|admin')
                             <div class="form-group col-md-5">
                                 <label for="resp_publica" class="checkbox checkbox-inline m-r-20">
                                     @if($detalheEncaminhamento->resp_publica == '1')
@@ -47,8 +60,9 @@
                                     Tornar resposta pública?
                                 </label>
                             </div>
-                        @endrole
-                    </div>
+                            @endrole
+                        </div>
+
                 </div>
             </div>
             <div class="modal-footer">

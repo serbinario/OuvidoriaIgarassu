@@ -100,6 +100,13 @@ class EncaminhamentoController extends Controller
     private function queryParaDetalheEncaminhamento($id)
     {
         $query = \DB::table('ouv_encaminhamento')
+            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+                $join->on(
+                    'prazo_solucao.id', '=',
+                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
+                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                );
+            })
             ->leftJoin('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
@@ -134,12 +141,15 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_demanda.data_da_ocorrencia,"%d/%m/%Y") as dataOcorrencia'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%H:%m:%s") as horaCadastro'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
+                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 'ouv_encaminhamento.encaminhado',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
                 'ouv_encaminhamento.resp_ouvidor_publica',
                 'ouv_encaminhamento.status_id as status_id',
+                'ouv_encaminhamento.status_prorrogacao',
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
@@ -367,40 +377,44 @@ class EncaminhamentoController extends Controller
             #Recuperando a empresa
             $retorno = $this->service->finalizar($id, $request->get('statusExterno'));
 
-            try {
+            #Retorno para a view
+            return redirect()->back()->with("message", "Manifestação finalizada com sucesso!");
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
 
-                /*if($retorno['demanda']->tipo_resposta_id == '1') {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function prorrogarPrazo(Request $request)
+    {
+        try {
 
-                    Mail::send('emails.paginaDeNotificacaoParaUsuario', ['demanda' => $retorno['demanda']], function ($m) {
-                        $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de reposta');
-
-                        $m->to("fabinhobarreto2@gmail.com", 'Fabio');
-
-                        $m->subject('Reposta da manifestação!');
-                    });
-
-                }*/
-                
-                // Enviando e-mail para as demandas agrupadas
-                /*foreach ($retorno['demandasAgrupadas'] as $demanda) {
-
-                    if($demanda->tipo_resposta_id == '1') {
-                        Mail::send('emails.paginaDeNotificacaoParaUsuario', ['demanda' => $demanda], function ($m) {
-                            $m->from('uchiteste@gmail.com', 'Ouvidoria - Notificação de reposta');
-
-                            $m->to("fabinhobarreto2@gmail.com", 'Fabio');
-
-                            $m->subject('Reposta da manifestação!');
-                        });
-                    }
-                }*/
-                
-            } catch (\Throwable $e) {
-                dd($e->getMessage());
-            }
+            #Recuperando a empresa
+            $this->service->prorrogarPrazo($request->all());
 
             #Retorno para a view
-            return redirect()->back()->with("message", "Demanda finalizada com sucesso!");
+            return redirect()->back()->with("message", "Manifestação prorrogada com sucesso!");
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function prorrogarPrazoSolucao(Request $request)
+    {
+        try {
+
+            #Recuperando a empresa
+            $this->service->prorrogarPrazoSolucao($request->all());
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Prazo da solução da manifestação foi prorrogado com sucesso!");
         } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }

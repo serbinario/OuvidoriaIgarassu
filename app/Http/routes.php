@@ -46,10 +46,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('historicoGrid', ['as' => 'historicoGrid', 'uses' => 'Ouvidoria\EncaminhamentoController@historicoEncamihamentosGrid']);
                 Route::get('reencaminar/{id}', ['as' => 'reencaminar', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminar']);
                 Route::post('reencaminarStore', ['as' => 'reencaminarStore', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminarStore']);
-                //Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
                 Route::get('encaminhar/{id}', ['as' => 'encaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhar']);
                 Route::post('encaminharStore', ['as' => 'encaminharStore', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminharStore']);
                 Route::get('finalizar/{id}', ['as' => 'finalizar', 'uses' => 'Ouvidoria\EncaminhamentoController@finalizar']);
+                Route::post('prorrogarPrazo', ['as' => 'prorrogarPrazo', 'uses' => 'Ouvidoria\EncaminhamentoController@prorrogarPrazo']);
+                Route::post('prorrogarPrazoSolucao', ['as' => 'prorrogarPrazoSolucao', 'uses' => 'Ouvidoria\EncaminhamentoController@prorrogarPrazoSolucao']);
 
                 #notificações
                 Route::post('verificarAlertasDeDemandas', ['as' => 'verificarAlertasDeDemandas', 'uses' => 'Ouvidoria\EncaminhamentoController@verificarAlertasDeDemandas']);

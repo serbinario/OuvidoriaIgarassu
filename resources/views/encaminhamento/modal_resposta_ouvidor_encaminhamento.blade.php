@@ -30,7 +30,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             {!! Form::label('resposta_ouvidor', 'Resposta do ouvidor ao encaminhamento atual') !!}
-                            {!! Form::textarea('resposta_ouvidor', $detalheEncaminhamento->resposta_ouvidor ,['size' => '80x5'] , array('class' => 'form-control')) !!}
+                            {!! Form::textarea('resposta_ouvidor', $detalheEncaminhamento->resposta_ouvidor , array('class' => 'form-control', 'rows' => '4')) !!}
                             <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
                             <input type="hidden" name="tipo_resposta" value="2">
                         </div>

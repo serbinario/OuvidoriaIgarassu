@@ -28,7 +28,9 @@ class Encaminhamento extends Model implements Transformable
 		'data_resposta',
 		'resposta_ouvidor',
 		'resp_publica',
-		'resp_ouvidor_publica'
+		'resp_ouvidor_publica',
+		'status_prorrogacao',
+		'justificativa_prorrogacao'
 	];
 
 	/**

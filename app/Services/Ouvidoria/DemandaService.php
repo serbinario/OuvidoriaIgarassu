@@ -193,11 +193,14 @@ class DemandaService
         $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
 
         # Envio de email de confirmação de cadastro
-        SerbinarioSendEmail::enviarEmailCom("emails.paginaDeConfirmacaoDeCadastro",
-            compact("demanda"), [
-                "destinatario" => $demanda->email,
-                "assunto" => "Registro da Manifestação"
-            ]);
+        if($demanda->email) {
+
+            SerbinarioSendEmail::enviarEmailCom("emails.paginaDeConfirmacaoDeCadastro",
+                compact("demanda"), [
+                    "destinatario" => $demanda->email,
+                    "assunto" => "Registro da Manifestação"
+                ]);
+        }
 
         #Retorno
         return $demanda;
