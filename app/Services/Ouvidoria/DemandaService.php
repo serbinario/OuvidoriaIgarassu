@@ -453,7 +453,7 @@ class DemandaService
             ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
-            ->where('ouv_demanda.n_protocolo', '=', $request['protocolo'])
+            ->where('ouv_demanda.n_protocolo', '=', $request->get('protocolo'))
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),

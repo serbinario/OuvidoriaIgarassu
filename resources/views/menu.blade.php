@@ -159,7 +159,7 @@
             <li class="sub-menu">
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
                 <ul>
-                    <li><a href="{{ route('seracademico.ouvidoria.psf.index')  }}">PSF</a></li>
+                    {{--<li><a href="{{ route('seracademico.ouvidoria.psf.index')  }}">PSF</a></li>--}}
                     <!--<li><a href="{{ route('seracademico.ouvidoria.comunidade.index')  }}">Comunidade</a></li>-->
                     <li><a href="{{ route('seracademico.ouvidoria.secretaria.index')  }}">Secretarias</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
