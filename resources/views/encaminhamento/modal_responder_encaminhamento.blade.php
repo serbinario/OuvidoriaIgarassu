@@ -25,24 +25,28 @@
                 </div> <br />
 
                 {{-- Campo para resposta --}}
-                {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
+                {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST", 'id' => 'FormResponder' ]) !!}
                 <div class="row">
 
                         <div class="row">
                             <div class="form-group col-md-12">
-                                {!! Form::label('resposta', 'Resposta ao encaminhamento atual') !!}
-                                {!! Form::textarea('resposta', $detalheEncaminhamento->resposta , array('class' => 'form-control', 'rows' => '4')) !!}
-                                <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
-                                <input type="hidden" name="tipo_resposta" value="1">
+                                <div class="fg-line">
+                                    {!! Form::label('resposta', 'Resposta ao encaminhamento atual') !!}
+                                    {!! Form::textarea('resposta', $detalheEncaminhamento->resposta , array('class' => 'form-control', 'rows' => '4')) !!}
+                                    <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
+                                    <input type="hidden" name="tipo_resposta" value="1">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <div class="fg-line">
-                                    <div class="fg-line">
-                                        <label for="data">Prazo para solução</label>
+                                    <label for="data">Prazo para solução</label>
+                                    @if($detalheEncaminhamento->prazo_solucao)
+                                        {!! Form::text('data', $detalheEncaminhamento->prazo_solucao, array('class' => 'form-control input-sm', 'id' => 'data', 'readonly' => 'readonly', 'placeholder' => 'Data')) !!}
+                                    @else
                                         {!! Form::text('data', null, array('class' => 'form-control input-sm', 'id' => 'data', 'placeholder' => 'Data')) !!}
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -73,4 +77,3 @@
         </div>
     </div>
 </div>
-<!-- FIM Modal de cadastro das Disciplinas-->

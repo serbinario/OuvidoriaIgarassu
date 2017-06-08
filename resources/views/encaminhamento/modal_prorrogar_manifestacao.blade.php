@@ -6,7 +6,7 @@
                 <button class="close" type="button" data-dismiss="modal">×</button>
                 <h4 class="modal-title">Prorrogar Manifestação</h4>
             </div>
-            {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.prorrogarPrazo', 'method' => "POST" ]) !!}
+            {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.prorrogarPrazo', 'method' => "POST", 'id' => 'FormProrrogarPrazo' ]) !!}
                 <div class="modal-body" style="alignment-baseline: central">
                     <div class="row">
                         <div class="row">

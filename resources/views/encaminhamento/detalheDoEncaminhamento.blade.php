@@ -505,6 +505,10 @@
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
     <script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
     <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/modal_responder.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/modal_responder_ouvidor.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_manifestacao.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_solucao.js')}}"></script>
     <script type="text/javascript">
 
         var idDemanda = "{{$detalheEncaminhamento->demanda_id}}";

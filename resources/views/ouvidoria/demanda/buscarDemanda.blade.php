@@ -152,13 +152,15 @@
                             <td colspan="3">{{$dados->relato}} </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Resposta</td>
+                            <td>Resposta</td>
+                            <td>Prazo para solução:</td>
+                            <td>{{$dados->prazo_solucao}}</td>
                         </tr>
-                        @if($dados->resp_publica == '1' && $dados->status_id == '6')
+                        @if($dados->resp_publica == '1')
                             <tr>
                                 <td colspan="3">{{$dados->resposta}} </td>
                             </tr>
-                        @elseif($dados->status_id == '6')
+                        @else
                             <tr>
                                 <td colspan="3">{{$dados->resposta_ouvidor}} </td>
                             </tr>

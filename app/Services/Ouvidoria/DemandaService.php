@@ -431,8 +431,15 @@ class DemandaService
                         where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
+            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+                $join->on(
+                    'prazo_solucao.id', '=',
+                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
+                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                );
+            })
             ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
@@ -454,6 +461,7 @@ class DemandaService
                 'ouv_destinatario.nome as destino',
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 'ouv_informacao.nome as informacao',
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',

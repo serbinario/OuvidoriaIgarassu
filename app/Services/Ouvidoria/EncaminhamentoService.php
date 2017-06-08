@@ -71,8 +71,8 @@ class EncaminhamentoService
     public function responder(array $data) : Encaminhamento
     {
         $id                 = isset($data['id']) ? $data['id'] : "";
-        $Resposta           = isset($data['resposta']) ? $data['resposta'] : "";
-        $RespostaOuvidor    = isset($data['resposta_ouvidor']) ? $data['resposta_ouvidor'] : "";
+        $resposta           = isset($data['resposta']) ? $data['resposta'] : "";
+        $respostaOuvidor    = isset($data['resposta_ouvidor']) ? $data['resposta_ouvidor'] : "";
         $tipoResposta       = isset($data['tipo_resposta']) ? $data['tipo_resposta'] : "";
 
         //Pegando um objeto da data de solução
@@ -82,17 +82,18 @@ class EncaminhamentoService
         # Pegando a data atual
         $date  = new \DateTime('now');
 
-        if($id && ($Resposta || $RespostaOuvidor)) {
+        if($id && ($resposta || $respostaOuvidor)) {
 
             // Pegando o encaminhamento
             $encaminhamento = $this->find($id);
 
             # Validando se a resposta foi de uma secretaria ou da própria ouvidoria
             if($tipoResposta == '1') {
-                $encaminhamento->resposta           = $Resposta;
+                $encaminhamento->resposta           = $resposta;
             } else {
-                $encaminhamento->resposta_ouvidor   = $RespostaOuvidor;
+                $encaminhamento->resposta_ouvidor   = $respostaOuvidor;
             }
+
 
             # Alterando os dados do encaminhamento como situação de respondida
             $encaminhamento->status_id              = 4;

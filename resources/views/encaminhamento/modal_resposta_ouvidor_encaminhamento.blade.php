@@ -25,14 +25,16 @@
                 </div> <br />
 
                 {{-- Campo para resposta --}}
-                {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST" ]) !!}
+                {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.responder', 'method' => "POST", 'id' => 'FormResponderOuvidor' ]) !!}
                 <div class="row">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            {!! Form::label('resposta_ouvidor', 'Resposta do ouvidor ao encaminhamento atual') !!}
-                            {!! Form::textarea('resposta_ouvidor', $detalheEncaminhamento->resposta_ouvidor , array('class' => 'form-control', 'rows' => '4')) !!}
-                            <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
-                            <input type="hidden" name="tipo_resposta" value="2">
+                            <div class="fg-line">
+                                {!! Form::label('resposta_ouvidor', 'Resposta do ouvidor ao encaminhamento atual') !!}
+                                {!! Form::textarea('resposta_ouvidor', $detalheEncaminhamento->resposta_ouvidor , array('class' => 'form-control', 'rows' => '4')) !!}
+                                <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
+                                <input type="hidden" name="tipo_resposta" value="2">
+                            </div>
                         </div>
                         {{--<div class="form-group col-md-5">
                             <label for="resp_ouvidor_publica" class="checkbox checkbox-inline m-r-20">
