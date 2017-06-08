@@ -135,6 +135,7 @@ class EncaminhamentoController extends Controller
                 'ouv_area.nome as area',
                 'ouv_area.id as area_id',
                 'ouv_status.nome as status',
+                'ouv_status.id as status_id',
                 'ouv_encaminhamento.parecer',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as dataCadastro'),
