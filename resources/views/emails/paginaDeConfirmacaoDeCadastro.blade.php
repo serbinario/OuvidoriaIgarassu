@@ -10,9 +10,9 @@
 <?php $data = \DateTime::createFromFormat("Y-m-d H:i:s", $demanda->data); ?>
 
 <p style="text-align: justify">
-    Sua manifestação foi registrado com o protocolo n {{$demanda->n_protocolo}} em {{ $data->format("d/m/Y") }}
-    as {{ $data->format("H:i:s") }} horas e será encaminhada para providência, Para consultar o andamento da sua
-    manifestação acessando o <a href="http://serouvidoria-abreu.serbinario.com.br/seracademico/indexPublico">Link</a>, digitando o número do protocolo,
+    Sua manifestação foi registrado com o protocolo nº {{$demanda->n_protocolo}} em {{ $data->format("d/m/Y") }}
+    às {{ $data->format("H:i:s") }} horas e será encaminhada para providência. Para consultar o andamento da sua
+    manifestação acessando o <a href="{{$configuracaoGeral->consulta_externa}}">Link</a>, digitando o número do protocolo.
 </p>
 
 <p style="text-align: justify">
@@ -81,7 +81,7 @@
             font-family:Verdana, Geneva, sans-serif;
             font-size:12px;
             white-space:nowrap;
-            border-bottom:solid 1px #E1E1E1;">{{$configuracaoGeral->consulta_externa}}</td>
+            border-bottom:solid 1px #E1E1E1;">{{$configuracaoGeral->acesso_principal}}</td>
         </tr>
         </tbody>
     </table>
