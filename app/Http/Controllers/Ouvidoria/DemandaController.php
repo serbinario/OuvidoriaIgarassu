@@ -437,7 +437,7 @@ class DemandaController extends Controller
             $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
 
             $mensagem = "{$configuracaoGeral->texto_agradecimento} <br><br>
-                <b>PROTOCOLO DA MENIFESTAÇÂO: {$result->n_protocolo}</b>";
+                <b>PROTOCOLO DA MANIFESTAÇÂO: {$result->n_protocolo}</b>";
 
             #Retorno para a view
             return redirect()->back()->with("message", $mensagem);

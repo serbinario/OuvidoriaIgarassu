@@ -17,58 +17,99 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/demo.css') }}"  media="screen,projection"/>
     <link href="{{ asset('/css/bootstrapValidation.mim.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.datetimepicker.css')}}" rel="stylesheet"/>
+    <style type="text/css" class="init">
+
+        *  {
+            margin:0;
+            padding:0;
+        }
+
+        html, body {height:100%;}
+
+        .geral {
+            min-height:100%;
+            position:relative;
+            width:100%;
+        }
+
+        .footer {
+            position:absolute;
+            bottom:0;
+            width:100%;
+        }
+
+        .content {overflow:hidden;}
+        .aside {width:200px;}
+        .fleft {float:left;}
+        .fright {float:right;}
+    </style>
 </head>
 <body>
-<div class="conteiner">
-    <div class="row">
-        <center>
-            <div class="topo" style="background-color: #0b8345">
-                <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 30%; height: 15%">
-                    {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
-                </center>
+
+<div class="geral">
+
+    <div class="header">
+    </div>
+    <div class="aside fleft">
+    </div>
+    <div class="aside fright">
+    </div>
+
+    <div class="content">
+
+        <div class="row">
+            <center>
+                <div class="topo" style="background-color: #0b8345">
+                    <center>
+                        <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 30%; height: 10%">
+                        {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
+                    </center>
+                </div>
+            </center>
+        </div>
+        <br />
+        <center><h2><?php echo "REGISTRO DE MANIFESTAÇÃO DA OUVIDORIA"; ?></h2></center>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-9 col-md-offset-2">
+                @if(Session::has('message'))
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <em style="text-align: justify"> {!! session('message') !!}</em>
+                    </div>
+                @endif
+
+                @if(Session::has('errors'))
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
+                {!! Form::open(['route'=>'storePublico', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
+                @include('tamplatesForms.tamplateFormDemandaPublic')
+                {!! Form::close() !!}
             </div>
+
+            <div class="col-md-6">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <center>
+            <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
+            <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
         </center>
     </div>
-    <br />
-    <center><h2><?php echo "REGISTRO DE MANIFESTAÇÃO DA OUVIDORIA"; ?></h2></center>
 
-    <br />
-    <div class="row">
-        <div class="col-md-9 col-md-offset-2">
-            @if(Session::has('message'))
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <em style="text-align: justify"> {!! session('message') !!}</em>
-                </div>
-            @endif
-
-            @if(Session::has('errors'))
-                <div class="alert alert-danger">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    @foreach($errors->all() as $error)
-                        <div>{{ $error }}</div>
-                    @endforeach
-                </div>
-            @endif
-            {!! Form::open(['route'=>'storePublico', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
-            @include('tamplatesForms.tamplateFormDemandaPublic')
-            {!! Form::close() !!}
-        </div>
-
-        <div class="col-md-6">
-
-        </div>
-    </div>
-    <div class="row">
-        <footer class="p-t-0" style="margin-top: 0px">
-            <center>
-                <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
-                <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
-            </center>
-        </footer>
-    </div>
 </div>
+
 
 <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
 <script src="{{ asset('/js/jquery-ui.js')}}"></script>
@@ -136,8 +177,6 @@
     });
 
 </script>
-
-
 
 </body>
 </html>

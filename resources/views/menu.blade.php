@@ -60,38 +60,38 @@
 
                 @role('ouvidoria|admin')
                     <li class="dropdown hidden-xs">
-                        <a title="Novas demandas" id="novas-demandas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '7' ])}}">
+                        <a title="Novas manifestações" id="novas-demandas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '7' ])}}">
                             <i class="him-icon zmdi zmdi-assignment-o"></i>
                         </a>
                     </li>
                 @endrole
 
                 <li class="dropdown hidden-xs">
-                    <a title="Demandas encaminhadas" id="demandas-encaminhadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
+                    <a title="Manifestações encaminhadas" id="demandas-encaminhadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
                         <i class="him-icon zmdi zmdi-mail-send"></i>
                     </a>
                 </li>
 
                 <li class="dropdown hidden-xs">
-                    <a title="Demandas em análise" id="demandas-analise" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '2' ])}}">
+                    <a title="Manifestações aguardando resposta" id="demandas-analise" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '2' ])}}">
                         <i class="him-icon zmdi zmdi-search"></i>
                     </a>
                 </li>
 
                 <li class="dropdown hidden-xs">
-                    <a title="Demandas concluídas" id="demandas-concluidas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '3' ])}}">
+                    <a title="Manifestações respondidas" id="demandas-concluidas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '3' ])}}">
                         <i class="him-icon zmdi zmdi-thumb-up"></i>
                     </a>
                 </li>
 
                 <li class="dropdown hidden-xs">
-                    <a title="Demandas a atrasar" id="demandas-para-atrasar" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '5' ])}}">
+                    <a title="Manifestações a atrasar" id="demandas-para-atrasar" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '5' ])}}">
                         <i class="him-icon zmdi zmdi-alarm-check"></i>
                     </a>
                 </li>
 
                 <li class="dropdown hidden-xs">
-                    <a title="Demandas atrasadas" id="demandas-atrasadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '6' ])}}">
+                    <a title="Manifestações atrasadas" id="demandas-atrasadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '6' ])}}">
                         <i class="him-icon zmdi zmdi-timer-off"></i>
                     </a>
                 </li>
