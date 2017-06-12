@@ -27,7 +27,7 @@
             {!! Form::open(['method' => "POST"]) !!}
 
             <div class="block-header">
-                <h2>GRÁFICO DE DEMANDAS</h2>
+                <h2>GRÁFICO DE MANIFESTAÇÕES</h2>
             </div>
             <div class="card">
                 <div class="card-body card-padding">
@@ -138,7 +138,7 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Quantidade de demandas'
+                        text: 'Quantidade de manifestações'
                     },
                     xAxis: {
                         categories: json[0]
@@ -146,7 +146,7 @@
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Total de demandas'
+                            text: 'Total de manifestações'
                         },
                         stackLabels: {
                             enabled: true,

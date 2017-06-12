@@ -11,13 +11,90 @@
 
 <p style="text-align: justify">
     Sua manifestação foi registrado com o protocolo n {{$demanda->n_protocolo}} em {{ $data->format("d/m/Y") }}
-    as {{ $data->format("H:i:s") }} horas e será encaminhada para providência.
+    as {{ $data->format("H:i:s") }} horas e será encaminhada para providência, Para consultar o andamento da sua
+    manifestação acessando o <a href="http://serouvidoria-abreu.serbinario.com.br/seracademico/indexPublico">Link</a>, digitando o número do protocolo,
 </p>
 
 <p style="text-align: justify">
-    Para consultar o andamento da sua manifestação acessando o
-    <a href="http://serouvidoria-abreu.serbinario.com.br/seracademico/indexPublico">Link</a>,
-    digitanto o numero do protocolo
+    {{$configuracaoGeral->texto_agradecimento}}<br />
+    <table style="width: 50%; border-collapse: collapse;" cellspacing="0" cellpadding="0" border="1" width="50%">
+        <tbody>
+        <tr>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;"><b>Pessoalmente ou Correspondências:</b></td>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;">{{$configuracaoGeral->texto_ende_horario_atend}}</td>
+        </tr>
+        <tr>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;"><b>Telefone 1:</b></td>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;">{{$configuracaoGeral->telefone1}}</td>
+        </tr>
+        <tr>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;"><b>Telefone 2:</b></td>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;">{{$configuracaoGeral->telefone2}}</td>
+        </tr>
+        <tr>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;"><b>Site:</b></td>
+            <td style="height:26px;
+            padding-left:4px;
+            padding-right:2px;
+            font-family:Verdana, Geneva, sans-serif;
+            font-size:12px;
+            white-space:nowrap;
+            border-bottom:solid 1px #E1E1E1;">{{$configuracaoGeral->consulta_externa}}</td>
+        </tr>
+        </tbody>
+    </table>
+</p>
+
+<br />
+<p style="text-align: justify">
+    Atenciosamente
+</p>
+
+<p style="text-align: justify">
+    {{$configuracaoGeral->nome_ouvidor}}<br />
+    {{$configuracaoGeral->cargo}}
 </p>
 
 </body>

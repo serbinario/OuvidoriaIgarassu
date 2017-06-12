@@ -14,7 +14,7 @@
                                 <div class="fg-line">
                                     <div class="fg-line">
                                         <label for="data">Novo prazo para solução</label>
-                                        {!! Form::text('data', null, array('class' => 'form-control input-sm', 'id' => 'data', 'placeholder' => 'Data')) !!}
+                                        {!! Form::text('data', null, array('class' => 'form-control input-sm date', 'id' => 'data', 'placeholder' => 'Data')) !!}
                                     </div>
                                 </div>
                             </div>

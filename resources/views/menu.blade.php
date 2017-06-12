@@ -207,7 +207,7 @@
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.status')  }}">Status demanda</a></li>
                     {{--<li><a href="{{ route('seracademico.ouvidoria.graficos.melhorias')  }}">Melhorias</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.graficos.melhoria')  }}">Recla. x Melhoria</a></li>--}}
-                    <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView')  }}">Demandas</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.graficos.demandasView')  }}">Manifestação</a></li>
                 </ul>
             </li>
             @endrole

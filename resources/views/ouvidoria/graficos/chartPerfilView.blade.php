@@ -27,7 +27,7 @@
             {!! Form::open(['method' => "POST"]) !!}
 
             <div class="block-header">
-                <h2>GRÁFICO DE PERFIL DA DEMANDA</h2>
+                <h2>GRÁFICO DE PERFIL DA MANIFESTAÇÃO</h2>
             </div>
             <div class="card">
                 <div class="card-body card-padding">
@@ -136,7 +136,7 @@
                         type: 'bar'
                     },
                     title: {
-                        text: 'Quantidade de demandas por perfil'
+                        text: 'Quantidade de manifestações por perfil'
                     },
                     xAxis: {
                         categories: json[0],

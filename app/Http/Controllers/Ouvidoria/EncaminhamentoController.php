@@ -124,6 +124,7 @@ class EncaminhamentoController extends Controller
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
+            ->leftJoin('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
             ->where('ouv_encaminhamento.id', '=', $id)
             ->select([
                 'ouv_encaminhamento.id as id',
@@ -136,6 +137,7 @@ class EncaminhamentoController extends Controller
                 'ouv_area.id as area_id',
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
+                'ouv_sigilo.nome as sigilo',
                 'ouv_encaminhamento.parecer',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as dataCadastro'),
@@ -144,6 +146,8 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                'prazo_solucao.status as status_prazo_solucao',
+                'prazo_solucao.justificativa as justificativa_prazo_solucao',
                 'ouv_encaminhamento.encaminhado',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
@@ -151,6 +155,7 @@ class EncaminhamentoController extends Controller
                 'ouv_encaminhamento.resp_ouvidor_publica',
                 'ouv_encaminhamento.status_id as status_id',
                 'ouv_encaminhamento.status_prorrogacao',
+                'ouv_encaminhamento.justificativa_prorrogacao',
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
@@ -191,10 +196,16 @@ class EncaminhamentoController extends Controller
             $data = $request->all();
 
             #Executando a ação
-            $this->service->responder($data);
+            $retorno = $this->service->responder($data);
 
-            #Retorno para a view
-            return redirect()->back()->with("message", "Encaminhamento respondido com sucesso!");
+            if($retorno) {
+                #Retorno para a view
+                return redirect()->back()->with("message", "Encaminhamento respondido com sucesso!");
+            } else {
+                #Retorno para a view
+                return redirect()->back()->with("error", "O prazo para solução da manifestação deve ser maior que a data do encaminhamento!");
+            }
+
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
         }
@@ -412,10 +423,16 @@ class EncaminhamentoController extends Controller
         try {
 
             #Recuperando a empresa
-            $this->service->prorrogarPrazoSolucao($request->all());
+            $retorno = $this->service->prorrogarPrazoSolucao($request->all());
 
-            #Retorno para a view
-            return redirect()->back()->with("message", "Prazo da solução da manifestação foi prorrogado com sucesso!");
+            if($retorno) {
+                #Retorno para a view
+                return redirect()->back()->with("message", "Prazo da solução da manifestação foi prorrogado com sucesso!");
+            } else {
+                #Retorno para a view
+                return redirect()->back()->with("error", "O prazo para solução da manifestação deve ser maior que a data do encaminhamento!");
+            }
+
         } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }

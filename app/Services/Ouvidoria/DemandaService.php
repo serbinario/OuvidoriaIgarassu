@@ -140,21 +140,21 @@ class DemandaService
 
         $dataObj  = new \DateTime('now');
         $dataObj->setTimezone( new \DateTimeZone('BRT') );
-        $this->anoAtual = $dataObj->format('Y');
+        //$this->anoAtual = $dataObj->format('Y');
 
         //recupera o maior código ja registrado
-        $codigo = \DB::table('ouv_demanda')
+        /*$codigo = \DB::table('ouv_demanda')
             ->where('ouv_demanda.codigo', 'like', '%'.$this->anoAtual)
-            ->max('codigo');
+            ->max('codigo');*/
 
         // Gerando o código da demanda
-        $codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
-        $codigoAtual = $codigo != null ?  substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
-        $this->ultimoAno = substr($codigo, -4);
+        /*$codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
+        $codigoAtual = $codigo != null ? substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
+        $this->ultimoAno = substr($codigo, -4);*/
 
         // Complementando os dados da demanda
         $data['data'] = $dataObj->format('Y-m-d H:i:s');
-        $data['codigo'] = $this->tratarCodigo($codigoAtual);
+        //$data['codigo'] = $this->tratarCodigo($codigoAtual);
         $data['n_protocolo'] = SerbinarioGerarCodigoSenha::gerarProtocolo();
         $data['user_id'] = $user ? $user->id : null;
         $data['status_id'] = '5';
@@ -196,7 +196,7 @@ class DemandaService
         if($demanda->email) {
 
             SerbinarioSendEmail::enviarEmailCom("emails.paginaDeConfirmacaoDeCadastro",
-                compact("demanda"), [
+                compact("demanda", 'configuracaoGeral'), [
                     "destinatario" => $demanda->email,
                     "assunto" => "Registro da Manifestação"
                 ]);

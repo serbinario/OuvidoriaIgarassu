@@ -45,7 +45,7 @@
                                     @if($detalheEncaminhamento->prazo_solucao)
                                         {!! Form::text('data', $detalheEncaminhamento->prazo_solucao, array('class' => 'form-control input-sm', 'id' => 'data', 'readonly' => 'readonly', 'placeholder' => 'Data')) !!}
                                     @else
-                                        {!! Form::text('data', null, array('class' => 'form-control input-sm', 'id' => 'data', 'placeholder' => 'Data')) !!}
+                                        {!! Form::text('data', null, array('class' => 'form-control input-sm date', 'id' => 'data', 'placeholder' => 'Data')) !!}
                                     @endif
                                 </div>
                             </div>

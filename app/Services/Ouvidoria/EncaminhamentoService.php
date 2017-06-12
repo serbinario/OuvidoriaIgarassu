@@ -27,6 +27,21 @@ class EncaminhamentoService
     private $user;
 
     /**
+     * @var
+     */
+    private $anoAtual;
+
+    /**
+     * @var
+     */
+    private $ultimoAno;
+
+    /**
+     * @var
+     */
+    private $tombo;
+
+    /**
      * @param EncaminhamentoRepository $repository
      */
     public function __construct(EncaminhamentoRepository $repository,
@@ -68,7 +83,7 @@ class EncaminhamentoService
      * @param array $data
      * @return array
      */
-    public function responder(array $data) : Encaminhamento
+    public function responder(array $data)
     {
         $id                 = isset($data['id']) ? $data['id'] : "";
         $resposta           = isset($data['resposta']) ? $data['resposta'] : "";
@@ -86,6 +101,11 @@ class EncaminhamentoService
 
             // Pegando o encaminhamento
             $encaminhamento = $this->find($id);
+
+            // Valida se a data de solução está sendo maior que a data do encaminhamento
+            if(strtotime($encaminhamento->data) >= strtotime($dataSolucao)) {
+                return false;
+            }
 
             # Validando se a resposta foi de uma secretaria ou da própria ouvidoria
             if($tipoResposta == '1') {
@@ -178,7 +198,9 @@ class EncaminhamentoService
     public function encaminharStore(array $data) : Encaminhamento
     {
         $date  = new \DateTime('now');
+        $date->setTimezone( new \DateTimeZone('BRT') );
         $dataAtual = $date->format('Y-m-d');
+        $this->anoAtual = $date->format('Y');
 
         #alterando o status do encaminhamento anterior para fechado
         if($data['id']) {
@@ -192,6 +214,7 @@ class EncaminhamentoService
         } else {
 
             $prioridade = Prioridade::where('id', "=", $data['prioridade_id'])->first();
+
 
         }
 
@@ -208,9 +231,31 @@ class EncaminhamentoService
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
 
-        // Alterando a situação da demanda para reecaminhado
+        // Alterando a situação da demanda para reecaminhado e editando algumas informações
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
-        if (isset($data['subassunto_id'])) {$demanda->subassunto_id = $data['subassunto_id'];}
+
+        # Inserinfo o subassunto caso seja informádo no encaminhamento
+        if (isset($data['subassunto_id'])) {
+            $demanda->subassunto_id = $data['subassunto_id'];
+        }
+
+        // Verifica se ja houve algum ancaminhamento anterior, caso não é gerado um código para manifestação
+        if(!$data['id']) {
+
+            //recupera o maior código ja registrado
+            $codigo = \DB::table('ouv_demanda')
+                ->where('ouv_demanda.codigo', 'like', '%'.$this->anoAtual)
+                ->max('codigo');
+
+            // Gerando o código da manifestação
+            $codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
+            $codigoAtual = $codigo != null ?  substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
+            $this->ultimoAno = substr($codigo, -4);
+
+            #Setando o código na manifestação
+            $demanda->codigo = $this->tratarCodigo($codigoAtual);
+        }
+
         $demanda->status_id = 1;
         $demanda->user_id = $this->user->id;
         $demanda->save();
@@ -356,6 +401,11 @@ class EncaminhamentoService
         $novoPrazo = \DateTime::createFromFormat('d/m/Y', $data['data']);
         $novoPrazo = $novoPrazo->format('Y-m-d');
 
+        // Valida se a data de solução está sendo maior que a data do encaminhamento
+        if(strtotime($encaminhamento->data) >= strtotime($novoPrazo)) {
+            return false;
+        }
+
         #Salvando o prazo de solução
         $prazo = \DB::table('prazo_solucao')->insert([
             'data' => $novoPrazo,
@@ -468,4 +518,21 @@ class EncaminhamentoService
          return $data;
     }
 
+    /**
+     * @param $codigo
+     * @return string
+     */
+    public function tratarCodigo($codigo)
+    {
+        if($codigo <= 1 || $this->anoAtual != $this->ultimoAno) {
+            $newCod2  = '1'.$this->anoAtual;
+        } else {
+            $newCod = $codigo;
+            $newCod2 = $newCod.$this->anoAtual;
+        }
+
+        $newCod2 = str_pad($newCod2,8,"0",STR_PAD_LEFT);
+
+        return $newCod2;
+    }
 }

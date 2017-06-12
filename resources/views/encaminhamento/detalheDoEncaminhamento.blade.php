@@ -52,20 +52,20 @@
                         </div>
                     @endif
 
-                    @if(Session::has('errors'))
+                    @if(Session::has('error'))
                         <div class="alert alert-danger">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            @foreach($errors->all() as $error)
-                                <div>{{ $error }}</div>
-                            @endforeach
+                            <em> {!! session('error') !!}</em>
                         </div>
                     @endif
+
 
                     <div class="row">
                         <div class="col-lg-12 animated fadeInRight">
                             <div class="mail-box-header">
                                 <div class="pull-right tooltip-demo">
-                                    <button type="button" class="btn btn-default btn-icon-text waves-effect"
+                                    <button type="button"  @if($detalheEncaminhamento->status_id == '6') disabled @endif
+                                            class="btn btn-default btn-icon-text waves-effect"
                                             data-toggle="modal" data-target="#modal_responder_encaminhamento">
                                         <i class="zmdi zmdi-check"></i> Responder
                                     </button>
@@ -100,28 +100,28 @@
                                                    class="btn bgm-bluegray waves-effect">
                                                     <i class="zmdi zmdi-arrow-back"></i> Voltar
                                                 </a>
-                                                <button type="button" data-toggle="modal"
+                                                <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal_responder_encaminhamento"
                                                         class="btn btn-primary">
                                                     <i class="zmdi zmdi-check"></i> Resposta
                                                 </button>
                                                 @role('ouvidoria|admin')
-                                                <button type="button" data-toggle="modal"
+                                                <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal_resposta_ouvidor_encaminhamento"
                                                         class="btn btn-primary">
                                                     <i class="zmdi zmdi-check"></i> Resposta ouvidoria
                                                 </button>
-                                                <button type="button" data-toggle="modal"
+                                                <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal_reencaminhamento"
                                                         class="btn btn-primary">
                                                     <i class="zmdi zmdi-mail-reply"></i> Reenchaminhar
                                                 </button>
-                                                <button type="button" data-toggle="modal"
+                                                <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal_encaminhamento"
                                                         class="btn btn-primary">
                                                     <i class="zmdi zmdi-mail-send"></i> Encaminhar
                                                 </button>
-                                                <button type="button" data-toggle="modal"
+                                                <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal-finalizar-manifestacao"
                                                         class="btn btn bgm-deeporange waves-effect">
                                                     <i class="zmdi zmdi-close-circle-o"></i> Finalizar
@@ -207,8 +207,9 @@
 
                                                     <tr>
                                                         <td><b>Identificação:</b></td>
-                                                        <td colspan="3"
-                                                            style="width: 50%;">{{$detalheEncaminhamento->identificacao}}</td>
+                                                        <td style="width: 50%;">{{$detalheEncaminhamento->sigilo}}</td>
+                                                        <td><b>Autor:</b></td>
+                                                        <td style="width: 50%;">{{$detalheEncaminhamento->identificacao}}</td>
                                                         <td><b>HORA:</b></td>
                                                         <td style="width : 30%">{{$detalheEncaminhamento->horaCadastro}}</td>
                                                     </tr>
@@ -277,6 +278,15 @@
                                                         </td>
                                                     </tr>
 
+                                                    @if($detalheEncaminhamento->status_prorrogacao)
+                                                        <tr>
+                                                            <td colspan="5"><b>PRAZO PRORROGADO - Justificativa da prorrogação:</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5">{{ $detalheEncaminhamento->justificativa_prorrogacao }}</td>
+                                                        </tr>
+                                                    @endif
+
                                                     <tr>
                                                         <td colspan="6" style="font-size: 16px;" class="titulo">Situação
                                                             Atual
@@ -298,7 +308,7 @@
                                                         <td>
                                                             @role('ouvidoria|admin')
                                                                 @if($detalheEncaminhamento->prazo_solucao)
-                                                                    <button type="button" data-toggle="modal"
+                                                                    <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                                             data-target="#modal-prorrogar-solucao-manifestacao"
                                                                             class="btn btn-sm btn-success waves-effect">
                                                                         <i class="zmdi zmdi-time-restore"></i> Prorrogar prazo
@@ -312,6 +322,15 @@
                                                         <td><b>Resposta:</b></td>
                                                         <td colspan="5">{{ $detalheEncaminhamento->resposta }}</td>
                                                     </tr>
+
+                                                    @if($detalheEncaminhamento->status_prazo_solucao)
+                                                        <tr>
+                                                            <td colspan="5"><b>PRAZO DE SOLUÇÃO PRORROGADO - Justificativa da prorrogação:</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5">{{ $detalheEncaminhamento->justificativa_prazo_solucao }}</td>
+                                                        </tr>
+                                                    @endif
 
 
                                                     </tbody>
@@ -506,10 +525,10 @@
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
     <script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
     <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
-    <script src="{{ asset('/js/validacoes/modal_responder.js')}}"></script>
+    {{--<script src="{{ asset('/js/validacoes/modal_responder.js')}}"></script>--}}
     <script src="{{ asset('/js/validacoes/modal_responder_ouvidor.js')}}"></script>
     <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_manifestacao.js')}}"></script>
-    <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_solucao.js')}}"></script>
+    {{--<script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_solucao.js')}}"></script>--}}
     <script type="text/javascript">
 
         var idDemanda = "{{$detalheEncaminhamento->demanda_id}}";

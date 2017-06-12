@@ -58,6 +58,7 @@
         <tr>
             <td><span class="text"><b>Protocolo: </b>{{$demanda->n_protocolo}}</span></td>
             <td><span class="text"><b>Registro: </b>{{$demanda->tipo_demanda}}</span></td>
+            <td><span class="text"><b>Identificação: </b>{{$demanda->sigilo}}</span></td>
         </tr>
     </table>
 
@@ -100,10 +101,6 @@
     <h4>DADOS DA OCCORÊNCIA</h4>
 
     <table style="width: 100%">
-        <tr>
-            <td style="width: 15%;"><span><b>DATA:</b> {{$demanda->data_da_ocorrencia}}</span></td>
-            <td><span><b>HORA:</b> {{$demanda->hora_da_ocorrencia}}</span></td>
-        </tr>
         <tr>
             <td colspan="2" style="text-align: justify"><span style="text-align: justify"><b>Descrição:</b> {{$demanda->relato}}</span></td>
         </tr>

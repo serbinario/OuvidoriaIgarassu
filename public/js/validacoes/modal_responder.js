@@ -7,6 +7,7 @@ $(document).ready(function () {
             resposta: {
                 required: true
             },
+
             data: {
                 required: true
             }

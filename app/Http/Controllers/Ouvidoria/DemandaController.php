@@ -527,6 +527,7 @@ class DemandaController extends Controller
             ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
+            ->leftJoin('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
             ->where('ouv_demanda.id', '=', $id)
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
@@ -566,7 +567,8 @@ class DemandaController extends Controller
                 'escolaridade.nome as escolaridade',
                 'ouv_demanda.exclusividade_sus_id',
                 'ouv_tipo_demanda.nome as tipo_demanda',
-                'ouv_area.secretario'
+                'ouv_area.secretario',
+                'ouv_sigilo.nome as sigilo',
             ])->first();
 
         return \PDF::loadView('reports.registroDemanda',

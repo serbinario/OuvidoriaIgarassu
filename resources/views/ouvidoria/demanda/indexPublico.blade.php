@@ -5,39 +5,76 @@
     <link href="{{ asset('/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrapValidation.mim.css')}}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.datetimepicker.css')}}" rel="stylesheet"/>
+    <style type="text/css" class="init">
+        *  {
+            margin:0;
+            padding:0;
+        }
+
+        html, body {height:100%;}
+
+        .geral {
+            min-height:100%;
+            position:relative;
+            width:100%;
+        }
+
+        .footer {
+            position:absolute;
+            bottom:0;
+            width:100%;
+        }
+
+        .content {overflow:hidden;}
+        .aside {width:200px;}
+        .fleft {float:left;}
+        .fright {float:right;}
+    </style>
 </head>
 <body>
-<div class="conteiner">
-    <div class="row">
-        <center>
-            <div class="topo" style="background-color: #0b8345">
-                <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
-                    {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
-                </center>
-            </div>
-        </center>
+
+<div class="geral">
+
+    <div class="header">
+    </div>
+    <div class="aside fleft">
+    </div>
+    <div class="aside fright">
     </div>
 
-    <br />
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <a href="{{ route('createPublico')  }}" title="cadastro da manifestação">
-                <img src="{{asset('/img/TagInicial_04.png')}}" style="margin-left: 25px">
-            </a>
-            <a href="{{ route('buscarDemanda')  }}" title="consultar da manifestação">
-                <img src="{{asset('/img/TagInicial_05.png')}}" >
-            </a>
+    <div class="content">
+        <div class="row">
+            <center>
+                <div class="topo" style="background-color: #0b8345">
+                    <center>
+                        <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
+                        {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
+                    </center>
+                </div>
+            </center>
         </div>
-        <div class="col-md-2"></div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <a href="{{ route('createPublico')  }}" title="cadastro da manifestação">
+                    <img src="{{asset('/img/TagInicial_04.png')}}" style="margin-left: 25px">
+                </a>
+                <a href="{{ route('buscarDemanda')  }}" title="consultar da manifestação">
+                    <img src="{{asset('/img/TagInicial_05.png')}}" >
+                </a>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
     </div>
 
-    <footer id="footer" class="p-t-0" style="margin-top: 100px">
+    <div class="footer">
         <center>
             <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
             <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
         </center>
-    </footer>
+    </div>
+
 </div>
 
 <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>

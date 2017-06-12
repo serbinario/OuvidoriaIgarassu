@@ -27,7 +27,7 @@
             {!! Form::open(['method' => "POST"]) !!}
 
             <div class="block-header">
-                <h2>GRÁFICO DE DEMANDA POR MEIO DE ATENDIMENTO</h2>
+                <h2>GRÁFICO DE MANIFESTAÇÃO POR MEIO DE REGISTRO</h2>
             </div>
             <div class="card">
                 <div class="card-body card-padding">
@@ -153,7 +153,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: 'DEMANDA POR MEIO DE ATENDIMENTO'
+                    text: 'MANIFESTAÇÕES POR MEIO DE REGISTRO'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

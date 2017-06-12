@@ -91,7 +91,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <div class="fg-line">
-                                    {!! Form::label('rg', 'RG *') !!}
+                                    {!! Form::label('rg', 'RG') !!}
                                     {!! Form::text('rg', Session::getOldInput('rg'), array('class' => 'form-control input-sm', 'placeholder' => 'RG')) !!}
                                 </div>
                             </div>

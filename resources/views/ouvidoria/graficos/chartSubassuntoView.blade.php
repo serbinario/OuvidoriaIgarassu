@@ -27,7 +27,7 @@
             {!! Form::open(['method' => "POST"]) !!}
 
             <div class="block-header">
-                <h2>GRÁFICO DE SUBASSUNTOS DA DEMANDA</h2>
+                <h2>GRÁFICO DE SUBASSUNTOS DA MANIFESTAÇÃO</h2>
             </div>
             <div class="card">
                 <div class="card-body card-padding">
@@ -147,7 +147,7 @@
                         type: 'bar'
                     },
                     title: {
-                        text: 'Quantidade de demandas por subassunto'
+                        text: 'Quantidade de manifestações por subassunto'
                     },
                     xAxis: {
                         categories: json[0],

@@ -31,7 +31,6 @@
             font-size: 12px;
             color:#484848;
             padding-left:4px;
-            padding-right:4px;
             border-bottom:solid 1px #CCC;
             height:26px;
             padding-right:5px;
@@ -57,129 +56,173 @@
             border-bottom:solid 1px #E1E1E1;
         }
 
+        *  {
+            margin:0;
+            padding:0;
+        }
+
+        html, body {height:100%;}
+
+        .geral {
+            min-height:100%;
+            position:relative;
+            width:100%;
+        }
+
+        .footer {
+            position:absolute;
+            bottom:0;
+            width:100%;
+        }
+
+        .content {overflow:hidden;}
+        .aside {width:200px;}
+        .fleft {float:left;}
+        .fright {float:right;}
     </style>
 </head>
 <body>
-<div class="conteiner">
-    <div class="row">
-        <center>
-            <div class="topo" style="background-color: #0b8345">
-                <center>
-                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
-                    {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
-                </center>
-            </div>
-        </center>
+
+<div class="geral">
+    <div class="header">
+    </div>
+    <div class="aside fleft">
+    </div>
+    <div class="aside fright">
     </div>
 
-    <br />
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            {!! Form::open(['route'=>'getDemanda', 'method' => "GET" ]) !!}
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <div class="fg-line">
+    <div class="content">
+
+        <div class="row">
+            <center>
+                <div class="topo" style="background-color: #0b8345">
+                    <center>
+                        <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 500px; height: 150px">
+                        {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
+                    </center>
+                </div>
+            </center>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                {!! Form::open(['route'=>'getDemanda', 'method' => "GET" ]) !!}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="form-group col-md-12">
                                 <div class="fg-line">
-                                    <label for="protocolo">Número de protocolo *</label>
-                                    {!! Form::text('protocolo', Session::getOldInput('protocolo') , array('class' => 'form-control')) !!}
+                                    <div class="fg-line">
+                                        <label for="protocolo">Número de protocolo *</label>
+                                        {!! Form::text('protocolo', Session::getOldInput('protocolo') , array('class' => 'form-control')) !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
-                    <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
+                        <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
+                        <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
+                    </div>
                 </div>
+                {!! Form::close() !!}
             </div>
-            {!! Form::close() !!}
+            @if(isset($dados))
+                <div class="col-md-6 col-md-offset-3">
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table compact table-condensed">
+                            <tbody>
+                            <tr>
+                                <td colspan="3" style="background-color: #0b8345; color: white">Identificação</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
+                                {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
+                            </tr>
+                            @if($dados->anonimo_id == '1')
+                                <tr>
+                                    <td colspan="3" style="background-color: #213a53; color: white">Dados pessoas</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">Nome: {{$dados->nome}} </td>
+                                    <td>Fone: {{$dados->fone}} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">E-mail: {{$dados->email}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Endereço: {{$dados->endereco}} </td>
+                                    <td>Número: {{$dados->numero_end}} </td>
+                                    <td>Comunidade: {{$dados->comunidade}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Sexo: {{$dados->sexo}} </td>
+                                    <td>Idade: {{$dados->idade}} </td>
+                                    <td>Escolaridade: {{$dados->escolaridade}} </td>
+                                </tr>
+                            @endif
+                            <tr>
+                                <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Situação: @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
+                            </tr>
+                            <tr>
+                                <td>Perfil: {{$dados->perfil}} </td>
+                                <td colspan="2">Tipo da manifestação: {{$dados->informacao}} </td>
+                                {{--<td>Data/Hora da ocorrência: <br /> {{$dados->data_da_ocorrencia}} - {{$dados->hora_da_ocorrencia}} </td>--}}
+                            </tr>
+                            <tr>
+                                <td>Área: {{$dados->area}} </td>
+                                <td>Assunto: {{$dados->assunto}} </td>
+                                <td>Subassunto: {{$dados->subassunto}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Relato</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">{{$dados->relato}} </td>
+                            </tr>
+                            <tr>
+                                <td>Resposta</td>
+                                <td>Prazo para solução:</td>
+                                <td>{{$dados->prazo_solucao}}</td>
+                            </tr>
+                            @if($dados->resp_publica == '1')
+                                <tr>
+                                    <td colspan="3">{{$dados->resposta}} </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td colspan="3">{{$dados->resposta_ouvidor}} </td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
+            <div class="col-md-2"></div>
         </div>
-        @if(isset($dados))
-            <div class="col-md-6 col-md-offset-3">
-                <div class="table-responsive">
-                    <table class="table compact table-condensed">
-                        <tbody>
-                        <tr>
-                            <td colspan="3" style="background-color: #0b8345; color: white">Identificação</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
-                            {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
-                        </tr>
-                        @if($dados->anonimo_id == '1')
-                            <tr>
-                                <td colspan="3" style="background-color: #213a53; color: white">Dados pessoas</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Nome: {{$dados->nome}} </td>
-                                <td>Fone: {{$dados->fone}} </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">E-mail: {{$dados->email}} </td>
-                            </tr>
-                            <tr>
-                                <td>Endereço: {{$dados->endereco}} </td>
-                                <td>Número: {{$dados->numero_end}} </td>
-                                <td>Comunidade: {{$dados->comunidade}} </td>
-                            </tr>
-                            <tr>
-                                <td>Sexo: {{$dados->sexo}} </td>
-                                <td>Idade: {{$dados->idade}} </td>
-                                <td>Escolaridade: {{$dados->escolaridade}} </td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Situação: @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
-                        </tr>
-                        <tr>
-                            <td>Perfil: {{$dados->perfil}} </td>
-                            <td colspan="2">Tipo da manifestação: {{$dados->informacao}} </td>
-                            {{--<td>Data/Hora da ocorrência: <br /> {{$dados->data_da_ocorrencia}} - {{$dados->hora_da_ocorrencia}} </td>--}}
-                        </tr>
-                        <tr>
-                            <td>Área: {{$dados->area}} </td>
-                            <td>Assunto: {{$dados->assunto}} </td>
-                            <td>Subassunto: {{$dados->subassunto}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Relato</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">{{$dados->relato}} </td>
-                        </tr>
-                        <tr>
-                            <td>Resposta</td>
-                            <td>Prazo para solução:</td>
-                            <td>{{$dados->prazo_solucao}}</td>
-                        </tr>
-                        @if($dados->resp_publica == '1')
-                            <tr>
-                                <td colspan="3">{{$dados->resposta}} </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td colspan="3">{{$dados->resposta_ouvidor}} </td>
-                            </tr>
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        @endif
-        <div class="col-md-2"></div>
     </div>
+
+    <div class="footer">
+        <center>
+            <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
+            <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
+        </center>
+    </div>
+
 </div>
 
-<footer id="footer" class="p-t-0" style="margin-top: 90px">
+
+{{--<footer id="footer" class="p-t-0" style="margin-top: 90px">
     <center>
         <img src="{{ asset('/img/s1.png')}}" style="width: 10%;"/><br />
         <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
     </center>
-</footer>
+</footer>--}}
 
 <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
 <script src="{{ asset('/js/jquery-ui.js')}}"></script>
