@@ -237,6 +237,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });
 
     //Ouvidoria
+    Route::get('indexPublico'  , ['as' => 'indexPublico', 'uses' => 'Ouvidoria\DemandaController@indexPublico']);
     Route::get('createPublico', ['as' => 'createPublico', 'uses' => 'Ouvidoria\DemandaController@createPublic']);
     Route::post('storePublico', ['as' => 'storePublico', 'uses' => 'Ouvidoria\DemandaController@storePublic']);
     Route::get('buscarDemanda', ['as' => 'buscarDemanda', 'uses' => 'Ouvidoria\DemandaController@buscarDemanda']);

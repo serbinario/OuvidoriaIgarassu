@@ -122,7 +122,7 @@
                         </div>
 
                         <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
-                        <a class="btn btn-default btn-sm m-t-10" href="{{ route('seracademico.indexPublico') }}">Voltar</a>
+                        <a class="btn btn-default btn-sm m-t-10" href="{{ route('indexPublico') }}">Voltar</a>
                     </div>
                 </div>
                 {!! Form::close() !!}

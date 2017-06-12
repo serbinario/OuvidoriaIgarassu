@@ -147,7 +147,7 @@
         </div>
 
         <ul class="main-menu">
-            <li><a href="{{ route('seracademico.indexPublico')  }}" target="_blank"><i class="zmdi zmdi-globe-alt"></i> Acesso Público</a></li>
+            <li><a href="{{ route('indexPublico')  }}" target="_blank"><i class="zmdi zmdi-globe-alt"></i> Acesso Público</a></li>
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
             @role('ouvidoria|admin|secretaria')
                 <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}"><i class="zmdi zmdi-assignment-o"></i> Manifestação</a></li>
