@@ -95,8 +95,13 @@ function data($dia, $mes, $ano, $semana) {
 
     <h5 style="font-size: 15px">Comunicação interna N.º: {{$demanda->codigo}}</h5>
 
-    <span><b>Ao secretário(a)</b></span></br>
-    <span><b>Dr(a). {{$demanda->secretario}}</b></span></br>
+    @if($demanda->area_id == '3')
+        <span><b>Gabinte do Prefeitro</b></span></br>
+        <span><b>V.Ex.ª {{$demanda->secretario}}</b></span></br>
+    @else
+        <span><b>Ao secretário(a)</b></span></br>
+        <span><b>Dr(a). {{$demanda->secretario}}</b></span></br>
+    @endif
 
     @if($demanda->data)
         <?php $data = \DateTime::createFromFormat('Y-m-d', $demanda->data); ?>

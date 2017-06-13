@@ -568,6 +568,7 @@ class DemandaController extends Controller
                 'ouv_demanda.exclusividade_sus_id',
                 'ouv_tipo_demanda.nome as tipo_demanda',
                 'ouv_area.secretario',
+                'ouv_area.id as area_id',
                 'ouv_sigilo.nome as sigilo',
             ])->first();
 
@@ -742,7 +743,8 @@ class DemandaController extends Controller
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',
                 'ouv_pessoa.nome as tipoUsuario',
-                'ouv_area.secretario'
+                'ouv_area.secretario',
+                'ouv_area.id as area_id'
             ])->first();
 
         return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows,
