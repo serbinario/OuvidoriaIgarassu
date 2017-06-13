@@ -14,11 +14,11 @@
         }
 
         .rodape{
-            position:absolute;
+
             bottom:0;
             width: 100%;
             height: 90px;
-            margin-top: 530px;
+            margin-top: 70px;
 
         }
 
@@ -40,14 +40,15 @@
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
+            <center><img src="{{asset('/img/abreu.png')}}" style="width: 130px; height: 85px"></center>
         </div>
     </center>
 
     <center><h4>{{ $configuracaoGeral->nome }}</h4></center>
 
-    <center><h4>REGISTRO DE MANIFESTAÇÃO DA OUVIDORIA</h4></center>
+    <center><h4>REGISTRO DE MANIFESTAÇÃO A OUVIDORIA</h4></center>
 
+    <br /><br />
     <h4>DADOS DA MANIFESTAÇÃO</h4>
     <table style="width: 100%">
         <tr>
@@ -88,7 +89,7 @@
             <td><span class="text"><b>Profissão:</b> {{$demanda->profissao}}</span></td>
         </tr>
         <tr>
-            <td colspan="2"><span class="text"><b>Endreço:</b> {{$demanda->endereco}}</span></td>
+            <td colspan="2"><span class="text"><b>Endereço:</b> {{$demanda->endereco}}</span></td>
             <td ><span class="text"><b>Número:</b> {{$demanda->numero_end}}</span></td>
         </tr>
         <tr>
@@ -98,7 +99,7 @@
         </tr>
     </table>
 
-    <h4>DADOS DA OCCORÊNCIA</h4>
+    <h4>DADOS DA OCORRÊNCIA</h4>
 
     <table style="width: 100%">
         <tr>
@@ -132,18 +133,24 @@
     {{--<h4>4. Observações</h4>
     <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>--}}
 
-    <h4 style="margin-top: 10%">Assinaturas</h4>
+    <br /> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <h4 style="margin-top: 5%">Assinaturas:</h4>
     <table class="table-assinatura"  style="width: 100%;">
         <tr>
-            <td style="width: 55%"><span><b>Assinatura Manifestante:<br /><br /><br /></b></span></td>
-            <td><span><b>Ouvidor Geral:<br /><br /><br /></b></span></td>
+            <td style="width: 55%"><span><b>Manifestante<br /><br /><br /></b></span></td>
+            <td><span><b>Ouvidor Geral<br /><br /><br /></b></span></td>
         </tr>
     </table>
 </div>
 
 <center>
     <div class="rodape">
-        <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
+        <center>
+            <img src="{{asset('/img/ouvidoria.png')}}" style="width: 280px; height: 75px"><br />
+            <span>PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
+            <span>Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
+            <span>CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>
+        </center>
     </div>
 </center>
 
