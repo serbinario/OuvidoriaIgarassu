@@ -63,7 +63,7 @@ function data($dia, $mes, $ano, $semana) {
             bottom:0;
             width: 100%;
             height: 90px;
-            margin-top: 300px;
+            margin-top: 100px;
         }
         span, p {
             font-size: 14px;
