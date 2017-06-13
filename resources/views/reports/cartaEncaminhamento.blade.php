@@ -66,7 +66,7 @@ function data($dia, $mes, $ano, $semana) {
             margin-top: 785px;
         }
         span, p {
-            font-size: 15px;
+            font-size: 14px;
             margin-left: 20px;
             text-align: justify;
         }
@@ -100,7 +100,7 @@ function data($dia, $mes, $ano, $semana) {
 
     @if($demanda->data)
         <?php $data = \DateTime::createFromFormat('Y-m-d', $demanda->data); ?>
-        <span style="position: absolute; top: 180px; left: 440px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
+        <span style="position: absolute; top: 180px; left: 400px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
     @endif
     <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
 
