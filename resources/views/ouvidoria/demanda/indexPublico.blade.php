@@ -40,7 +40,7 @@
         <div class="col-sm-5 col-md-5 col-md-offset-1">
             <div class="ibox-content">
                 <p>
-                    <a href="{{ route('createPublico')  }}" title="cadastro da manifestação">
+                    <a href="{{ route('buscarDemanda')  }}" title="cadastro da manifestação">
                         <img src="{{ asset('/img/TagInicial_05.png')}}" style="width: 100%;"/>
                     </a>
                 </p>
@@ -49,7 +49,7 @@
         <div class="col-sm-5 col-md-5">
             <div class="ibox-content">
                 <p>
-                    <a href="{{ route('buscarDemanda')  }}" title="consultar da manifestação">
+                    <a href="{{ route('createPublico')  }}" title="consultar da manifestação">
                         <img src="{{ asset('/img/TagInicial_04.png')}}" style="width: 100%;"/>
                     </a>
                 </p>
