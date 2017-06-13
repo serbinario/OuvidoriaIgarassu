@@ -37,7 +37,7 @@
 
 <div class="loginColumns animated fadeInDown">
     <div class="row">
-        <div class="col-sm-5 col-md-5 col-md-offset-1">
+        <div class="col-sm-5 col-md-3 col-md-offset-1">
             <div class="ibox-content">
                 <p>
                     <a href="{{ route('buscarDemanda')  }}" title="cadastro da manifestação">
@@ -46,7 +46,7 @@
                 </p>
             </div>
         </div>
-        <div class="col-sm-5 col-md-5">
+        <div class="col-sm-3 col-md-5">
             <div class="ibox-content">
                 <p>
                     <a href="{{ route('createPublico')  }}" title="consultar da manifestação">
