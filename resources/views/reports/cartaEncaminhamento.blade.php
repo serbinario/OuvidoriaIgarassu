@@ -66,7 +66,7 @@ function data($dia, $mes, $ano, $semana) {
             margin-top: 785px;
         }
         span, p {
-            font-size: 13px;
+            font-size: 15px;
             margin-left: 20px;
             text-align: justify;
         }
@@ -84,7 +84,7 @@ function data($dia, $mes, $ano, $semana) {
         <div class="topo" style="">
             <center><img src="{{asset('/img/LOGO_OUVIDORIA_1.jpg')}}" style="width: 130px; height: 85px"></center>
         </div><br />
-        <span style="font-size: 10px"><b>{{ $configuracaoGeral->nome }}</b></span><br />
+        <span style="font-size: 14px"><b>{{ $configuracaoGeral->nome }}</b></span><br />
         {{--<span style="font-size: 10px">Ouvidoria da Saúde</span>--}}
     </center>
     {{--<center>
@@ -93,24 +93,24 @@ function data($dia, $mes, $ano, $semana) {
         </div>
     </center>--}}
 
-    <h5 style="font-size: 15px">Manifestação N.º: {{$demanda->codigo}}</h5>
+    <h5 style="font-size: 15px">Comunicação interna N.º: {{$demanda->codigo}}</h5>
 
     <span><b>Ao secretário(a)</b></span></br>
     <span><b>Dr(a). {{$demanda->secretario}}</b></span></br>
 
     @if($demanda->data)
         <?php $data = \DateTime::createFromFormat('Y-m-d', $demanda->data); ?>
-        <span style="position: absolute; top: 180px; left: 480px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
+        <span style="position: absolute; top: 180px; left: 440px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
     @endif
     <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
 
     <span><b>Prezado(a) Senhor(a),</b></span></br>
     <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cumprimentando Cordialmente, encaminhamos a V.S.a a Manifestação via {{$demanda->origem}} da ouvidoria,</b> para fins de
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cumprimentando Cordialmente, encaminhamos a V.S.a a manifestação recebida pela ouvidoria,</b> para fins de
         conhecimento e para que sejam tomadas as devidas providências cabíveis.
-        pDevido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
-        epígrafe, solicito informar a este setor no prazo específico através de <b>comunicação interna</b> as providências
-        adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial para a satisfação do cidadão.</p></br></br>
+        Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
+        epígrafe, solicito informar a ouvidoria dentro do prazo estabelecido o retorno através de <b>comunicação interna</b> as providências
+        adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial a ser informada ao cidadão.</p></br></br>
 
 
     <table border rules=none style="width: 100%;">
@@ -145,7 +145,7 @@ function data($dia, $mes, $ano, $semana) {
 
     <table border rules=none style="width: 100%;">
         <tr>
-            <td><span><b>Descrição da Manifestação</b></span></td>
+            <td><span><b>Descrição da Manifestação do autor</b></span></td>
         </tr>
         <tr>
             <td rowspan="5"><p>{{ $demanda->relato }}</p></td>
@@ -154,7 +154,7 @@ function data($dia, $mes, $ano, $semana) {
 
     <table border rules=none style="width: 100%;">
         <tr>
-            <td><span><b>Interpretação da Manifestação</b></span></td>
+            <td><span><b>Interpretação da Manifestação pela ouvidoria</b></span></td>
         </tr>
         <tr>
             <td rowspan="5"><p>{{ $demanda->parecer }}</p></td>
