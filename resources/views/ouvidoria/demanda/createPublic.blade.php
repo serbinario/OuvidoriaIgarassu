@@ -58,14 +58,13 @@
     <div class="content">
 
         <div class="row">
-            <center>
-                <div class="topo" style="background-color: #0b8345">
-                    <center>
-                        <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" style="width: 30%; height: 10%">
-                        {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
-                    </center>
-                </div>
-            </center>
+            <div class="col-sm-12 col-md-12" style="background-color: #0b8345">
+                <center>
+                    <img src="{{asset('/img/LOGO_OUVIDORIA_2.jpg')}}" class="img-responsive"
+                         style="width: 450px; height: 120px">
+                    {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
+                </center>
+            </div>
         </div>
         <br />
         <center><h2><?php echo "REGISTRO DE MANIFESTAÇÃO DA OUVIDORIA"; ?></h2></center>
