@@ -133,7 +133,7 @@
     {{--<h4>4. Observações</h4>
     <p class="text" style="text-align: justify">{{$demanda['obs']}}</p>--}}
 
-    <br /> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /> <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     <h4 style="margin-top: 5%">Assinaturas:</h4>
     <table class="table-assinatura"  style="width: 100%;">
         <tr>
