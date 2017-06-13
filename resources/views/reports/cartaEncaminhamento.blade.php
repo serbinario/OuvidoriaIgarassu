@@ -63,7 +63,7 @@ function data($dia, $mes, $ano, $semana) {
             bottom:0;
             width: 100%;
             height: 90px;
-            margin-top: 430px;
+            margin-top: 300px;
         }
         span, p {
             font-size: 14px;
@@ -166,10 +166,10 @@ function data($dia, $mes, $ano, $semana) {
 <center>
     <div class="rodape">
         <center>
-            <img src="{{asset('/img/ouvidoria.png')}}" style="width: 280px; height: 75px"><br />
-            <span>PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
-            <span>Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
-            <span>CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>
+            <img src="{{asset('/img/ouvidoria.png')}}" style="width: 200px; height: 50px"><br />
+            <span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
+            <span style="font-size: 10px">Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
+            <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>
         </center>
     </div>
 </center>

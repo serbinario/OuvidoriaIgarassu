@@ -39,7 +39,7 @@
 <div class="page">
 
     <center>
-        <div class="topo" style="">
+        <div>
             <center><img src="{{asset('/img/abreu.png')}}" style="width: 130px; height: 85px"></center>
         </div>
     </center>
