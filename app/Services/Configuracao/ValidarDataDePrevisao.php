@@ -88,6 +88,6 @@ class ValidarDataDePrevisao
 
         }
 
-        return $dia_semana;
+        return utf8_encode($dia_semana);
     }
 }
