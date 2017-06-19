@@ -42,6 +42,8 @@
                         <tr>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>Secretaria</th>
+                            <th>Status</th>
                             <th >Acão</th>
                         </tr>
                         </thead>
@@ -50,6 +52,8 @@
                         <tr>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>Secretaria</th>
+                            <th>Status</th>
                             <th style="width: 10%;">Acão</th>
                         </tr>
                         </tfoot>
@@ -68,8 +72,10 @@
             serverSide: true,
             ajax: "{!! route('seracademico.user.grid') !!}",
             columns: [
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
+                {data: 'name', name: 'users.name'},
+                {data: 'email', name: 'users.email'},
+                {data: 'secretaria', name: 'ouv_area.nome'},
+                {data: 'ativo', name: 'ativo', orderable: false, searchable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

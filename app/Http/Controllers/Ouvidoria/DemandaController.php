@@ -336,8 +336,9 @@ class DemandaController extends Controller
                 if($this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
                     $html .= '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary waves-effect"><i class="zmdi zmdi-edit" title="Editar"></i></a> ';
                     $html .= '<a href="registro/'.$row->id.'" class="btn btn-xs btn-success waves-effect" target="__blanck" title="Registro"><i class="zmdi zmdi-file"></i></a> ';
-                    $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck" title="Documento"><i class="zmdi zmdi-file-text"></i></a> ';
                 }
+
+                $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck" title="Documento"><i class="zmdi zmdi-file-text"></i></a> ';
 
                 if(count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
                     $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir" title="Deletar"><i class="zmdi zmdi-plus-circle-o"></i></a> ';

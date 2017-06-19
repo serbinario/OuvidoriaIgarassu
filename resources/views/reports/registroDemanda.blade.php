@@ -40,7 +40,7 @@
 
     <center>
         <div>
-            <center><img src="{{asset('/img/abreu.png')}}" style="width: 130px; height: 85px"></center>
+            <center><img src="{{asset('/img/abreu.jpg')}}" style="width: 130px; height: 85px"></center>
         </div>
     </center>
 

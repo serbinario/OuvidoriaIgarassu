@@ -11,6 +11,7 @@ use Seracademico\Validators\UserValidator;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -40,6 +41,11 @@ class UserController extends Controller
     ];
 
     /**
+     * @var
+     */
+    private $user;
+
+    /**
      * @param UserService $service
      * @param UserValidator $validator
      */
@@ -47,6 +53,7 @@ class UserController extends Controller
     {
         $this->service   = $service;
         $this->validator = $validator;
+        $this->user      = Auth::user();
     }
 
     /**
@@ -63,11 +70,29 @@ class UserController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $users = \DB::table('users')->select(['id', 'name', 'email']);
+        $users = \DB::table('users')
+            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'users.area_id')
+            ->select([
+                'users.id',
+                'users.name',
+                'users.email',
+                'users.active as ativo',
+                'ouv_area.nome as secretaria'
+            ]);
 
         #Editando a grid
         return Datatables::of($users)->addColumn('action', function ($user) {
+
             return '<a href="edit/'.$user->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
+
+        })->addColumn('ativo', function ($user) {
+
+            if($user->ativo) {
+                return "Ativo";
+            } else {
+                return "Desativado";
+            }
+
         })->make(true);
     }
 
@@ -137,6 +162,23 @@ class UserController extends Controller
     }
 
     /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function editPerfil()
+    {
+        try {
+            #Recuperando o aluno
+            $user = $this->service->find($this->user->id);
+
+            #retorno para view
+            return view('user.edit_perfil', compact('user'));
+        } catch (\Throwable $e) {dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
      * @param Request $request
      * @param $id
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -161,6 +203,32 @@ class UserController extends Controller
 
             #Executando a ação
             $this->service->update($data, $id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Alteração realizada com sucesso!");
+        } catch (ValidatorException $e) {
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Throwable $e) { dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function updatePerfil(Request $request, $id)
+    {
+        try {
+            #Recuperando os dados da requisição
+            $data = $request->all();
+
+            #Validando a requisição
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
+
+            #Executando a ação
+            $this->service->updatePerfil($data, $id);
 
             #Retorno para a view
             return redirect()->back()->with("message", "Alteração realizada com sucesso!");

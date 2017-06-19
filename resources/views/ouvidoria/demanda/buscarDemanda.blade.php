@@ -55,37 +55,37 @@
                 <div class="table-responsive">
                     <table class="table compact table-condensed">
                         <tbody>
-                        <tr>
+                        {{--<tr>
                             <td colspan="3" style="background-color: #0b8345; color: white">Identificação</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
-                            {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
-                        </tr>
-                        @if($dados->anonimo_id == '1')
+                        </tr>--}}
+
+                       @if($dados->sigilo_id == '1')
                             <tr>
-                                <td colspan="3" style="background-color: #213a53; color: white">Dados pessoas</td>
+                                <td colspan="3" style="background-color: #0b8345; color: white">Dados do cidadão</td>
                             </tr>
                             <tr>
-                                <td colspan="2">Nome: {{$dados->nome}} </td>
-                                <td>Fone: {{$dados->fone}} </td>
+                                <td colspan="3">Nome: {{$dados->nome}} </td>
                             </tr>
                             <tr>
                                 <td colspan="3">E-mail: {{$dados->email}} </td>
                             </tr>
                             <tr>
-                                <td>Endereço: {{$dados->endereco}} </td>
+                                <td colspan="2">Endereço: {{$dados->endereco}} </td>
                                 <td>Número: {{$dados->numero_end}} </td>
-                                <td>Comunidade: {{$dados->comunidade}} </td>
+                                {{--<td>Comunidade: {{$dados->comunidade}} </td>--}}
                             </tr>
                             <tr>
-                                <td>Sexo: {{$dados->sexo}} </td>
+                                <td colspan="2">Sexo: {{$dados->sexo}} </td>
                                 <td>Idade: {{$dados->idade}} </td>
-                                <td>Escolaridade: {{$dados->escolaridade}} </td>
+                                {{--<td>Escolaridade: {{$dados->escolaridade}} </td>--}}
                             </tr>
                         @endif
                         <tr>
                             <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
+                            {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
                         </tr>
                         <tr>
                             <td colspan="3">Situação: @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
@@ -120,6 +120,10 @@
                                 <td colspan="3">{{$dados->resposta_ouvidor}} </td>
                             </tr>
                         @endif
+                        <tr>
+                            <td colspan="2">Prazo de resposta: {{$dados->previsao}} </td>
+                            <td>Prazo para solução: {{$dados->prazo_solucao}} </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

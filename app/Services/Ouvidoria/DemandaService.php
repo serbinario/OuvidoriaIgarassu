@@ -480,6 +480,7 @@ class DemandaService
                 'ouv_encaminhamento.resp_ouvidor_publica',
                 'ouv_encaminhamento.parecer',
                 'ouv_sigilo.nome as sigilo',
+                'ouv_sigilo.id as sigilo_id',
                 'ouv_anonimo.nome as anonimo',
                 'ouv_anonimo.id as anonimo_id',
                 'tipo_resposta.nome as tipo_resposta',

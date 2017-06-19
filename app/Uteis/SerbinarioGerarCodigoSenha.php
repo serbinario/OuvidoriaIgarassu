@@ -41,10 +41,10 @@ class SerbinarioGerarCodigoSenha
     {
         $data  = new \DateTime('now');
         $data->setTimezone( new \DateTimeZone('BRT') );
-        $ano = $data->format('Y');
+        $ano = $data->format('y');
 
         // Gerando o código da demanda
-        $protocolo = SerbinarioGerarCodigoSenha::gerar(8,true,true,true);
+        $protocolo = SerbinarioGerarCodigoSenha::gerar(5,true,true,true);
         $protocolo = $protocolo.$ano;
         
         $aux = false;

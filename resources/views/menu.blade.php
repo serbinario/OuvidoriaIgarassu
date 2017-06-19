@@ -64,13 +64,13 @@
                             <i class="him-icon zmdi zmdi-assignment-o"></i>
                         </a>
                     </li>
-                @endrole
 
-                <li class="dropdown hidden-xs">
-                    <a title="Manifestações encaminhadas" id="demandas-encaminhadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
-                        <i class="him-icon zmdi zmdi-mail-send"></i>
-                    </a>
-                </li>
+                    <li class="dropdown hidden-xs">
+                        <a title="Manifestações encaminhadas" id="demandas-encaminhadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '1' ])}}">
+                            <i class="him-icon zmdi zmdi-mail-send"></i>
+                        </a>
+                    </li>
+                @endrole
 
                 <li class="dropdown hidden-xs">
                     <a title="Manifestações aguardando resposta" id="demandas-analise" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '2' ])}}">
@@ -84,17 +84,19 @@
                     </a>
                 </li>
 
-                <li class="dropdown hidden-xs">
-                    <a title="Manifestações a atrasar" id="demandas-para-atrasar" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '5' ])}}">
-                        <i class="him-icon zmdi zmdi-alarm-check"></i>
-                    </a>
-                </li>
+                @role('ouvidoria|admin')
+                    <li class="dropdown hidden-xs">
+                        <a title="Manifestações a atrasar" id="demandas-para-atrasar" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '5' ])}}">
+                            <i class="him-icon zmdi zmdi-alarm-check"></i>
+                        </a>
+                    </li>
 
-                <li class="dropdown hidden-xs">
-                    <a title="Manifestações atrasadas" id="demandas-atrasadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '6' ])}}">
-                        <i class="him-icon zmdi zmdi-timer-off"></i>
-                    </a>
-                </li>
+                    <li class="dropdown hidden-xs">
+                        <a title="Manifestações atrasadas" id="demandas-atrasadas" href="{{route('seracademico.ouvidoria.demanda.index', ['status' => '6' ])}}">
+                            <i class="him-icon zmdi zmdi-timer-off"></i>
+                        </a>
+                    </li>
+                @endrole
 
             </ul>
         </li>
@@ -128,18 +130,18 @@
             </a>
 
             <ul class="main-menu">
-                {{--<li>
-                    <a href="profile-about.html"><i class="zmdi zmdi-account"></i>Perfil</a>
-                </li>
                 <li>
-                    <a href=""><i class="zmdi zmdi-input-antenna"></i> Privacy Settings</a>
+                    <a href="{{ route('seracademico.user.editPerfil')  }}"><i class="zmdi zmdi-account"></i>Perfil</a>
                 </li>
-                <li>
-                    <a href="{{ route('user.alterarSenha') }}"><i class="zmdi zmdi-settings"></i>Alterar Senha</a>
-                </li>
-                <li>
-                    <a href="{{ route('logout') }}"><i class="zmdi zmdi-time-restore"></i>Sair</a>
-                </li>--}}
+                {{-- <li>
+                     <a href=""><i class="zmdi zmdi-input-antenna"></i> Privacy Settings</a>
+                 </li>
+                 <li>
+                     <a href="{{ route('user.alterarSenha') }}"><i class="zmdi zmdi-settings"></i>Alterar Senha</a>
+                 </li>
+                 <li>
+                     <a href="{{ route('logout') }}"><i class="zmdi zmdi-time-restore"></i>Sair</a>
+                 </li>--}}
                 <li>
                     <a href="{{ url('auth/logout') }}"><i class="zmdi zmdi-power"></i>Sair</a>
                 </li>
@@ -220,12 +222,14 @@
                 </ul>
             </li>
             @endrole
-            <li class="sub-menu">
-                <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
-                <ul>
-                    <li><a href="{{ route('seracademico.configuracao.configuracaoGeral.edit')  }}">Geral</a></li>
-                </ul>
-            </li>
+            @role('admin')
+                <li class="sub-menu">
+                    <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
+                    <ul>
+                        <li><a href="{{ route('seracademico.configuracao.configuracaoGeral.edit')  }}">Geral</a></li>
+                    </ul>
+                </li>
+            @endrole
         </ul>
     </aside>
     {{--FIM Menu Lateral--}}

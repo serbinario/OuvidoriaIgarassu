@@ -33,7 +33,7 @@
             {{--Formulario--}}
             {!! Form::open(['route'=>'seracademico.user.store', 'method' => "POST", 'enctype' => 'multipart/form-data' ]) !!}
             <div class="block-header">
-                <h2>Encaminhamento da demanda</h2>
+                <h2>Cadastrar usuário</h2>
             </div>
             <div class="card">
                 <div class="card-body card-padding">

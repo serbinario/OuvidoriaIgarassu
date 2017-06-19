@@ -82,7 +82,7 @@ function data($dia, $mes, $ano, $semana) {
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/abreu.png')}}" style="width: 130px; height: 85px"></center>
+            <center><img src="{{asset('/img/abreu.jpg')}}" style="width: 130px; height: 85px"></center>
         </div><br />
         <span style="font-size: 14px"><b>{{ $configuracaoGeral->nome }}</b></span><br />
         {{--<span style="font-size: 10px">Ouvidoria da Saúde</span>--}}

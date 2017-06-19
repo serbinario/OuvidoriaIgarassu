@@ -230,6 +230,42 @@ class UserService
     }
 
     /**
+     * @param array $data
+     * @param int $id
+     * @return mixed
+     */
+    public function updatePerfil(array $data, int $id) : User
+    {
+
+        $data = $this->tratamentoCamposUpdate($data);
+
+        #tratando a senha
+        if(empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $newPassword = \bcrypt($data['password']);
+        }
+
+        #Salvando o registro pincipal
+        $user =  $this->repository->update($data, $id);
+
+        # Alterando a senha do usuário
+        if(isset($newPassword)) {
+            $user->fill([
+                'password' => $newPassword
+            ])->save();
+        }
+
+        #Verificando se foi criado no banco de dados
+        if(!$user) {
+            throw new \Exception('Ocorreu um erro ao cadastrar!');
+        }
+
+        #Retorno
+        return $user;
+    }
+
+    /**
      * @param array $models
      * @return array
      */

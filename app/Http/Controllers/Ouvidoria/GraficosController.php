@@ -12,6 +12,7 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Khill\Lavacharts\Lavacharts;
 use Seracademico\Uteis\SerbinarioDateFormat;
 use Seracademico\Services\Ouvidoria\DemandaService;
+use Illuminate\Support\Facades\Auth;
 
 class GraficosController extends Controller
 {
@@ -29,11 +30,17 @@ class GraficosController extends Controller
     ];
 
     /**
+     * @var
+     */
+    private $user;
+
+    /**
      * @param DemandaService $service
      */
     public function __construct(DemandaService $service)
     {
         $this->service   =  $service;
+        $this->user      = Auth::user();
     }
 
     /**
@@ -564,11 +571,12 @@ class GraficosController extends Controller
 
         if($secretaria) {
             $rows->where('ouv_area.id', '=', $secretaria);
+        } else if ($this->user->is('secretaria')) {
+            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
         }
 
         $rows = $rows->get();
 
-        //dd($rows);
 
         $dados = [];
 
@@ -629,6 +637,8 @@ class GraficosController extends Controller
 
         if($secretaria) {
             $rows->where('ouv_area.id', '=', $secretaria);
+        } else  if($this->user->is('secretaria')) {
+            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
         }
 
         $rows = $rows->get();

@@ -202,6 +202,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('store', ['as' => 'store', 'uses' => 'UserController@store']);
             Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'UserController@edit']);
             Route::post('update/{id}', ['as' => 'update', 'uses' => 'UserController@update']);
+
+            Route::get('editPerfil', ['as' => 'editPerfil', 'uses' => 'UserController@editPerfil']);
+            Route::post('updatePerfil/{id}', ['as' => 'updatePerfil', 'uses' => 'UserController@updatePerfil']);
         });
 
         Route::group(['prefix' => 'role', 'as' => 'role.'], function () {
