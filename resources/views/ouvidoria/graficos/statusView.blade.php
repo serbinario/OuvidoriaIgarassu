@@ -155,7 +155,7 @@
                     text: 'STATUS DAS MANIFESTAÇÕES'
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.qtd})</b>'
                 },
                 plotOptions: {
                     pie: {
@@ -163,7 +163,7 @@
                         cursor: 'pointer',
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.qtd})',
                             style: {
                                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                             }

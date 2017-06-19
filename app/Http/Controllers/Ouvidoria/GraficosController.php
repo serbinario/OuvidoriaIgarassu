@@ -579,13 +579,15 @@ class GraficosController extends Controller
 
 
         $dados = [];
+        $qtdTotal = 0;
 
         foreach ($rows as $row) {
-            $r = ['name' => $row->nome, 'y' => $row->qtd];
+            $r = ['name' => $row->nome, 'y' => $row->qtd, 'qtd' => $row->qtd];
             $dados[] = $r;
+            $qtdTotal = $qtdTotal + $row->qtd;
         }
 
-        return response()->json($dados);
+        return response()->json(['dados' => $dados, 'qtdTotal' => $qtdTotal]);
     }
 
 
@@ -646,7 +648,7 @@ class GraficosController extends Controller
         $dados = [];
 
         foreach ($rows as $row) {
-            $r = ['name' => $row->nome, 'y' => $row->qtd];
+            $r = ['name' => $row->nome, 'y' => $row->qtd, 'qtd' => $row->qtd];
             $dados[] = $r;
         }
 

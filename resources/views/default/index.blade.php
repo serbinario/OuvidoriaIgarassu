@@ -116,7 +116,8 @@
                 url: '{{route('seracademico.ouvidoria.graficos.informacaoAjax')}}',
                 datatype: 'json'
             }).done(function (json) {
-                grafico2(json)
+                grafico2(json['dados'])
+                $('.title-2').text(' ('+json['qtdTotal']+'}')
             });
         });
 
@@ -149,7 +150,7 @@
                     text: 'MANIFESTAÇÃO POR STATUS'
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.qtd})</b>'
                 },
                 plotOptions: {
                     pie: {
@@ -157,7 +158,7 @@
                         cursor: 'pointer',
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.qtd})',
                             style: {
                                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                             }
@@ -182,10 +183,10 @@
                     type: 'pie'
                 },
                 title: {
-                    text: 'MANIFESTAÇÃO POR CLASSIFICAÇÃO DAS MANIFESTAÇÕES'
+                    text: 'MANIFESTAÇÃO POR CLASSIFICAÇÃO DAS MANIFESTAÇÕES <span class="title-2"></span>'
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}% ({point.qtd})</b>'
                 },
                 plotOptions: {
                     pie: {
@@ -193,7 +194,7 @@
                         cursor: 'pointer',
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} % ({point.qtd})',
                             style: {
                                 color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                             }
