@@ -89,8 +89,29 @@ class EncaminhamentoController extends Controller
         $detalheEncaminhamento = $this->queryParaDetalheEncaminhamento($id);
         $loadFields = $this->service->load($this->loadFields);
 
+        $encaminhamentoAnterior =  \DB::table('ouv_encaminhamento')
+            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+                $join->on(
+                    'prazo_solucao.id', '=',
+                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
+                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                );
+            })
+            ->where('demanda_id', $detalheEncaminhamento->demanda_id)
+            ->where('status_id', '3')
+            ->orderBy('id', 'DESC')
+            ->select([
+                'ouv_encaminhamento.id',
+                'ouv_encaminhamento.resposta',
+                'ouv_encaminhamento.resposta_ouvidor',
+                'ouv_encaminhamento.resp_publica',
+                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
+            ])->first();
+
+       // dd($encaminhamentoAnterior);
+
         return view('encaminhamento.detalheDoEncaminhamento',
-            compact('detalheEncaminhamento', 'loadFields', 'respostasPassadas'));
+            compact('detalheEncaminhamento', 'loadFields', 'respostasPassadas', 'encaminhamentoAnterior'));
     }
 
     /**

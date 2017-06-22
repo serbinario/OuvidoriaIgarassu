@@ -265,9 +265,11 @@
                                                         <td><b>PRAZO:</b></td>
                                                         <td style="width : 50%">{{ $detalheEncaminhamento->previsao }}</td>
                                                         <td>
+                                                            <?php $respostaAnterior = isset($encaminhamentoAnterior->resposta) ? $encaminhamentoAnterior->resposta : ""; ?>
                                                             @role('ouvidoria|admin')
                                                                 @if(!$detalheEncaminhamento->status_prorrogacao &&
-                                                                ($detalheEncaminhamento->status_id != '4' && $detalheEncaminhamento->status_id != '6'))
+                                                                ($detalheEncaminhamento->status_id != '4' && $detalheEncaminhamento->status_id != '6')
+                                                                 && $respostaAnterior == "")
                                                                     <button type="button" data-toggle="modal"
                                                                             data-target="#modal-prorrogar-manifestacao"
                                                                             class="btn btn-sm btn-success waves-effect">

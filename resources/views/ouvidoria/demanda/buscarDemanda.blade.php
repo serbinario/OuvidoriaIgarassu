@@ -58,20 +58,18 @@
                         {{--<tr>
                             <td colspan="3" style="background-color: #0b8345; color: white">Identificação</td>
                         </tr>--}}
-
-                       @if($dados->sigilo_id == '1')
-                            <tr>
-                                <td colspan="3" style="background-color: #0b8345; color: white">Dados pessoais</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><b>Nome:</b> {{$dados->nome}} </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>CPF:</b> {{$dados->cpf}} </td>
-                                <td><b>Idade:</b> {{$dados->idade}} </td>
-                                {{--<td>Escolaridade: {{$dados->escolaridade}} </td>--}}
-                            </tr>
-                        @endif
+                        <tr>
+                            <td colspan="3" style="background-color: #0b8345; color: white">Dados do manifestante</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><b>Nome:</b> @if($dados->sigilo_id == '1') {{$dados->nome}} @else
+                                    Sigiloso @endif  </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>CPF:</b> @if($dados->sigilo_id == '1') {{$dados->cpf}} @endif   </td>
+                            <td><b>Idade:</b> @if($dados->sigilo_id == '1')  {{$dados->idade}} @endif </td>
+                            {{--<td>Escolaridade: {{$dados->escolaridade}} </td>--}}
+                        </tr>
                         <tr>
                             <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
                         </tr>
