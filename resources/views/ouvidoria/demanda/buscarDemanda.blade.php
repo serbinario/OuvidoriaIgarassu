@@ -39,11 +39,18 @@
     <div class="row">
         <div class="col-sm-5 col-md-10 col-md-offset-1">
             <div class="ibox-content">
-                {!! Form::open(['route'=>'getDemanda', 'method' => "GET" ]) !!}
-                    <div class="form-group">
-                        <label for="protocolo">Número de protocolo *</label>
-                        {!! Form::text('protocolo', Session::getOldInput('protocolo') , array('class' => 'form-control')) !!}
+                {!! Form::open(['route'=>'getDemanda', 'method' => "GET", 'id' => 'formBuscaDemanda' ]) !!}
+                <div class="row">
+                    <div class="form-group col-md-10">
+                        <div class="fg-line">
+                            <div class="fg-line">
+                                <label for="protocolo">Número de protocolo *</label>
+                                {!! Form::text('protocolo', Session::getOldInput('protocolo') , array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
                     </div>
+                </div>
+
                     <button class="btn btn-primary btn-sm m-t-10">Consultar</button>
                     <a class="btn btn-default btn-sm m-t-10" href="{{ route('indexPublico') }}">Voltar</a>
                 {!! Form::close() !!}
@@ -110,7 +117,7 @@
                         @foreach($repostas as $reposta)
                             @if($reposta->resp_publica == '1')
                                 <tr>
-                                    <td colspan="3"><b>Data: ({{$reposta->data_resposta}}) - </b>{{$reposta->resposta}} </td>
+                                    <td colspan="3"><b>Data: ({{$reposta->data_resposta}}) <br/> </b>{{$reposta->resposta}} </td>
                                 </tr>
                             @else
                                 <tr>
@@ -134,6 +141,9 @@
     <hr/>
     <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
     <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
-    {{--<script src="{{ asset('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')}}" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>--}}
+    <script src="{{ asset('/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
+    <script src="{{ asset('/lib/jquery-validation/src/localization/messages_pt_BR.js') }}"></script>
+    <script src="{{ asset('/js/validacoes/busca_demanda.js')}}"></script>
+
 </body>
 </html>
