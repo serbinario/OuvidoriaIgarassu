@@ -43,12 +43,14 @@
                                 <div class="fg-line">
                                     <label for="data">Prazo para solução</label>
                                     <?php $prazoAnterior = isset($encaminhamentoAnterior->prazo_solucao) ? $encaminhamentoAnterior->prazo_solucao : ""; ?>
-                                    @if(!$detalheEncaminhamento->prazo_solucao || !$prazoAnterior)
+                                    @if(!$detalheEncaminhamento->prazo_solucao && !$prazoAnterior)
                                         {!! Form::text('data', null, array('class' => 'form-control input-sm date', 'id' => 'data', 'placeholder' => 'Data')) !!}
-                                    @elseif ($prazoAnterior)
-                                        {!! Form::text('data', $prazoAnterior, array('class' => 'form-control input-sm', 'id' => 'data', 'readonly' => 'readonly', 'placeholder' => 'Data')) !!}
                                     @else
-
+                                        @if($detalheEncaminhamento->prazo_solucao)
+                                            {!! Form::text('data', $detalheEncaminhamento->prazo_solucao, array('class' => 'form-control input-sm', 'id' => 'data', 'readonly' => 'readonly', 'placeholder' => 'Data')) !!}
+                                        @elseif ($prazoAnterior)
+                                            {!! Form::text('data', $prazoAnterior, array('class' => 'form-control input-sm', 'id' => 'data', 'readonly' => 'readonly', 'placeholder' => 'Data')) !!}
+                                        @endif
                                     @endif
                                 </div>
                             </div>
