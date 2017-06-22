@@ -136,7 +136,15 @@ class DemandaController extends Controller
     {
         $dados = $this->service->detalheDaDemanda($request);
 
-        return view('ouvidoria.demanda.buscarDemanda', compact('dados'));
+        $repostas = \DB::table('ouv_encaminhamento')
+            ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)->select([
+                'resposta',
+                'resposta_ouvidor',
+                'resp_publica',
+                \DB::raw('DATE_FORMAT(data_resposta,"%d/%m/%Y") as data_resposta'),
+            ])->get();
+
+        return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'repostas'));
     }
 
     /**

@@ -61,22 +61,14 @@
 
                        @if($dados->sigilo_id == '1')
                             <tr>
-                                <td colspan="3" style="background-color: #0b8345; color: white">Dados do cidadão</td>
+                                <td colspan="3" style="background-color: #0b8345; color: white">Dados pessoais</td>
                             </tr>
                             <tr>
-                                <td colspan="3">Nome: {{$dados->nome}} </td>
+                                <td colspan="3"><b>Nome:</b> {{$dados->nome}} </td>
                             </tr>
                             <tr>
-                                <td colspan="3">E-mail: {{$dados->email}} </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">Endereço: {{$dados->endereco}} </td>
-                                <td>Número: {{$dados->numero_end}} </td>
-                                {{--<td>Comunidade: {{$dados->comunidade}} </td>--}}
-                            </tr>
-                            <tr>
-                                <td colspan="2">Sexo: {{$dados->sexo}} </td>
-                                <td>Idade: {{$dados->idade}} </td>
+                                <td colspan="2"><b>CPF:</b> {{$dados->cpf}} </td>
+                                <td><b>Idade:</b> {{$dados->idade}} </td>
                                 {{--<td>Escolaridade: {{$dados->escolaridade}} </td>--}}
                             </tr>
                         @endif
@@ -84,46 +76,49 @@
                             <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
                         </tr>
                         <tr>
-                            <td colspan="3">Sigilo: {{$dados->sigilo}} </td>
+                            <td colspan="3"><b>Sigilo:</b> {{$dados->sigilo}} </td>
                             {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
                         </tr>
                         <tr>
-                            <td colspan="3">Situação: @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
+                            <td colspan="3"><b>Situação:</b> @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
                         </tr>
                         <tr>
-                            <td>Perfil: {{$dados->perfil}} </td>
-                            <td colspan="2">Tipo da manifestação: {{$dados->informacao}} </td>
+                            <td><b>Perfil:</b> {{$dados->perfil}} </td>
+                            <td colspan="2"><b>Tipo da manifestação:</b> {{$dados->informacao}} </td>
                             {{--<td>Data/Hora da ocorrência: <br /> {{$dados->data_da_ocorrencia}} - {{$dados->hora_da_ocorrencia}} </td>--}}
                         </tr>
                         <tr>
-                            <td>Área: {{$dados->area}} </td>
-                            <td>Assunto: {{$dados->assunto}} </td>
-                            <td>Subassunto: {{$dados->subassunto}}</td>
+                            <td><b>Secretaria:</b> {{$dados->area}} </td>
+                            <td><b>Assunto:</b> {{$dados->assunto}} </td>
+                            <td><b>Subassunto:</b> {{$dados->subassunto}}</td>
                         </tr>
                         <tr>
-                            <td colspan="3">Relato</td>
+                            <td colspan="3"><b>Relato:</b></td>
                         </tr>
                         <tr>
                             <td colspan="3">{{$dados->relato}} </td>
                         </tr>
                         <tr>
-                            <td>Resposta</td>
-                            <td>Prazo para solução:</td>
-                            <td>{{$dados->prazo_solucao}}</td>
+                            <td colspan="3" style="background-color: #0b8345; color: white">Status da Manifestação</td>
                         </tr>
-                        @if($dados->resp_publica == '1')
-                            <tr>
-                                <td colspan="3">{{$dados->resposta}} </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td colspan="3">{{$dados->resposta_ouvidor}} </td>
-                            </tr>
-                        @endif
                         <tr>
-                            <td colspan="2">Prazo de resposta: {{$dados->previsao}} </td>
-                            <td>Prazo para solução: {{$dados->prazo_solucao}} </td>
+                            <td ><b>Prazo de resposta:</b> {{$dados->previsao}} </td>
+                            <td colspan="2"><b>Prazo para solução:</b> {{$dados->prazo_solucao}} </td>
                         </tr>
+                        <tr>
+                            <td colspan="3"><b>Resposta(s):</b></td>
+                        </tr>
+                        @foreach($repostas as $reposta)
+                            @if($reposta->resp_publica == '1')
+                                <tr>
+                                    <td colspan="3"><b>Data: ({{$reposta->data_resposta}}) - </b>{{$reposta->resposta}} </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td colspan="3">{{$reposta->resposta_ouvidor}} </td>
+                                </tr>
+                            @endif
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

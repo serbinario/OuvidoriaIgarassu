@@ -473,6 +473,8 @@ class DemandaService
                 'ouv_demanda.email',
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
+                'ouv_demanda.cpf',
+                'ouv_demanda.id as demanda_id',
                 'ouv_pessoa.nome as perfil',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
@@ -494,7 +496,9 @@ class DemandaService
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id'
             ])->first();
-        
+
+
+
         return $demanda;
     }
 
