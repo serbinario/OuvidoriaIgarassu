@@ -494,7 +494,8 @@ class DemandaService
                 \DB::raw('DATE_FORMAT(ouv_demanda.data_da_ocorrencia,"%d/%m/%Y") as data_da_ocorrencia'),
                 'ouv_demanda.hora_da_ocorrencia',
                 'ouv_status.nome as status',
-                'ouv_status.id as status_id'
+                'ouv_status.id as status_id',
+                 'ouv_demanda.n_protocolo'
             ])->first();
 
 

@@ -78,7 +78,8 @@
                             {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
                         </tr>
                         <tr>
-                            <td colspan="3"><b>Situação:</b> @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
+                            <td><b>Situação:</b> @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
+                            <td colspan="2"><b>Protocolo:</b>  {{$dados->n_protocolo}} </td>
                         </tr>
                         <tr>
                             <td><b>Perfil:</b> {{$dados->perfil}} </td>
