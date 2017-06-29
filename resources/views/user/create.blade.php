@@ -162,7 +162,7 @@
 @section('javascript')
     <script type="text/javascript" class="init">
         $(document).ready(function () {
-            $("#tree-role, #tree-permission").tree();
+            //$("#tree-role, #tree-permission").tree();
 
             $('#user a').click(function (e) {
                 e.preventDefault();

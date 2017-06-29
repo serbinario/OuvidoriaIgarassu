@@ -609,8 +609,8 @@ class DemandaController extends Controller
         $dados = $request->request->all();
 
         //Tratando as datas
-        $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
-        $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
+        $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio']);
+        $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim']);
         $secretaria = isset($dados['secretaria']) ? $dados['secretaria'] : '';
 
         #Criando a consulta
