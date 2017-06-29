@@ -56,44 +56,5 @@
     <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
     <script src="{{ asset('/js/validacoes/subassunto.js')}}"></script>
-    <script type="text/javascript">
-
-        //Carregando os bairros
-        $(document).on('change', "#secretaria", function () {
-            //Removendo as assuntos
-            $('#assunto_id option').remove();
-
-            //Recuperando a secretaria
-            var secretaria = $(this).val();
-
-            if (secretaria !== "") {
-                var dados = {
-                    'table' : 'ouv_assunto',
-                    'field_search' : 'area_id',
-                    'value_search': secretaria,
-                };
-
-                jQuery.ajax({
-                    type: 'POST',
-                    url: '{{ route('seracademico.util.search')  }}',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{  csrf_token() }}'
-                    },
-                    data: dados,
-                    datatype: 'json'
-                }).done(function (json) {
-                    var option = "";
-
-                    option += '<option value="">Selecione um assunto</option>';
-                    for (var i = 0; i < json.length; i++) {
-                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
-                    }
-
-                    $('#assunto_id option').remove();
-                    $('#assunto_id').append(option);
-                });
-            }
-        });
-
-    </script>
+    <script src="{{ asset('/js/cadastros/subassunto.js')}}"></script>
 @stop

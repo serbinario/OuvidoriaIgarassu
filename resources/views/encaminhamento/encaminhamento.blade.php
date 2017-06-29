@@ -127,7 +127,7 @@
     {{-- --}}
     <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
-    <script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/encaminhados.js')}}"></script>
 
     <script type="text/javascript">
         // Cadastrar assunto
