@@ -90,9 +90,13 @@ class EncaminhamentoService
         $respostaOuvidor    = isset($data['resposta_ouvidor']) ? $data['resposta_ouvidor'] : "";
         $tipoResposta       = isset($data['tipo_resposta']) ? $data['tipo_resposta'] : "";
 
-        //Pegando um objeto da data de solução
-        $dataSolucao = \DateTime::createFromFormat('d/m/Y', $data['data']);
-        $dataSolucao = $dataSolucao->format('Y-m-d');
+        //Pegando um objeto da data de solução casa seja informada
+        if (isset($data['data']) && $data['data'] != "") {
+            $dataSolucao = \DateTime::createFromFormat('d/m/Y', $data['data']);
+            $dataSolucao = $dataSolucao->format('Y-m-d');
+        } else {
+            $dataSolucao = null;
+        }
 
         # Pegando a data atual
         $date  = new \DateTime('now');
@@ -103,7 +107,7 @@ class EncaminhamentoService
             $encaminhamento = $this->find($id);
 
             // Valida se a data de solução está sendo maior que a data do encaminhamento
-            if(strtotime($encaminhamento->data) >= strtotime($dataSolucao)) {
+            if((isset($data['data']) && $data['data'] != "") && strtotime($encaminhamento->data) >= strtotime($dataSolucao)) {
                 return false;
             }
 
@@ -193,7 +197,8 @@ class EncaminhamentoService
 
     /**
      * @param array $data
-     * @return array
+     * @return Encaminhamento
+     * @throws \Exception
      */
     public function encaminharStore(array $data) : Encaminhamento
     {
@@ -221,7 +226,7 @@ class EncaminhamentoService
         # Pegando a data de previsão
         $previsao = ValidarDataDePrevisao::getResult($date, $prioridade->dias);
 
-        # preenchendo os dados para o reecaminhamento
+        # preenchendo os dados para o encaminhamento
         $data['data'] = $dataAtual;
         $data['previsao'] = $previsao;
         $data['status_id'] = 1;
@@ -270,8 +275,72 @@ class EncaminhamentoService
     }
 
     /**
+     * @param array $data
+     * @return Encaminhamento
+     * @throws \Exception
+     */
+    public function encaminharAjax(array $data) : Encaminhamento
+    {
+        $date  = new \DateTime('now');
+        $date->setTimezone( new \DateTimeZone('BRT') );
+        $dataAtual = $date->format('Y-m-d');
+        $this->anoAtual = $date->format('Y');
+
+        #Pegando os dados da prieoridade selecioanda
+        $prioridade = Prioridade::where('id', "=", $data['prioridade_id'])->first();
+
+        # Pegando a data de previsão
+        $previsao = ValidarDataDePrevisao::getResult($date, $prioridade->dias);
+
+        # preenchendo os dados para o encaminhamento
+        $data['data'] = $dataAtual;
+        $data['previsao'] = $previsao;
+        $data['status_id'] = 4;
+        $data['user_id'] = $this->user->id;
+        $data['prioridade_id'] = $prioridade->id;
+        $data['resposta'] = $data['comentario'];
+        $data['resp_publica'] = '1';
+
+        #Salvando o registro pincipal
+        $encaminhamento =  $this->repository->create($data);
+
+        // Alterando a situação da demanda para reecaminhado e editando algumas informações
+        $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
+
+        # Inserinfo o subassunto caso seja informádo no encaminhamento
+        if ($data['subassunto_id'] != "") {
+            $demanda->subassunto_id = $data['subassunto_id'];
+        }
+
+        //recupera o maior código ja registrado
+        $codigo = \DB::table('ouv_demanda')
+            ->where('ouv_demanda.codigo', 'like', '%' . $this->anoAtual)
+            ->max('codigo');
+
+        // Gerando o código da manifestação
+        $codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
+        $codigoAtual = $codigo != null ? substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
+        $this->ultimoAno = substr($codigo, -4);
+
+        #Setando o código na manifestação
+        $demanda->codigo = $this->tratarCodigo($codigoAtual);
+
+        $demanda->status_id = 4;
+        $demanda->user_id = $this->user->id;
+        $demanda->save();
+
+        #Verificando se foi criado no banco de dados
+        if(!$encaminhamento) {
+            throw new \Exception('Ocorreu um erro ao cadastrar!');
+        }
+
+        #Retorno
+        return $encaminhamento;
+    }
+
+    /**
      * @param $id
-     * @param $status_exter
+     * @param null $status_externo_id
      * @return array
      * @throws \Exception
      */

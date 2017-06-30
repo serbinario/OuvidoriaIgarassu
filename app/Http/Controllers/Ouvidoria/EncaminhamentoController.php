@@ -349,8 +349,13 @@ class EncaminhamentoController extends Controller
             #Carregando os dados para o cadastro
             $loadFields = $this->service->load($this->loadFields);
 
+            // Pegando o relato da demanda
+            $manifestacao = \DB::table('ouv_demanda')
+                ->where('id', $id)
+                ->select(['relato'])->first();
+
             #retorno para view
-            return view('encaminhamento.encaminhamento', compact('id','loadFields'));
+            return view('encaminhamento.encaminhamento', compact('id','loadFields', 'manifestacao'));
         } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
@@ -376,8 +381,8 @@ class EncaminhamentoController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
+ * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+ */
     public function encaminharStore(Request $request)
     {
         try {
@@ -397,6 +402,25 @@ class EncaminhamentoController extends Controller
 
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function encaminharAjax(Request $request)
+    {
+        try {
+            #Recuperando os dados da requisição
+            $data = $request->all();
+
+            #Executando a ação
+            $returno = $this->service->encaminharAjax($data);
+
+            #Retorno para a view
+            return \Illuminate\Support\Facades\Response::json(['success' => true]);
+        } catch (\Throwable $e) {
+            return \Illuminate\Support\Facades\Response::json(['error' => $e->getMessage()]);
         }
     }
 

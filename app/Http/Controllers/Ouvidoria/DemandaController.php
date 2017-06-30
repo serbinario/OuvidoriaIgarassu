@@ -136,15 +136,23 @@ class DemandaController extends Controller
     {
         $dados = $this->service->detalheDaDemanda($request);
 
-        $repostas = \DB::table('ouv_encaminhamento')
+        $encaminhamentos = \DB::table('ouv_encaminhamento')
+            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)->select([
                 'resposta',
                 'resposta_ouvidor',
                 'resp_publica',
+                'ouv_status.nome as status',
                 \DB::raw('DATE_FORMAT(data_resposta,"%d/%m/%Y") as data_resposta'),
+                \DB::raw('DATE_FORMAT(data,"%d/%m/%Y") as data'),
+                'ouv_area.nome as secretaria',
+                'ouv_area.id as secretaria_id',
+                'ouv_destinatario.nome as destino',
             ])->get();
 
-        return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'repostas'));
+        return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
     }
 
     /**
@@ -317,6 +325,7 @@ class DemandaController extends Controller
                     #condição
                     $query->where(function ($where) use ($search) {
                         $where->orWhere('ouv_demanda.codigo', 'like', "%$search%")
+                            ->orWhere('ouv_demanda.n_protocolo', 'like', "%$search%")
                             ->orWhere('ouv_prioridade.nome', 'like', "%$search%")
                             ->orWhere('ouv_informacao.nome', 'like', "%$search%")
                             ->orWhere('ouv_tipo_demanda.nome', 'like', "%$search%")
