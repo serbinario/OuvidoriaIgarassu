@@ -59,75 +59,106 @@
         @if(isset($dados))
             <div class="col-sm-5 col-md-10 col-md-offset-1">
                 <br />
-                <div class="table-responsive">
-                    <table class="table compact table-condensed">
-                        <tbody>
-                        {{--<tr>
-                            <td colspan="3" style="background-color: #0b8345; color: white">Identificação</td>
-                        </tr>--}}
-                        <tr>
-                            <td colspan="3" style="background-color: #0b8345; color: white">Dados do manifestante</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Nome:</b> @if($dados->sigilo_id == '1') {{$dados->nome}} @else
-                                    Sigiloso @endif  </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><b>CPF:</b> @if($dados->sigilo_id == '1') {{$dados->cpf}} @endif   </td>
-                            <td><b>Idade:</b> @if($dados->sigilo_id == '1')  {{$dados->idade}} @endif </td>
-                            {{--<td>Escolaridade: {{$dados->escolaridade}} </td>--}}
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="background-color: #0b8345; color: white">Dados da manifestação</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Sigilo:</b> {{$dados->sigilo}} </td>
-                            {{--<td>Anônimo: {{$dados->anonimo}} </td>--}}
-                        </tr>
-                        <tr>
-                            <td><b>Situação:</b> @if($dados->status_id == '6') {{$dados->status}} @else AGUARDANDO RESPOSTA @endif </td>
-                            <td colspan="2"><b>Protocolo:</b>  {{$dados->n_protocolo}} </td>
-                        </tr>
-                        <tr>
-                            <td><b>Perfil:</b> {{$dados->perfil}} </td>
-                            <td colspan="2"><b>Tipo da manifestação:</b> {{$dados->informacao}} </td>
-                            {{--<td>Data/Hora da ocorrência: <br /> {{$dados->data_da_ocorrencia}} - {{$dados->hora_da_ocorrencia}} </td>--}}
-                        </tr>
-                        <tr>
-                            <td><b>Secretaria:</b> {{$dados->area}} </td>
-                            <td><b>Assunto:</b> {{$dados->assunto}} </td>
-                            <td><b>Subassunto:</b> {{$dados->subassunto}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Relato:</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">{{$dados->relato}} </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="background-color: #0b8345; color: white">Status da Manifestação</td>
-                        </tr>
-                        <tr>
-                            <td ><b>Prazo de resposta:</b> {{$dados->previsao}} </td>
-                            <td colspan="2"><b>Prazo para solução:</b> {{$dados->prazo_solucao}} </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Resposta(s):</b></td>
-                        </tr>
-                        @foreach($repostas as $reposta)
-                            @if($reposta->resp_publica == '1')
-                                <tr>
-                                    <td colspan="3"><b>Data: ({{$reposta->data_resposta}}) <br/> </b>{{$reposta->resposta}} </td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td colspan="3">{{$reposta->resposta_ouvidor}} </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                        </tbody>
-                    </table>
+                {{--Painel 1--}}
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Dados do manifestante</div>
+
+                    <!-- List group -->
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <b>Nome:</b> @if($dados->sigilo_id == '1') {{$dados->nome}} @else
+                                Sigiloso @endif
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>CPF:</b> @if($dados->sigilo_id == '1') {{$dados->cpf}} @endif
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Idade:</b> @if($dados->sigilo_id == '1')  {{$dados->idade}} @endif
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+
+                {{--Painel 2--}}
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Dados da manifestação</div>
+
+                    <!-- List group -->
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>Sigilo:</b> {{$dados->sigilo}}
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Protocolo:</b>  {{$dados->n_protocolo}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>Perfil:</b> {{$dados->perfil}}
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Tipo da manifestação:</b> {{$dados->informacao}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>Assunto:</b> {{$dados->assunto}}
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Subassunto:</b> {{$dados->subassunto}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Relato: </b> {{$dados->relato}}
+                        </li>
+                    </ul>
+                </div>
+
+                {{--Painel 1--}}
+                <div class="panel panel-primary">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Status da Manifestação</div>
+
+                    <!-- List group -->
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>Prazo de resposta:</b> {{$dados->previsao}}
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Prazo para solução:</b> {{$dados->prazo_solucao}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <center><b>Histórico das situações da manifestação </b></center>
+                        </li>
+                        @foreach($encaminhamentos as $encaminhamento)
+                            <li class="list-group-item">
+                                <span>{{$dados->data_demanda}} - <b> Recebimento da manifestação </b></span> <br />
+                                <span>{{$encaminhamento->data}} - <b>Encaminhada para
+                                    @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
+                                    @else {{$encaminhamento->secretaria}} @endif </b> </span> ({{$encaminhamento->status}}) <br />
+                                <span>{{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> <br />
+                                    @if($encaminhamento->resp_publica == '1') {{$encaminhamento->resposta}} @else {{$encaminhamento->resposta_ouvidor}} @endif</span> <br />
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
             </div>
         @endif
     </div>

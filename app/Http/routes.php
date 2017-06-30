@@ -46,6 +46,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('reencaminarStore', ['as' => 'reencaminarStore', 'uses' => 'Ouvidoria\EncaminhamentoController@reencaminarStore']);
                 Route::get('encaminhar/{id}', ['as' => 'encaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminhar']);
                 Route::post('encaminharStore', ['as' => 'encaminharStore', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminharStore']);
+                Route::post('encaminharAjax', ['as' => 'encaminharAjax', 'uses' => 'Ouvidoria\EncaminhamentoController@encaminharAjax']);
                 Route::get('finalizar/{id}', ['as' => 'finalizar', 'uses' => 'Ouvidoria\EncaminhamentoController@finalizar']);
                 Route::post('prorrogarPrazo', ['as' => 'prorrogarPrazo', 'uses' => 'Ouvidoria\EncaminhamentoController@prorrogarPrazo']);
                 Route::post('prorrogarPrazoSolucao', ['as' => 'prorrogarPrazoSolucao', 'uses' => 'Ouvidoria\EncaminhamentoController@prorrogarPrazoSolucao']);

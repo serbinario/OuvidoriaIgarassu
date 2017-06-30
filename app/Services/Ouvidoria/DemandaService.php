@@ -491,7 +491,7 @@ class DemandaService
                 'escolaridade.nome as escolaridade',
                 'ouv_demanda.exclusividade_sus_id',
                 'ouv_tipo_demanda.nome as tipo_demanda',
-                \DB::raw('DATE_FORMAT(ouv_demanda.data_da_ocorrencia,"%d/%m/%Y") as data_da_ocorrencia'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data_demanda'),
                 'ouv_demanda.hora_da_ocorrencia',
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
