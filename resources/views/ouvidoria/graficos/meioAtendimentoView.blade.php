@@ -87,8 +87,6 @@
 @stop
 
 @section('javascript')
-    <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
-    <script src="{{ asset('/js/plugins/exporting.js')  }}"></script>
     <script src="{{ asset('/js/plugins/highcharts_theme.js')  }}"></script>
     <script src="{{ asset('/js/charts/chart_meio_de_registro.js')  }}"></script>
 @stop

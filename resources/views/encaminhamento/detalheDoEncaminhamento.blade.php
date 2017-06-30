@@ -519,17 +519,6 @@
 @stop
 
 @section('javascript')
-    {{--Mensagens personalizadas--}}
-    <script type="text/javascript" src="{{ asset('/dist/js/messages_pt_BR.js')  }}"></script>
-
-    {{-- --}}
-    <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
-    <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
-    <script src="{{ asset('/js/validacoes/encaminhados.js')}}"></script>
-    <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
-    <script src="{{ asset('/js/validacoes/modal_responder_ouvidor.js')}}"></script>
-    <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_manifestacao.js')}}"></script>
-    <script src="{{ asset('/js/demanda/detalhe_da_manifestacao.js')}}"></script>
     <script type="text/javascript">
 
         idDemanda = "{{$detalheEncaminhamento->demanda_id}}";

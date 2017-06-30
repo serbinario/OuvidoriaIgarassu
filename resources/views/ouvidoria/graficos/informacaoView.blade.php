@@ -87,8 +87,5 @@
 @stop
 
 @section('javascript')
-    <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
-    <script src="{{ asset('/js/plugins/exporting.js')  }}"></script>
-    <script src="{{ asset('/js/plugins/highcharts_theme.js')  }}"></script>
     <script src="{{ asset('/js/charts/chart_classificacao_manifestacao.js')  }}"></script>
 @stop
