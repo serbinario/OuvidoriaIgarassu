@@ -82,6 +82,3 @@
         </section>
     </div>
 @stop
-@section('javascript')
-    <script src="{{ asset('/js/reports/report_comunidade.js')  }}"></script>
-@stop

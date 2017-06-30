@@ -316,7 +316,3 @@
         </section>
     </div>
 @stop
-
-@section('javascript')
-    <script src="{{ asset('/js/tabelas/tabela_assuntos.js')  }}"></script>
-@stop

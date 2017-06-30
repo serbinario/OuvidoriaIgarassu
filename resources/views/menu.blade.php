@@ -18,7 +18,6 @@
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/select2-bootstrap-theme/dist/select2-bootstrap.min.css')}}" rel="stylesheet"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css')}}" rel="stylesheet"/>
-        <link type="text/css" rel="stylesheet" href="{{ asset('/dist/css/validate.css') }}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{{ asset('/css/plugins/toastr/toastr.min.css')}}">
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/chosen/chosen.css') }}" >
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/summernote/dist/summernote.css') }}">
@@ -287,6 +286,40 @@
     {{--<script src="{{ asset('/js/laroute.js') }}"></script>--}}
     <script src="{{ asset('/lib/chosen/chosen.jquery.js') }}"></script>
     <script type="text/javascript" src={{ asset('/dist/js/app.js') }}></script>
+
+    {{--Mensagens personalizadas--}}
+    <script type="text/javascript" src="{{ asset('/dist/js/messages_pt_BR.js')  }}"></script>
+
+    {{-- Js para as validações do formulário  --}}
+    <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
+
+    {{-- Importes da página de detalhe de encaminhamento  --}}
+    <script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/modal_responder_ouvidor.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_manifestacao.js')}}"></script>
+    <script src="{{ asset('/js/demanda/detalhe_da_manifestacao.js')}}"></script>
+
+    {{-- Importes da página de encaminhamento --}}
+    <script src="{{ asset('/js/encaminhamento/create_assunto_subassunto_ajax.js')}}"></script>
+    <script src="{{ asset('/js/encaminhamento/encaminhamento.js')}}"></script>
+
+    {{-- Importes da página de create e update e index de demanda --}}
+    <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
+    <script src="{{ asset('/js/demanda/create_demanda.js')}}"></script>
+    <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>
+
+    {{-- Importes da página gráficos --}}
+    <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
+    <script src="{{ asset('/js/plugins/exporting.js')  }}"></script>
+
+    {{-- Importes das página de relatórios --}}
+    <script src="{{ asset('/js/reports/report_comunidade.js')  }}"></script>
+
+    {{-- Importes das página de tabelas --}}
+    <script src="{{ asset('/js/tabelas/tabela_assuntos.js')  }}"></script>
+
 @else
     <script type="text/javascript" src="{{ asset('/dist/prod.min.js') }}"></script>
 @endif
