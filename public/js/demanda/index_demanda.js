@@ -62,7 +62,7 @@ $(document).ready(function(){
             }
         },
         ajax: {
-            url: "/seracademico/ouvidoria/demanda/grid",
+            url: "/index.php/seracademico/ouvidoria/demanda/grid",
             method: 'POST',
             data: function (d) {
                 d.data_inicio = $('input[name=data_inicio]').val();

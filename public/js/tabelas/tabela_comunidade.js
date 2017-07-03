@@ -15,10 +15,7 @@ $(document).on('change', "#cidade", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/util/search",
-            headers: {
-            'X-CSRF-TOKEN': '{{  csrf_token() }}'
-        },
+            url: "/index.php/seracademico/util/search",
         data: dados,
             datatype: 'json'
     }).done(function (json) {

@@ -13,7 +13,7 @@ $(document).on('click', '#search', function(event){
     };
 
     $.ajax({
-        url: "/seracademico/ouvidoria/graficos/assuntoAjax",
+        url: "/index.php/seracademico/ouvidoria/graficos/assuntoAjax",
         type: 'POST',
         dataType: 'JSON',
         data: dados,

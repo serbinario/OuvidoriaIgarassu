@@ -24,7 +24,7 @@ $(document).on('change', "#secretaria", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/util/search",
+            url: "/index.php/seracademico/util/search",
             data: dados,
             datatype: 'json'
         }).done(function (json) {
@@ -49,7 +49,7 @@ function loadAssuntos(dados) {
 
     jQuery.ajax({
         type: 'POST',
-        url: "/seracademico/util/search",
+        url: "/index.php/seracademico/util/search",
         data: dados,
         datatype: 'json'
     }).done(function (json) {
@@ -93,7 +93,7 @@ function loadSubassuntos(dados) {
 
     jQuery.ajax({
         type: 'POST',
-        url: "/seracademico/util/search",
+        url: "/index.php/seracademico/util/search",
         data: dados,
         datatype: 'json'
     }).done(function (json) {
@@ -154,7 +154,7 @@ $(document).on('click', "#respManifestacaoAjax", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/ouvidoria/encaminhamento/encaminharAjax",
+            url: "/index.php/seracademico/ouvidoria/encaminhamento/encaminharAjax",
             data: dados,
             datatype: 'json'
         }).done(function (json) {
