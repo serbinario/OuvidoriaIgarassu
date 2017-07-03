@@ -62,7 +62,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#psf-grid').DataTable({
+            var tablePSF = $('#psf-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],

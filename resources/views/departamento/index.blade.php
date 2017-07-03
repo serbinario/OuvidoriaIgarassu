@@ -64,7 +64,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#departamento-grid').DataTable({
+            var tableDepartamento = $('#departamento-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],

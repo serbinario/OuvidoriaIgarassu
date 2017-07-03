@@ -67,7 +67,7 @@
 
 @section('javascript')
     <script type="text/javascript">
-        var table = $('#user-grid').DataTable({
+        var tableUser = $('#user-grid').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{!! route('seracademico.user.grid') !!}",

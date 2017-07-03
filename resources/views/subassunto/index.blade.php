@@ -66,7 +66,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#subassunto-grid').DataTable({
+            var tableSubassunto = $('#subassunto-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],

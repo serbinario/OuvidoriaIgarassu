@@ -64,7 +64,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#melhoria-grid').DataTable({
+            var tableMelhoria = $('#melhoria-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],

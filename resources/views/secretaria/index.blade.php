@@ -64,7 +64,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#secretaria-grid').DataTable({
+            var tableSecretaria = $('#secretaria-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],

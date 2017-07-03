@@ -64,7 +64,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var table = $('#comunidade-grid').DataTable({
+            var tableComunidade = $('#comunidade-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],
