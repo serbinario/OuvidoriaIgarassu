@@ -25,7 +25,21 @@ var pathScripts = [
     'public/lib/jquery-mask-plugin/dist/jquery.mask.js',
     'public/lib/jquery-placeholder/jquery.placeholder.min.js',
     'public/lib/chosen/chosen.jquery.js',
-    'public/dist/js/app.js'
+    'public/dist/js/app.js',
+    'public/js/validacoes/encaminhamento.js',
+    'public/js/validacoes/reencaminhamento.js',
+    'public/js/validacoes/modal_responder_ouvidor.js',
+    'public/js/validacoes/modal_prorrogar_prazo_manifestacao.js',
+    'public/js/demanda/detalhe_da_manifestacao.js',
+    'public/js/encaminhamento/create_assunto_subassunto_ajax.js',
+    'public/js/encaminhamento/encaminhamento.js',
+    'public/js/validacoes/demanda.js',
+    'public/js/demanda/create_demanda.js',
+    'public/js/demanda/index_demanda.js',
+    'public/js/plugins/highcharts.js',
+    'public/js/plugins/exporting.js',
+    'public/js/reports/report_comunidade.js',
+    'public/js/tabelas/tabela_assuntos.js'
 ];
 
 var pathStyles = [
