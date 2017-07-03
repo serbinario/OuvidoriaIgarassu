@@ -17,7 +17,7 @@ $(document).on('change', "#secretaria", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/util/search",
+            url: "/index.php/seracademico/util/search",
             data: dados,
             datatype: 'json'
         }).done(function (json) {
@@ -42,7 +42,7 @@ function loadAssuntos(dados) {
 
     jQuery.ajax({
         type: 'POST',
-        url: "/seracademico/util/search",
+        url: "/index.php/seracademico/util/search",
         headers: {
             'X-CSRF-TOKEN': '{{  csrf_token() }}'
         },
@@ -89,10 +89,7 @@ function loadSubassuntos(dados) {
 
     jQuery.ajax({
         type: 'POST',
-        url: "/seracademico/util/search",
-        headers: {
-            'X-CSRF-TOKEN': '{{  csrf_token() }}'
-        },
+        url: "/index.php/seracademico/util/search",
         data: dados,
         datatype: 'json'
     }).done(function (json) {
@@ -143,7 +140,7 @@ $(document).on('change', "#cidade", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/util/search",
+            url: "/index.php/seracademico/util/search",
             headers: {
                 'X-CSRF-TOKEN': '{{  csrf_token() }}'
             },

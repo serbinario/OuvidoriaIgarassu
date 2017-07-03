@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     jQuery.ajax({
         type: 'POST',
-        url: "/seracademico/ouvidoria/graficos/statusAjax",
+        url: "/index.php/seracademico/ouvidoria/graficos/statusAjax",
         datatype: 'json'
     }).done(function (json) {
         grafico1(json)
@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     jQuery.ajax({
         type: 'POST',
-        url: "/seracademico/ouvidoria/graficos/informacaoAjax",
+        url: "/index.php/seracademico/ouvidoria/graficos/informacaoAjax",
         datatype: 'json'
     }).done(function (json) {
         grafico2(json['dados'])
