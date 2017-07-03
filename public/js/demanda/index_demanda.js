@@ -2,7 +2,7 @@
  * Created by fabio_000 on 29/06/2017.
  */
 
-// Variável global para armazenar o status da demanda para filtro da grid
+// Variï¿½vel global para armazenar o status da demanda para filtro da grid
 var statusGet;
 
 $(document).ready(function(){
@@ -92,7 +92,7 @@ $(document).ready(function(){
         ]
     });
 
-    //Função do submit do search da grid principal
+    //Funï¿½ï¿½o do submit do search da grid principal
     $('#search').click(function(e) {
         statusGet = "0";
         tableDemanda.draw();
@@ -123,7 +123,7 @@ $(document).on('click', 'a.excluir', function (event) {
     var url = $(this).attr('href');
     swal({
         title: "Alerta",
-        text: "Tem certeza da exclusão da demanda?",
+        text: "Tem certeza da exclusï¿½o da demanda?",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "Sim!",
