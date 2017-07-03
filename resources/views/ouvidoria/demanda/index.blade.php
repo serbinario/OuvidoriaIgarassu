@@ -169,6 +169,7 @@
 @stop
 
 @section('javascript')
+    <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>
     <script type="text/javascript">
         //Pega o status por acesso a página via get
         statusGet = '{{$status}}';

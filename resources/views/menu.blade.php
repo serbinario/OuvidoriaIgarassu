@@ -295,20 +295,20 @@
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
 
     {{-- Importes da página de detalhe de encaminhamento  --}}
-    <script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
+    {{--<script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
     <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
     <script src="{{ asset('/js/validacoes/modal_responder_ouvidor.js')}}"></script>
     <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_manifestacao.js')}}"></script>
-    <script src="{{ asset('/js/demanda/detalhe_da_manifestacao.js')}}"></script>
+    <script src="{{ asset('/js/demanda/detalhe_da_manifestacao.js')}}"></script>--}}
 
     {{-- Importes da página de encaminhamento --}}
-    <script src="{{ asset('/js/encaminhamento/create_assunto_subassunto_ajax.js')}}"></script>
-    <script src="{{ asset('/js/encaminhamento/encaminhamento.js')}}"></script>
+    {{--<script src="{{ asset('/js/encaminhamento/create_assunto_subassunto_ajax.js')}}"></script>
+    <script src="{{ asset('/js/encaminhamento/encaminhamento.js')}}"></script>--}}
 
     {{-- Importes da página de create e update e index de demanda --}}
-    <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
+    {{--<script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
     <script src="{{ asset('/js/demanda/create_demanda.js')}}"></script>
-    <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>
+    <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>--}}
 
     {{-- Importes da página gráficos --}}
     <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
