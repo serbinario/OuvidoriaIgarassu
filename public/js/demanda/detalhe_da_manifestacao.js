@@ -30,7 +30,7 @@ $(document).ready(function(){
         bLengthChange: false,
         order: [[ 1, "asc" ]],
         ajax: {
-            url: "/seracademico/ouvidoria/encaminhamento/historicoGrid",
+            url: "/index.php/seracademico/ouvidoria/encaminhamento/historicoGrid",
             method: 'POST',
             data: {'id' : idDemanda},
         },
@@ -75,7 +75,7 @@ $('#btnFinalizarManifestacao').click(function() {
 
     var statusExterno = $('#status_externo_id option:selected').val();
 
-    location.href = "/seracademico/ouvidoria/encaminhamento/finalizar/"+idEncaminhamento+"?statusExterno="+statusExterno;
+    location.href = "/index.php/seracademico/ouvidoria/encaminhamento/finalizar/"+idEncaminhamento+"?statusExterno="+statusExterno;
 
 });
 
@@ -96,7 +96,7 @@ $(document).on('change', "#secretaria", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/util/search",
+            url: "/index.php/seracademico/util/search",
             data: dados,
             datatype: 'json'
     }).done(function (json) {
@@ -122,7 +122,7 @@ var table2 = $('#demandas-agrupadas-grid').DataTable({
     bLengthChange: false,
     order: [[ 1, "asc" ]],
     ajax: {
-        url: "/seracademico/ouvidoria/encaminhamento/demandasAgrupadasGrid",
+        url: "/index.php/seracademico/ouvidoria/encaminhamento/demandasAgrupadasGrid",
         method: 'POST',
         data: {'id' : idDemanda},
     },
@@ -153,7 +153,7 @@ $(document).on('click', "#agrupar-demanda", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/ouvidoria/encaminhamento/agruparDemanda",
+            url: "/index.php/seracademico/ouvidoria/encaminhamento/agruparDemanda",
             data: dados,
             datatype: 'json'
     }).done(function (json) {
@@ -185,7 +185,7 @@ $(document).on('click', 'a.excluir-agrupamento', function (event) {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/ouvidoria/encaminhamento/deleteAgrupamento",
+            url: "/index.php/seracademico/ouvidoria/encaminhamento/deleteAgrupamento",
             data: {'id' : id},
         datatype: 'json'
     }).done(function (json) {

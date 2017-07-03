@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $.ajax({
-        url: "/seracademico/ouvidoria/graficos/demandasAjax",
+        url: "/index.php/seracademico/ouvidoria/graficos/demandasAjax",
         type: 'POST',
         dataType: 'JSON',
         success: function (json) {
@@ -26,7 +26,7 @@ $(document).on('click', '#search', function(event){
     };
 
     $.ajax({
-        url: "/seracademico/ouvidoria/graficos/demandasAjax",
+        url: "/index.php/seracademico/ouvidoria/graficos/demandasAjax",
         type: 'POST',
         dataType: 'JSON',
         data: dados,

@@ -129,8 +129,3 @@
     @include('modals.modal_cadastro_assunto')
     @include('modals.modal_cadastro_subassunto')
 @stop
-
-@section('javascript')
-    <script src="{{ asset('/js/encaminhamento/create_assunto_subassunto_ajax.js')}}"></script>
-    <script src="{{ asset('/js/encaminhamento/encaminhamento.js')}}"></script>
-@stop

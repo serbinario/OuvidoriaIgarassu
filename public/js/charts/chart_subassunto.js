@@ -13,7 +13,7 @@ $(document).on('click', '#search', function(event){
     };
 
     $.ajax({
-        url: "/seracademico/ouvidoria/graficos/subassuntoAjax",
+        url: "/index.php/seracademico/ouvidoria/graficos/subassuntoAjax",
         type: 'POST',
         dataType: 'JSON',
         data: dados,
@@ -87,7 +87,7 @@ $(document).on('change', "#secretaria", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/util/search",
+            url: "/index.php/seracademico/util/search",
             headers: {
             'X-CSRF-TOKEN': '{{  csrf_token() }}'
         },

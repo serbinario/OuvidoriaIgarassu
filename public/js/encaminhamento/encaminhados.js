@@ -9,7 +9,7 @@ $(document).ready(function(){
         bLengthChange: false,
         order: [[ 1, "asc" ]],
         ajax: {
-            url: "/seracademico/ouvidoria/encaminhamento/encaminhadosGrid",
+            url: "/index.php/seracademico/ouvidoria/encaminhamento/encaminhadosGrid",
             method: 'POST',
             data: function (d) {
                 d.status = $('select[name=status] option:selected').val();

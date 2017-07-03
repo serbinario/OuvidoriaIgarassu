@@ -13,7 +13,7 @@ $(document).on('click', "#salvar-assunto", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/ouvidoria/assunto/storeAjax",
+            url: "/index.php/seracademico/ouvidoria/assunto/storeAjax",
             data: dados,
             datatype: 'json'
         }).done(function (json) {
@@ -55,7 +55,7 @@ $(document).on('click', "#salvar-subassunto", function () {
 
         jQuery.ajax({
             type: 'POST',
-            url: "/seracademico/ouvidoria/subassunto/storeAjax",
+            url: "/index.php/seracademico/ouvidoria/subassunto/storeAjax",
             data: dados,
             datatype: 'json'
         }).done(function (json) {
