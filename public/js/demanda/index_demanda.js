@@ -7,7 +7,7 @@ var statusGet;
 
 $(document).ready(function(){
 
-    function format(d) {
+    function formatDemanda(d) {
 
         var html = "";
 
@@ -51,7 +51,7 @@ $(document).ready(function(){
         return html;
     }
 
-    var table = $('#demanda-grid').DataTable({
+    var tableDemanda = $('#demanda-grid').DataTable({
         processing: true,
         serverSide: true,
         order: [[ 1, "asc" ]],
@@ -95,14 +95,14 @@ $(document).ready(function(){
     //Função do submit do search da grid principal
     $('#search').click(function(e) {
         statusGet = "0";
-        table.draw();
+        tableDemanda.draw();
         e.preventDefault();
     });
 
     // Add event listener for opening and closing details
     $('#demanda-grid tbody').on('click', 'td.details-control', function () {
         var tr = $(this).closest('tr');
-        var row = table.row( tr );
+        var row = tableDemanda.row( tr );
 
         if ( row.child.isShown() ) {
             // This row is already open - close it
@@ -111,7 +111,7 @@ $(document).ready(function(){
         }
         else {
             // Open this row
-            row.child( format(row.data()) ).show();
+            row.child( formatDemanda(row.data()) ).show();
             tr.addClass('shown');
         }
     });
