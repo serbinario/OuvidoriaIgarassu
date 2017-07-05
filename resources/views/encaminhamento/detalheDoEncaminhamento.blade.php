@@ -64,15 +64,15 @@
                         <div class="col-lg-12 animated fadeInRight">
                             <div class="mail-box-header">
                                 <div class="pull-right tooltip-demo">
-                                    <button type="button"  @if($detalheEncaminhamento->status_id == '6') disabled @endif
+                                    {{--<button type="button"  @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                             class="btn btn-default btn-icon-text waves-effect"
                                             data-toggle="modal" data-target="#modal_responder_encaminhamento">
                                         <i class="zmdi zmdi-check"></i> Responder
-                                    </button>
+                                    </button>--}}
                                 </div>
-                                <h2>
+                                {{--<h2>
                                     {{$detalheEncaminhamento->area}} - {{$detalheEncaminhamento->destinatario}}
-                                </h2>
+                                </h2>--}}
 
                                 <div class="mail-tools tooltip-demo m-t-md">
                                     <h3>

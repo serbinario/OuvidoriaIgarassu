@@ -421,7 +421,7 @@ class DemandaService
      * @param $request
      * @return mixed
      */
-    public function detalheDaDemanda($request)
+    public function detalheDaDemanda($protocolo)
     {
         $demanda = \DB::table('ouv_demanda')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
@@ -453,7 +453,7 @@ class DemandaService
             ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
-            ->where('ouv_demanda.n_protocolo', '=', $request->get('protocolo'))
+            ->where('ouv_demanda.n_protocolo', '=', $protocolo)
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
