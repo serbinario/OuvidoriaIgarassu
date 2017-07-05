@@ -129,11 +129,18 @@
                 {{--Painel 1--}}
                 <div class="panel panel-primary">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">Status da Manifestação</div>
+                    <div class="panel-heading">Histórico das situações da manifestação</div>
 
                     <!-- List group -->
                     <ul class="list-group">
                         <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span>{{$dados->data_demanda}} - <b> Recebimento da manifestação </b></span>
+                                </div>
+                            </div>
+                        </li>
+                        {{--<li class="list-group-item">
                             <div class="row">
                                 <div class="col-md-6">
                                     <b>Prazo de resposta:</b> {{$dados->previsao}}
@@ -142,13 +149,9 @@
                                     <b>Prazo para solução:</b> {{$dados->prazo_solucao}}
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <center><b>Histórico das situações da manifestação </b></center>
-                        </li>
+                        </li>--}}
                         @foreach($encaminhamentos as $encaminhamento)
                             <li class="list-group-item">
-                                <span>{{$dados->data_demanda}} - <b> Recebimento da manifestação </b></span> <br />
                                 <span>{{$encaminhamento->data}} - <b>Encaminhada para
                                     @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
                                     @else {{$encaminhamento->secretaria}} @endif </b> </span> ({{$encaminhamento->status}}) <br />

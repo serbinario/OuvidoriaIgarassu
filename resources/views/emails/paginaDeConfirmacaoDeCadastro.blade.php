@@ -12,7 +12,7 @@
 <p style="text-align: justify">
     Sua manifestação foi registrado com o protocolo nº {{$demanda->n_protocolo}} em {{ $data->format("d/m/Y") }}
     às {{ $data->format("H:i:s") }} horas e será encaminhada para providência. Para consultar o andamento da sua
-    manifestação acessando o <a href="{{$configuracaoGeral->consulta_externa}}">Link</a>, digitando o número do protocolo.
+    manifestação acessando o <a href="{{route('getDemanda', ['protocolo' => $demanda->n_protocolo])}}">Link</a>, digitando o número do protocolo.
 </p>
 
 <p style="text-align: justify">

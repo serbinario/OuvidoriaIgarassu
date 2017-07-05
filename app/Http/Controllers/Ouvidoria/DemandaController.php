@@ -132,9 +132,14 @@ class DemandaController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getDemanda(Request $request)
+    public function getDemanda(Request $request, $protocolo)
     {
-        $dados = $this->service->detalheDaDemanda($request);
+
+        // Pegando o número do protocolo
+        $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
+
+        // Consulta os dados da demanda
+        $dados = $this->service->detalheDaDemanda($protocolo);
 
         $encaminhamentos = \DB::table('ouv_encaminhamento')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
