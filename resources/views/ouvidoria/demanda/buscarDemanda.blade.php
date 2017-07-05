@@ -143,20 +143,19 @@
                     </ul>
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        @foreach($encaminhamentos as $encaminhamento)
+                        @foreach($encaminhamentos as $chave => $encaminhamento)
                             <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
+                                <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
                                             {{$encaminhamento->data}} - <b>Encaminhada para
                                                 @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
                                                 @else {{$encaminhamento->secretaria}} @endif </b>
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div id="collapse-{{$chave}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{$chave}}">
                                     <ul class="list-group">
-
                                         <li class="list-group-item">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -168,14 +167,24 @@
                                         @if($encaminhamento->data_resposta)
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <span>{{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> <br/>
+                                                    <div class="col-md-12">
+                                                        <span>{{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b>
                                                         @if($encaminhamento->resp_publica == '1')
                                                             {{$encaminhamento->resposta}}
                                                         @else
                                                             {{$encaminhamento->resposta_ouvidor}}
                                                         @endif
                                                         </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <b>Prazo de resposta:</b> {{$dados->previsao}}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <b>Prazo para solução:</b> {{$dados->prazo_solucao}}
                                                     </div>
                                                 </div>
                                             </li>
