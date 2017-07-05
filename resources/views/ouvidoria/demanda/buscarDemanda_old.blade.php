@@ -140,52 +140,28 @@
                                 </div>
                             </div>
                         </li>
-                    </ul>
-
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        @foreach($encaminhamentos as $encaminhamento)
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
-                                    <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            {{$encaminhamento->data}} - <b>Encaminhada para
-                                                @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
-                                                @else {{$encaminhamento->secretaria}} @endif </b>
-                                        </a>
-                                    </h4>
+                        {{--<li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b>Prazo de resposta:</b> {{$dados->previsao}}
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                    <ul class="list-group">
-
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <span><b> Situação </b> - ({{$encaminhamento->status}})</span>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        @if($encaminhamento->data_resposta)
-                                            <li class="list-group-item">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <span>{{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> <br/>
-                                                        @if($encaminhamento->resp_publica == '1')
-                                                            {{$encaminhamento->resposta}}
-                                                        @else
-                                                            {{$encaminhamento->resposta_ouvidor}}
-                                                        @endif
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endif
-                                    </ul>
+                                <div class="col-md-6">
+                                    <b>Prazo para solução:</b> {{$dados->prazo_solucao}}
                                 </div>
                             </div>
+                        </li>--}}
+                        @foreach($encaminhamentos as $encaminhamento)
+                            <li class="list-group-item">
+                                <span>{{$encaminhamento->data}} - <b>Encaminhada para
+                                    @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
+                                    @else {{$encaminhamento->secretaria}} @endif </b> </span> ({{$encaminhamento->status}}) <br />
+                                <span>{{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> <br />
+                                    @if($encaminhamento->resp_publica == '1') {{$encaminhamento->resposta}} @else {{$encaminhamento->resposta_ouvidor}} @endif</span> <br />
+                            </li>
                         @endforeach
-                    </div>
+                    </ul>
                 </div>
+
             </div>
         @endif
     </div>
