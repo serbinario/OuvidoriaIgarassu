@@ -338,7 +338,7 @@ class DemandaController extends Controller
                             ->orWhere('ouv_comunidade.nome', 'like', "%$search%")
                             ->orWhere('area_destino.nome', 'like', "%$search%")
                             ->orWhere('ouv_destinatario.nome', 'like', "%$search%")
-                        ;
+                            ->orWhere('ouv_demanda.relato', 'like', "%$search%");
                     });
 
                 }
