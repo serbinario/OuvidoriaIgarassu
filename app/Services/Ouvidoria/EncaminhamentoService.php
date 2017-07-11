@@ -300,6 +300,7 @@ class EncaminhamentoService
         $data['prioridade_id'] = $prioridade->id;
         $data['resposta'] = $data['comentario'];
         $data['resp_publica'] = '1';
+        $data['data_resposta'] = $dataAtual;
 
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
