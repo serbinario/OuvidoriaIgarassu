@@ -162,7 +162,7 @@ function data($dia, $mes, $ano, $semana) {
             <td><span><b>Interpretação da Manifestação pela ouvidoria</b></span></td>
         </tr>
         <tr>
-            <td rowspan="5"><p>{{ $demanda->parecer }}</p></td>
+            <td rowspan="5"><p>{{ $encaminhamento->parecer }}</p></td>
         </tr>
     </table>
 
