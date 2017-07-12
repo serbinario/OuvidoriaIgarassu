@@ -174,7 +174,7 @@
                                     <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $chave."a"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $chave."a"; ?>">
-                                                {{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> - <b>Prazo para solução:</b> {{$dados->prazo_solucao}}
+                                                {{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> - <b>Prazo para solução:</b> {{$encaminhamento->prazo_solucao}}
                                             </a>
                                         </h4>
                                     </div>
