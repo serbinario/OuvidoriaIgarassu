@@ -764,6 +764,7 @@ class DemandaController extends Controller
                 'bairros.nome as bairro',
                 'ouv_demanda.endereco',
                 'ouv_demanda.numero_end',
+                'ouv_demanda.id',
                 'ouv_demanda.fone',
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
@@ -779,7 +780,7 @@ class DemandaController extends Controller
             ])->first();
 
         $encaminhamento = \DB::table('ouv_encaminhamento')
-            ->where('ouv_encaminhamento.demanda_id', $rows->demanda_id)->select([
+            ->where('ouv_encaminhamento.demanda_id', $rows->id)->select([
                 'ouv_encaminhamento.parecer',
             ])->first();
 
