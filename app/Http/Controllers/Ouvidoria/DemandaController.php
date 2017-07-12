@@ -778,8 +778,13 @@ class DemandaController extends Controller
                 'ouv_area.id as area_id'
             ])->first();
 
+        $encaminhamento = \DB::table('ouv_encaminhamento')
+            ->where('ouv_encaminhamento.demanda_id', $rows->demanda_id)->select([
+                'ouv_encaminhamento.parecer',
+            ])->first();
+
         return \PDF::loadView('reports.cartaEncaminhamento', ['demanda' =>  $rows,
-            'configuracaoGeral' => $configuracaoGeral])->stream();
+            'configuracaoGeral' => $configuracaoGeral, 'encaminhamento' => $encaminhamento])->stream();
     }
 
     /**
