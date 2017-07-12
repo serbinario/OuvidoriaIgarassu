@@ -306,10 +306,16 @@
                                                         <td><b>Secretaria:</b></td>
                                                         <td colspan="2" style="width : 50%">{{ $detalheEncaminhamento->area }}</td>
                                                         <td><b>PRAZO PARA SOLUÇÃO:</b></td>
-                                                        <td style="width : 50%">{{ $detalheEncaminhamento->prazo_solucao }}</td>
+                                                        <td style="width : 50%">
+                                                            @if($detalheEncaminhamento->prazo_solucao)
+                                                                {{ $detalheEncaminhamento->prazo_solucao }}
+                                                            @elseif($encaminhamentoAnterior->prazo_solucao)
+                                                                {{  $encaminhamentoAnterior->prazo_solucao }}
+                                                            @endif
+                                                        </td>
                                                         <td>
                                                             @role('ouvidoria|admin')
-                                                                @if($detalheEncaminhamento->prazo_solucao)
+                                                                @if($detalheEncaminhamento->prazo_solucao || $encaminhamentoAnterior->prazo_solucao)
                                                                     <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                                             data-target="#modal-prorrogar-solucao-manifestacao"
                                                                             class="btn btn-sm btn-success waves-effect">
