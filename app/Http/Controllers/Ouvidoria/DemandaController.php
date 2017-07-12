@@ -142,19 +142,27 @@ class DemandaController extends Controller
         $dados = $this->service->detalheDaDemanda($protocolo);
 
         $encaminhamentos = \DB::table('ouv_encaminhamento')
+            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+                $join->on(
+                    'prazo_solucao.id', '=',
+                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
+                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                );
+            })
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)->select([
-                'resposta',
-                'resposta_ouvidor',
-                'resp_publica',
+                'ouv_encaminhamento.resposta',
+                'ouv_encaminhamento.resposta_ouvidor',
+                'ouv_encaminhamento.resp_publica',
                 'ouv_status.nome as status',
-                \DB::raw('DATE_FORMAT(data_resposta,"%d/%m/%Y") as data_resposta'),
-                \DB::raw('DATE_FORMAT(data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 'ouv_area.nome as secretaria',
                 'ouv_area.id as secretaria_id',
                 'ouv_destinatario.nome as destino',
+                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
             ])->get();
 
         return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
