@@ -256,6 +256,7 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_encaminhamento.encaminhado',
                 'ouv_encaminhamento.resposta',
+                'ouv_encaminhamento.resposta_ouvidor',
             ]);
         
         return Datatables::of($rows)->make(true);
