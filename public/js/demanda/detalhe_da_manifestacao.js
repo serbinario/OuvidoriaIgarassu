@@ -9,11 +9,17 @@ function format(d) {
     html += "<table class='table table-border'>";
     html += "<tbody>";
     html += "<tr>";
-    html += "<td class='info' style='width: 15%;'>Parecer</td><td>"+d.parecer+"</td>";
+    html += "<td class='info' style='width: 20%;'>Parecer</td><td>"+d.parecer+"</td>";
     html += "</tr>";
     html += "<tr>";
-    html += "<td class='info'>Resposta</td><td>"+d.resposta+"</td>";
+    html += "<td class='info'>Resposta secretaria</td><td>"+d.resposta+"</td>";
     html += "</tr>";
+    // Valida se tem reposta do ouvidor
+    if(d.resposta_ouvidor) {
+        html += "<tr>";
+        html += "<td class='info'>Resposta ouvidor</td><td>"+d.resposta_ouvidor+"</td>";
+        html += "</tr>";
+    }
     html += "</tbody>";
     html += "</table>";
 
