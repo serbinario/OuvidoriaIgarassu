@@ -108,8 +108,6 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
             ])->first();
 
-       // dd($encaminhamentoAnterior);
-
         return view('encaminhamento.detalheDoEncaminhamento',
             compact('detalheEncaminhamento', 'loadFields', 'respostasPassadas', 'encaminhamentoAnterior'));
     }
