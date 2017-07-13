@@ -169,7 +169,7 @@
 
                             </div>
 
-                            @if($encaminhamento->data_resposta)
+                            @if($encaminhamento->resp_publica == '1' || $encaminhamento->resposta_ouvidor)
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
                                         <h4 class="panel-title">

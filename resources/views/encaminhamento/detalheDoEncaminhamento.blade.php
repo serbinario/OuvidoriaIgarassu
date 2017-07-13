@@ -309,13 +309,13 @@
                                                         <td style="width : 50%">
                                                             @if($detalheEncaminhamento->prazo_solucao)
                                                                 {{ $detalheEncaminhamento->prazo_solucao }}
-                                                            @elseif($encaminhamentoAnterior->prazo_solucao)
+                                                            @elseif(isset($encaminhamentoAnterior->prazo_solucao) && $encaminhamentoAnterior->prazo_solucao)
                                                                 {{  $encaminhamentoAnterior->prazo_solucao }}
                                                             @endif
                                                         </td>
                                                         <td>
                                                             @role('ouvidoria|admin')
-                                                                @if($detalheEncaminhamento->prazo_solucao || $encaminhamentoAnterior->prazo_solucao)
+                                                                @if($detalheEncaminhamento->prazo_solucao || (isset($encaminhamentoAnterior->prazo_solucao) && $encaminhamentoAnterior->prazo_solucao))
                                                                     <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                                             data-target="#modal-prorrogar-solucao-manifestacao"
                                                                             class="btn btn-sm btn-success waves-effect">
