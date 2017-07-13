@@ -453,6 +453,7 @@ class DemandaService
             ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
+            ->leftJoin('ouv_status_externo', 'ouv_status_externo.id', '=', 'ouv_demanda.status_externo_id')
             ->where('ouv_demanda.n_protocolo', '=', $protocolo)
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
@@ -495,7 +496,8 @@ class DemandaService
                 'ouv_demanda.hora_da_ocorrencia',
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
-                 'ouv_demanda.n_protocolo'
+                 'ouv_demanda.n_protocolo',
+                'ouv_status_externo.nome as status_externo'
             ])->first();
 
 
