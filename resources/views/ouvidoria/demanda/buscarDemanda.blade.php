@@ -169,6 +169,7 @@
 
                             </div>
 
+                        {{-- collapse para respotas --}}
                             @if($encaminhamento->resp_publica == '1' || $encaminhamento->resposta_ouvidor)
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
@@ -201,7 +202,18 @@
                         @endforeach
                     </div>
 
-
+                    <!-- List group para demanda que for finalizada -->
+                    @if($encaminhamento->status_id == '6')
+                        <ul class="list-group" style="margin-top: -15px">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <b>Demanda finalizada como: </b> {{$dados->status_externo}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    @endif
 
                 </div>
             </div>
