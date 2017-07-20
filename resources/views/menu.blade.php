@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>(LOCAL, ANIMAL!)SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</title>
+    <title>SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</title>
 
     @if(config('app.debug'))
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/fullcalendar/dist/fullcalendar.min.css') }}"  media="screen,projection"/>

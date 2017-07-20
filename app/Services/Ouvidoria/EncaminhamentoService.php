@@ -345,19 +345,19 @@ class EncaminhamentoService
      * @return array
      * @throws \Exception
      */
-    public function finalizar($id, $status_externo_id = null)
+    public function finalizar($id, $status_externo_id = 1)
     {
         #Recuperando o registro no banco de dados
         $encaminhamento = $this->repository->find($id);
         $encaminhamento->data_finalizacao = date('Y-m-d'); //registrando data de finalização da demanada @felipe
         $encaminhamento->status_id = 6;
-        //dd($encaminhamento);
         $encaminhamento->save();
 
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
         $demanda->status_id = 6;
         $demanda->status_externo_id = $status_externo_id;
         $demanda->user_id   = $this->user->id;
+        //dd($demanda);
         $demanda->save();
 
         // Pegando demandas está agrupada
