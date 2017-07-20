@@ -152,8 +152,8 @@ class SeracademicoRepositoryProvider extends ServiceProvider
         );
 
 		$this->app->bind(
-			\Seracademico\Repositories\ImportarDocRepository::class,
-			\Seracademico\Repositories\ImportarDocRepositoryEloquent::class
+			\Seracademico\Repositories\TemplateRepository::class,
+			\Seracademico\Repositories\TemplateRepositoryEloquent::class
 		);
 	}
 }

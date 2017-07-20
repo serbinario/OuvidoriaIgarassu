@@ -30,7 +30,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'Ouvidoria\DemandaController@destroy']);
                 Route::get('registro/{id}', ['as' => 'registro', 'uses' => 'Ouvidoria\DemandaController@registro']);
                 Route::get('reportPessoas', ['as' => 'reportPessoas', 'uses' => 'Ouvidoria\DemandaController@reportPessoas']);
-                Route::get('cartaEcaminhamento/{id}', ['as' => 'cartaEcaminhamento', 'uses' => 'Ouvidoria\DemandaController@cartaEcaminhamento']);
+                Route::get('cartaEcaminhamento/{id}', ['as' => 'cartaEcaminhamento', 'uses' => 'Documento\CartaEncaminhamentoController@index']);
                 Route::post('situacaoAjax', ['as' => 'situacaoAjax', 'uses' => 'Ouvidoria\DemandaController@situacaoAjax']);
                 Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
                 Route::get('detalheAnalise/{id}', ['as' => 'detalheAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@detalheParaAnaliseDoEncaminhamento']);
@@ -209,12 +209,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         });
 
 
-        // Rotas para importação de documentos
-        Route::group(['prefix' => 'importdoc', 'as' => 'importdoc.'], function () {
-            Route::get('index', ['as' => 'index', 'uses' => 'GerarDocumentoController@index']);
-            Route::get('create', ['as' => 'create', 'uses' => 'GerarDocumentoController@create']);
-            Route::post('store', ['as' => 'store', 'uses' => 'GerarDocumentoController@store']);
-            Route::get('grid', ['as' => 'grid', 'uses' => 'GerarDocumentoController@grid']);
+        // Rotas para importação de templates para os documentos
+        Route::group(['prefix' => 'template', 'as' => 'template.'], function () {
+            Route::get('index', ['as' => 'index', 'uses' => 'TemplateController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'TemplateController@create']);
+            Route::post('store', ['as' => 'store', 'uses' => 'TemplateController@store']);
+            Route::get('grid', ['as' => 'grid', 'uses' => 'TemplateController@grid']);
+        });
+
+        // Rotas para importação de templates para os documentos
+        Route::group(['prefix' => 'documento', 'as' => 'documento.'], function () {
+            Route::get('cartaencaminhamento/{id}', ['as' => 'cartaencaminhamento', 'uses' => 'CartaEncaminhamentoController@index']);
         });
 
         Route::group(['prefix' => 'role', 'as' => 'role.'], function () {

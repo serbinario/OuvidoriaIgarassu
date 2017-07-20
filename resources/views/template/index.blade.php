@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="text-right">
-                                <a class="btn btn-primary btn-sm m-t-10", href="{{ route('seracademico.importdoc.create')}}">Novo template</a>
+                                <a class="btn btn-primary btn-sm m-t-10", href="{{ route('seracademico.template.create')}}">Novo template</a>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                 serverSide: true,
                 order: [[ 1, "asc" ]],
                 ajax: {
-                    url: "{!! route('seracademico.importdoc.grid') !!}",
+                    url: "{!! route('seracademico.template.grid') !!}",
                     method: 'get'
                 },
                 columns: [

@@ -25,7 +25,7 @@
 
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}
-            {!! Form::open(['route'=>'seracademico.importdoc.store', 'method' => "POST", 'id'=> 'formTemplate', 'enctype' => 'multipart/form-data' ]) !!}
+            {!! Form::open(['route'=>'seracademico.template.store', 'method' => "POST", 'id'=> 'formTemplate', 'enctype' => 'multipart/form-data' ]) !!}
             <div class="block-header">
                 <h2>Importação de template</h2>
             </div>
@@ -34,10 +34,16 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <div class="fg-line">
                                         <label for="nome">Template (Documento) *</label>
                                         {!! Form::text('nome', Session::getOldInput('nome') , array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="fg-line">
+                                        <label for="documento_id">Documento *</label>
+                                        {!! Form::select('documento_id', $loadFields['documento'], Session::getOldInput('documento_id'), array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
                                 <div class="form-group col-md-4">

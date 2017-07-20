@@ -4,14 +4,14 @@ namespace Seracademico\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Seracademico\Repositories\ImportarDocRepository;
-use Seracademico\Entities\ImportarDoc;
+use Seracademico\Repositories\TemplateRepository;
+use Seracademico\Entities\Template;
 
 /**
  * Class BairroRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class ImportarDocRepositoryEloquent extends BaseRepository implements ImportarDocRepository
+class TemplateRepositoryEloquent extends BaseRepository implements TemplateRepository
 {
     /**
      * Specify Model class name
@@ -20,7 +20,7 @@ class ImportarDocRepositoryEloquent extends BaseRepository implements ImportarDo
      */
     public function model()
     {
-        return ImportarDoc::class;
+        return Template::class;
     }
 
     /**

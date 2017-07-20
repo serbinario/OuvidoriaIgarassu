@@ -2,21 +2,20 @@
 
 namespace Seracademico\Services;
 
-use Seracademico\Repositories\ImportarDocRepository;
-use Seracademico\Entities\ImportarDoc;
-//use Carbon\Carbon;
+use Seracademico\Repositories\TemplateRepository;
+use Seracademico\Entities\Template;
 
-class ImportarDocService
+class TemplateService
 {
     /**
-     * @var ImportarDocRepository
+     * @var TemplateRepository
      */
     private $repository;
 
     /**
-     * @param ImportarDocRepository $repository
+     * @param TemplateRepository $repository
      */
-    public function __construct(ImportarDocRepository $repository)
+    public function __construct(TemplateRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -42,14 +41,14 @@ class ImportarDocService
 
     /**
      * @param array $data
-     * @return ImportarDoc
+     * @return Template
      * @throws \Exception
      */
-    public function store(array $data) : ImportarDoc
+    public function store(array $data) : Template
     {
 
         // Pegando o conteúdo do arquivo importado transformando em string para insert no banco de dados
-        $data['conteudo'] = isset($data['file']) ? file_get_contents($data['file']->getPathname()) : "";
+        $data['html'] = isset($data['file']) ? file_get_contents($data['file']->getPathname()) : "";
 
         #Salvando o registro pincipal
         $retorno =  $this->repository->create($data);
@@ -66,14 +65,13 @@ class ImportarDocService
     /**
      * @param array $data
      * @param int $id
-     * @return ImportarDoc
+     * @return Template
      * @throws \Exception
      */
-    public function update(array $data, int $id) : ImportarDoc
+    public function update(array $data, int $id) : Template
     {
         #Atualizando no banco de dados
         $retorno = $this->repository->update($data, $id);
-
 
         #Verificando se foi atualizado no banco de dados
         if(!$retorno) {
