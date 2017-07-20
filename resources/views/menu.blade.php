@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</title>
+    <title>(LOCAL, ANIMAL!)SerOuvidor - Sistema Eletrônico Para Gestão de Ouvidorias</title>
 
     @if(config('app.debug'))
         <link type="text/css" rel="stylesheet" href="{{ asset('/lib/fullcalendar/dist/fullcalendar.min.css') }}"  media="screen,projection"/>
@@ -218,6 +218,7 @@
                     <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
                     <ul>
                         <li><a href="{{ route('seracademico.configuracao.configuracaoGeral.edit')  }}">Geral</a></li>
+                        <li><a href="{{ route('seracademico.importdoc.index')  }}">Importar template</a></li>
                     </ul>
                 </li>
             @endrole

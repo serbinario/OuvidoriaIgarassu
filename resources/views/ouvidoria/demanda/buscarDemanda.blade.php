@@ -150,7 +150,7 @@
                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
                                             {{$encaminhamento->data}} - Encaminhada para
                                                 @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
-                                                @else {{$encaminhamento->secretaria}} @endif - <b>Prazo de resposta:</b> {{$dados->previsao}}
+                                                @else {{$encaminhamento->secretaria}} @endif - <b>Prazo de retorno:</b> {{$dados->previsao}}
                                         </a>
                                     </h4>
                                 </div>
@@ -204,11 +204,12 @@
 
                     <!-- List group para demanda que for finalizada -->
                     @if(isset($encaminhamento) && $encaminhamento->status_id == '6')
+                        
                         <ul class="list-group" style="margin-top: -15px">
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <b>Demanda finalizada como: </b> {{$dados->status_externo}}
+                                        {{$encaminhamento->data_finalizacao}} - <b>Demanda finalizada como: </b> {{$dados->status_externo}}
                                     </div>
                                 </div>
                             </li>

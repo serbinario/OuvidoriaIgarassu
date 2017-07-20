@@ -208,6 +208,15 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::post('updatePerfil/{id}', ['as' => 'updatePerfil', 'uses' => 'UserController@updatePerfil']);
         });
 
+
+        // Rotas para importação de documentos
+        Route::group(['prefix' => 'importdoc', 'as' => 'importdoc.'], function () {
+            Route::get('index', ['as' => 'index', 'uses' => 'GerarDocumentoController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'GerarDocumentoController@create']);
+            Route::post('store', ['as' => 'store', 'uses' => 'GerarDocumentoController@store']);
+            Route::get('grid', ['as' => 'grid', 'uses' => 'GerarDocumentoController@grid']);
+        });
+
         Route::group(['prefix' => 'role', 'as' => 'role.'], function () {
             Route::get('index', ['as' => 'index', 'uses' => 'RoleController@index']);
             Route::get('grid', ['as' => 'grid', 'uses' => 'RoleController@grid']);

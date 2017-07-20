@@ -349,7 +349,9 @@ class EncaminhamentoService
     {
         #Recuperando o registro no banco de dados
         $encaminhamento = $this->repository->find($id);
+        $encaminhamento->data_finalizacao = date('Y-m-d'); //registrando data de finalização da demanada @felipe
         $encaminhamento->status_id = 6;
+        //dd($encaminhamento);
         $encaminhamento->save();
 
         $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
