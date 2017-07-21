@@ -49,6 +49,7 @@ class TemplateService
 
         // Pegando o conteúdo do arquivo importado transformando em string para insert no banco de dados
         $data['html'] = isset($data['file']) ? file_get_contents($data['file']->getPathname()) : "";
+        $data['status'] = '1';
 
         #Salvando o registro pincipal
         $retorno =  $this->repository->create($data);

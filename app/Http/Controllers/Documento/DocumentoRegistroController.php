@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Services\Configuracao\ConfiguracaoGeralService;
 
-class CartaEncaminhamentoController extends Controller
+class DocumentoRegistroController extends Controller
 {
 
     /**
@@ -32,7 +32,7 @@ class CartaEncaminhamentoController extends Controller
     public function index($id)
     {
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')->where('documento_id', 1)->where('status', 1)->select('html')->first();
+        $template = \DB::table('templates')->where('documento_id', 2)->where('status', 1)->select('html')->first();
 
         // Pega os dados necessário contidos no documentos
         $dados = $this->dados($id);
