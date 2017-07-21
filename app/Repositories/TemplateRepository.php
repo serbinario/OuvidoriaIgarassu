@@ -8,7 +8,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  * Interface BairroRepository
  * @package namespace App\Repositories;
  */
-interface ImportarDocRepository extends RepositoryInterface
+interface TemplateRepository extends RepositoryInterface
 {
     //
 }

@@ -218,7 +218,7 @@
                     <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
                     <ul>
                         <li><a href="{{ route('seracademico.configuracao.configuracaoGeral.edit')  }}">Geral</a></li>
-                        <li><a href="{{ route('seracademico.importdoc.index')  }}">Importar template</a></li>
+                        <li><a href="{{ route('seracademico.template.index')  }}">Importar template</a></li>
                     </ul>
                 </li>
             @endrole
