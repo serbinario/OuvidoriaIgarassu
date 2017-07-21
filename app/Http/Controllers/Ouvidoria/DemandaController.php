@@ -195,7 +195,6 @@ class DemandaController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             });
-
         }
 
         # Buscanco apenas as demandas encaminhadas e reencaminhadas
@@ -328,7 +327,6 @@ class DemandaController extends Controller
             $rows->where('users.id', '=', $request->get('responsavel'));
         }
 
-        
         #Editando a grid
         return Datatables::of($rows)
             ->filter(function ($query) use ($request) {
@@ -724,7 +722,6 @@ class DemandaController extends Controller
      */
     public function cartaEcaminhamento($id)
     {
-
         $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
 
         // Estrutura da query em geral
@@ -771,7 +768,7 @@ class DemandaController extends Controller
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
                 'ouv_demanda.n_protocolo',
-                'ouv_demanda.data as dataRegistro',
+                'ouv_demanda.data as dataRegistro', //para exibição em carta de encaminhamento @felipe
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.parecer',
                 'ouv_demanda.sigilo_id',
