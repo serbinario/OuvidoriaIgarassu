@@ -23,7 +23,6 @@ class CartaEncaminhamentoController extends Controller
         $this->configuracaoGeralService = $configuracaoGeralService;
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +57,7 @@ class CartaEncaminhamentoController extends Controller
         $codigo = $dados['manifestacao']->codigo;
         $secretariaId = $dados['manifestacao']->area_id;
         $secretario = $dados['manifestacao']->secretario;
-        $dataManifestacao = $dados['manifestacao']->data; # data de registro da manifestação
+        $dataManifestacao = $dados['manifestacao']->dataRegistro; # data de registro da manifestação
         $protocolo = $dados['manifestacao']->n_protocolo;
         $tipoManifestacao = $dados['manifestacao']->tipoManifestacao;
         $assunto = $dados['manifestacao']->assunto;
@@ -191,6 +190,7 @@ class CartaEncaminhamentoController extends Controller
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
                 'ouv_demanda.n_protocolo',
+                'ouv_demanda.data as dataRegistro',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.parecer',
                 'ouv_demanda.sigilo_id',

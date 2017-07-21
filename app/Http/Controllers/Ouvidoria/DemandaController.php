@@ -195,7 +195,6 @@ class DemandaController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             });
-
         }
 
         # Buscanco apenas as demandas encaminhadas e reencaminhadas
@@ -328,7 +327,6 @@ class DemandaController extends Controller
             $rows->where('users.id', '=', $request->get('responsavel'));
         }
 
-        
         #Editando a grid
         return Datatables::of($rows)
             ->filter(function ($query) use ($request) {
