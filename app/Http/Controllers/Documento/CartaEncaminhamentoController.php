@@ -104,7 +104,7 @@ class CartaEncaminhamentoController extends Controller
 
         // Define a data da manifestação por extenso caso a data esteja definida
         if ($dataManifestacao != "") {
-            $data = \DateTime::createFromFormat('Y-m-d', $dataManifestacao);
+            $data = \DateTime::createFromFormat('Y-m-d H:i:s', $dataManifestacao);
             $dataFormatada = $this->dataPorExtenso($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w'));
         } else {
             $dataFormatada = "";
