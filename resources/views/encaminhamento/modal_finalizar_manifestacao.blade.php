@@ -12,9 +12,9 @@
                         <div class="form-group col-md-12">
                             <label for="status_externo_id">Situação</label>
                             <select name="status_externo_id" class="form-control" id="status_externo_id">
-                                <option value="1">Procedente e solucionado</option>
-                                <option value="2">Improcedente</option>
-                                <option value="1">Procedente não solucionado</option>
+                                @foreach($loadFields['ouvidoria\\statusexterno'] as $key => $value)
+                                    <option value="{{$key}}">{{$value}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

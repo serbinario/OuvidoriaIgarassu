@@ -109,7 +109,7 @@ class DemandaController extends Controller
         $status = $request->has('status') ? $request->get('status') : "0";
 
         $usuarios = \DB::table('users')->select(['name', 'id'])->get();
-        
+
         return view('ouvidoria.demanda.index', compact('usuarios', 'status'));
     }
 

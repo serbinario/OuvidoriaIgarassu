@@ -345,7 +345,7 @@ class EncaminhamentoService
      * @return array
      * @throws \Exception
      */
-    public function finalizar($id, $status_externo_id = 1)
+    public function finalizar($id, $status_externo_id)
     {
         #Recuperando o registro no banco de dados
         $encaminhamento = $this->repository->find($id);
