@@ -227,12 +227,12 @@
             <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
         </center>
     </div>
+</div>
     <hr/>
     <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
     <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
     <script src="{{ asset('/lib/jquery-validation/src/localization/messages_pt_BR.js') }}"></script>
     <script src="{{ asset('/js/validacoes/busca_demanda.js')}}"></script>
-
 </body>
 </html>
