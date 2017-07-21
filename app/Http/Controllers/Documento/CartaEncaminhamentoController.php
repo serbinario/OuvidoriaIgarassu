@@ -69,7 +69,7 @@ class CartaEncaminhamentoController extends Controller
         $prioridade = $dados['manifestacao']->prioridade;
         $prazo = $dados['manifestacao']->prazo; # dias para solução do problema de acordo com prioridade
         $relato = $dados['manifestacao']->relato; # relato do manifestante
-        $parecer = $dados['encaminhamento']->parecer; # primeiro parecer do ouvidor
+        $parecer = isset($dados['encaminhamento']->parecer) ? $dados['encaminhamento']->parecer : ""; # primeiro parecer do ouvidor
 
         // Palavras reservadas de modo estático no documento para ser substituída pelos dados reais do banco
         $palavras = array(
@@ -103,8 +103,8 @@ class CartaEncaminhamentoController extends Controller
         }
 
         // Define a data da manifestação por extenso caso a data esteja definida
-        if ($dataManifestacao) {
-            $data = \DateTime::createFromFormat('Y-m-d', $dataManifestacao);
+        if ($dataManifestacao != "") {
+            $data = \DateTime::createFromFormat('Y-m-d H:i:s', $dataManifestacao);
             $dataFormatada = $this->dataPorExtenso($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w'));
         } else {
             $dataFormatada = "";
