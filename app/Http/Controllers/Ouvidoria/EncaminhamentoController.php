@@ -48,6 +48,7 @@ class EncaminhamentoController extends Controller
         'Ouvidoria\Status',
         'Ouvidoria\Prioridade',
         'Ouvidoria\Destinatario',
+        'Ouvidoria\StatusExterno'
     ];
 
     /**
