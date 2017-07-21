@@ -5,36 +5,41 @@ namespace Seracademico\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Seracademico\Http\Requests;
-use Seracademico\Repositories\ImportarDocRepository;
-use Seracademico\Services\ImportarDocService;
+use Seracademico\Repositories\TemplateRepository;
+use Seracademico\Services\TemplateService;
 use Yajra\Datatables\Datatables;
 use Prettus\Validator\Exceptions\ValidatorException;
 use Prettus\Validator\Contracts\ValidatorInterface;
 
 
-class GerarDocumentoController extends Controller
+class TemplateController extends Controller
 {
 
     /**
-     * @var ImportarDocService
+     * @var TemplateService
      */
     private $service;
 
-
     /**
-     * @var ImportarDocRepository
+     * @var TemplateRepository
      */
     protected $repository;
 
+    /**
+     * @var array
+     */
+    private $loadFields = [
+        'Documento'
+    ];
 
     /**
-     * @param ImportarDocService $service
-     * @param ImportarDocRepository $repository
+     * @param TemplateService $service
+     * @param TemplateRepository $repository
      */
-    public function __construct(ImportarDocService $service,
-                                ImportarDocRepository $repository)
+    public function __construct(TemplateService $service,
+                                TemplateRepository $repository)
     {
-        $this->service   =  $service;
+        $this->service    =  $service;
         $this->repository = $repository;
     }
 
@@ -43,7 +48,7 @@ class GerarDocumentoController extends Controller
      */
     public function index()
     {
-        return view('gerarDocumento.index');
+        return view('template.index');
     }
 
     /**
@@ -52,7 +57,7 @@ class GerarDocumentoController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('impotar_doc')
+        $rows = \DB::table('templates')
             ->select([
                 'nome',
             ]);
@@ -73,7 +78,11 @@ class GerarDocumentoController extends Controller
      */
     public function create()
     {
-        return view('gerarDocumento.create');
+
+        #Carregando os dados para o cadastro
+        $loadFields = $this->service->load($this->loadFields);
+
+        return view('template.create', compact('loadFields'));
     }
 
     /**
