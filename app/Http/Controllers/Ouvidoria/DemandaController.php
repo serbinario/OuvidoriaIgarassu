@@ -724,7 +724,6 @@ class DemandaController extends Controller
      */
     public function cartaEcaminhamento($id)
     {
-
         $configuracaoGeral = $this->configuracaoGeralService->findConfiguracaoGeral();
 
         // Estrutura da query em geral
@@ -771,7 +770,7 @@ class DemandaController extends Controller
                 'ouv_demanda.relato',
                 'ouv_demanda.obs',
                 'ouv_demanda.n_protocolo',
-                'ouv_demanda.data as dataRegistro',
+                'ouv_demanda.data as dataRegistro', //para exibição em carta de encaminhamento @felipe
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.parecer',
                 'ouv_demanda.sigilo_id',

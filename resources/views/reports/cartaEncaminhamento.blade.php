@@ -104,7 +104,7 @@ function data($dia, $mes, $ano, $semana) {
     @endif
 
     @if($demanda->dataRegistro)
-        <?php $data = \DateTime::createFromFormat('Y-m-d', $demanda->data); ?>
+        <?php $data = \DateTime::createFromFormat('Y-m-d', $demanda->dataRegistro); ?>
         <span style="position: absolute; top: 180px; left: 400px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
     @endif
     <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
