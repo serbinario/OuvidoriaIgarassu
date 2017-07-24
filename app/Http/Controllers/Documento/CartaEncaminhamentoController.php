@@ -77,9 +77,12 @@ class CartaEncaminhamentoController extends Controller
         $parecer = isset($dados['encaminhamento']->parecer) ? $dados['encaminhamento']->parecer : ""; # primeiro parecer do ouvidor
 
 
-        // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        //$fp = fopen("D:/LOCALHOST/SerOuvidoriaAbreu/resources/views/reports/cartaEncaminhamento.blade.php", "w");
-        $fp = fopen("/var/www/html/SerOuvidoriaAbreu/resources/views/reports/cartaEncaminhamento.blade.php", "w");
+        // Pega o caminho do arquivo
+        $caminho = base_path("/resources/views/reports/cartaEncaminhamento.blade.php");
+
+        //Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
+        //$fp = fopen("/var/www/html/SerOuvidoriaAbreu/resources/views/reports/cartaEncaminhamento.blade.php", "w");
 
         // Escreve no arquivo conteúdo do documento
         fwrite($fp, $template->html);
