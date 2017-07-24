@@ -97,5 +97,5 @@
 @stop
 
 @section('javascript')
-
+    <script src="{{ asset('/js/demanda/manifestacoes_arquivadas.js')}}"></script>
 @stop
