@@ -23,10 +23,10 @@ class CartaEncaminhamentoController extends Controller
         $this->configuracaoGeralService = $configuracaoGeralService;
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return mixed
      */
     public function index($id)
     {
@@ -36,23 +36,6 @@ class CartaEncaminhamentoController extends Controller
         // Pega os dados necessário contidos no documentos
         $dados = $this->dados($id);
 
-        // Pega os dados já tratados para exibição no documento
-        $retorno = $this->tratamentoDosDados($dados);
-
-        // Monta todo o conteúdo do documento
-        $conteudo = str_replace($retorno['palavras'], $retorno['variavies'], $template->html);
-
-        // Retorno do template e dados do documento
-        return \PDF::loadView('reports.cartaEncaminhamento', compact('conteudo'))->stream();
-    }
-
-    /**
-     * @param $dados
-     * @return array
-     */
-    public function tratamentoDosDados($dados)
-    {
-        // Organizando os dados a serem enviados ao documento
         $titulo = $dados['configuracao']->nome; # Nome estabelecido na configutação do sistema
         $codigo = $dados['manifestacao']->codigo;
         $secretariaId = $dados['manifestacao']->area_id;
@@ -71,69 +54,25 @@ class CartaEncaminhamentoController extends Controller
         $relato = $dados['manifestacao']->relato; # relato do manifestante
         $parecer = isset($dados['encaminhamento']->parecer) ? $dados['encaminhamento']->parecer : ""; # primeiro parecer do ouvidor
 
-        // Palavras reservadas de modo estático no documento para ser substituída pelos dados reais do banco
-        $palavras = array(
-            '$titulo$',
-            '$codigo$',
-            '$secretaria$',
-            '$secretario$',
-            '$data$',
-            '$protocolo$',
-            '$tipoManifestacao$',
-            '$assunto$',
-            '$origem$',
-            '$tipoUsuario$',
-            '$nome$',
-            '$fone$',
-            '$prioridade$',
-            '$prazo$',
-            '$relato$',
-            '$parecer$',
-        );
 
-        ## Regras para tratamento dos dados a serem tratados antes de serem exibidos
+        // Pega o caminho do arquivo
+        $caminho = base_path("/resources/views/reports/cartaEncaminhamento.blade.php");
 
-        // Validada se o documento está sendo encaminhado para o prefeito ou para outra secretaria
-        if ($secretariaId == '3') {
-            $secretaria = "Gabinte do Prefeitro";
-            $secretario = "V.Ex.ª " . $secretario;
-        } else {
-            $secretaria = "Ao secretário(a)";
-            $secretario = "Dr(a) " . $secretario;
-        }
+        //Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
 
-        // Define a data da manifestação por extenso caso a data esteja definida
-        if ($dataManifestacao != "") {
-            $data = \DateTime::createFromFormat('Y-m-d H:i:s', $dataManifestacao);
-            $dataFormatada = $this->dataPorExtenso($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w'));
-        } else {
-            $dataFormatada = "";
-        }
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
 
-        // Pega o nome do manifestante caso não seja sigiloso
-        $nome = $sigiloId == 2 ? 'Confidencial' : $nome;
+       //Fecha o arquivo
+        fclose($fp);
 
-        // Variaveis que iram substituir a palavras reservadas no documento
-        $variavies = array(
-            $titulo,
-            $codigo,
-            $secretaria,
-            $secretario,
-            $dataFormatada,
-            $protocolo,
-            $tipoManifestacao,
-            $assunto,
-            $origem,
-            $tipoUsuario,
-            $nome,
-            $fone,
-            $prioridade,
-            $prazo,
-            $relato,
-            $parecer,
-        );
-
-        return ['palavras' => $palavras, 'variavies' => $variavies];
+        // Retorno do template e dados do documento
+        return \PDF::loadView('reports.cartaEncaminhamento', compact(
+            'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
+            'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
+            'prazo', 'relato', 'parecer'
+            ))->stream();
     }
 
     /**
@@ -214,50 +153,5 @@ class CartaEncaminhamentoController extends Controller
             'manifestacao' => $manifestacao,
             'encaminhamento' => $encaminhamento
         );
-    }
-
-    /**
-     * @param $dia
-     * @param $mes
-     * @param $ano
-     * @param $semana
-     * @return string
-     */
-    public function dataPorExtenso($dia, $mes, $ano, $semana) {
-
-        // configuração mes
-        switch ($mes){
-
-            case 1: $mes = "Janeiro"; break;
-            case 2: $mes = "Fevereiro"; break;
-            case 3: $mes = "Março"; break;
-            case 4: $mes = "Abril"; break;
-            case 5: $mes = "Maio"; break;
-            case 6: $mes = "Junho"; break;
-            case 7: $mes = "Julho"; break;
-            case 8: $mes = "Agosto"; break;
-            case 9: $mes = "Setembro"; break;
-            case 10: $mes = "Outubro"; break;
-            case 11: $mes = "Novembro"; break;
-            case 12: $mes = "Dezembro"; break;
-
-        }
-
-
-        // configuração semana
-        switch ($semana) {
-
-            case 0: $semana = "Domingo"; break;
-            case 1: $semana = "Segunda Feira"; break;
-            case 2: $semana = "Terçaa Feira"; break;
-            case 3: $semana = "Quarta Feira"; break;
-            case 4: $semana = "Quinta Feira"; break;
-            case 5: $semana = "Sexta Feira"; break;
-            case 6: $semana = "Sábado"; break;
-
-        }
-
-        return "$dia de $mes de $ano";
-
     }
 }
