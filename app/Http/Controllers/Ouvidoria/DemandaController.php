@@ -137,17 +137,13 @@ class DemandaController extends Controller
      */
     public function getDemanda(Request $request, $protocolo)
     {
+        try {
         // Pegando o número do protocolo
         $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
-
-        if ($protocolo) {
-            throw new \exception('Demanda não encontrada!');
-        }
 
         // Consulta os dados da demanda
         $dados = $this->service->detalheDaDemanda($protocolo);
 
-        try {
         $encaminhamentos = \DB::table('ouv_encaminhamento')
             ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
                 $join->on(
@@ -178,8 +174,8 @@ class DemandaController extends Controller
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {print_r($e->getMessage()); exit;
-            return redirect()->back()->with('message', dd($e->getMessage()));
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Protocolo não encontrado!');
         }
     }
 

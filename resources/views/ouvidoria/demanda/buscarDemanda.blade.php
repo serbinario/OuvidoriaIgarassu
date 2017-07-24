@@ -39,6 +39,20 @@
     <div class="row">
         <div class="col-sm-5 col-md-10 col-md-offset-1">
             <div class="ibox-content">
+                @if(Session::has('message'))
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <em> {!! session('message') !!}</em>
+                    </div>
+                @endif
+                @if(Session::has('errors'))
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
                 {!! Form::open(['route'=>'getDemanda', 'method' => "GET", 'id' => 'formBuscaDemanda' ]) !!}
                 <div class="row">
                     <div class="form-group col-md-10">
