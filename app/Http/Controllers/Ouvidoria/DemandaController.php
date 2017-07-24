@@ -913,7 +913,19 @@ class DemandaController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function manifestacoesArquivadas()
+    {
+        #Retorno para view
+        return view('ouvidoria.demanda.manifestacoesArquivadas');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function gridManifestacoesArquivadas()
     {
 
         $rows = \DB::table('ouv_demanda')
@@ -964,7 +976,16 @@ class DemandaController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_demanda.n_protocolo'
-            )->first();
+            );
 
+        #Editando a grid
+        return Datatables::of($rows)->addColumn('action', function ($row) {
+
+            $html = "";
+            $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a> ';
+
+            return $html;
+
+        })->make(true);
     }
 }

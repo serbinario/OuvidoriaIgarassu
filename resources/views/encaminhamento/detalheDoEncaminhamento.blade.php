@@ -96,10 +96,11 @@
                                         <div class="col-md-12">
                                             <div class="table-responsive">
 
-                                                <a href="{!! route('seracademico.ouvidoria.demanda.index') !!}"
+                                                {{--<a href="{!! route('seracademico.ouvidoria.demanda.index') !!}"
                                                    class="btn bgm-bluegray waves-effect">
                                                     <i class="zmdi zmdi-arrow-back"></i> Voltar
-                                                </a>
+                                                </a>--}}
+                                                <button type="button" class="btn bgm-bluegray waves-effect" onclick='javascript:history.back();'><i class="zmdi zmdi-arrow-back"></i> Voltar</button>
                                                 <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal_responder_encaminhamento"
                                                         class="btn btn-primary">

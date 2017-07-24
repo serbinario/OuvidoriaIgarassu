@@ -35,6 +35,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
                 Route::get('detalheAnalise/{id}', ['as' => 'detalheAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@detalheParaAnaliseDoEncaminhamento']);
                 Route::get('arquivar/{id}', ['as' => 'arquivar', 'uses' => 'Ouvidoria\DemandaController@arquivar']);
+
+                // Rotas para manifestações arquivadas
+                Route::get('manifestacoesArquivadas', ['as' => 'manifestacoesArquivadas', 'uses' => 'Ouvidoria\DemandaController@manifestacoesArquivadas']);
+                Route::post('gridManifestacoesArquivadas', ['as' => 'gridManifestacoesArquivadas', 'uses' => 'Ouvidoria\DemandaController@gridManifestacoesArquivadas']);
             });
 
             Route::group(['prefix' => 'encaminhamento', 'as' => 'encaminhamento.'], function () {
