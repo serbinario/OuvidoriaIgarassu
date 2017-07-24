@@ -82,7 +82,6 @@ class DocumentoRegistroController extends Controller
 
         //Abre o arquivo em branco para escrita do conteúdo do arquivo
         $fp = fopen($caminho, "w");
-        //$fp = fopen("/var/www/html/SerOuvidoriaAbreu/resources/views/reports/registroDemanda.blade.php", "w");
 
         //Escreve no arquivo conteúdo do documento
         fwrite($fp, $template->html);
