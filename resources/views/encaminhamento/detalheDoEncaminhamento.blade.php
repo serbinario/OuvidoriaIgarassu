@@ -96,10 +96,11 @@
                                         <div class="col-md-12">
                                             <div class="table-responsive">
 
-                                                <a href="{!! route('seracademico.ouvidoria.demanda.index') !!}"
+                                                {{-- <a href="{!! route('seracademico.ouvidoria.demanda.index') !!}"
                                                    class="btn bgm-bluegray waves-effect">
                                                     <i class="zmdi zmdi-arrow-back"></i> Voltar
-                                                </a>
+                                                </a> --}}
+                                                <button type="button" class="btn bgm-bluegray waves-effect" onclick='javascript:history.back();'><i class="zmdi zmdi-arrow-back"></i> Voltar</button>
                                                 <button type="button" data-toggle="modal" @if($detalheEncaminhamento->status_id == '6') disabled @endif
                                                         data-target="#modal_responder_encaminhamento"
                                                         class="btn btn-primary">
@@ -265,11 +266,10 @@
                                                         <td><b>PRAZO:</b></td>
                                                         <td style="width : 50%">{{ $detalheEncaminhamento->previsao }}</td>
                                                         <td>
-                                                            <?php $respostaAnterior = isset($encaminhamentoAnterior->resposta) ? $encaminhamentoAnterior->resposta : ""; ?>
                                                             @role('ouvidoria|admin')
-                                                                @if(!$detalheEncaminhamento->status_prorrogacao &&
-                                                                ($detalheEncaminhamento->status_id != '4' && $detalheEncaminhamento->status_id != '6')
-                                                                 && $respostaAnterior == "")
+                                                                @if(!$detalheEncaminhamento->prazo_solucao &&
+                                                                (isset($encaminhamentoAnterior->prazo_solucao) && !$encaminhamentoAnterior->prazo_solucao) &&
+                                                                $detalheEncaminhamento->status_id != '6')
                                                                     <button type="button" data-toggle="modal"
                                                                             data-target="#modal-prorrogar-manifestacao"
                                                                             class="btn btn-sm btn-success waves-effect">

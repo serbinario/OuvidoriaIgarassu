@@ -2,12 +2,10 @@
  * Created by fabio_000 on 29/06/2017.
  */
 
-// Vari�vel global para armazenar o status da demanda para filtro da grid
-var statusGet;
 
 $(document).ready(function(){
 
-    function formatDemanda(d) {
+    function formatManifestacaoArquivada(d) {
 
         var html = "";
 
@@ -51,27 +49,13 @@ $(document).ready(function(){
         return html;
     }
 
-    var tableDemanda = $('#demanda-grid').DataTable({
+    var tableManifestacaoArquivada = $('#manifestacao-arquivada-grid').DataTable({
         processing: true,
         serverSide: true,
         order: [[ 1, "asc" ]],
-        fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-            if ( aData['demandaAgrupada'] == "1" )
-            {
-                $('td', nRow).css('background-color', '#a9d4e9');
-            }
-        },
         ajax: {
-            url: "/index.php/seracademico/ouvidoria/demanda/grid",
-            method: 'POST',
-            data: function (d) {
-                d.data_inicio = $('input[name=data_inicio]').val();
-                d.data_fim = $('input[name=data_fim]').val();
-                d.status = $('select[name=status] option:selected').val();
-                d.responsavel = $('select[name=responsavel] option:selected').val();
-                d.statusGet = statusGet;
-                d.globalSearch = $('input[name=globalSearch]').val();
-            }
+            url: "/index.php/seracademico/ouvidoria/demanda/gridManifestacoesArquivadas",
+            method: 'POST'
         },
         columns: [
             {
@@ -92,17 +76,11 @@ $(document).ready(function(){
         ]
     });
 
-    //Fun��o do submit do search da grid principal
-    $('#search').click(function(e) {
-        statusGet = "0";
-        tableDemanda.draw();
-        e.preventDefault();
-    });
 
     // Add event listener for opening and closing details
-    $('#demanda-grid tbody').on('click', 'td.details-control', function () {
-        var tr = $(this).closest('tr');
-        var row = tableDemanda.row( tr );
+    $('#manifestacao-arquivada-grid tbody').on('click', 'td.details-control', function () {
+        var tr  = $(this).closest('tr');
+        var row = tableManifestacaoArquivada.row( tr );
 
         if ( row.child.isShown() ) {
             // This row is already open - close it
@@ -111,37 +89,9 @@ $(document).ready(function(){
         }
         else {
             // Open this row
-            row.child( formatDemanda(row.data()) ).show();
+            row.child( formatManifestacaoArquivada(row.data()) ).show();
             tr.addClass('shown');
         }
     });
-});
 
-
-$(document).on('click', 'a.excluir', function (event) {
-    event.preventDefault();
-    var url = $(this).attr('href');
-    swal({
-        title: "Alerta",
-        text: "Tem certeza da exclusão da manifestação?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sim!",
-    }).then(function(){
-        location.href = url;
-    });
-});
-
-$(document).on('click', 'a.arquivar', function (event) {
-    event.preventDefault();
-    var url = $(this).attr('href');
-    swal({
-        title: "Alerta",
-        text: "Deseja arquivar a manifestação?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Sim!",
-    }).then(function(){
-        location.href = url;
-    });
 });

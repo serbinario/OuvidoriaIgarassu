@@ -149,6 +149,7 @@
                 <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>
             @endrole--}}
             @role('ouvidoria|admin')
+            <li><a href="{{ route('seracademico.ouvidoria.demanda.manifestacoesArquivadas')  }}"><i class="zmdi zmdi-archive"></i> Manifestações arquivadas</a></li>
             <li class="sub-menu">
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
                 <ul>
@@ -310,6 +311,7 @@
     <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
     <script src="{{ asset('/js/demanda/create_demanda.js')}}"></script>
     <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>
+    <script src="{{ asset('/js/demanda/manifestacoes_arquivadas.js')}}"></script>
 
     {{-- Importes da página gráficos --}}
     <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
