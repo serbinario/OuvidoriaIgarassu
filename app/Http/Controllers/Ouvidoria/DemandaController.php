@@ -130,7 +130,10 @@ class DemandaController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @param $protocolo
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \exception
      */
     public function getDemanda(Request $request, $protocolo)
     {
@@ -296,6 +299,7 @@ class DemandaController extends Controller
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->where('ouv_demanda.arquivada', '=', null)
             ->select(
                 'ouv_demanda.id',
                 'ouv_demanda.nome',
@@ -911,5 +915,60 @@ class DemandaController extends Controller
             dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }
+    }
+
+    public function manifestacoesArquivadas()
+    {
+
+        $rows = \DB::table('ouv_demanda')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                        where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
+            ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
+            ->leftJoin('users', 'users.id', '=', 'ouv_demanda.user_id')
+            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('ouv_area as area_destino', 'area_destino.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('ouv_area as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
+            ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
+            ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
+            ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
+            ->leftJoin('ouv_exclusividade_sus', 'ouv_exclusividade_sus.id', '=', 'ouv_demanda.exclusividade_sus_id')
+            ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
+            ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
+            ->leftJoin('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
+            ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->where('ouv_demanda.arquivada', '=', '1')
+            ->select(
+                'ouv_demanda.id',
+                'ouv_demanda.nome',
+                'ouv_encaminhamento.id as encaminhamento_id',
+                'ouv_prioridade.nome as prioridade',
+                'ouv_destinatario.nome as destino',
+                'area_destino.nome as area_destino',
+                'area_ouvidoria.nome as area_ouvidoria',
+                'users.name as responsavel',
+                'ouv_informacao.nome as informacao',
+                'ouv_idade.nome as idade',
+                'ouv_tipo_demanda.nome as tipo_demanda',
+                'ouv_status.nome as status',
+                'ouv_status.id as status_id',
+                'ouv_exclusividade_sus.nome as exclusividade',
+                'ouv_demanda.relato',
+                'ouv_demanda.endereco',
+                'ouv_demanda.fone',
+                'ouv_assunto.nome as assunto',
+                'ouv_melhorias.nome as melhoria',
+                'ouv_comunidade.nome as comunidade',
+                \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                'ouv_demanda.n_protocolo'
+            )->first();
+
     }
 }

@@ -426,7 +426,7 @@ class DemandaService
     {
         #arquivando a demanda o curso
         $result = $this->repository->find($id);
-        $result->arquivar = '1';
+        $result->arquivada = '1';
         $result->save();
 
         # Verificando se a execução foi bem sucessida
