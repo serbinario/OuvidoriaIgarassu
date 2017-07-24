@@ -155,20 +155,32 @@
                             </div>
                         </li>
                     </ul>
-
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
                         @foreach($encaminhamentos as $chave => $encaminhamento)
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
                                             {{$encaminhamento->data}} - Encaminhada para
-                                                @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
-                                                @else {{$encaminhamento->secretaria}} @endif - <b>Prazo de retorno:</b> {{$dados->previsao}}
+                                                @if($encaminhamento->secretaria_id == '1')
+                                                    {{$encaminhamento->destino}}
+
+                                                    @elseif($encaminhamento->status_id == 1)
+                                                        {{$encaminhamento->secretaria}}
+
+                                                        @elseif ($encaminhamento->status_id == 3)
+                                                            {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
+
+                                                            @elseif ($encaminhamento->status_id == 6)
+                                                                {{$encaminhamento->secretaria}}
+
+                                                                @elseif ($encaminhamento->status_id == 7)
+                                                                    {{$encaminhamento->secretaria}}
+                                                @endif
                                         </a>
                                     </h4>
                                 </div>
-
                                 <div id="collapse-{{$chave}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{$chave}}">
                                     <ul class="list-group">
                                         <li class="list-group-item">
@@ -180,10 +192,9 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </div>
 
-                        {{-- collapse para respotas --}}
+                            {{-- collapse para respotas --}}
                             @if($encaminhamento->resp_publica == '1' || $encaminhamento->resposta_ouvidor)
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
@@ -212,7 +223,6 @@
 
                                 </div>
                             @endif
-
                         @endforeach
                     </div>
 
