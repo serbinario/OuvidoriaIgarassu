@@ -156,7 +156,6 @@
                         </li>
                     </ul>
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-
                         @foreach($encaminhamentos as $chave => $encaminhamento)
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
@@ -165,18 +164,27 @@
                                             {{$encaminhamento->data}} - Encaminhada para
                                                 @if($encaminhamento->secretaria_id == '1')
                                                     {{$encaminhamento->destino}}
-
+                                                    {{--encaminhando--}}
                                                     @elseif($encaminhamento->status_id == 1)
                                                         {{$encaminhamento->secretaria}}
-
-                                                        @elseif ($encaminhamento->status_id == 3)
-                                                            {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
-
-                                                            @elseif ($encaminhamento->status_id == 6)
-                                                                {{$encaminhamento->secretaria}}
-
-                                                                @elseif ($encaminhamento->status_id == 7)
+                                                        {{--aguardando resposta--}}
+                                                        @elseif($encaminhamento->status_id == 2)
+                                                            {{$encaminhamento->secretaria}}
+                                                            {{--fechada--}}
+                                                            @elseif ($encaminhamento->status_id == 3)
+                                                                {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
+                                                                {{--respondida--}}
+                                                                @elseif ($encaminhamento->status_id == 4)
                                                                     {{$encaminhamento->secretaria}}
+                                                                    {{--nova--}}
+                                                                    @elseif ($encaminhamento->status_id == 5)
+                                                                        {{$encaminhamento->secretaria}}
+                                                                        {{--finalizada--}}
+                                                                        @elseif ($encaminhamento->status_id == 6)
+                                                                            {{$encaminhamento->secretaria}}
+                                                                            {{--reecaminhada--}}
+                                                                                @elseif ($encaminhamento->status_id == 7)
+                                                                                    {{$encaminhamento->secretaria}}
                                                 @endif
                                         </a>
                                     </h4>
@@ -194,13 +202,42 @@
                                 </div>
                             </div>
 
+                            {{-- collapse para alteração de prazo --}}
+                            @if($encaminhamento->prazo_solucao <> null)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $chave."a"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $chave."a"; ?>">
+                                                {{$encaminhamento->data}} - Prazo para solução extendido
+                                            </a>
+                                        </h4>
+                                    </div>
+
+                                    <div id="collapse-<?php echo $chave."a"; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $chave."a"; ?>">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        Prazo extendido para: {{$encaminhamento->prazo_solucao}}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            @endif
+
                             {{-- collapse para respotas --}}
                             @if($encaminhamento->resp_publica == '1' || $encaminhamento->resposta_ouvidor)
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $chave."a"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $chave."a"; ?>">
-                                                {{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b> - <b>Prazo para solução:</b> {{$encaminhamento->prazo_solucao}}
+                                                {{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante</b>
+                                                @if($encaminhamento->prazo_solucao == null)
+                                                    : <b>Prazo para solução:</b> {{$encaminhamento->prazo_solucao}}
+                                                @endif
                                             </a>
                                         </h4>
                                     </div>
