@@ -136,7 +136,11 @@ class DemandaController extends Controller
     {
         // Pegando o número do protocolo
         $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
-        dd($protocolo);
+
+        if ($protocolo) {
+            throw new \exception('Demanda não encontrada!');
+        }
+
         // Consulta os dados da demanda
         $dados = $this->service->detalheDaDemanda($protocolo);
 
