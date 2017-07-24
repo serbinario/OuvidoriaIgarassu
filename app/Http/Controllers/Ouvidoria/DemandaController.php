@@ -134,13 +134,13 @@ class DemandaController extends Controller
      */
     public function getDemanda(Request $request, $protocolo)
     {
-
         // Pegando o número do protocolo
         $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
-
+        dd($protocolo);
         // Consulta os dados da demanda
         $dados = $this->service->detalheDaDemanda($protocolo);
 
+        try {
         $encaminhamentos = \DB::table('ouv_encaminhamento')
             ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
                 $join->on(
@@ -167,7 +167,13 @@ class DemandaController extends Controller
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
             ])->get();
 
-        return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
+            return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
+
+        } catch (ValidatorException $e) {
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Throwable $e) {print_r($e->getMessage()); exit;
+            return redirect()->back()->with('message', dd($e->getMessage()));
+        }
     }
 
     /**
