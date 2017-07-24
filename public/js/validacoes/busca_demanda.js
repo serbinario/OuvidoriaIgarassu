@@ -3,7 +3,6 @@ $(document).ready(function () {
 
     $("#formBuscaDemanda").validate({
         rules: {
-
             protocolo: {
                 required: true
             }
