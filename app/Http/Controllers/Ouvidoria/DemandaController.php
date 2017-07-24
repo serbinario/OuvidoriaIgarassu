@@ -156,6 +156,7 @@ class DemandaController extends Controller
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
+                'ouv_encaminhamento.status_id',
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_finalizacao,"%d/%m/%Y") as data_finalizacao'),
