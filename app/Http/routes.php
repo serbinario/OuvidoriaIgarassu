@@ -34,6 +34,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('situacaoAjax', ['as' => 'situacaoAjax', 'uses' => 'Ouvidoria\DemandaController@situacaoAjax']);
                 Route::get('fristEncaminhar/{id}', ['as' => 'fristEncaminhar', 'uses' => 'Ouvidoria\EncaminhamentoController@fristEncaminhar']);
                 Route::get('detalheAnalise/{id}', ['as' => 'detalheAnalise', 'uses' => 'Ouvidoria\EncaminhamentoController@detalheParaAnaliseDoEncaminhamento']);
+                Route::get('arquivar/{id}', ['as' => 'arquivar', 'uses' => 'Ouvidoria\DemandaController@arquivar']);
             });
 
             Route::group(['prefix' => 'encaminhamento', 'as' => 'encaminhamento.'], function () {

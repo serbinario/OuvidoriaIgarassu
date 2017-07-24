@@ -51,7 +51,8 @@ class Demanda extends Model implements Transformable
 		'profissao',
 		'cep',
 		'bairro_id',
-        'status_externo_id'
+        'status_externo_id',
+		'arquivada'
 	];
 
 	/**
