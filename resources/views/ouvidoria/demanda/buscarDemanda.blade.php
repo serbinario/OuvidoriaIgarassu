@@ -204,7 +204,6 @@
 
                     <!-- List group para demanda que for finalizada -->
                     @if(isset($encaminhamento) && $encaminhamento->status_id == '6')
-                        
                         <ul class="list-group" style="margin-top: -15px">
                             <li class="list-group-item">
                                 <div class="row">
