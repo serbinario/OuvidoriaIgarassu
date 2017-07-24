@@ -123,7 +123,21 @@ $(document).on('click', 'a.excluir', function (event) {
     var url = $(this).attr('href');
     swal({
         title: "Alerta",
-        text: "Tem certeza da exclus�o da demanda?",
+        text: "Tem certeza da exclusão da manifestação?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim!",
+    }).then(function(){
+        location.href = url;
+    });
+});
+
+$(document).on('click', 'a.arquivar', function (event) {
+    event.preventDefault();
+    var url = $(this).attr('href');
+    swal({
+        title: "Alerta",
+        text: "Deseja arquivar a manifestação?",
         type: "warning",
         showCancelButton: true,
         confirmButtonText: "Sim!",

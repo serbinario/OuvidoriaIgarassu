@@ -418,6 +418,27 @@ class DemandaService
     }
 
     /**
+     * @param int $id
+     * @return bool
+     * @throws \Exception
+     */
+    public function arquivar(int $id)
+    {
+        #arquivando a demanda o curso
+        $result = $this->repository->find($id);
+        $result->arquivar = '1';
+        $result->save();
+
+        # Verificando se a execução foi bem sucessida
+        if(!$result) {
+            throw new \Exception('Ocorreu um erro ao tentar remover o curso!');
+        }
+
+        #retorno
+        return true;
+    }
+
+    /**
      * @param $request
      * @return mixed
      */

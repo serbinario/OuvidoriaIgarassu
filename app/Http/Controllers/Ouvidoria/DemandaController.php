@@ -376,12 +376,12 @@ class DemandaController extends Controller
                 }  if (count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria') && !$demandaAgrupada) {
                     $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info" title="Encaminhar"><i class="zmdi zmdi-mail-send"></i></a>';
                 } else if (!$demandaAgrupada) {
-                    $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a>';
+                    $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a> ';
                 }
 
                 // Condição para habilitar a opção de arquivar caso a demanda esteja finalizada
                 if ($row->status_id == '6') {
-                    $html .= '<a href="arquivar/'.$row->id.'" class="btn btn-xs btn-info" title="Arquivar"><i class="zmdi zmdi-mail-send"></i></a>';
+                    $html .= '<a href="arquivar/'.$row->id.'" class="btn btn-xs btn-info arquivar" title="Arquivar"><i class="zmdi zmdi-mail-send"></i></a>';
                 }
 
                 return $html;
@@ -879,6 +879,24 @@ class DemandaController extends Controller
 
             #Retorno para a view
             return redirect()->back()->with("message", "Remoção realizada com sucesso!");
+        } catch (\Throwable $e) {
+            dd($e);
+            return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function arquivar($id)
+    {
+        try {
+            #Executando a ação
+            $this->service->arquivar($id);
+
+            #Retorno para a view
+            return redirect()->back()->with("message", "Arquivação realizada com sucesso!");
         } catch (\Throwable $e) {
             dd($e);
             return redirect()->back()->with('message', $e->getMessage());
