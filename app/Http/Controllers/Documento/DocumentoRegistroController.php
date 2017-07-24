@@ -77,9 +77,12 @@ class DocumentoRegistroController extends Controller
         $cep = $dados['manifestacao']->cep;
         $relato = $dados['manifestacao']->relato;
 
+        // Pega o caminho do arquivo
+        $caminho = base_path("/resources/views/reports/registroDemanda.blade.php");
+
         //Abre o arquivo em branco para escrita do conteúdo do arquivo
-        //$fp = fopen("D:/LOCALHOST/SerOuvidoriaAbreu/resources/views/reports/registroDemanda.blade.php", "w");
-        $fp = fopen("/var/www/html/SerOuvidoriaAbreu/resources/views/reports/registroDemanda.blade.php", "w");
+        $fp = fopen($caminho, "w");
+        //$fp = fopen("/var/www/html/SerOuvidoriaAbreu/resources/views/reports/registroDemanda.blade.php", "w");
 
         //Escreve no arquivo conteúdo do documento
         fwrite($fp, $template->html);
