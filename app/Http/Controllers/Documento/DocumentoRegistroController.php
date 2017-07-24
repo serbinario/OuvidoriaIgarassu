@@ -29,7 +29,7 @@ class DocumentoRegistroController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index2($id)
     {
         // Pega o template atual para o documento de carta de encaminhamento
         $template = \DB::table('templates')->where('documento_id', 2)->where('status', 1)->select('html')->first();
@@ -45,6 +45,55 @@ class DocumentoRegistroController extends Controller
 
         // Retorno do template e dados do documento
         return \PDF::loadView('reports.registroDemanda', compact('conteudo'))->stream();
+    }
+
+    public function index($id)
+    {
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')->where('documento_id', 2)->where('status', 1)->select('html')->first();
+
+        // Pega os dados necessário contidos no documentos
+        $dados = $this->dados($id);
+
+        $titulo = $dados['configuracao']->nome; # Nome estabelecido na configutação do sistema
+        $informacao = $dados['manifestacao']->informacao;
+        $data_cadastro = $dados['manifestacao']->data_cadastro;
+        $hora_cadastro = $dados['manifestacao']->hora_cadastro;
+        $protocolo = $dados['manifestacao']->n_protocolo;
+        $tipo_demanda = $dados['manifestacao']->tipo_demanda;
+        $sigilo = $dados['manifestacao']->sigilo;
+        $nome = $dados['manifestacao']->nome; # nome do manifestante
+        $sexo = $dados['manifestacao']->sexo;
+        $fone = $dados['manifestacao']->fone;
+        $email = $dados['manifestacao']->email;
+        $idade = $dados['manifestacao']->idade;
+        $rg = $dados['manifestacao']->rg;
+        $cpf = $dados['manifestacao']->cpf;
+        $profissao = $dados['manifestacao']->profissao;
+        $endereco = $dados['manifestacao']->endereco;
+        $numero_end = $dados['manifestacao']->numero_end;
+        $cidade = $dados['manifestacao']->cidade;
+        $bairro = $dados['manifestacao']->bairro;
+        $cep = $dados['manifestacao']->cep;
+        $relato = $dados['manifestacao']->relato;
+
+        //Abre o arquivo em branco para escrita do conteúdo do arquivo
+        //$fp = fopen("D:/LOCALHOST/SerOuvidoriaAbreu/resources/views/reports/registroDemanda.blade.php", "w");
+        $fp = fopen("/var/www/html/SerOuvidoriaAbreu//resources/views/reports/registroDemanda.blade.php", "w");
+
+        //Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+        //Fecha o arquivo
+        fclose($fp);
+
+        // Retorno do template e dados do documento
+        return \PDF::loadView('reports.registroDemanda', compact(
+            'titulo', 'informacao', 'data_cadastro', 'hora_cadastro', 'protocolo', 'tipo_demanda', 'sigilo',
+            'nome', 'sexo', 'fone', 'email', 'idade', 'rg', 'cpf', 'profissao', 'endereco', 'numero_end', 'cidade',
+            'bairro', 'cep', 'relato'
+        ))->stream();
+
     }
 
     /**
