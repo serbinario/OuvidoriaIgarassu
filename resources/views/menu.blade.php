@@ -311,7 +311,7 @@
     <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
     <script src="{{ asset('/js/demanda/create_demanda.js')}}"></script>
     <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>
-    <script src="{{ asset('/js/demanda/manifestacoes_arquivadas.js')}}"></script>
+
 
     {{-- Importes da página gráficos --}}
     <script src="{{ asset('/js/plugins/highcharts.js')  }}"></script>
