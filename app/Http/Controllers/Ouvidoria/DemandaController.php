@@ -391,7 +391,7 @@ class DemandaController extends Controller
 
                 // Condição para habilitar a opção de arquivar caso a demanda esteja finalizada
                 if ($row->status_id == '6') {
-                    $html .= '<a href="arquivar/'.$row->id.'" class="btn btn-xs btn-info arquivar" title="Arquivar"><i class="zmdi zmdi-mail-send"></i></a>';
+                    $html .= '<a href="arquivar/'.$row->id.'" class="btn btn-xs btn-info arquivar" title="Arquivar"><i class="zmdi zmdi-archive"></i></a>';
                 }
 
                 return $html;

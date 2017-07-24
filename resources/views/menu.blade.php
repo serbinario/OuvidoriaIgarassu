@@ -149,7 +149,7 @@
                 <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>
             @endrole--}}
             @role('ouvidoria|admin')
-            <li><a href="{{ route('seracademico.ouvidoria.demanda.manifestacoesArquivadas')  }}"><i class="zmdi zmdi-assignment-o"></i> Manifestações arquivadas</a></li>
+            <li><a href="{{ route('seracademico.ouvidoria.demanda.manifestacoesArquivadas')  }}"><i class="zmdi zmdi-archive"></i> Manifestações arquivadas</a></li>
             <li class="sub-menu">
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
                 <ul>
