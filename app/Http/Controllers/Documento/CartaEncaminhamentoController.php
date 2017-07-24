@@ -28,7 +28,7 @@ class CartaEncaminhamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index_old($id)
     {
         // Pega o template atual para o documento de carta de encaminhamento
         $template = \DB::table('templates')->where('documento_id', 1)->where('status', 1)->select('html')->first();
@@ -44,6 +44,54 @@ class CartaEncaminhamentoController extends Controller
 
         // Retorno do template e dados do documento
         return \PDF::loadView('reports.cartaEncaminhamento', compact('conteudo'))->stream();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function index($id)
+    {
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')->where('documento_id', 1)->where('status', 1)->select('html')->first();
+
+        // Pega os dados necessário contidos no documentos
+        $dados = $this->dados($id);
+
+        $titulo = $dados['configuracao']->nome; # Nome estabelecido na configutação do sistema
+        $codigo = $dados['manifestacao']->codigo;
+        $secretariaId = $dados['manifestacao']->area_id;
+        $secretario = $dados['manifestacao']->secretario;
+        $dataManifestacao = $dados['manifestacao']->dataRegistro; # data de registro da manifestação
+        $protocolo = $dados['manifestacao']->n_protocolo;
+        $tipoManifestacao = $dados['manifestacao']->tipoManifestacao;
+        $assunto = $dados['manifestacao']->assunto;
+        $origem = $dados['manifestacao']->origem; # Meio usado para registrar a manifestação
+        $tipoUsuario = $dados['manifestacao']->tipoUsuario; # Se cidadão, funcionário e etc.
+        $sigiloId = $dados['manifestacao']->sigilo_id;
+        $nome = $dados['manifestacao']->nome; # nome do manifestante
+        $fone = $dados['manifestacao']->fone;
+        $prioridade = $dados['manifestacao']->prioridade;
+        $prazo = $dados['manifestacao']->prazo; # dias para solução do problema de acordo com prioridade
+        $relato = $dados['manifestacao']->relato; # relato do manifestante
+        $parecer = isset($dados['encaminhamento']->parecer) ? $dados['encaminhamento']->parecer : ""; # primeiro parecer do ouvidor
+
+
+        // Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen("D:/LOCALHOST/SerOuvidoriaAbreu/resources/views/reports/cartaEncaminhamento.blade.php", "w");
+
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+       //Fecha o arquivo
+        fclose($fp);
+
+        // Retorno do template e dados do documento
+        return \PDF::loadView('reports.cartaEncaminhamento', compact(
+            'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
+            'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
+            'prazo', 'relato', 'parecer'
+            ))->stream();
     }
 
     /**
