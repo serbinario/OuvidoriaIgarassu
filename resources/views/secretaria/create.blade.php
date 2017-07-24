@@ -20,7 +20,6 @@
                         @endforeach
                     </div>
                 @endif
-
             </div>
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}

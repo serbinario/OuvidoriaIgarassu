@@ -134,7 +134,7 @@ class DemandaController extends Controller
      */
     public function getDemanda(Request $request, $protocolo)
     {
-
+        try {
         // Pegando o número do protocolo
         $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
 
@@ -167,7 +167,13 @@ class DemandaController extends Controller
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
             ])->get();
 
-        return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
+            return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
+
+        } catch (ValidatorException $e) {
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', 'Protocolo não encontrado!');
+        }
     }
 
     /**
