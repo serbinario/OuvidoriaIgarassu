@@ -241,7 +241,7 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{$encaminhamento->data_finalizacao}} - <b>Demanda finalizada como: </b> {{$dados->status_externo}}
+                                        {{$encaminhamento->data_finalizacao}} - <b>Manifestação finalizada como: </b> {{$dados->status_externo}}
                                     </div>
                                 </div>
                             </li>
@@ -249,12 +249,12 @@
                     @endif
 
                     <!-- List group para demanda arquivada -->
-                    @if(isset($encaminhamento) && $encaminhamento->status_id == '6' && $encaminhamento->arquivamento == 1)
-                        <ul class="list-group" style="margin-top: -15px">
+                    @if(isset($encaminhamento) && $encaminhamento->arquivada == 1)
+                        <ul class="list-group" style="margin-top: 5px;">
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{$encaminhamento->data_arquivamento}} - <b>Demanda arquivada</b>
+                                        {{$encaminhamento->data_arquivamento}} - <b>Manifestação arquivada</b>
                                     </div>
                                 </div>
                             </li>
