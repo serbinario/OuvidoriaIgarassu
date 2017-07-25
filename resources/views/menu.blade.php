@@ -308,8 +308,8 @@
     <script src="{{ asset('/js/encaminhamento/encaminhamento.js')}}"></script>
 
     {{-- Importes da página de create e update e index de demanda --}}
-    <script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
-    <script src="{{ asset('/js/demanda/create_demanda.js')}}"></script>
+    {{--<script src="{{ asset('/js/validacoes/demanda.js')}}"></script>
+    <script src="{{ asset('/js/demanda/create_demanda.js')}}"></script>--}}
     <script src="{{ asset('/js/demanda/index_demanda.js')}}"></script>
 
 
