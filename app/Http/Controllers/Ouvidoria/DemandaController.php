@@ -118,7 +118,25 @@ class DemandaController extends Controller
      */
     public function indexPublico()
     {
-        return view('ouvidoria.demanda.indexPublico');
+
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')->where('documento_id', 5)->where('status', 1)->select('html')->first();
+
+
+        // Pega o caminho do arquivo
+        $empresa = "Serbinario";
+        $caminho = base_path("/resources/views/ouvidoria/demanda/{$empresa}indexPublico.blade.php");
+
+        // Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
+
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+        //Fecha o arquivo
+        fclose($fp);
+
+        return view("ouvidoria.demanda.{$empresa}indexPublico");
     }
 
     /**
@@ -170,7 +188,7 @@ class DemandaController extends Controller
                 'ouv_destinatario.nome as destino',
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
             ])->get();
-//dd($encaminhamentos);
+
             return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
@@ -436,8 +454,25 @@ class DemandaController extends Controller
         $loadFields = $this->service->load($this->loadFields);
         $loadFields2 = $this->service->load2($this->loadFields2);
 
+
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')->where('documento_id', 3)->where('status', 1)->select('html')->first();
+
+        // Pega o caminho do arquivo
+        $empresa = "Serbinario";
+        $caminho = base_path("/resources/views/ouvidoria/demanda/{$empresa}createPublic.blade.php");
+
+        // Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
+
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+        //Fecha o arquivo
+        fclose($fp);
+
         #Retorno para view
-        return view('ouvidoria.demanda.createPublic', compact('loadFields', 'loadFields2'));
+        return view("ouvidoria.demanda.{$empresa}createPublic", compact('loadFields', 'loadFields2'));
     }
 
     /**
