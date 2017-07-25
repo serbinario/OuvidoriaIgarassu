@@ -183,6 +183,7 @@ class DemandaController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_finalizacao,"%d/%m/%Y") as data_finalizacao'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data_arquivamento,"%d/%m/%Y") as data_arquivamento'),
                 'ouv_area.nome as secretaria',
                 'ouv_area.id as secretaria_id',
                 'ouv_destinatario.nome as destino',
