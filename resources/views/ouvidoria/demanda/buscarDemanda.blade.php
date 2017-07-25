@@ -155,8 +155,10 @@
                             </div>
                         </li>
                     </ul>
+
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         @foreach($encaminhamentos as $chave => $encaminhamento)
+
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
