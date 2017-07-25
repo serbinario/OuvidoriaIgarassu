@@ -122,7 +122,6 @@ class DemandaController extends Controller
         // Pega o template atual para o documento de carta de encaminhamento
         $template = \DB::table('templates')->where('documento_id', 5)->where('status', 1)->select('html')->first();
 
-
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
         $caminho = base_path("/resources/views/ouvidoria/demanda/{$empresa}indexPublico.blade.php");
@@ -144,7 +143,24 @@ class DemandaController extends Controller
      */
     public function buscarDemanda()
     {
-        return view('ouvidoria.demanda.buscarDemanda');
+
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')->where('documento_id', 6)->where('status', 1)->select('html')->first();
+
+        // Pega o caminho do arquivo
+        $empresa = "Serbinario";
+        $caminho = base_path("/resources/views/ouvidoria/demanda/{$empresa}buscarDemanda.blade.php");
+
+        // Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
+
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+        //Fecha o arquivo
+        fclose($fp);
+
+        return view("ouvidoria.demanda.{$empresa}buscarDemanda");
     }
 
     /**
