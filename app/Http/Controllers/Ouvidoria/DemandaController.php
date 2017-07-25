@@ -155,26 +155,24 @@ class DemandaController extends Controller
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->join('ouv_demanda', 'ouv_status.id', '=', 'ouv_demanda.status_id')
-            ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)->select([
+            ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)
+            ->select([
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
                 'ouv_encaminhamento.status_id',
-                'ouv_demanda.arquivada',
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_finalizacao,"%d/%m/%Y") as data_finalizacao'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
-                \DB::raw('DATE_FORMAT(ouv_demanda.data_arquivamento,"%d/%m/%Y") as data_arquivamento'),
-                //'ouv_demanda.data_arquivamento',
                 'ouv_area.nome as secretaria',
                 'ouv_area.id as secretaria_id',
                 'ouv_destinatario.nome as destino',
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
-            ])->get();
-//dd($encaminhamentos);
+                    ])
+            ->get();
+
             return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
