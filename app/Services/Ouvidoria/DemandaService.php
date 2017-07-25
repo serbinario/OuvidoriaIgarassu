@@ -486,6 +486,8 @@ class DemandaService
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                \DB::raw('DATE_FORMAT(ouv_demanda.data_arquivamento,"%d/%m/%Y") as data_arquivamento'),
+                'ouv_demanda.arquivada',
                 'ouv_informacao.nome as informacao',
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',

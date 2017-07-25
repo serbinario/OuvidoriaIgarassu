@@ -155,8 +155,10 @@
                             </div>
                         </li>
                     </ul>
+
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         @foreach($encaminhamentos as $chave => $encaminhamento)
+
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
@@ -253,12 +255,12 @@
                     @endif
 
                     <!-- List group para demanda arquivada -->
-                    @if(isset($encaminhamento) && $encaminhamento->arquivada == 1)
+                    @if(isset($encaminhamento) && $dados->arquivada == 1)
                         <ul class="list-group" style="margin-top: 5px;">
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{$encaminhamento->data_arquivamento}} - <b>Manifestação arquivada</b>
+                                        {{$dados->data_arquivamento}} - <b>Manifestação arquivada</b>
                                     </div>
                                 </div>
                             </li>
