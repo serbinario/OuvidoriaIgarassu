@@ -251,12 +251,12 @@
                     @endif
 
                     <!-- List group para demanda arquivada -->
-                    @if(isset($encaminhamento) && $encaminhamento->arquivada == 1)
+                    @if(isset($encaminhamento) && $dados->arquivada == 1)
                         <ul class="list-group" style="margin-top: 5px;">
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        {{$encaminhamento->data_arquivamento}} - <b>Manifestação arquivada</b>
+                                        {{$dados->data_arquivamento}} - <b>Manifestação arquivada</b>
                                     </div>
                                 </div>
                             </li>
