@@ -427,6 +427,8 @@ class DemandaService
         #arquivando a demanda o curso
         $result = $this->repository->find($id);
         $result->arquivada = '1';
+        $result->data_arquivamento = date('Y-m-d');
+
         $result->save();
 
         # Verificando se a execução foi bem sucessida
