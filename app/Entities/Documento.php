@@ -14,6 +14,7 @@ class Documento extends Model implements Transformable
 
     protected $fillable = [
         'nome',
+        'tipo_template_id'
     ];
 
 }

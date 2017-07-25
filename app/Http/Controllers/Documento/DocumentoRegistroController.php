@@ -58,9 +58,10 @@ class DocumentoRegistroController extends Controller
         $relato = $dados['manifestacao']->relato;
 
         // Pega o caminho do arquivo
-        $caminho = base_path("/resources/views/reports/registroDemanda.blade.php");
+        $empresa = "Serbinario";
+        $caminho = base_path("/resources/views/reports/{$empresa}registroDemanda.blade.php");
 
-        //Abre o arquivo em branco para escrita do conteúdo do arquivo
+        //Abre o arquivo em branco para escrita do conteúdo no arquivo
         $fp = fopen($caminho, "w");
 
         //Escreve no arquivo conteúdo do documento
@@ -70,7 +71,7 @@ class DocumentoRegistroController extends Controller
         fclose($fp);
 
         // Retorno do template e dados do documento
-        return \PDF::loadView('reports.registroDemanda', compact(
+        return \PDF::loadView("reports.{$empresa}registroDemanda", compact(
             'titulo', 'informacao', 'data_cadastro', 'hora_cadastro', 'protocolo', 'tipo_demanda', 'sigilo',
             'nome', 'sexo', 'fone', 'email', 'idade', 'rg', 'cpf', 'profissao', 'endereco', 'numero_end', 'cidade',
             'bairro', 'cep', 'relato'

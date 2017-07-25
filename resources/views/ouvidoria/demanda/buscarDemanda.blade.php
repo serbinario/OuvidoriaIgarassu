@@ -163,31 +163,38 @@
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
-                                            {{$encaminhamento->data}} - Encaminhada para
-                                                @if($encaminhamento->secretaria_id == '1')
-                                                    {{$encaminhamento->destino}}
-                                                    {{--encaminhando--}}
-                                                    @elseif($encaminhamento->status_id == 1)
-                                                        {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
-                                                        {{--aguardando resposta--}}
-                                                        @elseif($encaminhamento->status_id == 2)
-                                                            {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
-                                                            {{--fechada--}}
-                                                            @elseif ($encaminhamento->status_id == 3)
-                                                                {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
-                                                                {{--respondida--}}
-                                                                @elseif ($encaminhamento->status_id == 4)
-                                                                    {{$encaminhamento->secretaria}} - <b>Prazo de retorno:</b> {{$dados->previsao}}
-                                                                    {{--nova--}}
-                                                                    @elseif ($encaminhamento->status_id == 5)
-                                                                        {{$encaminhamento->secretaria}}
-                                                                        {{--finalizada--}}
-                                                                        @elseif ($encaminhamento->status_id == 6)
-                                                                            {{$encaminhamento->secretaria}}
-                                                                            {{--reecaminhada--}}
-                                                                                @elseif ($encaminhamento->status_id == 7)
-                                                                                    {{$encaminhamento->secretaria}}
-                                                @endif
+                                            {{$encaminhamento->data}} - <b>Encaminhada para: </b>
+                                            <?php
+                                            switch ($encaminhamento->secretaria_id) {
+                                                case 1:
+                                                    echo "$encaminhamento->destino: ";
+                                                    break;
+                                                default:
+                                                    echo "$encaminhamento->destino";
+                                                }
+                                            ?>
+                                            <?php
+                                            switch ($encaminhamento->status_id) {
+                                                case 1:
+                                                    echo "$encaminhamento->secretaria";
+                                                    break;
+                                                case 2:
+                                                    echo "$encaminhamento->secretaria";
+                                                    break;
+                                                case 3:
+                                                    echo "$encaminhamento->secretaria - <b>Prazo de retorno:</b> $dados->previsao";
+                                                    break;
+                                                case 5:
+                                                    echo "$encaminhamento->secretaria";
+                                                    break;
+                                                case 6:
+                                                    echo "$encaminhamento->secretaria";
+                                                    break;
+                                                case 7:
+                                                    echo "$encaminhamento->secretaria";
+                                                    break;
+                                                }
+                                            ?>
                                         </a>
                                     </h4>
                                 </div>

@@ -43,9 +43,6 @@ function loadAssuntos(dados) {
     jQuery.ajax({
         type: 'POST',
         url: "/index.php/seracademico/util/search",
-        headers: {
-            'X-CSRF-TOKEN': '{{  csrf_token() }}'
-        },
         data: dados,
         datatype: 'json'
     }).done(function (json) {
@@ -141,9 +138,6 @@ $(document).on('change', "#cidade", function () {
         jQuery.ajax({
             type: 'POST',
             url: "/index.php/seracademico/util/search",
-            headers: {
-                'X-CSRF-TOKEN': '{{  csrf_token() }}'
-            },
             data: dados,
             datatype: 'json'
         }).done(function (json) {
