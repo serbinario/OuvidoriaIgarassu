@@ -39,6 +39,20 @@
     <div class="row">
         <div class="col-sm-5 col-md-10 col-md-offset-1">
             <div class="ibox-content">
+                @if(Session::has('message'))
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <em> {!! session('message') !!}</em>
+                    </div>
+                @endif
+                @if(Session::has('errors'))
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        @foreach($errors->all() as $error)
+                            <div>{{ $error }}</div>
+                        @endforeach
+                    </div>
+                @endif
                 {!! Form::open(['route'=>'getDemanda', 'method' => "GET", 'id' => 'formBuscaDemanda' ]) !!}
                 <div class="row">
                     <div class="form-group col-md-10">
@@ -141,16 +155,41 @@
                             </div>
                         </li>
                     </ul>
-
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         @foreach($encaminhamentos as $chave => $encaminhamento)
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
-                                            {{$encaminhamento->data}} - <b>Encaminhada para
-                                                @if($encaminhamento->secretaria_id == '1'){{$encaminhamento->destino}}
-                                                @else {{$encaminhamento->secretaria}} @endif </b>
+                                            {{$encaminhamento->data}} - Encaminhada para
+                                            @if($encaminhamento->secretaria_id == '1')
+                                                {{$encaminhamento->destino}}
+                                                {{--encaminhando--}}
+                                            @elseif($encaminhamento->status_id == 1)
+                                                {{$encaminhamento->secretaria}} - <b>Prazo de
+                                                    retorno:</b> {{$dados->previsao}}
+                                                {{--aguardando resposta--}}
+                                            @elseif($encaminhamento->status_id == 2)
+                                                {{$encaminhamento->secretaria}} - <b>Prazo de
+                                                    retorno:</b> {{$dados->previsao}}
+                                                {{--fechada--}}
+                                            @elseif ($encaminhamento->status_id == 3)
+                                                {{$encaminhamento->secretaria}} - <b>Prazo de
+                                                    retorno:</b> {{$dados->previsao}}
+                                                {{--respondida--}}
+                                            @elseif ($encaminhamento->status_id == 4)
+                                                {{$encaminhamento->secretaria}} - <b>Prazo de
+                                                    retorno:</b> {{$dados->previsao}}
+                                                {{--nova--}}
+                                            @elseif ($encaminhamento->status_id == 5)
+                                                {{$encaminhamento->secretaria}}
+                                                {{--finalizada--}}
+                                            @elseif ($encaminhamento->status_id == 6)
+                                                {{$encaminhamento->secretaria}}
+                                                {{--reecaminhada--}}
+                                            @elseif ($encaminhamento->status_id == 7)
+                                                {{$encaminhamento->secretaria}}
+                                            @endif
                                         </a>
                                     </h4>
                                 </div>
@@ -163,37 +202,69 @@
                                                 </div>
                                             </div>
                                         </li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                                        @if($encaminhamento->data_resposta)
+                            {{-- collapse para respotas --}}
+                            @if($encaminhamento->resp_publica == '1' || $encaminhamento->resposta_ouvidor)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="heading-<?php echo $chave."a"; ?>">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $chave."a"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $chave."a"; ?>">
+                                                {{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante</b>
+                                                @if($encaminhamento->prazo_solucao <> null)
+                                                    : <b>Prazo para solução:</b> {{$encaminhamento->prazo_solucao}}
+                                                @endif
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-<?php echo $chave."a"; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $chave."a"; ?>">
+                                        <ul class="list-group">
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-md-12">
-                                                        <span>{{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante :</b>
+                                                    <div class="col-md-6">
                                                         @if($encaminhamento->resp_publica == '1')
                                                             {{$encaminhamento->resposta}}
                                                         @else
                                                             {{$encaminhamento->resposta_ouvidor}}
                                                         @endif
-                                                        </span>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="list-group-item">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <b>Prazo de resposta:</b> {{$dados->previsao}}
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <b>Prazo para solução:</b> {{$dados->prazo_solucao}}
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        @endif
-                                    </ul>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         @endforeach
                     </div>
+
+                    <!-- List group para demanda que for finalizada -->
+                    @if(isset($encaminhamento) && $encaminhamento->status_id == '6')
+                        <ul class="list-group" style="margin-top: -15px">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{$encaminhamento->data_finalizacao}} - <b>Demanda finalizada como: </b> {{$dados->status_externo}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    @endif
+
+                    <!-- List group para demanda arquivada -->
+                    @if(isset($encaminhamento) && $encaminhamento->status_id == '6')
+                        <ul class="list-group" style="margin-top: -15px">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{$encaminhamento->data_arquivamento}} - <b>Demanda arquivada</b>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    @endif
+
                 </div>
             </div>
         @endif
@@ -205,12 +276,12 @@
             <strong>Copyright &copy; 2015-2016 <a target="_blank" href="http://serbinario.com.br"><i></i>SERBINARIO</a> .</strong> Todos os direitos reservados.
         </center>
     </div>
+</div>
     <hr/>
     <script src="{{ asset('/js/jquery-2.1.1.js')}}"></script>
     <script src="{{ asset('/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('/lib/jquery-validation/dist/jquery.validate.js') }}"></script>
     <script src="{{ asset('/lib/jquery-validation/src/localization/messages_pt_BR.js') }}"></script>
     <script src="{{ asset('/js/validacoes/busca_demanda.js')}}"></script>
-
 </body>
 </html>

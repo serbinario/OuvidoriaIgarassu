@@ -50,7 +50,7 @@
                                         </ul>
                                         <!-- Fim Guias -->
 
-                                        <!-- Conte�do -->
+                                        <!-- Conte?do -->
                                         <div class="tab-content">
                                             {{--#1--}}
                                             <div role="tabpanel" class="tab-pane active" id="dados">
@@ -66,16 +66,16 @@
                                                     {{--<div class="form-group col-md-2">
                                                         <div class="fg-line">
                                                             <div class="fg-line">
-                                                                <label for="data_da_ocorrencia">Data da ocorr�ncia</label>
-                                                                {!! Form::text('data_da_ocorrencia', Session::getOldInput('data_da_ocorrencia'), array('class' => 'form-control input-sm date', 'id' => 'data_da_ocorrencia', 'placeholder' => 'Data da ocorr�ncia')) !!}
+                                                                <label for="data_da_ocorrencia">Data da ocorr?ncia</label>
+                                                                {!! Form::text('data_da_ocorrencia', Session::getOldInput('data_da_ocorrencia'), array('class' => 'form-control input-sm date', 'id' => 'data_da_ocorrencia', 'placeholder' => 'Data da ocorr?ncia')) !!}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-2">
                                                         <div class="fg-line">
                                                             <div class="fg-line">
-                                                                <label for="hora_da_ocorrencia">Hora da ocorr�ncia</label>
-                                                                {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control input-sm time', 'placeholder' => 'Hora da ocorr�ncia')) !!}
+                                                                <label for="hora_da_ocorrencia">Hora da ocorr?ncia</label>
+                                                                {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control input-sm time', 'placeholder' => 'Hora da ocorr?ncia')) !!}
                                                             </div>
                                                         </div>
                                                     </div>--}}
@@ -561,7 +561,7 @@
             }
         });
 
-        // Func��o para carregar os assunto
+        // Func??o para carregar os assunto
         function loadAssuntos(dados) {
 
             //Removendo as assuntos
@@ -605,7 +605,7 @@
         });
 
 
-        // Fun��o para carregar os subassuntos
+        // Fun??o para carregar os subassuntos
         function loadSubassuntos(dados) {
 
             //Removendo as Bairros
