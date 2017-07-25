@@ -1,3 +1,4 @@
+//const elixir = require('laravel-elixir');
 var gulp = require('gulp');
 var cleancss = require('gulp-clean-css');
 var concat = require('gulp-concat');

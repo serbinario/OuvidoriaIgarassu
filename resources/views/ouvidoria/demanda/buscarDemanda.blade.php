@@ -249,7 +249,7 @@
                     @endif
 
                     <!-- List group para demanda arquivada -->
-                    @if(isset($encaminhamento) && $encaminhamento->status_id == '6')
+                    @if(isset($encaminhamento) && $encaminhamento->status_id == '6' && $encaminhamento->arquivamento == 1)
                         <ul class="list-group" style="margin-top: -15px">
                             <li class="list-group-item">
                                 <div class="row">
