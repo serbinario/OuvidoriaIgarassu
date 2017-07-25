@@ -6,7 +6,8 @@
     "gulp": "^3.8.8",
     "gulp-clean-css": "^3.4.2",
     "gulp-concat": "^2.6.1",
-    "gulp-uglify": "^3.0.0"
+    "gulp-uglify": "^3.0.0",
+    "laravel-elixir-browsersync-official": "^1.0.0"
   },
   "dependencies": {
     "laravel-elixir": "^3.0.0",

@@ -170,7 +170,7 @@ class DemandaController extends Controller
                 'ouv_destinatario.nome as destino',
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
             ])->get();
-//dd($encaminhamentos);
+
             return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
