@@ -1,3 +1,5 @@
+@inject('service', 'Seracademico\Services\Ouvidoria\EncaminhamentoService')
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -157,44 +159,18 @@
                     </ul>
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <?php
+                            $prazoProrrogado = null;
+                        ?>
                         @foreach($encaminhamentos as $chave => $encaminhamento)
-
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="heading-{{$chave}}">
                                     <h4 class="panel-title">
                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
                                             {{$encaminhamento->data}} - <b>Encaminhada para: </b>
-                                            <?php
-                                            switch ($encaminhamento->secretaria_id) {
-                                                case 1:
-                                                    echo "$encaminhamento->destino: ";
-                                                    break;
-                                                default:
-                                                    echo "$encaminhamento->destino";
-                                                }
-                                            ?>
-                                            <?php
-                                            switch ($encaminhamento->status_id) {
-                                                case 1:
-                                                    echo "$encaminhamento->secretaria";
-                                                    break;
-                                                case 2:
-                                                    echo "$encaminhamento->secretaria";
-                                                    break;
-                                                case 3:
-                                                    echo "$encaminhamento->secretaria - <b>Prazo de retorno:</b> $dados->previsao";
-                                                    break;
-                                                case 5:
-                                                    echo "$encaminhamento->secretaria";
-                                                    break;
-                                                case 6:
-                                                    echo "$encaminhamento->secretaria";
-                                                    break;
-                                                case 7:
-                                                    echo "$encaminhamento->secretaria";
-                                                    break;
-                                                }
-                                            ?>
+                                            @if ($encaminhamento->secretaria_id)
+                                                {{$encaminhamento->destino}} - <b>Prazo para resposta: </b> {{$encaminhamento->previsao}}
+                                            @endif
                                         </a>
                                     </h4>
                                 </div>
@@ -218,7 +194,7 @@
                                         <h4 class="panel-title">
                                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $chave."a"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $chave."a"; ?>">
                                                 {{$encaminhamento->data_resposta}} - <b>Resposta da Secretaria Demandante</b>
-                                                @if($encaminhamento->prazo_solucao <> null)
+                                                @if($encaminhamento->prazo_solucao != null)
                                                     : <b>Prazo para solução:</b> {{$encaminhamento->prazo_solucao}}
                                                 @endif
                                             </a>
@@ -241,6 +217,30 @@
                                     </div>
                                 </div>
                             @endif
+
+                            {{-- collapse para alteração prazo solução --}}
+                            @foreach($service->getPrazos($encaminhamento->id) as $key => $prazo)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="heading-<?php echo $key."c"; ?>">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $key."c"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $key."c"; ?>">
+                                                {{$encaminhamento->data}} - <b>Prazo para solução prorrogado para: </b> {{$prazo->data}}
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse-<?php echo $key."c"; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $key."c"; ?>">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                    {{$prazo->justificativa}}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endforeach
                         @endforeach
                     </div>
 

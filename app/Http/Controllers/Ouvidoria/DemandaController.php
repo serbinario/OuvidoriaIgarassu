@@ -118,9 +118,16 @@ class DemandaController extends Controller
      */
     public function indexPublico()
     {
-
+        try {
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')->where('documento_id', 5)->where('status', 1)->select('html')->first();
+        $template = \DB::table('templates')
+            ->where('documento_id', 5)
+            ->where('status', 1)
+            ->select('html')->first();
+
+        if (!$template) {
+            throw new \Exception('Template não encontrado!');
+        }
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
@@ -136,6 +143,12 @@ class DemandaController extends Controller
         fclose($fp);
 
         return view("ouvidoria.demanda.{$empresa}indexPublico");
+
+        } catch (ValidatorException $e) {
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('message', $e->getMessage());
+}
     }
 
     /**
@@ -143,9 +156,11 @@ class DemandaController extends Controller
      */
     public function buscarDemanda()
     {
-
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')->where('documento_id', 6)->where('status', 1)->select('html')->first();
+        $template = \DB::table('templates')
+            ->where('documento_id', 6)
+            ->where('status', 1)
+            ->select('html')->first();
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
@@ -178,6 +193,10 @@ class DemandaController extends Controller
         // Consulta os dados da demanda
         $dados = $this->service->detalheDaDemanda($protocolo);
 
+            if (!$dados) {
+                throw new \Exception('Manifestação não encontrada!');
+            }
+
         $encaminhamentos = \DB::table('ouv_encaminhamento')
             ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
                 $join->on(
@@ -191,6 +210,7 @@ class DemandaController extends Controller
             ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
             ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)
             ->select([
+                'ouv_encaminhamento.id',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
@@ -200,19 +220,20 @@ class DemandaController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_finalizacao,"%d/%m/%Y") as data_finalizacao'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_area.nome as secretaria',
                 'ouv_area.id as secretaria_id',
                 'ouv_destinatario.nome as destino',
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
                     ])
             ->get();
-//dd($encaminhamentos);
+
             return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         } catch (\Throwable $e) {
-            return redirect()->back()->with('message', 'Protocolo não encontrado!');
+            return redirect()->back()->with('message', $e->getMessage());
         }
     }
 

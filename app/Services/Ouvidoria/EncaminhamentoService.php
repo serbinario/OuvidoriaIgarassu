@@ -607,4 +607,23 @@ class EncaminhamentoService
 
         return $newCod2;
     }
+
+    /**
+     * @param $idEncaminhamento
+     */
+    public function getPrazos($idEncaminhamento)
+    {
+        $prazos = \DB::table('prazo_solucao')
+            ->select([
+                'id',
+                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as data'),
+                'justificativa',
+                'status'
+            ])
+            ->where('status', 1)
+            ->where('encaminhamento_id', $idEncaminhamento)
+            ->get();
+
+        return $prazos;
+    }
 }
