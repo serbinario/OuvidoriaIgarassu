@@ -118,16 +118,9 @@ class DemandaController extends Controller
      */
     public function indexPublico()
     {
-        try {
-        // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')
-            ->where('documento_id', 5)
-            ->where('status', 1)
-            ->select('html')->first();
 
-        if (!$template) {
-            throw new \Exception('Template não encontrado!');
-        }
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')->where('documento_id', 5)->where('status', 1)->select('html')->first();
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
@@ -143,12 +136,6 @@ class DemandaController extends Controller
         fclose($fp);
 
         return view("ouvidoria.demanda.{$empresa}indexPublico");
-
-        } catch (ValidatorException $e) {
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {
-            return redirect()->back()->with('message', $e->getMessage());
-}
     }
 
     /**
@@ -187,6 +174,10 @@ class DemandaController extends Controller
     public function getDemanda(Request $request, $protocolo)
     {
         try {
+
+            //Pegando a empresa
+            $empresa = "Serbinario";
+
         // Pegando o número do protocolo
         $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
 
@@ -228,7 +219,8 @@ class DemandaController extends Controller
                     ])
             ->get();
 
-            return view('ouvidoria.demanda.buscarDemanda', compact('dados', 'encaminhamentos'));
+
+            return  view("ouvidoria.demanda.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
