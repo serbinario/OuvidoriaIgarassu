@@ -23,7 +23,7 @@
                                 <div>{{ $error }}</div>
                             @endforeach
                         </div>
-                @endif
+                        @endif
 
                 <!-- Botão novo -->
                     <div class="row">
@@ -78,7 +78,7 @@
         });
 
 
-        /*$(document).on('click', 'a.excluir', function (event) {
+        $(document).on('click', 'a.excluir', function (event) {
             event.preventDefault();
             var url = $(this).attr('href');
             swal({
@@ -90,7 +90,7 @@
             }).then(function(){
                 location.href = url;
             });
-        });*/
+        });
 
     </script>
 @stop

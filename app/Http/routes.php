@@ -222,6 +222,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
             Route::get('create', ['as' => 'create', 'uses' => 'TemplateController@create']);
             Route::post('store', ['as' => 'store', 'uses' => 'TemplateController@store']);
             Route::get('grid', ['as' => 'grid', 'uses' => 'TemplateController@grid']);
+            Route::get('destroy/{id}', ['as' => 'destroy', 'uses' => 'TemplateController@destroy']);
         });
 
         // Rotas para importação de templates para os documentos
