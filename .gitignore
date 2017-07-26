@@ -12,3 +12,4 @@ Homestead.json
 snappy.php
 /public/lib/*
 /public/lib/
+/storage
