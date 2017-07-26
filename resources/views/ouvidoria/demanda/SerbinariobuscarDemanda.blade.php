@@ -159,6 +159,7 @@
                     </ul>
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
                         <?php
                             $prazoProrrogado = null;
                         ?>
@@ -169,7 +170,7 @@
                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-{{$chave}}" aria-expanded="true" aria-controls="collapse-{{$chave}}">
                                             {{$encaminhamento->data}} - <b>Encaminhada para: </b>
                                             @if ($encaminhamento->secretaria_id)
-                                                {{$encaminhamento->destino}} - <b>Prazo para resposta: </b> {{$encaminhamento->previsao}}
+                                                {{$encaminhamento->secretaria}} - <b>Prazo para resposta: </b> {{$encaminhamento->previsao}}
                                             @endif
                                         </a>
                                     </h4>

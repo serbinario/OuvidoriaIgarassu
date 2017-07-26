@@ -174,51 +174,49 @@ class DemandaController extends Controller
     public function getDemanda(Request $request, $protocolo)
     {
         try {
-
             //Pegando a empresa
             $empresa = "Serbinario";
 
-        // Pegando o número do protocolo
-        $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
+            // Pegando o número do protocolo
+            $protocolo = $request->get('protocolo') ? $request->get('protocolo') : $protocolo;
 
-        // Consulta os dados da demanda
-        $dados = $this->service->detalheDaDemanda($protocolo);
+            // Consulta os dados da demanda
+            $dados = $this->service->detalheDaDemanda($protocolo);
 
             if (!$dados) {
                 throw new \Exception('Manifestação não encontrada!');
             }
 
-        $encaminhamentos = \DB::table('ouv_encaminhamento')
-            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
-                $join->on(
-                    'prazo_solucao.id', '=',
-                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
+            $encaminhamentos = \DB::table('ouv_encaminhamento')
+                ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+                    $join->on(
+                        'prazo_solucao.id', '=',
+                        \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
                         where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
-                );
-            })
-            ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)
-            ->select([
-                'ouv_encaminhamento.id',
-                'ouv_encaminhamento.resposta',
-                'ouv_encaminhamento.resposta_ouvidor',
-                'ouv_encaminhamento.resp_publica',
-                'ouv_encaminhamento.status_id',
-                'ouv_status.nome as status',
-                'ouv_status.id as status_id',
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_finalizacao,"%d/%m/%Y") as data_finalizacao'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
-                \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
-                'ouv_area.nome as secretaria',
-                'ouv_area.id as secretaria_id',
-                'ouv_destinatario.nome as destino',
-                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
-                    ])
-            ->get();
-
+                    );
+                })
+                ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
+                ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
+                ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+                ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)
+                ->select([
+                    'ouv_encaminhamento.id',
+                    'ouv_encaminhamento.resposta',
+                    'ouv_encaminhamento.resposta_ouvidor',
+                    'ouv_encaminhamento.resp_publica',
+                    'ouv_encaminhamento.status_id',
+                    'ouv_status.nome as status',
+                    'ouv_status.id as status_id',
+                    \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_finalizacao,"%d/%m/%Y") as data_finalizacao'),
+                    \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
+                    \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
+                    \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
+                    'ouv_area.nome as secretaria',
+                    'ouv_area.id as secretaria_id',
+                    'ouv_destinatario.nome as destino',
+                    \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
+                ])
+                ->get();
 
             return  view("ouvidoria.demanda.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
 
