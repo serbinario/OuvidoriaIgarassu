@@ -122,9 +122,10 @@ class AssuntoController extends Controller
 
             #Retorno para a view
             return redirect()->back()->with("message", "Cadastro realizado com sucesso!");
+
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        } catch (\Throwable $e) {print_r($e->getMessage()); exit;
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }

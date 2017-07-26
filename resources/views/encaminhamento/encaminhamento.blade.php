@@ -16,14 +16,14 @@
                     <div class="alert alert-danger">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         @foreach($errors->all() as $error)
-                            <div>{{ $error }}</div>
+                            <div>{{ utf8_encode($error) }}</div>
                         @endforeach
                     </div>
                 @endif
             </div>
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}
-            {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.encaminharStore', 'method' => "POST", 'id'=> 'formEncaminhamento' ]) !!}
+            {!! Form::open(['route'=>'seracademico.ouvidoria.encaminhamento.primeiroEncaminharStore', 'method' => "POST", 'id'=> 'formPrimeiroEncaminhamento' ]) !!}
             <div class="block-header">
                 <h2>Encaminhamento da demanda</h2>
             </div>
