@@ -298,6 +298,7 @@
 
     {{-- Importes da página de detalhe de encaminhamento  --}}
     <script src="{{ asset('/js/validacoes/encaminhamento.js')}}"></script>
+    {{--<script src="{{ asset('/js/validacoes/primeiro_encaminhamento.js')}}"></script>--}}
     <script src="{{ asset('/js/validacoes/reencaminhamento.js')}}"></script>
     <script src="{{ asset('/js/validacoes/modal_responder_ouvidor.js')}}"></script>
     <script src="{{ asset('/js/validacoes/modal_prorrogar_prazo_manifestacao.js')}}"></script>

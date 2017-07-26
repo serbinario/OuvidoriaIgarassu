@@ -10,18 +10,18 @@ class DemandaPublicValidator extends LaravelValidator
 	use TraitReplaceRulesValidator;
 
 	protected $attributes = [
-		'g-recaptcha-response' => 'Voc� precisa marcar'
+		'g-recaptcha-response' => 'Você precisa marcar'
 	];
 
 	protected $messages = [
-		'required' => ':attribute � requerido',
-		'max' => ':attribute s� pode ter no m�ximo :max caracteres',
-		'serbinario_alpha_space' => ' :attribute deve conter apenas letras e espa�os entre palavras',
-		'numeric' => ':attribute deve conter apenas n�meros',
+		'required' => ':attribute é requerido',
+		'max' => ':attribute só pode ter no máximo :max caracteres',
+		'serbinario_alpha_space' => ' :attribute deve conter apenas letras e espaços entre palavras',
+		'numeric' => ':attribute deve conter apenas números',
 		'email' => ':attribute deve seguir esse exemplo: exemplo@dominio.com',
 		'digits_between' => ':attribute deve ter entre :min - :max.',
-		'cpf_br' => ':attribute deve ser um n�mero de CPF v�lido',
-		'unique' => ':attribute j� se encontra cadastrado'
+		'cpf_br' => ':attribute deve ser um número de CPF válido',
+		'unique' => ':attribute já se encontra cadastrado'
 	];
 
     protected $rules = [

@@ -7,31 +7,34 @@ use \Prettus\Validator\LaravelValidator;
 
 class EncaminhamentoValidator extends LaravelValidator
 {
-    use TraitReplaceRulesValidator;
+	use TraitReplaceRulesValidator;
+
+	protected $messages  = [
+		'required' => ':attribute é requerido',
+	];
+
+	protected $attributes = [
+		'secretaria' =>  'Secretaria' ,
+		'parecer' =>  'Parecer' ,
+		'destinatario_id' =>  'Destino' ,
+		'prioridade_id' =>  'Prioridade' ,
+	];
 
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
-            
-			'previsao' =>  '' ,
-			'data' =>  '' ,
-			'parecer' =>  '' ,
-			'resposta' =>  '' ,
-			'destinatario_id' =>  '' ,
-			'status_id' =>  '' ,
-			'prioridade_id' =>  '' ,
-			'demanda_id' =>  '' ,
+
+			'secretaria' =>  'required' ,
+			'parecer' =>  'required' ,
+			'destinatario_id' =>  'required' ,
+			'prioridade_id' =>  'required' ,
 
         ],
         ValidatorInterface::RULE_UPDATE => [
-            
-			'previsao' =>  '' ,
-			'data' =>  '' ,
-			'parecer' =>  '' ,
-			'resposta' =>  '' ,
-			'destinatario_id' =>  '' ,
-			'status_id' =>  '' ,
-			'prioridade_id' =>  '' ,
-			'demanda_id' =>  '' ,
+
+			'secretaria' =>  'required' ,
+			'parecer' =>  'required' ,
+			'destinatario_id' =>  'required' ,
+			'prioridade_id' =>  'required' ,
 
         ],
    ];
