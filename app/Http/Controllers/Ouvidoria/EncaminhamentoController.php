@@ -381,8 +381,9 @@ class EncaminhamentoController extends Controller
     }
 
     /**
- * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
- */
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function encaminharStore(Request $request)
     {
         try {
@@ -402,6 +403,37 @@ class EncaminhamentoController extends Controller
 
         } catch (\Throwable $e) {print_r($e->getMessage()); exit;
             return redirect()->back()->with('message', $e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function primeiroEncaminharStore(Request $request)
+    {
+        try {
+            #Recuperando os dados da requisição
+            $data = $request->all();
+
+            #Validando a requisição
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
+
+            #Executando a ação
+            $this->service->encaminharStore($data);
+
+            /*if($returno) {
+                $detalhe = $this->queryParaDetalheEncaminhamento($returno->id);
+                SerbinarioSendEmail::sendEmailMultiplo($detalhe);
+            }*/
+
+            #Retorno para a view
+            return redirect()->route('seracademico.ouvidoria.demanda.index')->with("message", "Encaminhamento realizado com sucesso!");
+
+        } catch (ValidatorException $e) {
+            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
+        } catch (\Throwable $e) {
+            return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
     }
 

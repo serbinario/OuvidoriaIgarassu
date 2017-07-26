@@ -446,8 +446,6 @@ class GraficosController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ])->get();
 
-        //dd($rows);
-
         $dados = [];
         $dados[0] = ['Element', 'Density', ['role' => 'style']];
 
