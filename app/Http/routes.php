@@ -17,6 +17,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
         //Rotas gerais
         Route::get('index'  , ['as' => 'index', 'uses' => 'DefaultController@index']);
+        Route::post('statusAjaxDashboard', ['as' => 'statusAjaxDashboard', 'uses' => 'DefaultController@statusAjax']);
 
         Route::group(['prefix' => 'ouvidoria', 'as' => 'ouvidoria.'], function () {
 
