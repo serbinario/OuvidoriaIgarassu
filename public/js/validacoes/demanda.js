@@ -5,27 +5,27 @@ $(document).ready(function () {
         rules: {
 
             sigilo_id: {
-                required: true,
+                required: true
             },
 
             anonimo_id: {
-                required: true,
+                required: true
             },
 
             informacao_id: {
-                required: true,
+                required: true
             },
 
             pessoa_id: {
-                required: true,
+                required: true
             },
 
             relato: {
-                required: true,
+                required: true
             },
 
             area_id: {
-                required: true,
+                required: true
             }
         },
         //For custom messages

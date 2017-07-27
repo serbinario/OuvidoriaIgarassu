@@ -58,7 +58,7 @@
                                     {{--#1--}}
                                     <div role="tabpanel" class="tab-pane active" id="dados">
                                         <div class="row">
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-1">
                                                 <div class=" fg-line">
                                                     <label for="sigilo_id">Sigilo</label>
                                                     <div class="select">
@@ -83,8 +83,13 @@
                                                 </div>
                                             </div>--}}
                                         </div>
+
+                                        <div class="topo-conteudo-full">
+                                            <h4>Dados pessoais</h4>
+                                        </div>
+
                                         <div class="row">
-                                            <div class="form-group col-md-4">
+                                            <div class="form-group col-md-6">
                                                 <div class="fg-line">
                                                     <label for="nome">Nome</label>
                                                     {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome')) !!}
@@ -106,17 +111,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-4">
-                                                <div class="fg-line">
-                                                    <div class="fg-line">
-                                                        <label for="email">E-mail</label>
-                                                        {!! Form::text('email', Session::getOldInput('email'), array('class' => 'form-control input-sm', 'placeholder' => 'Endereço Eletrônico')) !!}
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-3">
                                                 <div class="fg-line">
                                                     <div class="fg-line">
                                                         <label for="cpf">CPF</label>
@@ -124,19 +121,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-3">
                                                 <div class="fg-line">
                                                     <div class="fg-line">
                                                         <label for="rg">RG</label>
                                                         {!! Form::text('rg', Session::getOldInput('rg'), array('class' => 'form-control input-sm', 'placeholder' => 'RG')) !!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group col-md-2">
-                                                <div class="fg-line">
-                                                    <div class="fg-line">
-                                                        <label for="fone">Telefone</label>
-                                                        {!! Form::text('fone', Session::getOldInput('fone'), array('class' => 'form-control input-sm telefone', 'placeholder' => 'Telefone para Contato')) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,6 +138,29 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-2">
+                                                <div class="fg-line">
+                                                    <div class="fg-line">
+                                                        <label for="fone">Telefone</label>
+                                                        {!! Form::text('fone', Session::getOldInput('fone'), array('class' => 'form-control input-sm telefone', 'placeholder' => 'Telefone para Contato')) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <div class="fg-line">
+                                                    <div class="fg-line">
+                                                        <label for="email">E-mail</label>
+                                                        {!! Form::text('email', Session::getOldInput('email'), array('class' => 'form-control input-sm', 'placeholder' => 'Endereço Eletrônico')) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="topo-conteudo-full">
+                                            <h4>Endereço</h4>
+                                        </div>
+
                                         <div class="row">
                                             <div class="form-group col-md-4">
                                                 <div class="fg-line">
@@ -201,6 +213,11 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="topo-conteudo-full">
+                                            <h4>Dados da Manifestação</h4>
+                                        </div>
+
                                         <div class="row">
                                             <div class="form-group col-md-3">
                                                 <div class=" fg-line">
@@ -440,7 +457,7 @@
                                                             <label for="encaminhamento[parecer]">Comentário/Parecer</label>
                                                             <div class="textarea">
                                                                 {!! Form::textarea('encaminhamento[parecer]', Session::getOldInput('encaminhamento[parecer]'),
-                                                                    array('class' => 'form-control', 'rows' => '5')) !!}
+                                                                    array('class' => 'form-control', 'rows' => '5', 'placeholder' => 'Descrição do ocorrido')) !!}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -479,27 +496,31 @@
                 rules: {
 
                     sigilo_id: {
-                        required: true,
+                        required: true
                     },
 
                     anonimo_id: {
-                        required: true,
+                        required: true
                     },
 
                     informacao_id: {
-                        required: true,
+                        required: true
                     },
 
                     pessoa_id: {
-                        required: true,
+                        required: true
                     },
 
                     relato: {
-                        required: true,
+                        required: true
                     },
 
                     area_id: {
-                        required: true,
+                        required: true
+                    },
+
+                    email: {
+                        email: true
                     }
                 },
                 //For custom messages
