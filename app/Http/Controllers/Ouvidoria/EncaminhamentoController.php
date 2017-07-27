@@ -107,6 +107,7 @@ class EncaminhamentoController extends Controller
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                \DB::raw('DATE_FORMAT(prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
                 'prazo_solucao.status as status_prazo_solucao',
                 'prazo_solucao.justificativa as justificativa_prazo_solucao',
             ])->first();
@@ -168,6 +169,7 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                \DB::raw('DATE_FORMAT(prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
                 'prazo_solucao.status as status_prazo_solucao',
                 'prazo_solucao.justificativa as justificativa_prazo_solucao',
                 'ouv_encaminhamento.encaminhado',

@@ -221,14 +221,15 @@
                             {{-- collapse para alteração prazo solução --}}
                             @foreach($service->getPrazos($encaminhamento->id) as $key => $prazo)
                                 <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="heading-<?php echo $key."c"; ?>">
+                                    <div class="panel-heading" role="tab" id="heading-<?php echo $encaminhamento->id.$key."c"; ?>">
                                         <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $key."c"; ?>" aria-expanded="true" aria-controls="collapse-<?php echo $key."c"; ?>">
-                                                {{$encaminhamento->data}} - <b>Prazo para solução prorrogado para: </b> {{$prazo->data}}
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?php echo $encaminhamento->id.$key."c"; ?>"
+                                               aria-expanded="true" aria-controls="collapse-<?php echo $encaminhamento->id.$key."c"; ?>">
+                                                {{$prazo->data_cadastro}} - <b>Prazo para solução prorrogado para: </b> {{$prazo->data}}
                                             </a>
                                         </h4>
                                     </div>
-                                    <div id="collapse-<?php echo $key."c"; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $key."c"; ?>">
+                                    <div id="collapse-<?php echo $encaminhamento->id.$key."c"; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-<?php echo $encaminhamento->id.$key."c"; ?>">
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 <div class="row">

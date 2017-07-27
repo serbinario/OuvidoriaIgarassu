@@ -90,6 +90,7 @@ class EncaminhamentoService
         $respostaOuvidor    = isset($data['resposta_ouvidor']) ? $data['resposta_ouvidor'] : "";
         $tipoResposta       = isset($data['tipo_resposta']) ? $data['tipo_resposta'] : "";
 
+
         //Pegando um objeto da data de solução casa seja informada
         if (isset($data['data']) && $data['data'] != "") {
             $dataSolucao = \DateTime::createFromFormat('d/m/Y', $data['data']);
@@ -138,6 +139,7 @@ class EncaminhamentoService
                 #Salvando o prazo de solução
                 \DB::table('prazo_solucao')->insert([
                     'data' => $dataSolucao,
+                    'data_cadastro' => $date->format('Y-m-d'),
                     'encaminhamento_id' => $encaminhamento->id
                 ]);
 
@@ -469,6 +471,9 @@ class EncaminhamentoService
     public function prorrogarPrazoSolucao(array $data)
     {
 
+        # Pegando a data atual
+        $date  = new \DateTime('now');
+
         #alterando o status do encaminhamento para prorrogado
         $encaminhamento = $this->find($data['id']);
 
@@ -486,7 +491,8 @@ class EncaminhamentoService
             'data' => $novoPrazo,
             'encaminhamento_id' => $encaminhamento->id,
             'status' => '1',
-            'justificativa' => $data['justificativa']
+            'justificativa' => $data['justificativa'],
+            'data_cadastro' => $date->format('Y-m-d')
         ]);
 
         #Verificando se foi criado no banco de dados
@@ -620,6 +626,7 @@ class EncaminhamentoService
             ->select([
                 'id',
                 \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
                 'justificativa',
                 'status'
             ])

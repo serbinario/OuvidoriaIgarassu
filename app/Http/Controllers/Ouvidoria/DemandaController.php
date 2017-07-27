@@ -214,7 +214,7 @@ class DemandaController extends Controller
                     'ouv_area.nome as secretaria',
                     'ouv_area.id as secretaria_id',
                     'ouv_destinatario.nome as destino',
-                    \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
+                    \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 ])
                 ->get();
 
