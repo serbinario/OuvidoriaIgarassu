@@ -54,7 +54,7 @@ $(document).ready(function(){
     var tableDemanda = $('#demanda-grid').DataTable({
         processing: true,
         serverSide: true,
-        order: [[ 1, "asc" ]],
+        order: [[ 1, "desc" ]],
         fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
             if ( aData['demandaAgrupada'] == "1" )
             {

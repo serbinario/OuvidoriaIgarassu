@@ -36,7 +36,7 @@
     <section id="content">
         <div class="container">
             <div class="block-header">
-                <h2>Listar Demanda(s)</h2>
+                <h2>Listar Manifestações</h2>
             </div>
 
             <div class="card material-table">
@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="text-right">
-                                <a class="btn btn-primary btn-sm m-t-10" href="{{ route('seracademico.ouvidoria.demanda.create')}}">Nova Demanda</a>
+                                <a class="btn btn-primary btn-sm m-t-10" href="{{ route('seracademico.ouvidoria.demanda.create')}}">Nova Manifestação</a>
                             </div>
                         </div>
                     </div><br />

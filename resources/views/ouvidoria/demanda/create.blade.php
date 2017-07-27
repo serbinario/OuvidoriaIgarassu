@@ -26,7 +26,7 @@
             {!! Form::open(['route'=>'seracademico.ouvidoria.demanda.store', 'method' => "POST", 'id'=> 'formDemanda' ]) !!}
 
             <div class="block-header">
-                <h2>Cadastro de Demandas</h2>
+                <h2>Cadastro de Manifestação</h2>
             </div>
             <div class="card">
                 <div class="card-body card-padding">
