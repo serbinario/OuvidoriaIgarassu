@@ -331,15 +331,21 @@
                                                         <td colspan="5">{{ $detalheEncaminhamento->resposta }}</td>
                                                     </tr>
 
-                                                    @if($detalheEncaminhamento->status_prazo_solucao)
+                                                    @if($detalheEncaminhamento->status_prazo_solucao ||
+                                                    (isset($encaminhamentoAnterior->status_prazo_solucao) && $encaminhamentoAnterior->status_prazo_solucao))
                                                         <tr>
                                                             <td colspan="5"><b>PRAZO DE SOLUÇÃO PRORROGADO - Justificativa da prorrogação:</b></td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="5">{{ $detalheEncaminhamento->justificativa_prazo_solucao }}</td>
+                                                            <td colspan="5">
+                                                                @if($detalheEncaminhamento->status_prazo_solucao)
+                                                                    {{ $detalheEncaminhamento->justificativa_prazo_solucao }}
+                                                                @elseif (isset($encaminhamentoAnterior->status_prazo_solucao) && $encaminhamentoAnterior->status_prazo_solucao)
+                                                                    {{ $encaminhamentoAnterior->justificativa_prazo_solucao }}
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     @endif
-
 
                                                     </tbody>
                                                     {{--<tbody>

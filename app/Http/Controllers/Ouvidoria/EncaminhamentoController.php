@@ -106,7 +106,9 @@ class EncaminhamentoController extends Controller
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
-                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao')
+                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                'prazo_solucao.status as status_prazo_solucao',
+                'prazo_solucao.justificativa as justificativa_prazo_solucao',
             ])->first();
 
         return view('encaminhamento.detalheDoEncaminhamento',

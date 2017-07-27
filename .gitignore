@@ -13,3 +13,7 @@ snappy.php
 /public/lib/*
 /public/lib/
 /storage
+/resources/views/ouvidoria/arquivos_dinamicos/
+/resources/views/ouvidoria/arquivos_dinamicos/*
+/resources/views/ouvidoria/reports/
+/resources/views/ouvidoria/reports/*
