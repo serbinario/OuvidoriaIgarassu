@@ -31,7 +31,7 @@
                         {{--#1--}}
                         <div role="tabpanel" class="tab-pane active" id="dados">
                             <div class="row">
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
                                     <div class=" fg-line">
                                         <label for="sigilo_id">Sigilo</label>
                                         <div class="select">
@@ -57,18 +57,10 @@
                                 </div>--}}
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <div class="fg-line">
                                         <label for="nome">Nome</label>
                                         {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome')) !!}
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <div class=" fg-line">
-                                        <label for="sexos_id">Sexo</label>
-                                        <div class="select">
-                                            {!! Form::select('sexos_id', $loadFields['sexo'], null, array('class'=> 'form-control')) !!}
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -79,11 +71,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <div class="fg-line">
-                                        <div class="fg-line">
-                                            <label for="email">E-mail</label>
-                                            {!! Form::text('email', Session::getOldInput('email'), array('class' => 'form-control input-sm', 'placeholder' => 'Endereço Eletrônico')) !!}
+                                <div class="form-group col-md-2">
+                                    <div class=" fg-line">
+                                        <label for="sexos_id">Sexo</label>
+                                        <div class="select">
+                                            {!! Form::select('sexos_id', $loadFields['sexo'], null, array('class'=> 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -105,11 +97,21 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-2">
                                     <div class="fg-line">
                                         <div class="fg-line">
                                             <label for="fone">Telefone</label>
                                             {!! Form::text('fone', Session::getOldInput('fone'), array('class' => 'form-control input-sm telefone', 'placeholder' => 'Telefone para Contato')) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="fg-line">
+                                        <div class="fg-line">
+                                            <label for="email">E-mail</label>
+                                            {!! Form::text('email', Session::getOldInput('email'), array('class' => 'form-control input-sm', 'placeholder' => 'Endereço Eletrônico')) !!}
                                         </div>
                                     </div>
                                 </div>

@@ -132,7 +132,6 @@ class DemandaService
      */
     public function store(array $data) : Demanda
     {
-
         // Pegando o usuário
         $user = Auth::user();
         
