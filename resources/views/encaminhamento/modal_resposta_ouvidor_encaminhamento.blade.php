@@ -34,6 +34,9 @@
                                 {!! Form::textarea('resposta_ouvidor', $detalheEncaminhamento->resposta_ouvidor , array('class' => 'form-control', 'rows' => '4')) !!}
                                 <input type="hidden" name="id" value="{{$detalheEncaminhamento->id}}">
                                 <input type="hidden" name="tipo_resposta" value="2">
+                                {{--<input type="hidden" name="data" value="
+                                @if($detalheEncaminhamento->prazo_solucao) {{ $detalheEncaminhamento->prazo_solucao }}
+                                @elseif ($prazoAnterior)   ">--}}
                             </div>
                         </div>
                         {{--<div class="form-group col-md-5">

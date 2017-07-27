@@ -107,7 +107,7 @@ class EncaminhamentoService
             $encaminhamento = $this->find($id);
 
             // Valida se a data de solução está sendo maior que a data do encaminhamento
-            if((isset($data['data']) && $data['data'] != "") && strtotime($encaminhamento->data) >= strtotime($dataSolucao)) {
+            if($dataSolucao && strtotime($encaminhamento->data) >= strtotime($dataSolucao)) {
                 return false;
             }
 
@@ -117,7 +117,6 @@ class EncaminhamentoService
             } else {
                 $encaminhamento->resposta_ouvidor   = $respostaOuvidor;
             }
-
 
             # Alterando os dados do encaminhamento como situação de respondida
             $encaminhamento->status_id              = 4;
@@ -133,12 +132,16 @@ class EncaminhamentoService
             // Salvando o encaminhamento
             $encaminhamento->save();
 
-            #Salvando o prazo de solução
-            $prazo = \DB::table('prazo_solucao')->insert([
-                'data' => $dataSolucao,
-                'encaminhamento_id' => $encaminhamento->id
-            ]);
+            // Valida se foi possui alguma data de solução
+            if ($dataSolucao) {
 
+                #Salvando o prazo de solução
+                \DB::table('prazo_solucao')->insert([
+                    'data' => $dataSolucao,
+                    'encaminhamento_id' => $encaminhamento->id
+                ]);
+
+            }
 
             // Alterando a situação da demanda para concluído
             $demanda = $this->demandaPepository->find($encaminhamento->demanda_id);
