@@ -124,7 +124,7 @@ class DemandaController extends Controller
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
-        $caminho = base_path("/resources/views/ouvidoria/demanda/{$empresa}indexPublico.blade.php");
+        $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}indexPublico.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
         $fp = fopen($caminho, "w");
@@ -135,7 +135,7 @@ class DemandaController extends Controller
         //Fecha o arquivo
         fclose($fp);
 
-        return view("ouvidoria.demanda.{$empresa}indexPublico");
+        return view("ouvidoria.arquivos_dinamicos.{$empresa}indexPublico");
     }
 
     /**
@@ -151,7 +151,7 @@ class DemandaController extends Controller
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
-        $caminho = base_path("/resources/views/ouvidoria/demanda/{$empresa}buscarDemanda.blade.php");
+        $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}buscarDemanda.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
         $fp = fopen($caminho, "w");
@@ -162,7 +162,7 @@ class DemandaController extends Controller
         //Fecha o arquivo
         fclose($fp);
 
-        return view("ouvidoria.demanda.{$empresa}buscarDemanda");
+        return view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda");
     }
 
     /**
@@ -218,7 +218,7 @@ class DemandaController extends Controller
                 ])
                 ->get();
 
-            return  view("ouvidoria.demanda.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
+            return  view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
@@ -470,8 +470,27 @@ class DemandaController extends Controller
         $loadFields = $this->service->load($this->loadFields);
         $loadFields2 = $this->service->load2($this->loadFields2);
 
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')
+            ->where('documento_id', 4)
+            ->where('status', 1)
+            ->select('html')->first();
+
+        // Pega o caminho do arquivo
+        $empresa = "Serbinario";
+        $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}create.blade.php");
+
+        // Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
+
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+        //Fecha o arquivo
+        fclose($fp);
+
         #Retorno para view
-        return view('ouvidoria.demanda.create', compact('loadFields', 'loadFields2'));
+        return view("ouvidoria.arquivos_dinamicos.{$empresa}create", compact('loadFields', 'loadFields2'));
     }
 
     /**
@@ -483,8 +502,29 @@ class DemandaController extends Controller
         $loadFields = $this->service->load($this->loadFields);
         $loadFields2 = $this->service->load2($this->loadFields2);
 
+
+        // Pega o template atual para o documento de carta de encaminhamento
+        $template = \DB::table('templates')
+            ->where('documento_id', 3)
+            ->where('status', 1)
+            ->select('html')->first();
+
+        // Pega o caminho do arquivo
+        $empresa = "Serbinario";
+        $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}createPublic.blade.php");
+
+        // Abre o arquivo em branco para escrita do conteúdo do arquivo
+        $fp = fopen($caminho, "w");
+
+        // Escreve no arquivo conteúdo do documento
+        fwrite($fp, $template->html);
+
+        //Fecha o arquivo
+        fclose($fp);
+
         #Retorno para view
-        return view('ouvidoria.demanda.createPublic', compact('loadFields', 'loadFields2'));
+        return view("ouvidoria.arquivos_dinamicos.{$empresa}createPublic", compact('loadFields', 'loadFields2'));
+
     }
 
     /**
@@ -557,8 +597,28 @@ class DemandaController extends Controller
             $loadFields = $this->service->load($this->loadFields);
             $loadFields2 = $this->service->load2($this->loadFields2);
 
-            #retorno para view
-            return view('ouvidoria.demanda.edit', compact('model', 'loadFields', 'loadFields2'));
+            // Pega o template atual para o documento de carta de encaminhamento
+            $template = \DB::table('templates')
+                ->where('documento_id', 7)
+                ->where('status', 1)
+                ->select('html')->first();
+
+            // Pega o caminho do arquivo
+            $empresa = "Serbinario";
+            $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}edit.blade.php");
+
+            // Abre o arquivo em branco para escrita do conteúdo do arquivo
+            $fp = fopen($caminho, "w");
+
+            // Escreve no arquivo conteúdo do documento
+            fwrite($fp, $template->html);
+
+            //Fecha o arquivo
+            fclose($fp);
+
+            #Retorno para view
+            return view("ouvidoria.arquivos_dinamicos.{$empresa}edit", compact('model', 'loadFields', 'loadFields2'));
+
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }
