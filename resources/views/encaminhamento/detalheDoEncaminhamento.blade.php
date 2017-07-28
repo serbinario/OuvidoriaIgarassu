@@ -269,7 +269,7 @@
                                                             @role('ouvidoria|admin')
                                                                 @if(!$detalheEncaminhamento->prazo_solucao ||
                                                                 (isset($encaminhamentoAnterior->prazo_solucao) && !$encaminhamentoAnterior->prazo_solucao) &&
-                                                                $detalheEncaminhamento->status_id != '6')
+                                                                $detalheEncaminhamento->status_id != '6' && !$detalheEncaminhamento->status_prorrogacao)
                                                                     <button type="button" data-toggle="modal"
                                                                             data-target="#modal-prorrogar-manifestacao"
                                                                             class="btn btn-sm btn-success waves-effect">

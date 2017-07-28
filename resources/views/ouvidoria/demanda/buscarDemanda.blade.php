@@ -151,7 +151,7 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <span>{{$dados->data_demanda}} - <b> Recebimento da manifestação </b></span>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <span><b> Situação </b> - ({{$encaminhamento->status}})</span>
                                                 </div>
                                             </div>
@@ -204,7 +204,7 @@
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         @if($encaminhamento->resp_publica == '1')
                                                             {{$encaminhamento->resposta}}
                                                         @else
@@ -233,7 +233,7 @@
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                     {{$prazo->justificativa}}
                                                     </div>
                                                 </div>
