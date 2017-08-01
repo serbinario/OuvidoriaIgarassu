@@ -17,7 +17,7 @@
             position: absolute;
             bottom:0;
             width: 100%;
-            height: 90px;
+            height: 150px;
             margin-top: 70px;
 
         }
@@ -29,7 +29,7 @@
 
         span, p {
             font-size: 13px;
-         /*   margin-left: 20px;*/
+            /*   margin-left: 20px;*/
         }
     </style>
     <link href="" rel="stylesheet" media="screen">
@@ -40,11 +40,11 @@
 
     <center>
         <div>
-            <center><img src="{{asset('/img/abreu.jpg')}}" style="width: 130px; height: 85px"></center>
+            <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 250px; height: 85px"></center>
         </div>
     </center>
 
-    <center><h4>{{ $configuracaoGeral->nome }}</h4></center>
+    <center><h4>{{ $titulo }}</h4></center>
 
     <center><h4>REGISTRO DE MANIFESTAÇÃO A OUVIDORIA</h4></center>
 
@@ -52,14 +52,14 @@
     <h4>DADOS DA MANIFESTAÇÃO</h4>
     <table style="width: 100%">
         <tr>
-            <td style="width: 300px"><span class="text"><b>Tipo: </b>{{$demanda->informacao}}</span></td>
-            <td><span class="text"><b>Data: </b>{{$demanda->data_cadastro}}</span></td>
-            <td><span class="text"><b>Hora: </b>{{$demanda->hora_cadastro}}</span></td>
+            <td style="width: 300px"><span class="text"><b>Tipo: </b>{{$informacao}}</span></td>
+            <td><span class="text"><b>Data: </b>{{$data_cadastro}}</span></td>
+            <td><span class="text"><b>Hora: </b>{{$hora_cadastro}}</span></td>
         </tr>
         <tr>
-            <td><span class="text"><b>Protocolo: </b>{{$demanda->n_protocolo}}</span></td>
-            <td><span class="text"><b>Registro: </b>{{$demanda->tipo_demanda}}</span></td>
-            <td><span class="text"><b>Identificação: </b>{{$demanda->sigilo}}</span></td>
+            <td><span class="text"><b>Protocolo: </b>{{$protocolo}}</span></td>
+            <td><span class="text"><b>Registro: </b>{{$tipo_demanda}}</span></td>
+            <td><span class="text"><b>Identificação: </b>{{$sigilo}}</span></td>
         </tr>
     </table>
 
@@ -73,29 +73,29 @@
     <h4>DADOS PESSOAIS</h4>
     <table style="width: 100%">
         <tr>
-            <td colspan="3"><span class="text"><b>Nome:</b> {{$demanda->nome}}</span></td>
+            <td colspan="3"><span class="text"><b>Nome:</b> {{$nome}}</span></td>
         </tr>
         <tr>
-            <td><span class="text"><b>Sexo:</b> {{$demanda->sexo}}</span></td>
-            <td><span class="text"><b>Telefone:</b> {{$demanda->fone}}</span></td>
-            <td><span class="text"><b>E-mail:</b> {{$demanda->email}}</span></td>
+            <td><span class="text"><b>Sexo:</b> {{$sexo}}</span></td>
+            <td><span class="text"><b>Telefone:</b> {{$fone}}</span></td>
+            <td><span class="text"><b>E-mail:</b> {{$email}}</span></td>
         </tr>
         <tr>
-            <td><span class="text"><b>Idade:</b> {{$demanda->idade}}</span></td>
-            <td><span class="text"><b>RG:</b> {{$demanda->rg}}</span></td>
-            <td><span class="text"><b>CPF:</b> {{$demanda->cpf}}</span></td>
+            <td><span class="text"><b>Idade:</b> {{$idade}}</span></td>
+            <td><span class="text"><b>RG:</b> {{$rg}}</span></td>
+            <td><span class="text"><b>CPF:</b> {{$cpf}}</span></td>
         </tr>
         <tr>
-            <td><span class="text"><b>Profissão:</b> {{$demanda->profissao}}</span></td>
+            <td><span class="text"><b>Profissão:</b> {{$profissao}}</span></td>
         </tr>
         <tr>
-            <td colspan="2"><span class="text"><b>Endereço:</b> {{$demanda->endereco}}</span></td>
-            <td ><span class="text"><b>Número:</b> {{$demanda->numero_end}}</span></td>
+            <td colspan="2"><span class="text"><b>Endereço:</b> {{$endereco}}</span></td>
+            <td ><span class="text"><b>Número:</b> {{$numero_end}}</span></td>
         </tr>
         <tr>
-            <td style=""><span class="text"><b>Cidade:</b> {{$demanda->cidade}}</span></td>
-            <td style="width: 200px"><span class="text"><b>Bairro:</b> {{$demanda->bairro}}</span></td>
-            <td style=""><span class="text"><b>CEP:</b> {{$demanda->cep}}</span></td>
+            <td style=""><span class="text"><b>Cidade:</b> {{$cidade}}</span></td>
+            <td style="width: 200px"><span class="text"><b>Bairro:</b> {{$bairro}}</span></td>
+            <td style=""><span class="text"><b>CEP:</b> {{$cep}}</span></td>
         </tr>
     </table>
 
@@ -103,7 +103,7 @@
 
     <table style="width: 100%">
         <tr>
-            <td colspan="2" style="text-align: justify"><span style="text-align: justify"><b>Descrição:</b> {{$demanda->relato}}</span></td>
+            <td colspan="2" style="text-align: justify"><span style="text-align: justify"><b>Descrição:</b> {{$relato}}</span></td>
         </tr>
     </table>
 
@@ -146,7 +146,7 @@
 <center>
     <div class="rodape">
         <center>
-            <img src="{{asset('/img/ouvidoria.png')}}" style="width: 200px; height: 50px"><br />
+            <img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 250px; height: 85px"><br />
             <span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
             <span style="font-size: 10px">Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
             <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>

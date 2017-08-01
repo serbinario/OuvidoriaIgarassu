@@ -77,6 +77,7 @@ class DocumentoRegistroController extends Controller
             'bairro', 'cep', 'relato'
         ))->stream();
 
+
     }
 
     /**

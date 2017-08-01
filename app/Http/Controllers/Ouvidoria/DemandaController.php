@@ -219,7 +219,6 @@ class DemandaController extends Controller
                 ->get();
 
             return  view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
-            //return  view("ouvidoria.demanda.buscarDemanda", compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();

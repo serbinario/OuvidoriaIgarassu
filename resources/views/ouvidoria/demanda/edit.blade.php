@@ -50,7 +50,7 @@
                                         </ul>
                                         <!-- Fim Guias -->
 
-                                        <!-- Conte�do -->
+                                        <!-- Conteúdo -->
                                         <div class="tab-content">
                                             {{--#1--}}
                                             <div role="tabpanel" class="tab-pane active" id="dados">
@@ -63,28 +63,41 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {{--<div class="form-group col-md-2">
-                                                        <div class="fg-line">
-                                                            <div class="fg-line">
-                                                                <label for="data_da_ocorrencia">Data da ocorr�ncia</label>
-                                                                {!! Form::text('data_da_ocorrencia', Session::getOldInput('data_da_ocorrencia'), array('class' => 'form-control input-sm date', 'id' => 'data_da_ocorrencia', 'placeholder' => 'Data da ocorr�ncia')) !!}
+                                                    <div class="form-group col-md-2">
+                                                        <div class=" fg-line">
+                                                            <label for="anonimo_id">Anônimo</label>
+                                                            <div class="select">
+                                                                {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], null, array('class'=> 'form-control', 'id' => 'anonimo_id')) !!}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-2">
                                                         <div class="fg-line">
                                                             <div class="fg-line">
-                                                                <label for="hora_da_ocorrencia">Hora da ocorr�ncia</label>
-                                                                {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control input-sm time', 'placeholder' => 'Hora da ocorr�ncia')) !!}
+                                                                <label for="data_da_ocorrencia">Data da ocorrência</label>
+                                                                {!! Form::text('data_da_ocorrencia', Session::getOldInput('data_da_ocorrencia'), array('class' => 'form-control input-sm date', 'id' => 'data_da_ocorrencia', 'placeholder' => 'Data da ocorrência')) !!}
                                                             </div>
                                                         </div>
-                                                    </div>--}}
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <div class="fg-line">
+                                                            <div class="fg-line">
+                                                                <label for="hora_da_ocorrencia">Hora da ocorrência</label>
+                                                                {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control input-sm time', 'placeholder' => 'Hora da ocorrência')) !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
+                                                <div class="topo-conteudo-full">
+                                                    <h4>Dados pessoais</h4>
+                                                </div>
+
                                                 <div class="row">
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-6">
                                                         <div class="fg-line">
                                                             <label for="nome">Nome</label>
-                                                            {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome')) !!}
+                                                            {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome', 'id' => 'nome')) !!}
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-2">
@@ -103,17 +116,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-md-4">
-                                                        <div class="fg-line">
-                                                            <div class="fg-line">
-                                                                <label for="email">E-mail</label>
-                                                                {!! Form::text('email', Session::getOldInput('email'), array('class' => 'form-control input-sm', 'placeholder' => 'Endereço Eletrônico')) !!}
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="form-group col-md-2">
+                                                    <div class="form-group col-md-3">
                                                         <div class="fg-line">
                                                             <div class="fg-line">
                                                                 <label for="cpf">CPF</label>
@@ -121,19 +126,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group col-md-2">
+                                                    <div class="form-group col-md-3">
                                                         <div class="fg-line">
                                                             <div class="fg-line">
                                                                 <label for="rg">RG</label>
                                                                 {!! Form::text('rg', Session::getOldInput('rg'), array('class' => 'form-control input-sm', 'placeholder' => 'RG')) !!}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-2">
-                                                        <div class="fg-line">
-                                                            <div class="fg-line">
-                                                                <label for="fone">Telefone</label>
-                                                                {!! Form::text('fone', Session::getOldInput('fone'), array('class' => 'form-control input-sm telefone', 'placeholder' => 'Telefone para Contato')) !!}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -146,6 +143,29 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-2">
+                                                        <div class="fg-line">
+                                                            <div class="fg-line">
+                                                                <label for="fone">Telefone</label>
+                                                                {!! Form::text('fone', Session::getOldInput('fone'), array('class' => 'form-control input-sm telefone', 'placeholder' => 'Telefone para Contato')) !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <div class="fg-line">
+                                                            <div class="fg-line">
+                                                                <label for="email">E-mail</label>
+                                                                {!! Form::text('email', Session::getOldInput('email'), array('class' => 'form-control input-sm', 'placeholder' => 'Endereço Eletrônico')) !!}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="topo-conteudo-full">
+                                                    <h4>Endereço</h4>
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="form-group col-md-4">
                                                         <div class="fg-line">
@@ -198,6 +218,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="topo-conteudo-full">
+                                                    <h4>Dados da Manifestação</h4>
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="form-group col-md-3">
                                                         <div class=" fg-line">
@@ -437,7 +462,7 @@
                                                                     <label for="encaminhamento[parecer]">Comentário/Parecer</label>
                                                                     <div class="textarea">
                                                                         {!! Form::textarea('encaminhamento[parecer]', Session::getOldInput('encaminhamento[parecer]'),
-                                                                            array('class' => 'form-control', 'rows' => '5')) !!}
+                                                                            array('class' => 'form-control', 'rows' => '5', 'placeholder' => 'Descrição do ocorrido')) !!}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -469,34 +494,38 @@
 @section('javascript')
     <script type="text/javascript">
 
-        // Regras de validações do formulário
+        // Regras de validação do formulário
         $(document).ready(function () {
 
             $("#formDemanda").validate({
                 rules: {
 
                     sigilo_id: {
-                        required: true,
+                        required: true
                     },
 
                     anonimo_id: {
-                        required: true,
+                        required: true
                     },
 
                     informacao_id: {
-                        required: true,
+                        required: true
                     },
 
                     pessoa_id: {
-                        required: true,
+                        required: true
                     },
 
                     relato: {
-                        required: true,
+                        required: true
                     },
 
                     area_id: {
-                        required: true,
+                        required: true
+                    },
+
+                    email: {
+                        email: true
                     }
                 },
                 //For custom messages
@@ -525,6 +554,23 @@
         });
 
 
+        // Trata a questão de marcar o campo de sigilo como sigiloso, e ativar a mensagem sobre informação
+        // de dados pessoais
+        $(document).ready(function(){
+
+            // Caso seja marcado como anônimo, os campos para dados pessoais seram desativados
+            $('#anonimo_id').on('click', function(){
+
+                var valor = $(this).val();
+
+                if(valor == '2') {
+                    $('#nome').prop("disabled", true);
+                } else if (valor == '1') {
+                    $('#nome').prop("disabled", false);
+                }
+            });
+
+        });
 
         //Carregando os destinatários
         $(document).on('change', "#secretaria", function () {
@@ -539,7 +585,7 @@
                 var dados = {
                     'table': 'ouv_destinatario',
                     'field_search': 'area_id',
-                    'value_search': secretaria,
+                    'value_search': secretaria
                 };
 
                 jQuery.ajax({
@@ -551,7 +597,7 @@
                     var option = "";
 
                     option += '<option value="">Selecione</option>';
-                    for (var i = 0; i < json.length; i++) {
+                    for ( var i = 0; i < json.length; i++) {
                         option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
                     }
 
@@ -561,7 +607,7 @@
             }
         });
 
-        // Func��o para carregar os assunto
+        // Funcção para carregar os assunto
         function loadAssuntos(dados) {
 
             //Removendo as assuntos
@@ -605,7 +651,7 @@
         });
 
 
-        // Fun��o para carregar os subassuntos
+        // Função para carregar os subassuntos
         function loadSubassuntos(dados) {
 
             //Removendo as Bairros

@@ -58,7 +58,7 @@
                                     {{--#1--}}
                                     <div role="tabpanel" class="tab-pane active" id="dados">
                                         <div class="row">
-                                            <div class="form-group col-md-1">
+                                            <div class="form-group col-md-2">
                                                 <div class=" fg-line">
                                                     <label for="sigilo_id">Sigilo</label>
                                                     <div class="select">
@@ -66,7 +66,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{--<div class="form-group col-md-2">
+                                            <div class="form-group col-md-2">
+                                                <div class=" fg-line">
+                                                    <label for="anonimo_id">Anônimo</label>
+                                                    <div class="select">
+                                                        {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], null, array('class'=> 'form-control', 'id' => 'anonimo_id')) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-2">
                                                 <div class="fg-line">
                                                     <div class="fg-line">
                                                         <label for="data_da_ocorrencia">Data da ocorrência</label>
@@ -81,7 +89,7 @@
                                                         {!! Form::text('hora_da_ocorrencia', Session::getOldInput('hora_da_ocorrencia'), array('class' => 'form-control input-sm time', 'placeholder' => 'Hora da ocorrência')) !!}
                                                     </div>
                                                 </div>
-                                            </div>--}}
+                                            </div>
                                         </div>
 
                                         <div class="topo-conteudo-full">
@@ -92,7 +100,7 @@
                                             <div class="form-group col-md-6">
                                                 <div class="fg-line">
                                                     <label for="nome">Nome</label>
-                                                    {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome')) !!}
+                                                    {!! Form::text('nome', null, array('class' => 'form-control input-sm', 'placeholder' => 'Nome', 'id' => 'nome')) !!}
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-2">
@@ -549,6 +557,23 @@
         });
 
 
+        // Trata a questão de marcar o campo de sigilo como sigiloso, e ativar a mensagem sobre informação
+        // de dados pessoais
+        $(document).ready(function(){
+
+            // Caso seja marcado como anônimo, os campos para dados pessoais seram desativados
+            $('#anonimo_id').on('click', function(){
+
+                var valor = $(this).val();
+
+                if(valor == '2') {
+                    $('#nome').prop("disabled", true);
+                } else if (valor == '1') {
+                    $('#nome').prop("disabled", false);
+                }
+            });
+
+        });
 
         //Carregando os destinatários
         $(document).on('change', "#secretaria", function () {
@@ -563,7 +588,7 @@
                 var dados = {
                     'table': 'ouv_destinatario',
                     'field_search': 'area_id',
-                    'value_search': secretaria,
+                    'value_search': secretaria
                 };
 
                 jQuery.ajax({
@@ -575,7 +600,7 @@
                     var option = "";
 
                     option += '<option value="">Selecione</option>';
-                    for (var i = 0; i < json.length; i++) {
+                    for ( var i = 0; i < json.length; i++) {
                         option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
                     }
 

@@ -17,7 +17,7 @@
             position: absolute;
             bottom:0;
             width: 100%;
-            height: 90px;
+            height: 150px;
             margin-top: 70px;
 
         }
@@ -29,7 +29,7 @@
 
         span, p {
             font-size: 13px;
-         /*   margin-left: 20px;*/
+            /*   margin-left: 20px;*/
         }
     </style>
     <link href="" rel="stylesheet" media="screen">
@@ -40,7 +40,7 @@
 
     <center>
         <div>
-            <center><img src="{{asset('/img/abreu.jpg')}}" style="width: 130px; height: 85px"></center>
+            <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 250px; height: 85px"></center>
         </div>
     </center>
 
@@ -146,7 +146,7 @@
 <center>
     <div class="rodape">
         <center>
-            <img src="{{asset('/img/ouvidoria.png')}}" style="width: 200px; height: 50px"><br />
+            <img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 250px; height: 85px"><br />
             <span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
             <span style="font-size: 10px">Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
             <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>

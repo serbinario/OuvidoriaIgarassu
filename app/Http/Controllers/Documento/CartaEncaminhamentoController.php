@@ -74,6 +74,7 @@ class CartaEncaminhamentoController extends Controller
             'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
             'prazo', 'relato', 'parecer'
             ))->stream();
+
     }
 
     /**
