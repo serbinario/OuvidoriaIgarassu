@@ -10,7 +10,7 @@ class TipoResposta extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table    = 'tipo_resposta';
+    protected $table    = 'ouv_tipo_resposta';
 
     protected $fillable = [
 		'nome',

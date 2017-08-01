@@ -137,7 +137,7 @@ class EncaminhamentoService
             if ($dataSolucao) {
 
                 #Salvando o prazo de solução
-                \DB::table('prazo_solucao')->insert([
+                \DB::table('ouv_prazo_solucao')->insert([
                     'data' => $dataSolucao,
                     'data_cadastro' => $date->format('Y-m-d'),
                     'encaminhamento_id' => $encaminhamento->id
@@ -366,12 +366,12 @@ class EncaminhamentoService
         $demanda->save();
 
         // Pegando demandas está agrupada
-        $demandaAgrupada = \DB::table('demandas_agrupadas')
-            ->join('ouv_demanda as principal', 'principal.id', '=', 'demandas_agrupadas.demanda_principal_id')
-            ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+        $demandaAgrupada = \DB::table('ouv_demandas_agrupadas')
+            ->join('ouv_demanda as principal', 'principal.id', '=', 'ouv_demandas_agrupadas.demanda_principal_id')
+            ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'ouv_demandas_agrupadas.demanda_agrupada_id')
             ->where('principal.id', '=',$demanda->id)
             ->select([
-                    'demandas_agrupadas.demanda_agrupada_id',
+                    'ouv_demandas_agrupadas.demanda_agrupada_id',
                     'agrupada.n_protocolo',
                     'agrupada.tipo_resposta_id'
                 ]
@@ -487,7 +487,7 @@ class EncaminhamentoService
         }
 
         #Salvando o prazo de solução
-        $prazo = \DB::table('prazo_solucao')->insert([
+        $prazo = \DB::table('ouv_prazo_solucao')->insert([
             'data' => $novoPrazo,
             'encaminhamento_id' => $encaminhamento->id,
             'status' => '1',
@@ -622,11 +622,11 @@ class EncaminhamentoService
      */
     public function getPrazos($idEncaminhamento)
     {
-        $prazos = \DB::table('prazo_solucao')
+        $prazos = \DB::table('ouv_prazo_solucao')
             ->select([
                 'id',
-                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as data'),
-                \DB::raw('DATE_FORMAT(prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as data'),
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
                 'justificativa',
                 'status'
             ])

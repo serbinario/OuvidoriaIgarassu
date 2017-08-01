@@ -10,7 +10,7 @@ class Documento extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table = "documentos";
+    protected $table = "ouv_documentos";
 
     protected $fillable = [
         'nome',

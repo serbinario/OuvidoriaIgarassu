@@ -10,7 +10,7 @@ class Template extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table = "templates";
+    protected $table = "ouv_templates";
 
     protected $fillable = [
         'nome',

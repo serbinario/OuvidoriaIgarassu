@@ -57,7 +57,7 @@ class TemplateController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('templates')
+        $rows = \DB::table('ouv_templates')
             ->select([
                 'id',
                 'nome',

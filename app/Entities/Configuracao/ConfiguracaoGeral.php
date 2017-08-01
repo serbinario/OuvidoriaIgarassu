@@ -10,7 +10,7 @@ class ConfiguracaoGeral extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table = 'configuracao_geral';
+    protected $table = 'ouv_configuracao_geral';
 
     protected $fillable = [
         'nome',

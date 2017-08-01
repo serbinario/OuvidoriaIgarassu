@@ -453,11 +453,11 @@ class DemandaService
                         where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+            ->leftJoin(\DB::raw('ouv_prazo_solucao'), function ($join) {
                 $join->on(
-                    'prazo_solucao.id', '=',
-                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
-                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                    'ouv_prazo_solucao.id', '=',
+                    \DB::raw("(SELECT ouv_prazo_solucao.id FROM ouv_prazo_solucao
+                        where ouv_prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY ouv_prazo_solucao.id DESC LIMIT 1)")
                 );
             })
             ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
@@ -472,7 +472,7 @@ class DemandaService
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->join('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
             ->leftJoin('ouv_anonimo', 'ouv_anonimo.id', '=', 'ouv_demanda.anonimo_id')
-            ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
+            ->leftJoin('ouv_tipo_resposta', 'ouv_tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
             ->leftJoin('ouv_status_externo', 'ouv_status_externo.id', '=', 'ouv_demanda.status_externo_id')
@@ -484,7 +484,7 @@ class DemandaService
                 'ouv_destinatario.nome as destino',
                 'ouv_area.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
-                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data_arquivamento,"%d/%m/%Y") as data_arquivamento'),
                 'ouv_demanda.arquivada',
                 'ouv_informacao.nome as informacao',
@@ -510,7 +510,7 @@ class DemandaService
                 'ouv_sigilo.id as sigilo_id',
                 'ouv_anonimo.nome as anonimo',
                 'ouv_anonimo.id as anonimo_id',
-                'tipo_resposta.nome as tipo_resposta',
+                'ouv_tipo_resposta.nome as tipo_resposta',
                 'ouv_idade.nome as idade',
                 'sexos.nome as sexo',
                 'escolaridade.nome as escolaridade',

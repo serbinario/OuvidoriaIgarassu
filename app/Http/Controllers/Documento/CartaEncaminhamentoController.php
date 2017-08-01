@@ -31,7 +31,7 @@ class CartaEncaminhamentoController extends Controller
     public function index($id)
     {
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')->where('documento_id', 1)->where('status', 1)->select('html')->first();
+        $template = \DB::table('ouv_templates')->where('documento_id', 1)->where('status', 1)->select('html')->first();
 
         // Pega os dados necessário contidos no documentos
         $dados = $this->dados($id);

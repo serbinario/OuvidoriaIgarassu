@@ -120,20 +120,20 @@ class DemandaController extends Controller
     {
 
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')->where('documento_id', 5)->where('status', 1)->select('html')->first();
+        $template = \DB::table('ouv_templates')->where('documento_id', 5)->where('status', 1)->select('html')->first();
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
         $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}indexPublico.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        $fp = fopen($caminho, "w");
+        //$fp = fopen($caminho, "w");
 
         // Escreve no arquivo conteúdo do documento
-        fwrite($fp, $template->html);
+        //fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        fclose($fp);
+        //fclose($fp);
 
         return view("ouvidoria.arquivos_dinamicos.{$empresa}indexPublico");
     }
@@ -144,7 +144,7 @@ class DemandaController extends Controller
     public function buscarDemanda()
     {
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')
+        $template = \DB::table('ouv_templates')
             ->where('documento_id', 6)
             ->where('status', 1)
             ->select('html')->first();
@@ -154,13 +154,13 @@ class DemandaController extends Controller
         $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}buscarDemanda.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        $fp = fopen($caminho, "w");
+        //$fp = fopen($caminho, "w");
 
         // Escreve no arquivo conteúdo do documento
-        fwrite($fp, $template->html);
+        //fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        fclose($fp);
+        //fclose($fp);
 
         return view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda");
     }
@@ -188,11 +188,11 @@ class DemandaController extends Controller
             }
 
             $encaminhamentos = \DB::table('ouv_encaminhamento')
-                ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+                ->leftJoin(\DB::raw('ouv_prazo_solucao'), function ($join) {
                     $join->on(
-                        'prazo_solucao.id', '=',
-                        \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
-                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                        'ouv_prazo_solucao.id', '=',
+                        \DB::raw("(SELECT ouv_prazo_solucao.id FROM ouv_prazo_solucao
+                        where ouv_prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY ouv_prazo_solucao.id DESC LIMIT 1)")
                     );
                 })
                 ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
@@ -214,11 +214,12 @@ class DemandaController extends Controller
                     'ouv_area.nome as secretaria',
                     'ouv_area.id as secretaria_id',
                     'ouv_destinatario.nome as destino',
-                    \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                    \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 ])
                 ->get();
 
             return  view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
+            //return  view("ouvidoria.demanda.buscarDemanda", compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
@@ -414,8 +415,8 @@ class DemandaController extends Controller
                 $demanda = $this->repository->find($row->id);
 
                 // Validando se a demanda está agrupada
-                $demandaAgrupada = \DB::table('demandas_agrupadas')
-                    ->join('ouv_demanda', 'ouv_demanda.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+                $demandaAgrupada = \DB::table('ouv_demandas_agrupadas')
+                    ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_demandas_agrupadas.demanda_agrupada_id')
                     ->where('ouv_demanda.id', '=', $row->id)
                     ->select('ouv_demanda.id')->first();
 
@@ -446,8 +447,8 @@ class DemandaController extends Controller
         })->addColumn('demandaAgrupada', function ($row) {
 
                 // Validando se a demanda está agrupada
-                $demandaAgrupada = \DB::table('demandas_agrupadas')
-                    ->join('ouv_demanda', 'ouv_demanda.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+                $demandaAgrupada = \DB::table('ouv_demandas_agrupadas')
+                    ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_demandas_agrupadas.demanda_agrupada_id')
                     ->where('ouv_demanda.id', '=', $row->id)
                     ->select('ouv_demanda.id')->first();
                 
@@ -471,7 +472,7 @@ class DemandaController extends Controller
         $loadFields2 = $this->service->load2($this->loadFields2);
 
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')
+        $template = \DB::table('ouv_templates')
             ->where('documento_id', 4)
             ->where('status', 1)
             ->select('html')->first();
@@ -504,7 +505,7 @@ class DemandaController extends Controller
 
 
         // Pega o template atual para o documento de carta de encaminhamento
-        $template = \DB::table('templates')
+        $template = \DB::table('ouv_templates')
             ->where('documento_id', 3)
             ->where('status', 1)
             ->select('html')->first();
@@ -514,16 +515,17 @@ class DemandaController extends Controller
         $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}createPublic.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        $fp = fopen($caminho, "w");
+        //$fp = fopen($caminho, "w");
 
         // Escreve no arquivo conteúdo do documento
-        fwrite($fp, $template->html);
+        //fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        fclose($fp);
+        //fclose($fp);
 
         #Retorno para view
-        return view("ouvidoria.arquivos_dinamicos.{$empresa}createPublic", compact('loadFields', 'loadFields2'));
+        //return view("ouvidoria.arquivos_dinamicos.{$empresa}createPublic", compact('loadFields', 'loadFields2'));
+        return view("ouvidoria.demanda.createPublic", compact('loadFields', 'loadFields2'));
 
     }
 
@@ -598,7 +600,7 @@ class DemandaController extends Controller
             $loadFields2 = $this->service->load2($this->loadFields2);
 
             // Pega o template atual para o documento de carta de encaminhamento
-            $template = \DB::table('templates')
+            $template = \DB::table('ouv_templates')
                 ->where('documento_id', 7)
                 ->where('status', 1)
                 ->select('html')->first();

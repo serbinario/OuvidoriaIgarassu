@@ -91,11 +91,11 @@ class EncaminhamentoController extends Controller
         $loadFields = $this->service->load($this->loadFields);
 
         $encaminhamentoAnterior =  \DB::table('ouv_encaminhamento')
-            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+            ->leftJoin(\DB::raw('ouv_prazo_solucao'), function ($join) {
                 $join->on(
-                    'prazo_solucao.id', '=',
-                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
-                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                    'ouv_prazo_solucao.id', '=',
+                    \DB::raw("(SELECT ouv_prazo_solucao.id FROM ouv_prazo_solucao
+                        where ouv_prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY ouv_prazo_solucao.id DESC LIMIT 1)")
                 );
             })
             ->where('demanda_id', $detalheEncaminhamento->demanda_id)
@@ -106,10 +106,10 @@ class EncaminhamentoController extends Controller
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
                 'ouv_encaminhamento.resp_publica',
-                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
-                \DB::raw('DATE_FORMAT(prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
-                'prazo_solucao.status as status_prazo_solucao',
-                'prazo_solucao.justificativa as justificativa_prazo_solucao',
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
+                'ouv_prazo_solucao.status as status_prazo_solucao',
+                'ouv_prazo_solucao.justificativa as justificativa_prazo_solucao',
             ])->first();
 
         return view('encaminhamento.detalheDoEncaminhamento',
@@ -123,11 +123,11 @@ class EncaminhamentoController extends Controller
     private function queryParaDetalheEncaminhamento($id)
     {
         $query = \DB::table('ouv_encaminhamento')
-            ->leftJoin(\DB::raw('prazo_solucao'), function ($join) {
+            ->leftJoin(\DB::raw('ouv_prazo_solucao'), function ($join) {
                 $join->on(
-                    'prazo_solucao.id', '=',
-                    \DB::raw("(SELECT prazo_solucao.id FROM prazo_solucao
-                        where prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY prazo_solucao.id DESC LIMIT 1)")
+                    'ouv_prazo_solucao.id', '=',
+                    \DB::raw("(SELECT ouv_prazo_solucao.id FROM ouv_prazo_solucao
+                        where ouv_prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY ouv_prazo_solucao.id DESC LIMIT 1)")
                 );
             })
             ->leftJoin('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
@@ -146,7 +146,7 @@ class EncaminhamentoController extends Controller
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
-            ->leftJoin('tipo_resposta', 'tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
+            ->leftJoin('ouv_tipo_resposta', 'ouv_tipo_resposta.id', '=', 'ouv_demanda.tipo_resposta_id')
             ->leftJoin('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
             ->where('ouv_encaminhamento.id', '=', $id)
             ->select([
@@ -168,10 +168,10 @@ class EncaminhamentoController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%H:%m:%s") as horaCadastro'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
-                \DB::raw('DATE_FORMAT(prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
-                \DB::raw('DATE_FORMAT(prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
-                'prazo_solucao.status as status_prazo_solucao',
-                'prazo_solucao.justificativa as justificativa_prazo_solucao',
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
+                \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data_cadastro,"%d/%m/%Y") as data_cadastro'),
+                'ouv_prazo_solucao.status as status_prazo_solucao',
+                'ouv_prazo_solucao.justificativa as justificativa_prazo_solucao',
                 'ouv_encaminhamento.encaminhado',
                 'ouv_encaminhamento.resposta',
                 'ouv_encaminhamento.resposta_ouvidor',
@@ -184,7 +184,7 @@ class EncaminhamentoController extends Controller
                 'ouv_subassunto.nome as subassunto',
                 'ouv_informacao.nome as informacao',
                 'ouv_demanda.relato',
-                'tipo_resposta.nome as tipo_resposta',
+                'ouv_tipo_resposta.nome as tipo_resposta',
                 'users_demanda.name as responsavel',
                 'users_encaminhamento.name as responsavel_resposta',
                 'ouv_demanda.nome as manifestante',
@@ -273,16 +273,16 @@ class EncaminhamentoController extends Controller
      */
     public function demandasAgrupadasGrid(Request $request)
     {
-        $rows = \DB::table('demandas_agrupadas')
-            ->join('ouv_demanda as principal', 'principal.id', '=', 'demandas_agrupadas.demanda_principal_id')
-            ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'demandas_agrupadas.demanda_agrupada_id')
+        $rows = \DB::table('ouv_demandas_agrupadas')
+            ->join('ouv_demanda as principal', 'principal.id', '=', 'ouv_demandas_agrupadas.demanda_principal_id')
+            ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'ouv_demandas_agrupadas.demanda_agrupada_id')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'agrupada.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->join('ouv_area', 'ouv_area.id', '=', 'agrupada.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'agrupada.status_id')
             ->where('principal.id', '=', $request->get('id'))
             ->select([
-                'demandas_agrupadas.id as id',
+                'ouv_demandas_agrupadas.id as id',
                 \DB::raw('CONCAT (SUBSTRING(agrupada.codigo, 4, 4), "/", SUBSTRING(agrupada.codigo, -4, 4)) as codigo'),
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
@@ -547,14 +547,14 @@ class EncaminhamentoController extends Controller
         if($demanda) {
 
             // Pega a demanda a ser agrupada
-            $validarAgrupamento = \DB::table('demandas_agrupadas')->where('demanda_principal_id', '=', $request->get('id'))
+            $validarAgrupamento = \DB::table('ouv_demandas_agrupadas')->where('demanda_principal_id', '=', $request->get('id'))
                 ->where('demanda_agrupada_id', '=', $demanda->id)
                 ->select(['id'])->first();
 
             // Valida se essa demanda já foi agrupada
             if(!$validarAgrupamento) {
 
-                \DB::table('demandas_agrupadas')->insert(
+                \DB::table('ouv_demandas_agrupadas')->insert(
                     ['demanda_principal_id' => $request->get('id'), 'demanda_agrupada_id' => $demanda->id]
                 );
 
@@ -581,7 +581,7 @@ class EncaminhamentoController extends Controller
     public function deletarDemandaAgrupada(Request $request)
     {
         
-        $result  = \DB::table('demandas_agrupadas')->where('id', '=', $request->get('id'))->delete();
+        $result  = \DB::table('ouv_demandas_agrupadas')->where('id', '=', $request->get('id'))->delete();
 
         if($result) {
             $retorno = true;
