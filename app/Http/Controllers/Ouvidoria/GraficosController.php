@@ -83,8 +83,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_demanda.informacao_id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -96,7 +96,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -155,8 +155,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_subassunto.assunto_id')
             ->select([
                 'ouv_assunto.nome as nome',
@@ -168,7 +168,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -270,8 +270,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_demanda.tipo_demanda_id')
             ->select([
                 'ouv_tipo_demanda.nome as nome',
@@ -283,7 +283,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -333,8 +333,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_demanda.pessoa_id')
             ->select([
                 'ouv_pessoa.nome as nome',
@@ -346,7 +346,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -388,7 +388,7 @@ class GraficosController extends Controller
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->join('gen_escolaridade', 'gen_escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -396,11 +396,11 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_demanda.escolaridade_id')
             ->select([
-                'escolaridade.nome as nome',
+                'gen_escolaridade.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
@@ -409,7 +409,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -493,8 +493,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_tipo_demanda.id')
             ->select([
                 'ouv_tipo_demanda.nome as nome',
@@ -506,7 +506,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -555,8 +555,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as nome',
@@ -568,9 +568,9 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         } else if ($this->user->is('secretaria')) {
-            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
+            $rows->where('gen_secretaria.id', '=', $this->user->secretaria->id);
         }
 
         $rows = $rows->get();
@@ -623,8 +623,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_status.id')
             ->select([
                 'ouv_status.nome as nome',
@@ -636,9 +636,9 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         } else  if($this->user->is('secretaria')) {
-            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
+            $rows->where('gen_secretaria.id', '=', $this->user->secretaria->id);
         }
 
         $rows = $rows->get();
@@ -687,8 +687,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->whereIn('ouv_demanda.informacao_id', [2,4])
             ->groupBy('ouv_informacao.id')
             ->select([
@@ -701,7 +701,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -751,8 +751,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.nome as nome',
@@ -764,7 +764,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -812,8 +812,8 @@ class GraficosController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->select([
                 \DB::raw('month(ouv_demanda.data) as mes'),
                 \DB::raw('year(ouv_demanda.data) as ano'),
@@ -827,7 +827,7 @@ class GraficosController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();

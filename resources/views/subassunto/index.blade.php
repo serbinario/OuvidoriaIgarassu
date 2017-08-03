@@ -75,7 +75,7 @@
                     method: 'POST'
                 },
                 columns: [
-                    {data: 'area', name: 'ouv_area.nome'},
+                    {data: 'area', name: 'gen_secretaria.nome'},
                     {data: 'assunto', name: 'ouv_assunto.nome'},
                     {data: 'nome', name: 'ouv_subassunto.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}

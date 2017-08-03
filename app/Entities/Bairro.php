@@ -10,7 +10,7 @@ class Bairro extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table = "bairros";
+    protected $table = "gen_bairros";
 
     protected $fillable = [
         'nome',

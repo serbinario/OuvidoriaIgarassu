@@ -74,7 +74,7 @@
                 },
                 columns: [
                     {data: 'nome', name: 'ouv_comunidade.nome'},
-                    {data: 'psf', name: 'psf.nome'},
+                    {data: 'ouv_psf', name: 'ouv_psf.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

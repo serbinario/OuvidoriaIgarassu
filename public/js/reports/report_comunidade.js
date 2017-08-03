@@ -8,7 +8,7 @@ $(document).on('change', "#cidade", function () {
 
     if (cidade !== "") {
         var dados = {
-            'table' : 'bairros',
+            'table' : 'gen_bairros',
             'field_search' : 'cidades_id',
             'value_search': cidade,
         }

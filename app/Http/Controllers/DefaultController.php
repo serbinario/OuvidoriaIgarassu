@@ -46,8 +46,8 @@ class DefaultController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (2) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 \DB::raw('COUNT(ouv_demanda.id) as analises'),
@@ -55,7 +55,7 @@ class DefaultController extends Controller
 
 
         if($user->is('secretaria')) {
-            $analises->where('ouv_area.id', '=', $user->secretaria->id);
+            $analises->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $analises = $analises->first();
@@ -69,8 +69,8 @@ class DefaultController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (4) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 \DB::raw('COUNT(ouv_demanda.id) as concluidas'),
@@ -78,7 +78,7 @@ class DefaultController extends Controller
 
 
         if($user->is('secretaria')) {
-            $concluidas->where('ouv_area.id', '=', $user->secretaria->id);
+            $concluidas->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $concluidas = $concluidas->first();
@@ -92,8 +92,8 @@ class DefaultController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
@@ -102,7 +102,7 @@ class DefaultController extends Controller
 
 
         if($user->is('secretaria')) {
-            $atrasadas->where('ouv_area.id', '=', $user->secretaria->id);
+            $atrasadas->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $atrasadas = $atrasadas->first();
@@ -136,8 +136,8 @@ class DefaultController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_status.id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
@@ -146,7 +146,7 @@ class DefaultController extends Controller
             ]);
 
         if($user->is('secretaria')) {
-            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
+            $rows->where('gen_secretaria.id', '=', $this->user->secretaria->id);
         }
 
         $rows = $rows->get();
@@ -188,8 +188,8 @@ class DefaultController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_informacao.id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
@@ -199,7 +199,7 @@ class DefaultController extends Controller
 
 
         if ($user->is('secretaria')) {
-            $rows->where('ouv_area.id', '=', $this->user->secretaria->id);
+            $rows->where('gen_secretaria.id', '=', $this->user->secretaria->id);
         }
 
         $rows = $rows->get();

@@ -22,13 +22,13 @@ class ComunidadeValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE => [
             
 			'nome' =>  'required' ,
-            'psf_id' => 'required'
+            'ouv_psf_id' => 'required'
 
         ],
         ValidatorInterface::RULE_UPDATE => [
             
 			'nome' =>  'required' ,
-            'psf_id' => 'required'
+            'ouv_psf_id' => 'required'
         ],
    ];
 

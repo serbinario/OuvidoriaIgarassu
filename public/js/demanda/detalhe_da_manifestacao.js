@@ -50,8 +50,8 @@ $(document).ready(function(){
             {data: 'data', name: 'ouv_encaminhamento.data'},
             {data: 'previsao', name: 'ouv_encaminhamento.previsao'},
             {data: 'prioridade', name: 'ouv_prioridade.nome'},
-            {data: 'area', name: 'ouv_area.nome'},
-            {data: 'destinatario', name: 'ouv_destinatario.nome'},
+            {data: 'area', name: 'gen_secretaria.nome'},
+            {data: 'destinatario', name: 'gen_departamento.nome'},
             {data: 'status', name: 'ouv_status.nome'},
         ]
     });
@@ -95,7 +95,7 @@ $(document).on('change', "#secretaria", function () {
 
     if (secretaria !== "") {
         var dados = {
-            'table' : 'ouv_destinatario',
+            'table' : 'gen_departamento',
             'field_search' : 'area_id',
             'value_search': secretaria,
         };
@@ -134,7 +134,7 @@ var table2 = $('#demandas-agrupadas-grid').DataTable({
     },
     columns: [
         {data: 'codigo', name: 'agrupada.codigo'},
-        {data: 'area', name: 'ouv_area.nome'},
+        {data: 'area', name: 'gen_secretaria.nome'},
         {data: 'assunto', name: 'ouv_assunto.nome'},
         {data: 'subassunto', name: 'ouv_subassunto.nome'},
         {data: 'status', name: 'ouv_status.nome'},

@@ -17,7 +17,7 @@ $(document).on('change', "#secretaria", function () {
     if (secretaria !== "") {
 
         var dados = {
-            'table': 'ouv_destinatario',
+            'table': 'gen_departamento',
             'field_search': 'area_id',
             'value_search': secretaria,
         };

@@ -22,7 +22,7 @@
                     </div>
                 @endif
 
-                {!! Form::model($model, ['route'=> ['seracademico.ouvidoria.psf.update', $model->id], 'method' => "POST", 'id'=> 'formPsf' ]) !!}
+                {!! Form::model($model, ['route'=> ['seracademico.ouvidoria.ouv_psf.update', $model->id], 'method' => "POST", 'id'=> 'formPsf' ]) !!}
                     @include('tamplatesForms.tamplateFormPsf')
                 {!! Form::close() !!}
             </section>

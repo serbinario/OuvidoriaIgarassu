@@ -11,7 +11,7 @@ class Psf extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table    = 'psf';
+    protected $table    = 'ouv_ouv_psf';
 
     protected $fillable = [ 
 		'nome'
@@ -19,6 +19,6 @@ class Psf extends Model implements Transformable
 
     public function comunidades()
     {
-        return $this->hasMany(Comunidade::class, 'psf_id');
+        return $this->hasMany(Comunidade::class, 'ouv_psf_id');
     }
 }

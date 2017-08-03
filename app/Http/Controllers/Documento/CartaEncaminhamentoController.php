@@ -97,11 +97,11 @@ class CartaEncaminhamentoController extends Controller
                 );
             })
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
@@ -114,8 +114,8 @@ class CartaEncaminhamentoController extends Controller
                 'ouv_encaminhamento.data',
                 'ouv_prioridade.nome as prioridade',
                 'ouv_prioridade.dias as prazo',
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
+                'gen_departamento.nome as destino',
+                'gen_secretaria.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
@@ -123,7 +123,7 @@ class CartaEncaminhamentoController extends Controller
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_demanda.nome',
-                'bairros.nome as bairro',
+                'gen_bairros.nome as bairro',
                 'ouv_demanda.endereco',
                 'ouv_demanda.numero_end',
                 'ouv_demanda.id',
@@ -138,8 +138,8 @@ class CartaEncaminhamentoController extends Controller
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',
                 'ouv_pessoa.nome as tipoUsuario',
-                'ouv_area.secretario',
-                'ouv_area.id as area_id'
+                'gen_secretaria.secretario',
+                'gen_secretaria.id as area_id'
             ])->first();
 
         // Pega o primeiro encaminhamento da manifestação

@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="text-right">
-                                <a class="btn btn-primary btn-sm m-t-10", href="{{ route('seracademico.ouvidoria.psf.create')}}">Nova Psf</a>
+                                <a class="btn btn-primary btn-sm m-t-10", href="{{ route('seracademico.ouvidoria.ouv_psf.create')}}">Nova Psf</a>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table id="psf-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
+                    <table id="ouv_psf-grid" class="display table compact table-bordered" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>PSF</th>
@@ -62,12 +62,12 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var tablePSF = $('#psf-grid').DataTable({
+            var tablePSF = $('#ouv_psf-grid').DataTable({
                 processing: true,
                 serverSide: true,
                 order: [[ 1, "asc" ]],
                 ajax: {
-                    url: "{!! route('seracademico.ouvidoria.psf.grid') !!}",
+                    url: "{!! route('seracademico.ouvidoria.ouv_psf.grid') !!}",
                     method: 'POST'
                 },
                 columns: [

@@ -133,15 +133,15 @@ class EncaminhamentoController extends Controller
             ->leftJoin('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
-            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
-            ->leftJoin('cidades', 'cidades.id', '=', 'bairros.cidades_id')
-            ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
+            ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('gen_cidades', 'gen_cidades.id', '=', 'gen_bairros.cidades_id')
+            ->leftJoin('gen_sexo', 'gen_sexo.id', '=', 'ouv_demanda.sexos_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->leftJoin('users as users_demanda', 'users_demanda.id', '=', 'ouv_demanda.user_id')
             ->leftJoin('users as users_encaminhamento', 'users_encaminhamento.id', '=', 'ouv_encaminhamento.user_id')
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
@@ -154,10 +154,10 @@ class EncaminhamentoController extends Controller
                 'ouv_demanda.id as demanda_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 'ouv_prioridade.nome as prioridade',
-                'ouv_destinatario.nome as destinatario',
-                'ouv_destinatario.id as destinatario_id',
-                'ouv_area.nome as area',
-                'ouv_area.id as area_id',
+                'gen_departamento.nome as destinatario',
+                'gen_departamento.id as destinatario_id',
+                'gen_secretaria.nome as area',
+                'gen_secretaria.id as area_id',
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
                 'ouv_sigilo.nome as sigilo',
@@ -199,10 +199,10 @@ class EncaminhamentoController extends Controller
                 'ouv_demanda.numero_end',
                 'ouv_demanda.cep',
                 'ouv_pessoa.nome as identificacao',
-                'bairros.nome as bairro',
-                'cidades.nome as cidade',
+                'gen_bairros.nome as bairro',
+                'gen_cidades.nome as cidade',
                 'ouv_idade.nome as idade',
-                'sexos.nome as sexo',
+                'gen_sexo.nome as sexo',
                 'ouv_demanda.sigilo_id',
                 'ouv_demanda.n_protocolo',
             ])->first();
@@ -244,8 +244,8 @@ class EncaminhamentoController extends Controller
         $rows = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
             ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->where('ouv_demanda.id', '=', $request->get('id'))
             ->select([
@@ -253,8 +253,8 @@ class EncaminhamentoController extends Controller
                 'ouv_demanda.id as demanda_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 'ouv_prioridade.nome as prioridade',
-                'ouv_destinatario.nome as destinatario',
-                'ouv_area.nome as area',
+                'gen_departamento.nome as destinatario',
+                'gen_secretaria.nome as area',
                 'ouv_status.nome as status',
                 'ouv_encaminhamento.parecer',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
@@ -278,7 +278,7 @@ class EncaminhamentoController extends Controller
             ->join('ouv_demanda as agrupada', 'agrupada.id', '=', 'ouv_demandas_agrupadas.demanda_agrupada_id')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'agrupada.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'agrupada.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'agrupada.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'agrupada.status_id')
             ->where('principal.id', '=', $request->get('id'))
             ->select([
@@ -286,7 +286,7 @@ class EncaminhamentoController extends Controller
                 \DB::raw('CONCAT (SUBSTRING(agrupada.codigo, 4, 4), "/", SUBSTRING(agrupada.codigo, -4, 4)) as codigo'),
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
-                'ouv_area.nome as area',
+                'gen_secretaria.nome as area',
                 'ouv_status.nome as status',
                 \DB::raw('DATE_FORMAT(agrupada.data,"%d/%m/%Y") as data'),
             ]);

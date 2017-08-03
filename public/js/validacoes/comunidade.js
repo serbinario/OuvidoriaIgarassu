@@ -8,7 +8,7 @@ $(document).ready(function () {
                 required: true,
             },
 
-            psf_id: {
+            ouv_psf_id: {
                 required: true,
             },
         },

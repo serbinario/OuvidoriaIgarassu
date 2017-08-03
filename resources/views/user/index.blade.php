@@ -74,7 +74,7 @@
             columns: [
                 {data: 'name', name: 'users.name'},
                 {data: 'email', name: 'users.email'},
-                {data: 'secretaria', name: 'ouv_area.nome'},
+                {data: 'secretaria', name: 'gen_secretaria.nome'},
                 {data: 'ativo', name: 'ativo', orderable: false, searchable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]

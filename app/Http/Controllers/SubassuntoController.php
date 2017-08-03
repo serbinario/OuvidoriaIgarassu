@@ -66,12 +66,12 @@ class SubassuntoController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_subassunto')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_assunto.area_id')
             ->select([
                 'ouv_subassunto.id as id',
                 'ouv_subassunto.nome as nome',
                 'ouv_assunto.nome as assunto',
-                'ouv_area.nome as area'
+                'gen_secretaria.nome as area'
             ]);
 
         #Editando a grid

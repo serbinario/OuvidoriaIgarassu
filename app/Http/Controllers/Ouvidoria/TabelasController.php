@@ -81,7 +81,7 @@ class TabelasController extends Controller
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_assunto.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->groupBy('ouv_assunto.id', 'ouv_informacao.id')
             ->select([
@@ -96,7 +96,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -251,7 +251,7 @@ class TabelasController extends Controller
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
+            ->join('gen_sexo', 'gen_sexo.id', '=', 'ouv_demanda.sexos_id')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -259,11 +259,11 @@ class TabelasController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->groupBy('sexos.id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->groupBy('gen_sexo.id')
             ->select([
-                'sexos.nome as sexo',
+                'gen_sexo.nome as sexo',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
             
@@ -272,7 +272,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -329,7 +329,7 @@ class TabelasController extends Controller
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->join('gen_escolaridade', 'gen_escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -337,11 +337,11 @@ class TabelasController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->groupBy('escolaridade.id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->groupBy('gen_escolaridade.id')
             ->select([
-                'escolaridade.id as escolaridade',
+                'gen_escolaridade.id as escolaridade',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
@@ -350,7 +350,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -361,7 +361,7 @@ class TabelasController extends Controller
             $totalDemandas += $row->qtd;
         }
         
-        $escolaridades = \DB::table('escolaridade')->get();
+        $escolaridades = \DB::table('gen_escolaridade')->get();
 
         return compact('rows', 'totalDemandas', 'escolaridades', 'loadFields');
     }
@@ -410,7 +410,7 @@ class TabelasController extends Controller
         
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->join('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
@@ -419,13 +419,13 @@ class TabelasController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
-            ->groupBy('bairros.id', 'ouv_informacao.id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->groupBy('gen_bairros.id', 'ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as info',
-                'bairros.nome as bairro',
-                'bairros.id as bairro_id',
+                'gen_bairros.nome as bairro',
+                'gen_bairros.id as bairro_id',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
@@ -434,11 +434,11 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         if($cidade) {
-            $rows->where('bairros.cidades_id', $cidade);
+            $rows->where('gen_bairros.cidades_id', $cidade);
         }
 
         $rows = $rows->get();
@@ -518,8 +518,8 @@ class TabelasController extends Controller
                     where encaminhamento.demanda_id = ouv_demanda.id ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.id as melhoria',
@@ -531,7 +531,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         $rows = $rows->get();
@@ -543,8 +543,8 @@ class TabelasController extends Controller
         }
 
         $melhorias = \DB::table('ouv_melhorias')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
-            ->where('ouv_area.id', '=', $secretaria)
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_melhorias.area_id')
+            ->where('gen_secretaria.id', '=', $secretaria)
             ->select('ouv_melhorias.nome', 'ouv_melhorias.id')
             ->get();
 

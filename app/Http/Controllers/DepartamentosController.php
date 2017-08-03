@@ -65,12 +65,12 @@ class DepartamentosController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_destinatario')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+        $rows = \DB::table('gen_departamento')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->select([
-                'ouv_destinatario.id',
-                'ouv_destinatario.nome',
-                'ouv_area.nome as area'
+                'gen_departamento.id',
+                'gen_departamento.nome',
+                'gen_secretaria.nome as area'
             ]);
 
         #Editando a grid

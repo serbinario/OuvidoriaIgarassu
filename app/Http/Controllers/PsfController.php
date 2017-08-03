@@ -50,7 +50,7 @@ class PsfController extends Controller
      */
     public function index()
     {
-        return view('psf.index');
+        return view('ouv_psf.index');
     }
 
     /**
@@ -59,18 +59,18 @@ class PsfController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('psf')->select(['id', 'nome']);
+        $rows = \DB::table('ouv_ouv_psf')->select(['id', 'nome']);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {
             # Recuperando a psf
-            $psf = $this->repository->find($row->id);
+            $ouv_psf = $this->repository->find($row->id);
 
             # Html de edição
             $html = '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Editar</a>';
 
             # Verificando a possibilidade de exclusão
-            if(count($psf->comunidades) == 0) {
+            if(count($ouv_psf->comunidades) == 0) {
                 $html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir"><i class="fa fa-delete"></i> Deletar</a>';
             }
 
@@ -87,7 +87,7 @@ class PsfController extends Controller
         $loadFields = $this->service->load($this->loadFields);
 
         #Retorno para view
-        return view('psf.create', compact('loadFields'));
+        return view('ouv_psf.create', compact('loadFields'));
     }
 
     /**
@@ -129,7 +129,7 @@ class PsfController extends Controller
             $loadFields = $this->service->load($this->loadFields);
 
             #retorno para view
-            return view('psf.edit', compact('model', 'loadFields'));
+            return view('ouv_psf.edit', compact('model', 'loadFields'));
         } catch (\Throwable $e) {dd($e);
             return redirect()->back()->with('message', $e->getMessage());
         }

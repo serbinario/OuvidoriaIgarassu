@@ -460,15 +460,15 @@ class DemandaService
                         where ouv_prazo_solucao.encaminhamento_id = ouv_encaminhamento.id ORDER BY ouv_prazo_solucao.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
-            ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
-            ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->leftJoin('gen_sexo', 'gen_sexo.id', '=', 'ouv_demanda.sexos_id')
+            ->leftJoin('gen_escolaridade', 'gen_escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->join('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
             ->leftJoin('ouv_anonimo', 'ouv_anonimo.id', '=', 'ouv_demanda.anonimo_id')
@@ -481,8 +481,8 @@ class DemandaService
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
+                'gen_departamento.nome as destino',
+                'gen_secretaria.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data_arquivamento,"%d/%m/%Y") as data_arquivamento'),
@@ -512,8 +512,8 @@ class DemandaService
                 'ouv_anonimo.id as anonimo_id',
                 'ouv_tipo_resposta.nome as tipo_resposta',
                 'ouv_idade.nome as idade',
-                'sexos.nome as sexo',
-                'escolaridade.nome as escolaridade',
+                'gen_sexo.nome as sexo',
+                'gen_escolaridade.nome as escolaridade',
                 'ouv_demanda.exclusividade_sus_id',
                 'ouv_tipo_demanda.nome as tipo_demanda',
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data_demanda'),

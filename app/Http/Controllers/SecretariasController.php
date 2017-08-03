@@ -63,7 +63,7 @@ class SecretariasController extends Controller
     public function grid()
     {
         #Criando a consulta
-        $rows = \DB::table('ouv_area')->select(['id', 'nome', 'secretario']);
+        $rows = \DB::table('gen_secretaria')->select(['id', 'nome', 'secretario']);
 
         #Editando a grid
         return Datatables::of($rows)->addColumn('action', function ($row) {

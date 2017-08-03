@@ -10,7 +10,7 @@ class Area extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table    = 'ouv_area';
+    protected $table    = 'gen_secretaria';
 
     protected $fillable = [ 
 		'nome',

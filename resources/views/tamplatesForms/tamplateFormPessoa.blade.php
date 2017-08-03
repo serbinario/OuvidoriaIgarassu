@@ -142,22 +142,22 @@
                             <div class="form-group col-md-4">
                                 {!! Form::label('cidade', 'Cidade ') !!}
                                 @if(isset($model->endereco->bairro->cidade->id))
-                                    {!! Form::select('cidade', array($model->endereco->bairro->cidade->id => $model->endereco->bairro->cidade->nome), $model->endereco->bairro->cidade->id,array('class' => 'form-control', 'id' => 'cidade')) !!}
+                                    {!! Form::select('cidade', array($model->endereco->bairro->cidade->id => $model->endereco->bairro->cidade->nome), $model->gen_endereco->bairro->cidade->id,array('class' => 'form-control', 'id' => 'cidade')) !!}
                                 @else
                                     {!! Form::select('cidade', array(), Session::getOldInput('cidade'),array('class' => 'form-control', 'id' => 'cidade')) !!}
                                 @endif
                             </div>
                             <div class="form-group col-md-3">
-                                {!! Form::label('endereco[bairros_id]', 'Bairro ') !!}
-                                @if(isset($model->endereco->bairro->id))
-                                    {!! Form::select('endereco[bairros_id]', array($model->endereco->bairro->id => $model->endereco->bairro->nome), $model->endereco->bairro->id,array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                {!! Form::label('gen_endereco[bairros_id]', 'Bairro ') !!}
+                                @if(isset($model->gen_endereco->bairro->id))
+                                    {!! Form::select('gen_endereco[bairros_id]', array($model->gen_endereco->bairro->id => $model->gen_endereco->bairro->nome), $model->gen_endereco->bairro->id,array('class' => 'form-control', 'id' => 'bairro')) !!}
                                 @else
-                                    {!! Form::select('endereco[bairros_id]', array(), Session::getOldInput('bairro'),array('class' => 'form-control', 'id' => 'bairro')) !!}
+                                    {!! Form::select('gen_endereco[bairros_id]', array(), Session::getOldInput('bairro'),array('class' => 'form-control', 'id' => 'bairro')) !!}
                                 @endif
                             </div>
                             <div class="form-group col-md-2">
-                                {!! Form::label('endereco[complemento]', 'Complemento ') !!}
-                                {!! Form::text('endereco[complemento]', Session::getOldInput('endereco[complemento]'), array('class' => 'form-control')) !!}
+                                {!! Form::label('gen_endereco[complemento]', 'Complemento ') !!}
+                                {!! Form::text('gen_endereco[complemento]', Session::getOldInput('gen_endereco[complemento]'), array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <legend><i class="fa fa-phone"></i> Contato</legend>
@@ -231,7 +231,7 @@
 
             if (estado !== "") {
                 var dados = {
-                    'table' : 'cidades',
+                    'table' : 'gen_cidades',
                     'field_search' : 'estados_id',
                     'value_search': estado,
                 };
@@ -268,7 +268,7 @@
 
             if (cidade !== "") {
                 var dados = {
-                    'table' : 'bairros',
+                    'table' : 'gen_bairros',
                     'field_search' : 'cidades_id',
                     'value_search': cidade,
                 };

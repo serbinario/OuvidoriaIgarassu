@@ -17,7 +17,7 @@
                 </div>
 
                 <button class="btn btn-primary btn-sm m-t-10">Salvar</button>
-                <a class="btn btn-primary btn-sm m-t-10" href="{{route('seracademico.ouvidoria.psf.index') }}">Voltar</a>
+                <a class="btn btn-primary btn-sm m-t-10" href="{{route('seracademico.ouvidoria.ouv_psf.index') }}">Voltar</a>
             </div>
         </div>
     </div>
@@ -31,5 +31,5 @@
     {{-- --}}
     <script type="text/javascript" src="{{ asset('/dist/js/validacao/adicional/alphaSpace.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('/lib/jquery-validation/src/additional/integer.js')  }}"></script>
-    <script src="{{ asset('/js/validacoes/psf.js')}}"></script>
+    <script src="{{ asset('/js/validacoes/ouv_psf.js')}}"></script>
 @endsection

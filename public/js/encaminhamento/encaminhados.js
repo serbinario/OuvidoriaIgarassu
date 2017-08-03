@@ -19,8 +19,8 @@ $(document).ready(function(){
         },
         columns: [
             {data: 'codigo', name: 'codigo', orderable: false, searchable: false},
-            {data: 'area', name: 'ouv_area.nome'},
-            {data: 'destino', name: 'ouv_destinatario.nome'},
+            {data: 'area', name: 'gen_secretaria.nome'},
+            {data: 'destino', name: 'gen_departamento.nome'},
             {data: 'responsavel', name: 'users.name'},
             {data: 'prioridade', name: 'ouv_prioridade.nome'},
             {data: 'data', name: 'ouv_encaminhamento.data'},

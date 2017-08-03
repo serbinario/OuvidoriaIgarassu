@@ -10,7 +10,7 @@ class Destinatario extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $table    = 'ouv_destinatario';
+    protected $table    = 'gen_departamento';
 
     protected $fillable = [ 
 		'nome',

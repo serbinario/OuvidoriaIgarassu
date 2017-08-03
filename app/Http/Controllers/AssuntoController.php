@@ -64,11 +64,11 @@ class AssuntoController extends Controller
     {
         #Criando a consulta
         $rows = \DB::table('ouv_assunto')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_assunto.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_assunto.area_id')
             ->select([
                 'ouv_assunto.id', 
                 'ouv_assunto.nome',
-                'ouv_area.nome as area'
+                'gen_secretaria.nome as area'
             ]);
 
         #Editando a grid

@@ -10,7 +10,7 @@ $(document).on('change', "#secretaria", function () {
     if (secretaria !== "") {
 
         var dados = {
-            'table': 'ouv_destinatario',
+            'table': 'gen_departamento',
             'field_search': 'area_id',
             'value_search': secretaria,
         };
@@ -130,7 +130,7 @@ $(document).on('change', "#cidade", function () {
 
     if (cidade !== "") {
         var dados = {
-            'table': 'bairros',
+            'table': 'gen_bairros',
             'field_search': 'cidades_id',
             'value_search': cidade
         }

@@ -170,7 +170,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
                 Route::post('melhoriasAjax', ['as' => 'melhoriasAjax', 'uses' => 'Ouvidoria\GraficosController@melhoriasAjax']);
             });
 
-            Route::group(['prefix' => 'psf', 'as' => 'psf.'], function () {
+            Route::group(['prefix' => 'ouv_psf', 'as' => 'ouv_psf.'], function () {
                 Route::get('index', ['as' => 'index', 'uses' => 'PsfController@index']);
                 Route::post('grid', ['as' => 'grid', 'uses' => 'PsfController@grid']);
                 Route::get('create', ['as' => 'create', 'uses' => 'PsfController@create']);

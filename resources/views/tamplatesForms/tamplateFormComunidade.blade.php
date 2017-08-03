@@ -17,8 +17,8 @@
                     <div class="form-group col-md-6">
                         <div class="fg-line">
                             <div class="fg-line">
-                                <label for="psf_id">Psf *</label>
-                                {!! Form::select('psf_id', ['' => 'Selecione uma PSF'] + $loadFields['psf']->toArray(), Session::getOldInput('psf_id'), array('class' => 'form-control')) !!}
+                                <label for="ouv_psf_id">Psf *</label>
+                                {!! Form::select('ouv_psf_id', ['' => 'Selecione uma PSF'] + $loadFields['ouv_psf']->toArray(), Session::getOldInput('ouv_psf_id'), array('class' => 'form-control')) !!}
                             </div>
                         </div>
                     </div>

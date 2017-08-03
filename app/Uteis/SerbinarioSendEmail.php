@@ -14,8 +14,8 @@ class SerbinarioSendEmail
     public static function sendEmailMultiplo($detalhe)
     {
         $usuarios = \DB::table('users')
-            ->join('ouv_area', 'ouv_area.id', '=', 'users.area_id')
-            ->where('ouv_area.id', '=', $detalhe->area_id)
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'users.area_id')
+            ->where('gen_secretaria.id', '=', $detalhe->area_id)
             ->select(['email', 'name'])->get();
 
 

@@ -586,7 +586,7 @@
             if (secretaria !== "") {
 
                 var dados = {
-                    'table': 'ouv_destinatario',
+                    'table': 'gen_departamento',
                     'field_search': 'area_id',
                     'value_search': secretaria
                 };
@@ -706,7 +706,7 @@
 
             if (cidade !== "") {
                 var dados = {
-                    'table': 'bairros',
+                    'table': 'gen_bairros',
                     'field_search': 'cidades_id',
                     'value_search': cidade
                 }

@@ -196,8 +196,8 @@ class DemandaController extends Controller
                     );
                 })
                 ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-                ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-                ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+                ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+                ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
                 ->where('ouv_encaminhamento.demanda_id', $dados->demanda_id)
                 ->select([
                     'ouv_encaminhamento.id',
@@ -211,9 +211,9 @@ class DemandaController extends Controller
                     \DB::raw('DATE_FORMAT(ouv_encaminhamento.data_resposta,"%d/%m/%Y") as data_resposta'),
                     \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                     \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
-                    'ouv_area.nome as secretaria',
-                    'ouv_area.id as secretaria_id',
-                    'ouv_destinatario.nome as destino',
+                    'gen_secretaria.nome as secretaria',
+                    'gen_secretaria.id as secretaria_id',
+                    'gen_departamento.nome as destino',
                     \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 ])
                 ->get();
@@ -332,9 +332,9 @@ class DemandaController extends Controller
         // Estrutura da query em geral
         $rows->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->leftJoin('users', 'users.id', '=', 'ouv_demanda.user_id')
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area as area_destino', 'area_destino.id', '=', 'ouv_destinatario.area_id')
-            ->leftJoin('ouv_area as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria as area_destino', 'area_destino.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
@@ -350,7 +350,7 @@ class DemandaController extends Controller
                 'ouv_demanda.nome',
                 'ouv_encaminhamento.id as encaminhamento_id',
                 'ouv_prioridade.nome as prioridade',
-                'ouv_destinatario.nome as destino',
+                'gen_departamento.nome as destino',
                 'area_destino.nome as area_destino',
                 'area_ouvidoria.nome as area_ouvidoria',
                 'users.name as responsavel',
@@ -404,7 +404,7 @@ class DemandaController extends Controller
                             ->orWhere('ouv_demanda.nome', 'like', "%$search%")
                             ->orWhere('ouv_comunidade.nome', 'like', "%$search%")
                             ->orWhere('area_destino.nome', 'like', "%$search%")
-                            ->orWhere('ouv_destinatario.nome', 'like', "%$search%")
+                            ->orWhere('gen_departamento.nome', 'like', "%$search%")
                             ->orWhere('ouv_demanda.relato', 'like', "%$search%");
                     });
 
@@ -672,16 +672,16 @@ class DemandaController extends Controller
                         where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
-            ->leftJoin('cidades', 'cidades.id', '=', 'bairros.cidades_id')
+            ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('gen_cidades', 'gen_cidades.id', '=', 'gen_bairros.cidades_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
-            ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
-            ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->leftJoin('gen_sexo', 'gen_sexo.id', '=', 'ouv_demanda.sexos_id')
+            ->leftJoin('gen_escolaridade', 'gen_escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
@@ -694,15 +694,15 @@ class DemandaController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data_cadastro'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%H:%m:%s") as hora_cadastro'),
                 'ouv_demanda.hora_da_ocorrencia',
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
+                'gen_departamento.nome as destino',
+                'gen_secretaria.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_informacao.nome as informacao',
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_demanda.nome as nome',
-                'bairros.nome as bairro',
-                'cidades.nome as cidade',
+                'gen_bairros.nome as bairro',
+                'gen_cidades.nome as cidade',
                 'ouv_demanda.endereco',
                 'ouv_demanda.n_protocolo',
                 'ouv_demanda.numero_end',
@@ -720,12 +720,12 @@ class DemandaController extends Controller
                 'ouv_demanda.sigilo_id',
                 'ouv_demanda.anonimo_id',
                 'ouv_idade.nome as idade',
-                'sexos.nome as sexo',
-                'escolaridade.nome as escolaridade',
+                'gen_sexo.nome as sexo',
+                'gen_escolaridade.nome as escolaridade',
                 'ouv_demanda.exclusividade_sus_id',
                 'ouv_tipo_demanda.nome as tipo_demanda',
-                'ouv_area.secretario',
-                'ouv_area.id as area_id',
+                'gen_secretaria.secretario',
+                'gen_secretaria.id as area_id',
                 'ouv_sigilo.nome as sigilo',
             ])->first();
 
@@ -764,7 +764,7 @@ class DemandaController extends Controller
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->select([
                 'ouv_demanda.id',
@@ -780,7 +780,7 @@ class DemandaController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
 
@@ -819,7 +819,7 @@ class DemandaController extends Controller
         $rows = \DB::table('ouv_demanda')
             ->join('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_demanda.status_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->where('ouv_status.id', '=', $dados['status'])
             ->select([
@@ -835,7 +835,7 @@ class DemandaController extends Controller
         };
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
 
         return \PDF::loadView('ouvidoria.reports.reportStatus', ['demandas' =>  $rows->get()])->setOrientation('landscape')->stream();
@@ -860,11 +860,11 @@ class DemandaController extends Controller
                 );
             })
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->join('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
@@ -877,8 +877,8 @@ class DemandaController extends Controller
                 'ouv_encaminhamento.data',
                 'ouv_prioridade.nome as prioridade',
                 'ouv_prioridade.dias as prazo',
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
+                'gen_departamento.nome as destino',
+                'gen_secretaria.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
@@ -886,7 +886,7 @@ class DemandaController extends Controller
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_demanda.nome as nome',
-                'bairros.nome as bairro',
+                'gen_bairros.nome as bairro',
                 'ouv_demanda.endereco',
                 'ouv_demanda.numero_end',
                 'ouv_demanda.id',
@@ -901,8 +901,8 @@ class DemandaController extends Controller
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',
                 'ouv_pessoa.nome as tipoUsuario',
-                'ouv_area.secretario',
-                'ouv_area.id as area_id'
+                'gen_secretaria.secretario',
+                'gen_secretaria.id as area_id'
             ])->first();
 
         $encaminhamento = \DB::table('ouv_encaminhamento')
@@ -962,15 +962,15 @@ class DemandaController extends Controller
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
-            ->where('bairros.id', '=', $bairro)
+            ->where('gen_bairros.id', '=', $bairro)
             ->select([
                 'ouv_demanda.id',
                 'ouv_demanda.nome as nome',
                 'ouv_demanda.endereco',
-                'bairros.nome as bairro',
+                'gen_bairros.nome as bairro',
                 'ouv_demanda.fone',
                 'ouv_subassunto.nome as subassunto',
             ]);
@@ -981,7 +981,7 @@ class DemandaController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('ouv_area.id', '=', $secretaria);
+            $rows->where('gen_secretaria.id', '=', $secretaria);
         }
         
         return \PDF::loadView('ouvidoria.reports.reportComunidade', ['demandas' =>  $rows->get()])->setOrientation('landscape')->stream();
@@ -1048,9 +1048,9 @@ class DemandaController extends Controller
             })
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->leftJoin('users', 'users.id', '=', 'ouv_demanda.user_id')
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area as area_destino', 'area_destino.id', '=', 'ouv_destinatario.area_id')
-            ->leftJoin('ouv_area as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria as area_destino', 'area_destino.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as area_ouvidoria', 'area_ouvidoria.id', '=', 'ouv_demanda.area_id')
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
@@ -1066,7 +1066,7 @@ class DemandaController extends Controller
                 'ouv_demanda.nome',
                 'ouv_encaminhamento.id as encaminhamento_id',
                 'ouv_prioridade.nome as prioridade',
-                'ouv_destinatario.nome as destino',
+                'gen_departamento.nome as destino',
                 'area_destino.nome as area_destino',
                 'area_ouvidoria.nome as area_ouvidoria',
                 'users.name as responsavel',

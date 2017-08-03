@@ -29,15 +29,15 @@ class PsfService
     public function find($id)
     {
         #Recuperando o registro no banco de dados
-        $psf = $this->repository->find($id);
+        $ouv_psf = $this->repository->find($id);
 
         #Verificando se o registro foi encontrado
-        if(!$psf) {
+        if(!$ouv_psf) {
             throw new \Exception('Empresa não encontrada!');
         }
 
         #retorno
-        return $psf;
+        return $ouv_psf;
     }
 
     /**
@@ -48,15 +48,15 @@ class PsfService
     {
 
         #Salvando o registro pincipal
-        $psf =  $this->repository->create($data);
+        $ouv_psf =  $this->repository->create($data);
 
         #Verificando se foi criado no banco de dados
-        if(!$psf) {
+        if(!$ouv_psf) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
         #Retorno
-        return $psf;
+        return $ouv_psf;
     }
 
     /**
@@ -67,16 +67,16 @@ class PsfService
     public function update(array $data, int $id) : Psf
     {
         #Atualizando no banco de dados
-        $psf = $this->repository->update($data, $id);
+        $ouv_psf = $this->repository->update($data, $id);
 
 
         #Verificando se foi atualizado no banco de dados
-        if(!$psf) {
+        if(!$ouv_psf) {
             throw new \Exception('Ocorreu um erro ao cadastrar!');
         }
 
         #Retorno
-        return $psf;
+        return $ouv_psf;
     }
 
     /**

@@ -23,7 +23,7 @@
             </div>
             {{-- Fim mensagem de alerta --}}
             {{--Formulario--}}
-            {!! Form::open(['route'=>'seracademico.ouvidoria.psf.store', 'method' => "POST", 'id'=> 'formPsf' ]) !!}
+            {!! Form::open(['route'=>'seracademico.ouvidoria.ouv_psf.store', 'method' => "POST", 'id'=> 'formPsf' ]) !!}
             @include('tamplatesForms.tamplateFormPsf')
             {!! Form::close() !!}
             {{--Fim formulario--}}

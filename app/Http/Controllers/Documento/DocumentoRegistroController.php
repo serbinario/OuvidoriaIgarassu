@@ -99,16 +99,16 @@ class DocumentoRegistroController extends Controller
                         where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
                 );
             })
-            ->leftJoin('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->leftJoin('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
-            ->leftJoin('bairros', 'bairros.id', '=', 'ouv_demanda.bairro_id')
-            ->leftJoin('cidades', 'cidades.id', '=', 'bairros.cidades_id')
+            ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
+            ->leftJoin('gen_cidades', 'gen_cidades.id', '=', 'gen_bairros.cidades_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_idade', 'ouv_idade.id', '=', 'ouv_demanda.idade_id')
-            ->leftJoin('sexos', 'sexos.id', '=', 'ouv_demanda.sexos_id')
-            ->leftJoin('escolaridade', 'escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
+            ->leftJoin('gen_sexo', 'gen_sexo.id', '=', 'ouv_demanda.sexos_id')
+            ->leftJoin('gen_escolaridade', 'gen_escolaridade.id', '=', 'ouv_demanda.escolaridade_id')
             ->leftJoin('ouv_tipo_demanda', 'ouv_tipo_demanda.id', '=', 'ouv_demanda.tipo_demanda_id')
             ->leftJoin('ouv_pessoa', 'ouv_pessoa.id', '=', 'ouv_demanda.pessoa_id')
             ->leftJoin('ouv_sigilo', 'ouv_sigilo.id', '=', 'ouv_demanda.sigilo_id')
@@ -121,15 +121,15 @@ class DocumentoRegistroController extends Controller
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data_cadastro'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%H:%m:%s") as hora_cadastro'),
                 'ouv_demanda.hora_da_ocorrencia',
-                'ouv_destinatario.nome as destino',
-                'ouv_area.nome as area',
+                'gen_departamento.nome as destino',
+                'gen_secretaria.nome as area',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_informacao.nome as informacao',
                 'ouv_assunto.nome as assunto',
                 'ouv_subassunto.nome as subassunto',
                 'ouv_demanda.nome as nome',
-                'bairros.nome as bairro',
-                'cidades.nome as cidade',
+                'gen_bairros.nome as bairro',
+                'gen_cidades.nome as cidade',
                 'ouv_demanda.endereco',
                 'ouv_demanda.n_protocolo',
                 'ouv_demanda.numero_end',
@@ -147,12 +147,12 @@ class DocumentoRegistroController extends Controller
                 'ouv_demanda.sigilo_id',
                 'ouv_demanda.anonimo_id',
                 'ouv_idade.nome as idade',
-                'sexos.nome as sexo',
-                'escolaridade.nome as escolaridade',
+                'gen_sexo.nome as sexo',
+                'gen_escolaridade.nome as escolaridade',
                 'ouv_demanda.exclusividade_sus_id',
                 'ouv_tipo_demanda.nome as tipo_demanda',
-                'ouv_area.secretario',
-                'ouv_area.id as area_id',
+                'gen_secretaria.secretario',
+                'gen_secretaria.id as area_id',
                 'ouv_sigilo.nome as sigilo',
             ])->first();
 

@@ -73,7 +73,7 @@
                     method: 'POST'
                 },
                 columns: [
-                    {data: 'area', name: 'ouv_area.nome'},
+                    {data: 'area', name: 'gen_secretaria.nome'},
                     {data: 'nome', name: 'ouv_assunto.nome'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

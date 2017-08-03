@@ -55,8 +55,8 @@ class SerbinarioAlertaDemanda
 
         $demandas = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->whereIn('ouv_status.id', [1,7])
             ->select([
@@ -65,7 +65,7 @@ class SerbinarioAlertaDemanda
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$user->is('admin|ouvidoria') && $user->is('secretaria')) {
-            $demandas->where('ouv_area.id', '=',$user->secretaria->id);
+            $demandas->where('gen_secretaria.id', '=',$user->secretaria->id);
         }
 
         $demandas = $demandas->first();
@@ -88,8 +88,8 @@ class SerbinarioAlertaDemanda
 
         $demandas = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->whereIn('ouv_status.id', [2])
             ->select([
@@ -98,7 +98,7 @@ class SerbinarioAlertaDemanda
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$user->is('admin|ouvidoria') && $user->is('secretaria')) {
-            $demandas->where('ouv_area.id', '=', $user->secretaria->id);
+            $demandas->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $demandas = $demandas->first();
@@ -121,8 +121,8 @@ class SerbinarioAlertaDemanda
 
         $demandas = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->whereIn('ouv_status.id', [4])
             ->select([
@@ -131,7 +131,7 @@ class SerbinarioAlertaDemanda
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$user->is('admin|ouvidoria') && $user->is('secretaria')) {
-            $demandas->where('ouv_area.id', '=', $user->secretaria->id);
+            $demandas->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $demandas = $demandas->first();
@@ -161,8 +161,8 @@ class SerbinarioAlertaDemanda
                 );
             })
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
             ->where(\DB::raw('DATEDIFF(ouv_encaminhamento.previsao, CURDATE())'), '<=', '15')
             ->select([
@@ -171,7 +171,7 @@ class SerbinarioAlertaDemanda
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$user->is('admin|ouvidoria') && $user->is('secretaria')) {
-            $demandas->where('ouv_area.id', '=', $user->secretaria->id);
+            $demandas->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $demandas = $demandas->first();
@@ -202,8 +202,8 @@ class SerbinarioAlertaDemanda
                 );
             })
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
-            ->join('ouv_destinatario', 'ouv_destinatario.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_destinatario.area_id')
+            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->whereIn('ouv_encaminhamento.status_id', [1,7,2])
             ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
             ->select([
@@ -212,7 +212,7 @@ class SerbinarioAlertaDemanda
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$user->is('admin|ouvidoria') && $user->is('secretaria')) {
-            $demandas->where('ouv_area.id', '=', $user->secretaria->id);
+            $demandas->where('gen_secretaria.id', '=', $user->secretaria->id);
         }
 
         $demandas = $demandas->first();

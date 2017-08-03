@@ -66,11 +66,11 @@ class MelhoriaController extends Controller
     {
         #Criando a consulta
         $rows = \DB::table('ouv_melhorias')
-            ->join('ouv_area', 'ouv_area.id', '=', 'ouv_melhorias.area_id')
+            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_melhorias.area_id')
             ->select([
                 'ouv_melhorias.id',
                 'ouv_melhorias.nome',
-                'ouv_area.nome as area'
+                'gen_secretaria.nome as area'
             ]);
 
         #Editando a grid

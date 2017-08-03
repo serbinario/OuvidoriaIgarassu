@@ -63,11 +63,11 @@ class ComunidadeController extends Controller
     {
         #Criando a consulta
         $rows = \DB::table('ouv_comunidade')
-            ->leftJoin('psf', 'psf.id', '=', 'ouv_comunidade.psf_id')
+            ->leftJoin('ouv_ouv_psf', 'ouv_ouv_psf.id', '=', 'ouv_comunidade.ouv_psf_id')
             ->select([
                 'ouv_comunidade.id',
                 'ouv_comunidade.nome',
-                'psf.nome as psf'
+                'ouv_ouv_psf.nome as ouv_psf'
             ]);
 
         #Editando a grid
