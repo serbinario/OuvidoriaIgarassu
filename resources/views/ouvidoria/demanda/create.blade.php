@@ -62,18 +62,18 @@
                                                 <div class=" fg-line">
                                                     <label for="sigilo_id">Sigilo</label>
                                                     <div class="select">
-                                                        {!! Form::select('sigilo_id', $loadFields['ouvidoria\sigilo'], null, array('class'=> 'form-control')) !!}
+                                                        {!! Form::select('sigilo_id', (["" => "Selecione"] + $loadFields['ouvidoria\sigilo']->toArray()), null, array('id' => 'sigilo_id', 'class'=> 'form-control')) !!}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                            {{--<div class="form-group col-md-2">
                                                 <div class=" fg-line">
                                                     <label for="anonimo_id">Anônimo</label>
                                                     <div class="select">
                                                         {!! Form::select('anonimo_id', $loadFields['ouvidoria\anonimo'], null, array('class'=> 'form-control', 'id' => 'anonimo_id')) !!}
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>--}}
                                             <div class="form-group col-md-2">
                                                 <div class="fg-line">
                                                     <div class="fg-line">
@@ -562,13 +562,13 @@
         $(document).ready(function(){
 
             // Caso seja marcado como anônimo, os campos para dados pessoais seram desativados
-            $('#anonimo_id').on('click', function(){
+            $('#sigilo_id').on('click', function(){
 
                 var valor = $(this).val();
 
-                if(valor == '2') {
+                if(valor == '3') {
                     $('#nome').prop("disabled", true);
-                } else if (valor == '1') {
+                } else {
                     $('#nome').prop("disabled", false);
                 }
             });
