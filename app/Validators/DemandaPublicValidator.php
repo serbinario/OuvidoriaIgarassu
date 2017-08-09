@@ -28,17 +28,17 @@ class DemandaPublicValidator extends LaravelValidator
         ValidatorInterface::RULE_CREATE => [
             
 			'sigilo_id' =>  'required',
-			'nome' =>  'required',
+			/*'nome' =>  'required',
 			'sexos_id' =>  'required',
 			'idade_id' =>  'required',
 			'cpf' =>  'required',
-			//'rg' =>  'required',
+			'rg' =>  'required',
 			'fone' =>  'required',
 			'profissao' =>  'required',
 			'endereco' =>  'required',
 			'numero_end' =>  'required',
 			'cidade' =>  'required',
-			'bairro_id' =>  'required',
+			'bairro_id' =>  'required',*/
 
 			'pessoa_id' =>  'required',
 			'informacao_id' =>  'required',
@@ -49,17 +49,17 @@ class DemandaPublicValidator extends LaravelValidator
         ValidatorInterface::RULE_UPDATE => [
 
 			'sigilo_id' =>  'required',
-			'nome' =>  'required',
+			/*'nome' =>  'required',
 			'sexos_id' =>  'required',
 			'idade_id' =>  'required',
 			'cpf' =>  'required',
-			//'rg' =>  'required',
+			'rg' =>  'required',
 			'fone' =>  'required',
 			'profissao' =>  'required',
 			'endereco' =>  'required',
 			'numero_end' =>  'required',
 			'cidade' =>  'required',
-			'bairro_id' =>  'required',
+			'bairro_id' =>  'required',*/
 
 			'pessoa_id' =>  'required',
 			'informacao_id' =>  'required',
