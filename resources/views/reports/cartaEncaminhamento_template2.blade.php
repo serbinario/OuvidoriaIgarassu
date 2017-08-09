@@ -82,7 +82,7 @@ function data($dia, $mes, $ano, $semana) {
 
     <center>
         <div class="topo" style="">
-            <center><img src="{{asset('/img/abreu.jpg')}}" style="width: 130px; height: 85px"></center>
+            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 130px; height: 95px"></center>
         </div><br />
         <span style="font-size: 14px"><b>{{ $titulo }}</b></span><br />
         {{--<span style="font-size: 10px">Ouvidoria da Saúde</span>--}}
@@ -171,10 +171,10 @@ function data($dia, $mes, $ano, $semana) {
 <center>
     <div class="rodape">
         <center>
-            <img src="{{asset('/img/ouvidoria.png')}}" style="width: 200px; height: 50px"><br />
-            <span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
+            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 130px; height: 95px"></center>
+            {{--<span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
             <span style="font-size: 10px">Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
-            <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>
+            <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>--}}
         </center>
     </div>
 </center>

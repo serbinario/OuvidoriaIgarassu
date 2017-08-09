@@ -214,7 +214,7 @@
                 </ul>
             </li>
             @endrole
-
+            @role('admin')
                 <li class="sub-menu">
                     <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-assignment"></i> Configurações</a>
                     <ul>
@@ -222,7 +222,7 @@
                         <li><a href="{{ route('seracademico.template.index')  }}">Importar template</a></li>
                     </ul>
                 </li>
-
+            @endrole
         </ul>
     </aside>
     {{--FIM Menu Lateral--}}

@@ -28,7 +28,7 @@
         <div class="col-sm-8 col-md-6">
             <div class="ibox-content">
                 <p>
-                    <img src="{{ asset('/img/ouvidoria-logo.png')}}" style="width: 100%;"/>
+                    <center><img src="{{ asset('/img/ouvidoria-saude-logo.png')}}" style="width: 50%;"/></center>
                 </p>
                 {!! Form::open(['url'=>'auth/login', 'method' => "POST"]) !!}
                 {!! csrf_field() !!}

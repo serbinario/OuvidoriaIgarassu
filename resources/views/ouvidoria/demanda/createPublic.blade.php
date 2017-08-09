@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-12" style="background-color: #0b8345">
                 <center>
-                    <img src="{{asset('/img/ouvidoria-logo.png')}}" class="img-responsive" style="width: 450px; height: 150px">
+                    <img src="{{asset('/img/ouvidoria_saude.png')}}" class="img-responsive" style="width: 190px; height: 150px">
                     {{--<img src="{{asset('/img/igarassu.png')}}" style="width: 400px; height: 90px">--}}
                 </center>
             </div>

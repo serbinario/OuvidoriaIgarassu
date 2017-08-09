@@ -55,7 +55,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-sm m-t-10">Salvar</button>
-                            <button type="button" class="btn btn-primary btn-sm m-t-10" onclick='javascript:history.back();'>Voltar</button>
+                            <a class="btn btn-primary btn-sm m-t-10" href="{{ route('seracademico.template.index') }}">Voltar</a>
                         </div>
                     </div>
                 </div>
