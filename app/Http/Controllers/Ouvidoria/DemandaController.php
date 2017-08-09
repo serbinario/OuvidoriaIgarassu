@@ -127,13 +127,13 @@ class DemandaController extends Controller
         $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}indexPublico.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        //$fp = fopen($caminho, "w");
+        $fp = fopen($caminho, "w");
 
         // Escreve no arquivo conteúdo do documento
-        //fwrite($fp, $template->html);
+        fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        //fclose($fp);
+        fclose($fp);
 
         return view("ouvidoria.arquivos_dinamicos.{$empresa}indexPublico");
     }
@@ -154,13 +154,13 @@ class DemandaController extends Controller
         $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}buscarDemanda.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        //$fp = fopen($caminho, "w");
+        $fp = fopen($caminho, "w");
 
         // Escreve no arquivo conteúdo do documento
-        //fwrite($fp, $template->html);
+        fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        //fclose($fp);
+        fclose($fp);
 
         return view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda");
     }
@@ -219,7 +219,6 @@ class DemandaController extends Controller
                 ->get();
 
             return  view("ouvidoria.arquivos_dinamicos.{$empresa}buscarDemanda", compact('dados', 'encaminhamentos'));
-            //return  view("ouvidoria.demanda.buscarDemanda", compact('dados', 'encaminhamentos'));
 
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
@@ -515,17 +514,16 @@ class DemandaController extends Controller
         $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}createPublic.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        //$fp = fopen($caminho, "w");
+        $fp = fopen($caminho, "w");
 
         // Escreve no arquivo conteúdo do documento
-        //fwrite($fp, $template->html);
+        fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        //fclose($fp);
+        fclose($fp);
 
         #Retorno para view
-        //return view("ouvidoria.arquivos_dinamicos.{$empresa}createPublic", compact('loadFields', 'loadFields2'));
-        return view("ouvidoria.demanda.createPublic", compact('loadFields', 'loadFields2'));
+        return view("ouvidoria.arquivos_dinamicos.{$empresa}createPublic", compact('loadFields', 'loadFields2'));
 
     }
 
