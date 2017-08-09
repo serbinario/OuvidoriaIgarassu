@@ -125,18 +125,10 @@
                                                         "Desejo sigilo"
                                                     </label>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-3">
                                                 <div class="radio m-b-15">
                                                     <label>
-                                                        <input type="radio" id="anonimo-1" name="anonimo_id" value="2">
-                                                        <i class="input-helper"></i>
-                                                        "Não desejo anonimato"
-                                                    </label>
-                                                </div>
-                                                <div class="radio m-b-15">
-                                                    <label>
-                                                        <input type="radio" id="anonimo-2" name="anonimo_id" value="1">
+                                                        <input type="radio" id="sigilo-3" name="sigilo_id"
+                                                               value="3">
                                                         <i class="input-helper"></i>
                                                         "Desejo anonimato"
                                                     </label>
@@ -414,44 +406,44 @@
                 },
 
                 /*nome: {
-                    required: true
-                },
+                 required: true
+                 },
 
-                sexos_id: {
-                    required: true
-                },
+                 sexos_id: {
+                 required: true
+                 },
 
-                idade_id: {
-                    required: true
-                },
+                 idade_id: {
+                 required: true
+                 },
 
-                cpf: {
-                    required: true
-                },
+                 cpf: {
+                 required: true
+                 },
 
-                fone: {
-                    required: true
-                },
+                 fone: {
+                 required: true
+                 },
 
-                profissao: {
-                    required: true
-                },
+                 profissao: {
+                 required: true
+                 },
 
-                endereco: {
-                    required: true
-                },
+                 endereco: {
+                 required: true
+                 },
 
-                numero_end: {
-                    required: true
-                },
+                 numero_end: {
+                 required: true
+                 },
 
-                cidade: {
-                    required: true
-                },
+                 cidade: {
+                 required: true
+                 },
 
-                bairro_id: {
-                    required: true
-                },*/
+                 bairro_id: {
+                 required: true
+                 },*/
 
                 informacao_id: {
                     required: true
@@ -525,10 +517,10 @@
         });
 
         // Caso seja marcado como anônimo, os campos para dados pessoais seram desativados
-        $('#anonimo-2, #anonimo-1').on('click', function(){
-            if($("#anonimo-2").prop( "checked")) {
+        $('#sigilo-3, #sigilo-2, #sigilo-1').on('click', function(){
+            if($("#sigilo-3").prop( "checked")) {
                 $('.dados-pessoais').hide();
-            } else if ($("#anonimo-1").prop( "checked")) {
+            } else if (!$("#sigilo-3").prop( "checked")) {
                 $('.dados-pessoais').show();
             }
         });
