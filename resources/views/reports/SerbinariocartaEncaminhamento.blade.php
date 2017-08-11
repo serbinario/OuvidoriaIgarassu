@@ -62,7 +62,7 @@ function data($dia, $mes, $ano, $semana) {
             position: absolute;
             bottom:0;
             width: 100%;
-            height: 100px;
+            height: 130px;
             margin-top: 100px;
         }
         span, p {
@@ -105,9 +105,9 @@ function data($dia, $mes, $ano, $semana) {
 
     @if($dataManifestacao)
         <?php $data = \DateTime::createFromFormat('Y-m-d H:i:s', $dataManifestacao); ?>
-        <span style="position: absolute; top: 180px; left: 400px;">Abreu e Lima, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
+        <span style="position: absolute; top: 180px; left: 400px;">Igarassu, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
     @endif
-    <span>Assunto: Manifestação recebida pela Ouvidoria Geral do Município de Abreu e Lima.</span></br></br>
+    <span>Assunto: Manifestação recebida pela Ouvidoria Municipal de saúde de Igarassu.</span></br></br>
 
     <span><b>Prezado(a) Senhor(a),</b></span></br>
     <p>
@@ -171,7 +171,8 @@ function data($dia, $mes, $ano, $semana) {
 <center>
     <div class="rodape">
         <center>
-            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 130px; height: 95px"></center>
+            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 130px; height: 95px"></center><br />
+            <span style="font-size: 10px">Ouvidoria da Saúde de Igarassu</span><br />
             {{--<span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
             <span style="font-size: 10px">Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
             <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>--}}
