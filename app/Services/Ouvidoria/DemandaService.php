@@ -157,6 +157,7 @@ class DemandaService
         $data['n_protocolo'] = SerbinarioGerarCodigoSenha::gerarProtocolo();
         $data['user_id'] = $user ? $user->id : null;
         $data['status_id'] = '5';
+        $data['ouvidoria_id'] = $user->ouvidoria_id;
 
         #Salvando o registro pincipal
         $demanda =  $this->repository->create($data);

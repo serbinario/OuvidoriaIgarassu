@@ -43,6 +43,7 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Secretaria</th>
+                            <th>Ouvidoria</th>
                             <th>Status</th>
                             <th >Acão</th>
                         </tr>
@@ -53,6 +54,7 @@
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Secretaria</th>
+                            <th>Ouvidoria</th>
                             <th>Status</th>
                             <th style="width: 10%;">Acão</th>
                         </tr>
@@ -75,6 +77,7 @@
                 {data: 'name', name: 'users.name'},
                 {data: 'email', name: 'users.email'},
                 {data: 'secretaria', name: 'gen_secretaria.nome'},
+                {data: 'ouvidoria', name: 'ouv_ouvidorias.nome'},
                 {data: 'ativo', name: 'ativo', orderable: false, searchable: false},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]

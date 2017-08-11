@@ -53,7 +53,8 @@ class Demanda extends Model implements Transformable
 		'bairro_id',
         'status_externo_id',
 		'arquivada',
-		'data_arquivamento'
+		'data_arquivamento',
+		'ouvidoria_id'
 	];
 
 	/**

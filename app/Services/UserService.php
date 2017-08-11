@@ -7,6 +7,7 @@ use Seracademico\Repositories\RoleRepository;
 use Seracademico\Entities\User;
 use Seracademico\Repositories\PermissionRepository;
 use Seracademico\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 
 class UserService
 {
@@ -70,6 +71,10 @@ class UserService
      */
     public function store(array $data) : User
     {
+
+        // Pegando o usuário
+        $user = Auth::user();
+
         $data = $this->tratamentoCampos($data);
         
         #tratando a senha
@@ -88,6 +93,11 @@ class UserService
 
             #destruindo o img do array
             unset($data['img']);
+        }
+
+        // pegando o id da ouvidoria do administrador da ouvidoria logada
+        if($user->is('admin')) {
+            $data['ouvidoria_id'] = $user->ouvidoria_id;
         }
 
         #Salvando o registro pincipal
