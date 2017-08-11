@@ -346,7 +346,7 @@ class DemandaController extends Controller
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->join('ouv_ouvidorias', 'ouv_ouvidorias.id', '=', 'ouv_demanda.ouvidoria_id')
             ->where('ouv_demanda.arquivada', '=', null)
-            ->where('ouv_ouvidorias.id', '=', $ouvidoria)
+            //->where('ouv_ouvidorias.id', '=', $ouvidoria)
             ->select(
                 'ouv_demanda.id',
                 'ouv_demanda.nome',
