@@ -72,12 +72,14 @@ class UserController extends Controller
         #Criando a consulta
         $users = \DB::table('users')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'users.area_id')
+            ->join('ouv_ouvidorias', 'ouv_ouvidorias.id', '=', 'users.ouvidoria_id')
             ->select([
                 'users.id',
                 'users.name',
                 'users.email',
                 'users.active as ativo',
-                'gen_secretaria.nome as secretaria'
+                'gen_secretaria.nome as secretaria',
+                'ouv_ouvidorias.nome as ouvidoria'
             ]);
 
         #Editando a grid

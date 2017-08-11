@@ -239,6 +239,7 @@ class DemandaController extends Controller
         //Tratando as datas
         $dataIni = SerbinarioDateFormat::toUsa($dados['data_inicio'], 'date');
         $dataFim = SerbinarioDateFormat::toUsa($dados['data_fim'], 'date');
+        $ouvidoria = $this->user->ouvidoria_id;
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda');
@@ -343,7 +344,9 @@ class DemandaController extends Controller
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
+            ->join('ouv_ouvidorias', 'ouv_ouvidorias.id', '=', 'ouv_demanda.ouvidoria_id')
             ->where('ouv_demanda.arquivada', '=', null)
+            ->where('ouv_ouvidorias.id', '=', $ouvidoria)
             ->select(
                 'ouv_demanda.id',
                 'ouv_demanda.nome',
@@ -368,7 +371,8 @@ class DemandaController extends Controller
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data,"%d/%m/%Y") as data'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
-                'ouv_demanda.n_protocolo'
+                'ouv_demanda.n_protocolo',
+                'ouv_ouvidorias.nome as ouvidoria'
             );
 
         if($dataIni && $dataFim) {
