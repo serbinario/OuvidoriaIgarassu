@@ -142,6 +142,7 @@ class EncaminhamentoController extends Controller
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->leftJoin('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
@@ -156,8 +157,8 @@ class EncaminhamentoController extends Controller
                 'ouv_prioridade.nome as prioridade',
                 'gen_departamento.nome as destinatario',
                 'gen_departamento.id as destinatario_id',
-                'gen_secretaria.nome as area',
-                'gen_secretaria.id as area_id',
+                \DB::raw('IF(gen_secretaria.nome != "", gen_secretaria.nome, secretaria_dm.nome) as area'),
+                \DB::raw('IF(gen_secretaria.id != "", gen_secretaria.id, secretaria_dm.id) as area_id'),
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
                 'ouv_sigilo.nome as sigilo',
@@ -244,8 +245,9 @@ class EncaminhamentoController extends Controller
         $rows = \DB::table('ouv_encaminhamento')
             ->join('ouv_demanda', 'ouv_demanda.id', '=', 'ouv_encaminhamento.demanda_id')
             ->join('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
-            ->join('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
-            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->join('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->where('ouv_demanda.id', '=', $request->get('id'))
             ->select([
@@ -254,7 +256,7 @@ class EncaminhamentoController extends Controller
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 'ouv_prioridade.nome as prioridade',
                 'gen_departamento.nome as destinatario',
-                'gen_secretaria.nome as area',
+                \DB::raw('IF(gen_secretaria.nome != "", gen_secretaria.nome, secretaria_dm.nome) as area'),
                 'ouv_status.nome as status',
                 'ouv_encaminhamento.parecer',
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),

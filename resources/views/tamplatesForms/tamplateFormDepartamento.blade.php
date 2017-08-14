@@ -6,11 +6,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <div class="fg-line">
                             <div class="fg-line">
                                 <label for="nome">Departamento *</label>
                                 {!! Form::text('nome', Session::getOldInput('nome') , array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <div class="fg-line">
+                            <div class="fg-line">
+                                <label for="responsavel">Responsável *</label>
+                                {!! Form::text('responsavel', Session::getOldInput('nome') , array('class' => 'form-control')) !!}
                             </div>
                         </div>
                     </div>

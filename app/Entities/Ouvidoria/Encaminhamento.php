@@ -31,7 +31,8 @@ class Encaminhamento extends Model implements Transformable
 		'resp_ouvidor_publica',
 		'status_prorrogacao',
 		'justificativa_prorrogacao',
-		'data_finalizacao'
+		'data_finalizacao',
+		'secretaria_id'
 	];
 
 	/**

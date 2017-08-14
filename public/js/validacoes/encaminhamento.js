@@ -7,10 +7,6 @@ $(document).ready(function () {
             secretaria: {
                 required: true,
             },
-
-            destinatario_id: {
-                required: true,
-            },
             
             parecer: {
                 required: true,

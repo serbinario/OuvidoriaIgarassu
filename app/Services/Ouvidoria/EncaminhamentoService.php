@@ -164,6 +164,8 @@ class EncaminhamentoService
      */
     public function reencaminarStore(array $data) : Encaminhamento
     {
+        $data = $this->tratamentoCampos($data);
+
         $date  = new \DateTime('now');
         $dataAtual = $date->format('Y-m-d');
 
@@ -181,6 +183,11 @@ class EncaminhamentoService
         $data['status_id'] = 7;
         $data['user_id'] = $this->user->id;
         $data['prioridade_id'] = $encaminhamentoAnterior->prioridade_id;
+
+        // Validando se não foi encaminhado para um departamento, sendo no caso registrado apenas para secretaria
+        if(!isset($data['destinatario_id'])) {
+            $data['secretaria_id'] = $data['secretaria'];
+        }
 
         #Salvando o registro principal
         $encaminhamento =  $this->repository->create($data);
@@ -207,13 +214,16 @@ class EncaminhamentoService
      */
     public function encaminharStore(array $data) : Encaminhamento
     {
+
+        $data = $this->tratamentoCampos($data);
+
         $date  = new \DateTime('now');
         $date->setTimezone( new \DateTimeZone('BRT') );
         $dataAtual = $date->format('Y-m-d');
         $this->anoAtual = $date->format('Y');
 
         #alterando o status do encaminhamento anterior para fechado
-        if($data['id']) {
+        if(isset($data['id']) && $data['id']) {
 
             $encaminhamentoAnterior = $this->find($data['id']);
             $encaminhamentoAnterior->status_id = 3;
@@ -238,6 +248,11 @@ class EncaminhamentoService
         $data['user_id'] = $this->user->id;
         $data['prioridade_id'] = $prioridade->id;
 
+        // Validando se não foi encaminhado para um departamento, sendo no caso registrado apenas para secretaria
+        if(!isset($data['destinatario_id'])) {
+            $data['secretaria_id'] = $data['secretaria'];
+        }
+
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
 
@@ -250,7 +265,7 @@ class EncaminhamentoService
         }
 
         // Verifica se ja houve algum ancaminhamento anterior, caso não é gerado um código para manifestação
-        if(!$data['id']) {
+        if(!isset($data['id'])) {
 
             //recupera o maior código ja registrado
             $codigo = \DB::table('ouv_demanda')
@@ -306,6 +321,11 @@ class EncaminhamentoService
         $data['resposta'] = $data['comentario'];
         $data['resp_publica'] = '1';
         $data['data_resposta'] = $dataAtual;
+
+        // Validando se não foi encaminhado para um departamento, sendo no caso registrado apenas para secretaria
+        if(!isset($data['destinatario_id'])) {
+            $data['secretaria_id'] = $data['secretaria'];
+        }
 
         #Salvando o registro pincipal
         $encaminhamento =  $this->repository->create($data);
@@ -635,5 +655,23 @@ class EncaminhamentoService
             ->get();
 
         return $prazos;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function tratamentoCampos(array &$data)
+    {
+        # Tratamento de campos de chaves estrangeira
+        foreach ($data as $key => $value) {
+            $explodeKey = explode("_", $key);
+
+            if ($explodeKey[count($explodeKey) -1] == "id" && $value == null ) {
+                unset($data[$key]);
+            }
+        }
+        #Retorno
+        return $data;
     }
 }

@@ -14,7 +14,8 @@ class Destinatario extends Model implements Transformable
 
     protected $fillable = [ 
 		'nome',
-        'area_id'
+        'area_id',
+        'responsavel'
 	];
 
     /**
