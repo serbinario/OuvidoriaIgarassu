@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <div class=" fg-line">
-                                        <label for="destinatario_id">Destino *</label>
+                                        <label for="destinatario_id">Destino</label>
                                         <div class="select">
                                             {!! Form::select('destinatario_id', array(), null, array('class' => 'form-control', 'id' => 'destinatario_id')) !!}
                                         </div>

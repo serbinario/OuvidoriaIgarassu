@@ -16,7 +16,6 @@ class EncaminhamentoValidator extends LaravelValidator
 	protected $attributes = [
 		'secretaria' =>  'Secretaria' ,
 		'parecer' =>  'Parecer' ,
-		'destinatario_id' =>  'Destino' ,
 		'prioridade_id' =>  'Prioridade' ,
 	];
 
@@ -25,7 +24,6 @@ class EncaminhamentoValidator extends LaravelValidator
 
 			'secretaria' =>  'required' ,
 			'parecer' =>  'required' ,
-			'destinatario_id' =>  'required' ,
 			'prioridade_id' =>  'required' ,
 
         ],
@@ -33,7 +31,6 @@ class EncaminhamentoValidator extends LaravelValidator
 
 			'secretaria' =>  'required' ,
 			'parecer' =>  'required' ,
-			'destinatario_id' =>  'required' ,
 			'prioridade_id' =>  'required' ,
 
         ],

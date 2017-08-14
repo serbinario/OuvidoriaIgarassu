@@ -100,7 +100,11 @@ function data($dia, $mes, $ano, $semana) {
         <span><b>V.Ex.ª {{$secretario}}</b></span></br>
     @else
         <span><b>Ao secretário(a)</b></span></br>
-        <span><b>Dr(a). {{$secretario}}</b></span></br>
+        @if($responsavel)
+            <span><b>Dr(a). {{$responsavel}}</b></span></br>
+        @else
+            <span><b>Dr(a). {{$secretario}}</b></span></br>
+        @endif
     @endif
 
     @if($dataManifestacao)

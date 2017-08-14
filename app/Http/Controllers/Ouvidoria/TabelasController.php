@@ -79,9 +79,18 @@ class TabelasController extends Controller
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
+            ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                $join->on(
+                    'ouv_encaminhamento.id', '=',
+                    \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                        where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                );
+            })
             ->join('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
             ->join('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
-            ->join('gen_secretaria', 'gen_secretaria.id', '=', 'ouv_assunto.area_id')
+            ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
+            ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->groupBy('ouv_assunto.id', 'ouv_informacao.id')
             ->select([
@@ -96,7 +105,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('gen_secretaria.id', '=', $secretaria);
+            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$secretaria}"));
         }
 
         $rows = $rows->get();
@@ -261,6 +270,7 @@ class TabelasController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('gen_sexo.id')
             ->select([
                 'gen_sexo.nome as sexo',
@@ -272,7 +282,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('gen_secretaria.id', '=', $secretaria);
+            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$secretaria}"));
         }
 
         $rows = $rows->get();
@@ -339,6 +349,7 @@ class TabelasController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('gen_escolaridade.id')
             ->select([
                 'gen_escolaridade.id as escolaridade',
@@ -350,7 +361,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('gen_secretaria.id', '=', $secretaria);
+            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$secretaria}"));
         }
 
         $rows = $rows->get();
@@ -421,6 +432,7 @@ class TabelasController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('gen_bairros.id', 'ouv_informacao.id')
             ->select([
                 'ouv_informacao.nome as info',
@@ -434,7 +446,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('gen_secretaria.id', '=', $secretaria);
+            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$secretaria}"));
         }
 
         if($cidade) {
@@ -520,6 +532,7 @@ class TabelasController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_melhorias.id')
             ->select([
                 'ouv_melhorias.id as melhoria',
@@ -531,7 +544,7 @@ class TabelasController extends Controller
         }
 
         if($secretaria) {
-            $rows->where('gen_secretaria.id', '=', $secretaria);
+            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$secretaria}"));
         }
 
         $rows = $rows->get();

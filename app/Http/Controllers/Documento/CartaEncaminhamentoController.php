@@ -53,6 +53,7 @@ class CartaEncaminhamentoController extends Controller
         $prazo = $dados['manifestacao']->prazo; # dias para solução do problema de acordo com prioridade
         $relato = $dados['manifestacao']->relato; # relato do manifestante
         $parecer = isset($dados['encaminhamento']->parecer) ? $dados['encaminhamento']->parecer : ""; # primeiro parecer do ouvidor
+        $responsavel = isset($dados['manifestacao']->responsavel) ? $dados['manifestacao']->responsavel : "";
 
 
         // Pega o caminho do arquivo
@@ -72,7 +73,7 @@ class CartaEncaminhamentoController extends Controller
         return \PDF::loadView("reports.{$empresa}cartaEncaminhamento", compact(
             'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
             'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
-            'prazo', 'relato', 'parecer'
+            'prazo', 'relato', 'parecer', 'responsavel'
             ))->stream();
 
     }
@@ -99,6 +100,7 @@ class CartaEncaminhamentoController extends Controller
             ->leftJoin('ouv_prioridade', 'ouv_prioridade.id', '=', 'ouv_encaminhamento.prioridade_id')
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->leftJoin('ouv_status', 'ouv_status.id', '=', 'ouv_encaminhamento.status_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('gen_bairros', 'gen_bairros.id', '=', 'ouv_demanda.bairro_id')
@@ -115,7 +117,7 @@ class CartaEncaminhamentoController extends Controller
                 'ouv_prioridade.nome as prioridade',
                 'ouv_prioridade.dias as prazo',
                 'gen_departamento.nome as destino',
-                'gen_secretaria.nome as area',
+                \DB::raw('IF(gen_secretaria.nome != "", gen_secretaria.nome, secretaria_dm.nome) as area'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 'ouv_status.nome as status',
                 'ouv_status.id as status_id',
@@ -138,8 +140,9 @@ class CartaEncaminhamentoController extends Controller
                 'ouv_informacao.nome as tipoManifestacao',
                 'ouv_tipo_demanda.nome as origem',
                 'ouv_pessoa.nome as tipoUsuario',
-                'gen_secretaria.secretario',
-                'gen_secretaria.id as area_id'
+                \DB::raw('IF(gen_secretaria.secretario != "", gen_secretaria.secretario, secretaria_dm.secretario) as secretario'),
+                \DB::raw('IF(gen_secretaria.id != "", gen_secretaria.id, secretaria_dm.id) as area_id'),
+                'gen_departamento.responsavel',
             ])->first();
 
         // Pega o primeiro encaminhamento da manifestação

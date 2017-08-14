@@ -19,7 +19,7 @@ $(document).on('change', "#secretaria", function () {
         var dados = {
             'table': 'gen_departamento',
             'field_search': 'area_id',
-            'value_search': secretaria,
+            'value_search': secretaria
         };
 
         jQuery.ajax({
@@ -30,7 +30,7 @@ $(document).on('change', "#secretaria", function () {
         }).done(function (json) {
             var option = "";
 
-            //option += '<option value="">Selecione</option>';
+            option += '<option value="">Selecione</option>';
             for (var i = 0; i < json.length; i++) {
                 option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
             }

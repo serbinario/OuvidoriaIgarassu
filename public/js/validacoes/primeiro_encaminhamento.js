@@ -8,10 +8,6 @@ $(document).ready(function () {
                 required: true,
             },
 
-            destinatario_id: {
-                required: true,
-            },
-
             parecer: {
                 required: true,
             },

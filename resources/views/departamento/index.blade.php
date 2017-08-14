@@ -42,6 +42,7 @@
                         <tr>
                             <th>Secretaria</th>
                             <th>Departamento</th>
+                            <th>Responsável</th>
                             <th>Acão</th>
                         </tr>
                         </thead>
@@ -49,6 +50,7 @@
                         <tr>
                             <th>Secretaria</th>
                             <th>Departamento</th>
+                            <th>Responsável</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>
                         </tfoot>
@@ -75,6 +77,7 @@
                 columns: [
                     {data: 'area', name: 'gen_secretaria.nome'},
                     {data: 'nome', name: 'gen_departamento.nome'},
+                    {data: 'responsavel', name: 'gen_departamento.responsavel'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

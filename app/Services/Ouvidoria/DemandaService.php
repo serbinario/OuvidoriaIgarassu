@@ -136,24 +136,13 @@ class DemandaService
         $user = Auth::user();
         
         $data = $this->tratamentoCampos($data);
+        $data['encaminhamento'] = $this->tratamentoCampos($data['encaminhamento']);
 
         $dataObj  = new \DateTime('now');
         $dataObj->setTimezone( new \DateTimeZone('BRT') );
-        //$this->anoAtual = $dataObj->format('Y');
-
-        //recupera o maior código ja registrado
-        /*$codigo = \DB::table('ouv_demanda')
-            ->where('ouv_demanda.codigo', 'like', '%'.$this->anoAtual)
-            ->max('codigo');*/
-
-        // Gerando o código da demanda
-        /*$codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
-        $codigoAtual = $codigo != null ? substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
-        $this->ultimoAno = substr($codigo, -4);*/
 
         // Complementando os dados da demanda
         $data['data'] = $dataObj->format('Y-m-d H:i:s');
-        //$data['codigo'] = $this->tratarCodigo($codigoAtual);
         $data['n_protocolo'] = SerbinarioGerarCodigoSenha::gerarProtocolo();
         $data['user_id'] = $user ? $user->id : null;
         $data['status_id'] = '5';
@@ -164,16 +153,21 @@ class DemandaService
         $encaminhamento = null;
 
         #### Encaminhamento ###
-        if(isset($data['encaminhamento']) && $data['encaminhamento']['prioridade_id'] && $data['encaminhamento']['destinatario_id']) {
+        if(isset($data['encaminhamento']) && $data['encaminhamento']['prioridade_id'] && $data['secretaria']) {
 
             $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
             $previsao = ValidarDataDePrevisao::getResult($dataObj, $prioridade->dias);
 
-            $data['encaminhamento']['previsao'] = $previsao;
-            $data['encaminhamento']['data'] = $data['data'];
+            $data['encaminhamento']['previsao']   = $previsao;
+            $data['encaminhamento']['data']       = $data['data'];
             $data['encaminhamento']['demanda_id'] = $demanda->id;
-            $data['encaminhamento']['status_id'] = '1';
-            $data['encaminhamento']['user_id'] = $user->id;
+            $data['encaminhamento']['status_id']  = '1';
+            $data['encaminhamento']['user_id']    = $user->id;
+
+            // Validando se não foi encaminhado para um departamento, sendo no caso registrado apenas para secretaria
+            if(!isset($data['destinatario_id'])) {
+                $data['encaminhamento']['secretaria_id'] = $data['secretaria'];
+            }
 
             $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
 
@@ -463,6 +457,7 @@ class DemandaService
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->join('ouv_informacao', 'ouv_informacao.id', '=', 'ouv_demanda.informacao_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->leftJoin('ouv_subassunto', 'ouv_subassunto.id', '=', 'ouv_demanda.subassunto_id')
@@ -483,7 +478,7 @@ class DemandaService
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 'gen_departamento.nome as destino',
-                'gen_secretaria.nome as area',
+                \DB::raw('IF(gen_secretaria.nome != "", gen_secretaria.nome, secretaria_dm.nome) as area'),
                 \DB::raw('DATE_FORMAT(ouv_encaminhamento.previsao,"%d/%m/%Y") as previsao'),
                 \DB::raw('DATE_FORMAT(ouv_prazo_solucao.data,"%d/%m/%Y") as prazo_solucao'),
                 \DB::raw('DATE_FORMAT(ouv_demanda.data_arquivamento,"%d/%m/%Y") as data_arquivamento'),
@@ -524,8 +519,6 @@ class DemandaService
                  'ouv_demanda.n_protocolo',
                 'ouv_status_externo.nome as status_externo'
             ])->first();
-
-
 
         return $demanda;
     }

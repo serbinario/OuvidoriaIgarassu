@@ -70,6 +70,7 @@ class DepartamentosController extends Controller
             ->select([
                 'gen_departamento.id',
                 'gen_departamento.nome',
+                'gen_departamento.responsavel',
                 'gen_secretaria.nome as area'
             ]);
 
