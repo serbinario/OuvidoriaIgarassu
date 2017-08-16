@@ -20,7 +20,8 @@
         "guzzlehttp/guzzle": "~6.0",
         "simplesoftwareio/simple-sms": "3.1.*",
         "prettus/laravel-validation": "^1.1",
-        "anhskohbo/no-captcha": "^2.3"
+        "anhskohbo/no-captcha": "^2.3",
+        "tecnickcom/tcpdf": "^6.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

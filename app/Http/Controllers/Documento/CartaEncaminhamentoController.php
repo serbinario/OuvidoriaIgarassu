@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Seracademico\Http\Controllers\Controller;
 use Seracademico\Services\Configuracao\ConfiguracaoGeralService;
+use Seracademico\Uteis\GerarPDF;
+
 
 class CartaEncaminhamentoController extends Controller
 {
@@ -61,21 +63,64 @@ class CartaEncaminhamentoController extends Controller
         $caminho = base_path("/resources/views/reports/{$empresa}cartaEncaminhamento.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        $fp = fopen($caminho, "w+");
+        //$fp = fopen($caminho, "w+");
 
         // Escreve no arquivo conteúdo do documento
-        fwrite($fp, $template->html);
+        //fwrite($fp, $template->html);
 
        //Fecha o arquivo
-        fclose($fp);
+        //fclose($fp);
 
         // Retorno do template e dados do documento
-        return \PDF::loadView("reports.{$empresa}cartaEncaminhamento", compact(
+        /*return \PDF::loadView("reports.{$empresa}cartaEncaminhamento", compact(
             'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
             'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
             'prazo', 'relato', 'parecer', 'responsavel'
-            ))->stream();
+            ))->stream();*/
 
+        $view = \View::make("reports.{$empresa}cartaEncaminhamento", compact(
+            'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
+            'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
+            'prazo', 'relato', 'parecer', 'responsavel'
+        ));
+
+        $view_content = $view->render();
+
+        $pdf = new GerarPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+        $urlImagem = base_path("/public/img/ouvidoria-saude-logo.png");
+
+        // Setando os parametros dinâmicos para montar o calendário
+        $pdf->setTitulo($titulo);
+        $pdf->setUrlImagem($urlImagem);
+
+        $pdf->SetAuthor('Nicola Asuni');
+        $pdf->SetTitle('Carta de encaminhamento');
+        $pdf->SetSubject('');
+        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+
+        // set default header data
+        $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+
+        // set header and footer fonts
+        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+        $pdf->SetFont('dejavusans', '', 9, '', true);
+
+        $pdf->AddPage();
+
+        $pdf->writeHTML($view_content, true, false, true, false, '');
+
+        $pdf->Output('carta_encaminhamento.pdf');
     }
 
     /**

@@ -142,6 +142,7 @@ return [
         */
         Barryvdh\Snappy\ServiceProvider::class,
 
+
         /*
         * Lavacharts gerar gráficos
         */
