@@ -381,7 +381,7 @@ class DemandaController extends Controller
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
         if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $rows->where('area_destino.id', '=', $this->user->secretaria->id);
+            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$this->user->secretaria->id}"));
         }
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
@@ -406,9 +406,11 @@ class DemandaController extends Controller
                             ->orWhere('ouv_tipo_demanda.nome', 'like', "%$search%")
                             ->orWhere('ouv_demanda.nome', 'like', "%$search%")
                             ->orWhere('ouv_comunidade.nome', 'like', "%$search%")
-                            ->orWhere('area_destino.nome', 'like', "%$search%")
+                            ->orWhere('gen_secretaria.nome', 'like', "%$search%")
+                            ->orWhere('secretaria_dm.nome', 'like', "%$search%")
                             ->orWhere('gen_departamento.nome', 'like', "%$search%")
                             ->orWhere('ouv_demanda.relato', 'like', "%$search%");
+
                     });
 
                 }
