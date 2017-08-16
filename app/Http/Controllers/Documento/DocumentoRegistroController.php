@@ -63,13 +63,13 @@ class DocumentoRegistroController extends Controller
         $caminho = base_path("/resources/views/reports/{$empresa}registroDemanda.blade.php");
 
         //Abre o arquivo em branco para escrita do conteúdo no arquivo
-        //$fp = fopen($caminho, "w");
+        $fp = fopen($caminho, "w");
 
         //Escreve no arquivo conteúdo do documento
-        //fwrite($fp, $template->html);
+        fwrite($fp, $template->html);
 
         //Fecha o arquivo
-        //fclose($fp);
+        fclose($fp);
 
         // Retorno do template e dados do documento
         $view = \View::make("reports.{$empresa}registroDemanda", compact(

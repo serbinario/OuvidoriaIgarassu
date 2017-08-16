@@ -123,9 +123,9 @@
 
     <br /> <br /><br /><br />
     <h4 style="margin-top: 5%">Assinaturas:</h4>
-    <table class="table-assinatura"  style="width: 100%;">
+    <table class="table-assinatura">
         <tr>
-            <td style="width: 55%"><span><b>Manifestante<br /><br /><br /></b></span></td>
+            <td><span><b>Manifestante<br /><br /><br /></b></span></td>
             <td><span><b>Ouvidor Geral<br /><br /><br /></b></span></td>
         </tr>
     </table>
