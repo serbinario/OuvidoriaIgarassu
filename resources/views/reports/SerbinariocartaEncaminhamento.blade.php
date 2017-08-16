@@ -58,21 +58,19 @@ function data($dia, $mes, $ano, $semana) {
         body {
             font-family: arial;
         }
-        .rodape{
-            position: absolute;
-            bottom:0;
-            width: 100%;
-            height: 130px;
-            margin-top: 100px;
-        }
+
         span, p {
-            font-size: 14px;
-            margin-left: 20px;
             text-align: justify;
         }
         span {
             text-align: justify
         }
+
+        table {
+            width: 100%;
+            border: 1px solid #444;
+        }
+
     </style>
     <link href="" rel="stylesheet" media="screen">
 </head>
@@ -80,88 +78,76 @@ function data($dia, $mes, $ano, $semana) {
 <body>
 <div class="page">
 
-    <center>
-        <div class="topo" style="">
-            <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 130px; height: 95px"></center>
-        </div><br />
-        <span style="font-size: 14px"><b>{{ $titulo }}</b></span><br />
-        {{--<span style="font-size: 10px">Ouvidoria da Saúde</span>--}}
-    </center>
-    {{--<center>
-        <div class="topo" style="">
-            <center><img src="{{asset('/img/ouvidoria-logo.png')}}" style="width: 320px; height: 100px"></center>
-        </div>
-    </center>--}}
 
     <h5 style="font-size: 15px">Comunicação interna N.º: {{$codigo}}</h5>
 
     @if($secretariaId == '3')
-        <span><b>Gabinte do Prefeitro</b></span></br>
-        <span><b>V.Ex.ª {{$secretario}}</b></span></br>
+        <span><b>Gabinte do Prefeitro</b></span><br />
+        <span><b>V.Ex.ª {{$secretario}}</b></span><br />
     @else
-        <span><b>Ao secretário(a)</b></span></br>
+        <span><b>Ao secretário(a)</b></span><br />
         @if($responsavel)
-            <span><b>Dr(a). {{$responsavel}}</b></span></br>
+            <span><b>Dr(a). {{$responsavel}}</b></span>
         @else
-            <span><b>Dr(a). {{$secretario}}</b></span></br>
+            <span><b>Dr(a). {{$secretario}}</b></span>
         @endif
     @endif
 
     @if($dataManifestacao)
         <?php $data = \DateTime::createFromFormat('Y-m-d H:i:s', $dataManifestacao); ?>
-        <span style="position: absolute; top: 180px; left: 400px;">Igarassu, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</span></br>
+        <div style="text-align: right">Igarassu, <?php data($data->format('d'), $data->format('m'), $data->format('Y'), $data->format('w')); ?>.</div><br />
     @endif
-    <span>Assunto: Manifestação recebida pela Ouvidoria Municipal de saúde de Igarassu.</span></br></br>
+    <span>Assunto: Manifestação recebida pela Ouvidoria Municipal de saúde de Igarassu.</span><br /><br />
 
-    <span><b>Prezado(a) Senhor(a),</b></span></br>
+    <span><b>Prezado(a) Senhor(a),</b></span><br />
     <p>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cumprimentando Cordialmente, encaminhamos a V.S.a a manifestação recebida pela ouvidoria,</b> para fins de
         conhecimento e para que sejam tomadas as devidas providências cabíveis.
         Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
         epígrafe, solicito informar a ouvidoria dentro do prazo estabelecido o <b>retorno</b> através de <b>comunicação interna</b> as providências
-        adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial a ser informada ao cidadão.</p></br></br>
+        adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial a ser informada ao cidadão.</p><br /><br />
 
 
-    <table border rules=none style="width: 100%;">
+    <table class="table table-border" >
         <tr>
-            <td style="width: 340px"><span class="text"><b>Protocolo Nº. {{$protocolo}} </b></span></td>
+            <td ><span class="text"><b>Protocolo Nº. {{$protocolo}} </b></span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Tipo de manifestação: </b>{{ $tipoManifestacao }}</span></td>
+            <td ><span class="text"><b>Tipo de manifestação: </b>{{ $tipoManifestacao }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Assunto: </b>{{ $assunto  }}</span></td>
+            <td ><span class="text"><b>Assunto: </b>{{ $assunto  }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Origem: </b>{{ $origem }}</span></td>
+            <td ><span class="text"><b>Origem: </b>{{ $origem }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Usuário: </b>{{ $tipoUsuario }}</span></td>
+            <td ><span class="text"><b>Usuário: </b>{{ $tipoUsuario }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Nome: </b>{{ ($sigiloId == 2) ? 'Confidencial' : $nome }}</span></td>
+            <td ><span class="text"><b>Nome: </b>{{ ($sigiloId == 2) ? 'Confidencial' : $nome }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Celular: </b>{{ $fone  }}</span></td>
+            <td ><span class="text"><b>Celular: </b>{{ $fone  }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Classificação: </b>{{ $prioridade  }}</span></td>
+            <td ><span class="text"><b>Classificação: </b>{{ $prioridade  }}</span></td>
         </tr>
         <tr>
-            <td style="width: 340px"><span class="text"><b>Prazo de Resposta: </b>{{ $prazo  }} dias úteis</span></td>
+            <td ><span class="text"><b>Prazo de Resposta: </b>{{ $prazo  }} dias úteis</span></td>
         </tr>
-    </table><br />
+    </table><br /><br />
 
-    <table border rules=none style="width: 100%;">
+    <table >
         <tr>
             <td><span><b>Descrição da Manifestação do autor</b></span></td>
         </tr>
         <tr>
             <td rowspan="5"><p>{{ $relato }}</p></td>
         </tr>
-    </table> <br />
+    </table> <br /><br />
 
-    <table border rules=none style="width: 100%;">
+    <table >
         <tr>
             <td><span><b>Interpretação da Manifestação pela ouvidoria</b></span></td>
         </tr>
@@ -172,17 +158,17 @@ function data($dia, $mes, $ano, $semana) {
 
 </div>
 
-<center>
+{{--<center>
     <div class="rodape">
         <center>
             <center><img src="{{asset('/img/ouvidoria_saude.png')}}" style="width: 130px; height: 95px"></center><br />
             <span style="font-size: 10px">Ouvidoria da Saúde de Igarassu</span><br />
-            {{--<span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
+            --}}{{--<span style="font-size: 10px">PREFEITURA MUNICIPAL DE ABREU E LIMA</span><br />
             <span style="font-size: 10px">Avenida Duque de Caxias nº 924 - Centro - Abreu E Lima PE</span><br />
-            <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>--}}
+            <span style="font-size: 10px">CEP: 53.580-020 - CNPJ: 08.637.3730001-80 - FONE: (81) 3542.1061</span>--}}{{--
         </center>
     </div>
-</center>
+</center>--}}
 
 </body>
 </html>
