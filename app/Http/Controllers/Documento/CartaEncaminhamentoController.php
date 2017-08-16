@@ -63,21 +63,15 @@ class CartaEncaminhamentoController extends Controller
         $caminho = base_path("/resources/views/reports/{$empresa}cartaEncaminhamento.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
-        //$fp = fopen($caminho, "w+");
+        $fp = fopen($caminho, "w+");
 
         // Escreve no arquivo conteúdo do documento
-        //fwrite($fp, $template->html);
+        fwrite($fp, $template->html);
 
-       //Fecha o arquivo
-        //fclose($fp);
+        //Fecha o arquivo
+        fclose($fp);
 
         // Retorno do template e dados do documento
-        /*return \PDF::loadView("reports.{$empresa}cartaEncaminhamento", compact(
-            'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
-            'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
-            'prazo', 'relato', 'parecer', 'responsavel'
-            ))->stream();*/
-
         $view = \View::make("reports.{$empresa}cartaEncaminhamento", compact(
             'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
             'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
