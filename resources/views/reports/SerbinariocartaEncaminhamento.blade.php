@@ -85,10 +85,11 @@ function data($dia, $mes, $ano, $semana) {
         <span><b>Gabinte do Prefeitro</b></span><br />
         <span><b>V.Ex.ª {{$secretario}}</b></span><br />
     @else
-        <span><b>Ao secretário(a)</b></span><br />
         @if($responsavel)
-            <span><b>Dr(a). {{$responsavel}}</b></span>
+            <span><b>À {{$departamento}}</b></span><br />
+            <span><b>{{$responsavel}}</b></span>
         @else
+            <span><b>Ao secretário(a)</b></span><br />
             <span><b>Dr(a). {{$secretario}}</b></span>
         @endif
     @endif
@@ -101,11 +102,10 @@ function data($dia, $mes, $ano, $semana) {
 
     <span><b>Prezado(a) Senhor(a),</b></span><br />
     <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cumprimentando Cordialmente, encaminhamos a V.S.a a manifestação recebida pela ouvidoria,</b> para fins de
-        conhecimento e para que sejam tomadas as devidas providências cabíveis.
-        Devido ao caráter interativo da Ouvidoria Municipal a qual permite ao usuário o acompanhamento do processo em
-        epígrafe, solicito informar a ouvidoria dentro do prazo estabelecido o <b>retorno</b> através de <b>comunicação interna</b> as providências
-        adotada e/ou possível solução do problema. Considerando a <b>resposta</b> primordial a ser informada ao cidadão.</p><br /><br />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cumprimentando cordialmente, encaminhamos a V.S.a a manifestação
+            recebida por essa Ouvidoria para análise e providências cabíveis.</b> Solicitamos encaminhar a Ouvidoria,
+        dentro do prazo estabelecido, o retorno através de comunicação interna para que esta seja informada ao cidadão.
+    </p><br /><br />
 
 
     <table class="table table-border" >
