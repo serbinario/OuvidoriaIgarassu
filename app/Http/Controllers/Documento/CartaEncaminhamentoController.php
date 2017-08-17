@@ -83,11 +83,13 @@ class CartaEncaminhamentoController extends Controller
 
         $pdf = new GerarPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-        $urlImagem = base_path("/public/img/ouvidoria-saude-logo.png");
+        $urlImagemTopo = base_path("/public/img/ouvidoria-saude-logo.png");
+        $urlImagemRodape = base_path("/public/img/logo_redape_igarassu.png");
 
         // Setando os parametros dinâmicos para montar o calendário
         $pdf->setTitulo($titulo);
-        $pdf->setUrlImagem($urlImagem);
+        $pdf->setUrlImagemTopo($urlImagemTopo);
+        $pdf->setUrlImagemRodape($urlImagemRodape);
 
         $pdf->SetAuthor('Nicola Asuni');
         $pdf->SetTitle('Carta de encaminhamento');
