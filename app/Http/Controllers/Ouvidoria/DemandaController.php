@@ -346,14 +346,12 @@ class DemandaController extends Controller
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
             ->join('ouv_ouvidorias', 'ouv_ouvidorias.id', '=', 'ouv_demanda.ouvidoria_id')
             ->where('ouv_demanda.arquivada', '=', null)
-            //->where('ouv_ouvidorias.id', '=', $ouvidoria)
             ->select(
                 'ouv_demanda.id',
                 'ouv_demanda.nome',
                 'ouv_encaminhamento.id as encaminhamento_id',
                 'ouv_prioridade.nome as prioridade',
                 'gen_departamento.nome as destino',
-                //'area_destino.nome as area_destino',
                 \DB::raw('IF(gen_secretaria.nome != "", gen_secretaria.nome, secretaria_dm.nome) as area_destino'),
                 'users.name as responsavel',
                 'ouv_informacao.nome as informacao',
@@ -380,8 +378,12 @@ class DemandaController extends Controller
         }
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin|ouvidoria') && $this->user->is('secretaria')) {
-            $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$this->user->secretaria->id}"));
+        if(!$this->user->is('admin') && $this->user->is('secretaria|ouvidoria')) {
+            if(isset($this->user->secretaria->id) && !isset($this->user->departamento->id)) {
+                $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$this->user->secretaria->id}"));
+            } else if (isset($this->user->departamento->id)) {
+                $rows->where('gen_departamento.id', '=', $this->user->departamento->id);
+            }
         }
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
@@ -894,7 +896,6 @@ class DemandaController extends Controller
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
-                //\DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 'ouv_encaminhamento.data',
                 'ouv_prioridade.nome as prioridade',
                 'ouv_prioridade.dias as prazo',

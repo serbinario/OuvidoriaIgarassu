@@ -84,16 +84,34 @@
                                                 </div>
                                             </div>
 
+                                        </div>
+
+                                        <div class="row">
+
                                             <div class="form-group col-md-3">
                                                 <div class=" fg-line">
                                                     <label for="area_id">Secretaria</label>
                                                     <div class="select">
-                                                        {!! Form::select('area_id', ['' => 'Selecione uma secretaria'] + $loadFields2['ouvidoria\secretaria']->toArray(), Session::getOldInput('secretaria'), array('class' => 'form-control')) !!}
+                                                        {!! Form::select('area_id', ['' => 'Selecione uma secretaria'] + $loadFields2['ouvidoria\secretaria']->toArray(), null,array('id' => 'area_id', 'class' => 'form-control')) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <div class=" fg-line">
+                                                    <label for="departamento_id">Departamento</label>
+                                                    <div class="select">
+                                                        @if(isset($user->departamento->id))
+                                                            {!! Form::select('departamento_id', array($user->departamento->id => $user->departamento->nome), $user->departamento->id, array('class' => 'form-control', 'id' => 'departamento_id')) !!}
+                                                        @else
+                                                            {!! Form::select('departamento_id', array(), null, array('class' => 'form-control', 'id' => 'departamento_id')) !!}
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
 
                                         </div>
+
                                         <div class="row">
                                             <div class="form-group col-md-4">
                                                 <label for="active" class="checkbox checkbox-inline m-r-20">
@@ -177,6 +195,41 @@
                 e.preventDefault();
                 $(this).tab('show');
             });
+        });
+
+        //Carregando os departamentos
+        $(document).on('change', "#area_id", function () {
+            //Removendo as assuntos
+            $('#departamento_id option').remove();
+
+            //Recuperando a secretaria
+            var secretaria = $(this).val();
+
+            if (secretaria !== "") {
+
+                var dados = {
+                    'table': 'gen_departamento',
+                    'field_search': 'area_id',
+                    'value_search': secretaria
+                };
+
+                jQuery.ajax({
+                    type: 'POST',
+                    url: "/index.php/seracademico/util/search",
+                    data: dados,
+                    datatype: 'json'
+                }).done(function (json) {
+                    var option = "";
+
+                    option += '<option value="">Selecione</option>';
+                    for (var i = 0; i < json.length; i++) {
+                        option += '<option value="' + json[i]['id'] + '">' + json[i]['nome'] + '</option>';
+                    }
+
+                    $('#departamento_id option').remove();
+                    $('#departamento_id').append(option);
+                });
+            }
         });
     </script>
 @stop

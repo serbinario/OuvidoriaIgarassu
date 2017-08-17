@@ -53,7 +53,7 @@ class UserService
     public function find(int $id) : User
     {
         #Recuperando o registro no banco de dados
-        $user = $this->repository->with('roles', 'permissions')->find($id);
+        $user = $this->repository->with('roles', 'permissions', 'departamento')->find($id);
 
         #Verificando se o registro foi encontrado
         if(!$user) {
@@ -82,6 +82,7 @@ class UserService
 
         #tratando a imagem
         if(isset($data['img'])) {
+
             $file     = $data['img'];
             $fileName = md5(uniqid(rand(), true)) . "." . $file->getClientOriginalExtension();
 
