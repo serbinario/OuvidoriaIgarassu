@@ -104,7 +104,7 @@ function data($dia, $mes, $ano, $semana) {
     <p>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Cumprimentando cordialmente, encaminhamos a V.S.a a manifestação
             recebida por essa Ouvidoria para análise e providências cabíveis.</b> Solicitamos encaminhar a Ouvidoria,
-        dentro do prazo estabelecido, o retorno através de comunicação interna para que esta seja informada ao cidadão.
+        dentro do prazo estabelecido, o retorno através de comunicação Interna para que esta seja informada ao cidadão.
     </p><br /><br />
 
 
