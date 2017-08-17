@@ -56,6 +56,7 @@ class CartaEncaminhamentoController extends Controller
         $relato = $dados['manifestacao']->relato; # relato do manifestante
         $parecer = isset($dados['encaminhamento']->parecer) ? $dados['encaminhamento']->parecer : ""; # primeiro parecer do ouvidor
         $responsavel = isset($dados['manifestacao']->responsavel) ? $dados['manifestacao']->responsavel : "";
+        $departamento = $dados['manifestacao']->departamento;
 
 
         // Pega o caminho do arquivo
@@ -75,7 +76,7 @@ class CartaEncaminhamentoController extends Controller
         $view = \View::make("reports.{$empresa}cartaEncaminhamento", compact(
             'titulo', 'codigo', 'secretariaId', 'secretario', 'dataManifestacao', 'dataManifestacao', 'protocolo',
             'tipoManifestacao', 'assunto', 'origem', 'tipoUsuario', 'sigiloId', 'nome', 'fone', 'prioridade',
-            'prazo', 'relato', 'parecer', 'responsavel'
+            'prazo', 'relato', 'parecer', 'responsavel', 'departamento'
         ));
 
         $view_content = $view->render();
@@ -151,7 +152,6 @@ class CartaEncaminhamentoController extends Controller
             ->select([
                 'ouv_encaminhamento.id as encaminhamento_id',
                 \DB::raw('CONCAT (SUBSTRING(ouv_demanda.codigo, 4, 4), "/", SUBSTRING(ouv_demanda.codigo, -4, 4)) as codigo'),
-                //\DB::raw('DATE_FORMAT(ouv_encaminhamento.data,"%d/%m/%Y") as data'),
                 'ouv_encaminhamento.data',
                 'ouv_prioridade.nome as prioridade',
                 'ouv_prioridade.dias as prazo',
@@ -182,6 +182,7 @@ class CartaEncaminhamentoController extends Controller
                 \DB::raw('IF(gen_secretaria.secretario != "", gen_secretaria.secretario, secretaria_dm.secretario) as secretario'),
                 \DB::raw('IF(gen_secretaria.id != "", gen_secretaria.id, secretaria_dm.id) as area_id'),
                 'gen_departamento.responsavel',
+                'gen_departamento.nome as departamento'
             ])->first();
 
         // Pega o primeiro encaminhamento da manifestação
