@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use Bican\Roles\Traits\HasRoleAndPermission;
 use Bican\Roles\Contracts\HasRoleAndPermission as HasRoleAndPermissionContract;
+use Seracademico\Entities\Ouvidoria\Destinatario;
 use Seracademico\Entities\Ouvidoria\Secretaria;
 
 class User extends Model implements AuthenticatableContract,
@@ -34,7 +35,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'active', 'path_image', 'area_id', 'ouvidoria_id'];
+    protected $fillable = ['name', 'email', 'password', 'active', 'path_image', 'area_id', 'ouvidoria_id', 'departamento_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -60,6 +61,14 @@ class User extends Model implements AuthenticatableContract,
     public function secretaria()
     {
         return $this->belongsTo(Secretaria::class, 'area_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function departamento()
+    {
+        return $this->belongsTo(Destinatario::class, 'departamento_id');
     }
 }
 

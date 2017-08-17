@@ -48,14 +48,20 @@ class DefaultController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 \DB::raw('COUNT(ouv_demanda.id) as analises'),
             ]);
 
 
-        if($user->is('secretaria')) {
-            $analises->where('gen_secretaria.id', '=', $user->secretaria->id);
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$user->is('admin') && $user->is('secretaria|ouvidoria')) {
+            if(isset($user->secretaria->id) && !isset($user->departamento->id)) {
+                $analises->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$user->secretaria->id}"));
+            } else if (isset($user->departamento->id)) {
+                $analises->where('gen_departamento.id', '=', $user->departamento->id);
+            }
         }
 
         $analises = $analises->first();
@@ -71,14 +77,20 @@ class DefaultController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 \DB::raw('COUNT(ouv_demanda.id) as concluidas'),
             ]);
 
 
-        if($user->is('secretaria')) {
-            $concluidas->where('gen_secretaria.id', '=', $user->secretaria->id);
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$user->is('admin') && $user->is('secretaria|ouvidoria')) {
+            if(isset($user->secretaria->id) && !isset($user->departamento->id)) {
+                $concluidas->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$user->secretaria->id}"));
+            } else if (isset($user->departamento->id)) {
+                $concluidas->where('gen_departamento.id', '=', $user->departamento->id);
+            }
         }
 
         $concluidas = $concluidas->first();
@@ -94,6 +106,7 @@ class DefaultController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->where('ouv_encaminhamento.previsao', '<', $data->format('Y-m-d'))
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
@@ -101,8 +114,13 @@ class DefaultController extends Controller
             ]);
 
 
-        if($user->is('secretaria')) {
-            $atrasadas->where('gen_secretaria.id', '=', $user->secretaria->id);
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$user->is('admin') && $user->is('secretaria|ouvidoria')) {
+            if(isset($user->secretaria->id) && !isset($user->departamento->id)) {
+                $atrasadas->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$user->secretaria->id}"));
+            } else if (isset($user->departamento->id)) {
+                $atrasadas->where('gen_departamento.id', '=', $user->departamento->id);
+            }
         }
 
         $atrasadas = $atrasadas->first();
@@ -138,6 +156,7 @@ class DefaultController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_status.id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
@@ -145,8 +164,13 @@ class DefaultController extends Controller
                 \DB::raw('count(ouv_demanda.id) as qtd'),
             ]);
 
-        if($user->is('secretaria')) {
-            $rows->where('gen_secretaria.id', '=', $this->user->secretaria->id);
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$user->is('admin') && $user->is('secretaria|ouvidoria')) {
+            if(isset($user->secretaria->id) && !isset($user->departamento->id)) {
+                $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$user->secretaria->id}"));
+            } else if (isset($user->departamento->id)) {
+                $rows->where('gen_departamento.id', '=', $user->departamento->id);
+            }
         }
 
         $rows = $rows->get();
@@ -190,6 +214,7 @@ class DefaultController extends Controller
             })
             ->leftJoin('gen_departamento', 'gen_departamento.id', '=', 'ouv_encaminhamento.destinatario_id')
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
+            ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_informacao.id')
             ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
@@ -198,12 +223,16 @@ class DefaultController extends Controller
             ]);
 
 
-        if ($user->is('secretaria')) {
-            $rows->where('gen_secretaria.id', '=', $this->user->secretaria->id);
+        // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
+        if(!$user->is('admin') && $user->is('secretaria|ouvidoria')) {
+            if(isset($user->secretaria->id) && !isset($user->departamento->id)) {
+                $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$user->secretaria->id}"));
+            } else if (isset($user->departamento->id)) {
+                $rows->where('gen_departamento.id', '=', $user->departamento->id);
+            }
         }
 
         $rows = $rows->get();
-
 
         $dados = [];
         $qtdTotal = 0;
