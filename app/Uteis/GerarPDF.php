@@ -20,7 +20,12 @@ class GerarPDF extends \TCPDF
     /**
      * @var string
      */
-    private $urlImagem = "";
+    private $urlImagemTopo = "";
+
+    /**
+     * @var string
+     */
+    private $urlImagemRodape = "";
 
     //Page header
     public function Header() {
@@ -31,19 +36,19 @@ class GerarPDF extends \TCPDF
         $this->Cell(190, 45, $this->titulo, 0, false, 'C', 0, '', 0, false, 'C', 'B');
 
         // Logo
-        $this->Image($this->urlImagem, 100, 3, 20, '', 'PNG', '', 'C', false, 300, '', false, false, 0, false, false, false);
+        $this->Image($this->urlImagemTopo, 100, 3, 20, '', 'PNG', '', 'C', false, 300, '', false, false, 0, false, false, false);
 
     }
 
     // Page footer
     public function Footer() {
         // Set font
-        $this->SetFont('helvetica', '', 9);
+        //$this->SetFont('helvetica', '', 9);
         // Title
-        $this->Cell(190, 10, $this->titulo, 0, false, 'C', 0, '', 0, false, 'C', 'M');
+        //$this->Cell(190, 10, $this->titulo, 0, false, 'C', 0, '', 0, false, 'C', 'M');
 
         // Logo
-        $this->Image($this->urlImagem, 100, 265, 20, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
+        $this->Image($this->urlImagemRodape, 90, 270, 40, '', 'PNG', '', 'M', false, 300, '', false, false, 0, false, false, false);
     }
 
     /**
@@ -65,17 +70,34 @@ class GerarPDF extends \TCPDF
     /**
      * @return string
      */
-    public function getUrlImagem()
+    public function getUrlImagemTopo()
     {
-        return $this->urlImagem;
+        return $this->urlImagemTopo;
     }
 
     /**
-     * @param string $urlImagem
+     * @param string $urlImagemTopo
      */
-    public function setUrlImagem($urlImagem)
+    public function setUrlImagemTopo($urlImagemTopo)
     {
-        $this->urlImagem = $urlImagem;
+        $this->urlImagemTopo = $urlImagemTopo;
     }
+
+    /**
+     * @return string
+     */
+    public function getUrlImagemRodape()
+    {
+        return $this->urlImagemRodape;
+    }
+
+    /**
+     * @param string $urlImagemRodape
+     */
+    public function setUrlImagemRodape($urlImagemRodape)
+    {
+        $this->urlImagemRodape = $urlImagemRodape;
+    }
+
 
 }
