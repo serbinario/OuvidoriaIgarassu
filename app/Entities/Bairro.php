@@ -5,6 +5,7 @@ namespace Seracademico\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Seracademico\Entities\Ouvidoria\Demanda;
 
 class Bairro extends Model implements Transformable
 {
@@ -25,5 +26,13 @@ class Bairro extends Model implements Transformable
     public function cidade()
     {
         return $this->belongsTo(Cidade::class, "cidades_id");
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function demanda()
+    {
+        return $this->hasMany(Demanda::class, 'bairro_id', 'id');
     }
 }

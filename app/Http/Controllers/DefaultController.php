@@ -146,7 +146,7 @@ class DefaultController extends Controller
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_status', 'ouv_status.id', "=", "ouv_demanda.status_id")
+            ->leftJoin('ouv_status', 'ouv_status.id', "=", "ouv_demanda.status_id")
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -158,7 +158,7 @@ class DefaultController extends Controller
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_status.id')
-            ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
+            //->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 'ouv_status.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
@@ -204,7 +204,7 @@ class DefaultController extends Controller
 
         #Criando a consulta
         $rows = \DB::table('ouv_demanda')
-            ->join('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
+            ->leftJoin('ouv_informacao', 'ouv_informacao.id', "=", "ouv_demanda.informacao_id")
             ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
@@ -216,7 +216,7 @@ class DefaultController extends Controller
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_informacao.id')
-            ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
+            //->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 'ouv_informacao.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),

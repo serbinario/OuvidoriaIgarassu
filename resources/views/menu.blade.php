@@ -159,6 +159,7 @@
                     <li><a href="{{ route('seracademico.ouvidoria.departamento.index')  }}">Departamentos</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.assunto.index')  }}">Assunto</a></li>
                     <li><a href="{{ route('seracademico.ouvidoria.subassunto.index')  }}">Subassunto</a></li>
+                    <li><a href="{{ route('seracademico.ouvidoria.bairro.index')  }}">Bairros</a></li>
                     {{--<li><a href="{{ route('seracademico.ouvidoria.melhoria.index')  }}">Melhorias</a></li>--}}
                 </ul>
             </li>
