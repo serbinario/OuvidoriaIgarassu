@@ -36,10 +36,6 @@ class EncaminhamentoService
      */
     private $ultimoAno;
 
-    /**
-     * @var
-     */
-    private $tombo;
 
     /**
      * @param EncaminhamentoRepository $repository

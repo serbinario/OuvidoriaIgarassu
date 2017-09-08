@@ -37,11 +37,6 @@ class DemandaService
     /**
      * @var
      */
-    private $tombo;
-
-    /**
-     * @var
-     */
     private $configuracaoGeralService;
 
     /**
@@ -134,12 +129,14 @@ class DemandaService
     {
         // Pegando o usuário
         $user = Auth::user();
-        
+
         $data = $this->tratamentoCampos($data);
         $data['encaminhamento'] = $this->tratamentoCampos($data['encaminhamento']);
 
         $dataObj  = new \DateTime('now');
         $dataObj->setTimezone( new \DateTimeZone('BRT') );
+        $dataAtual = $dataObj->format('Y-m-d');
+        $this->anoAtual = $dataObj->format('Y');
 
         // Complementando os dados da demanda
         $data['data'] = $dataObj->format('Y-m-d H:i:s');
@@ -152,8 +149,10 @@ class DemandaService
         $demanda =  $this->repository->create($data);
         $encaminhamento = null;
 
+
         #### Encaminhamento ###
         if(isset($data['encaminhamento']) && $data['encaminhamento']['prioridade_id'] && $data['secretaria']) {
+
 
             $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
             $previsao = ValidarDataDePrevisao::getResult($dataObj, $prioridade->dias);
@@ -171,11 +170,26 @@ class DemandaService
 
             $encaminhamento = $this->encaminhamentoRepository->create($data['encaminhamento']);
 
+            //recupera o maior código ja registrado
+            $codigo = \DB::table('ouv_demanda')
+                ->where('ouv_demanda.codigo', 'like', '%' . $this->anoAtual)
+                ->max('codigo');
+
+            // Gerando o código da manifestação
+            $codigoMax = $codigo != null ? $codigoMax = $codigo + 1 : $codigoMax = "0001{$this->anoAtual}";
+            $codigoAtual = $codigo != null ?  substr($codigoMax, 0, -4) + 1 : substr($codigoMax, 0, -4);
+            $this->ultimoAno = substr($codigo, -4);
+
+            // Pegando a demanda atual
+            $demanda =  $this->repository->find($demanda->id);
+            $demanda->status_id = '1'; # Mudando o status para encaminhado
+            $demanda->codigo = $this->tratarCodigo($codigoAtual); #Setando o código na manifestação
+
             if(isset($data['subassunto_id'])) {
-                $demanda =  $this->repository->find($demanda->id);
                 $demanda->subassunto_id = $data['subassunto_id'];
-                $demanda->save();
             }
+
+            $demanda->save();
 
         }
         
