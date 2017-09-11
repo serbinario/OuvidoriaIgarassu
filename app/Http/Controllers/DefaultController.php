@@ -158,7 +158,7 @@ class DefaultController extends Controller
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_status.id')
-            //->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
+            ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 'ouv_status.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
@@ -216,7 +216,7 @@ class DefaultController extends Controller
             ->leftJoin('gen_secretaria', 'gen_secretaria.id', '=', 'gen_departamento.area_id')
             ->leftJoin('gen_secretaria as secretaria_dm', 'secretaria_dm.id', '=', 'ouv_encaminhamento.secretaria_id')
             ->groupBy('ouv_informacao.id')
-            //->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
+            ->whereRaw("MONTH(ouv_demanda.data) = {$mesAtual}")
             ->select([
                 'ouv_informacao.nome as nome',
                 \DB::raw('count(ouv_demanda.id) as qtd'),
