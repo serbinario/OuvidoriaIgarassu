@@ -23,4 +23,13 @@ class Role extends Model implements Transformable, RoleHasRelations
     {
         return $this->belongsToMany(Permission ::class);
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeBySistema($query, $value)
+    {
+        return $query->whereIn('sistema', [$value,0]);
+    }
 }

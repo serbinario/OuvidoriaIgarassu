@@ -58,7 +58,7 @@
                         </div>
                     @endif
 
-                 @role('ouvidoria|admin')
+                 @role('ouvidoria|admin|operador')
                     <!-- Botão novo -->
                     <div class="row">
                         <div class="col-xs-12">
@@ -142,7 +142,7 @@
                             <th>Responsável</th>
                             <th>Prioridade</th>
                             <th>Caract. da demanda</th>
-                            <th>Meio de registro</th>
+                            <th>Assunto</th>
                             <th>Status</th>
                             <th>Acão</th>
                         </tr>
@@ -156,7 +156,7 @@
                             <th>Responsável</th>
                             <th>Prioridade</th>
                             <th>Caract. da demanda</th>
-                            <th>Meio de registro</th>
+                            <th>Assunto</th>
                             <th>Status</th>
                             <th style="width: 16%;">Acão</th>
                         </tr>

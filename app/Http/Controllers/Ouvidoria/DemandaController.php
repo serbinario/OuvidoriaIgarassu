@@ -257,7 +257,7 @@ class DemandaController extends Controller
 
         # Buscanco apenas as demandas encaminhadas e reencaminhadas
         if($request->has('status') && ($request->get('status') == '1' || $request->get('statusGet') == '1')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -268,7 +268,7 @@ class DemandaController extends Controller
 
         # Buscanco apenas as demandas em análise
         if($request->has('status') && ($request->get('status') == '2' || $request->get('statusGet') == '2')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -279,7 +279,7 @@ class DemandaController extends Controller
 
         # Buscanco apenas as demandas concluídas
         if($request->has('status') && ($request->get('status') == '3' || $request->get('statusGet') == '3')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -290,7 +290,7 @@ class DemandaController extends Controller
 
         # Buscanco apenas as demandas finalizadas
         if($request->has('status') && $request->get('status') != 0 && $request->get('status') == '4') {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -301,7 +301,7 @@ class DemandaController extends Controller
 
         # Buscanco apenas as demandas a atrasar em 15 dias
         if($request->has('status') && ($request->get('status') == '5' || $request->get('statusGet') == '5')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -313,7 +313,7 @@ class DemandaController extends Controller
 
         # Buscanco apenas as demandas atrasadas
         if($request->has('status') && ($request->get('status') == '6' || $request->get('statusGet') == '6')) {
-            $rows ->join(\DB::raw('ouv_encaminhamento'), function ($join) {
+            $rows ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
                 $join->on(
                     'ouv_encaminhamento.id', '=',
                     \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento 
@@ -344,7 +344,7 @@ class DemandaController extends Controller
             ->leftJoin('ouv_assunto', 'ouv_assunto.id', '=', 'ouv_subassunto.assunto_id')
             ->leftJoin('ouv_melhorias', 'ouv_melhorias.id', '=', 'ouv_demanda.melhoria_id')
             ->leftJoin('ouv_comunidade', 'ouv_comunidade.id', '=', 'ouv_demanda.comunidade_id')
-            ->join('ouv_ouvidorias', 'ouv_ouvidorias.id', '=', 'ouv_demanda.ouvidoria_id')
+            ->leftJoin('ouv_ouvidorias', 'ouv_ouvidorias.id', '=', 'ouv_demanda.ouvidoria_id')
             ->where('ouv_demanda.arquivada', '=', null)
             ->select(
                 'ouv_demanda.id',
@@ -378,16 +378,17 @@ class DemandaController extends Controller
         }
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if(!$this->user->is('admin') && $this->user->is('secretaria|ouvidoria')) {
-            if(isset($this->user->secretaria->id) && !isset($this->user->departamento->id)) {
-                $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != '', gen_secretaria.id, secretaria_dm.id) = {$this->user->secretaria->id}"));
+        /*if (!$this->user->is('admin') && $this->user->is('secretaria|ouvidoria|operador')) {
+            if (isset($this->user->secretaria->id) && !isset($this->user->departamento->id)) {
+                //dd($this->user->secretaria->id);
+                $rows->whereRaw(\DB::raw("IF(gen_secretaria.id != null, gen_secretaria.id, secretaria_dm.id) = {$this->user->secretaria->id}"));
             } else if (isset($this->user->departamento->id)) {
                 $rows->where('gen_departamento.id', '=', $this->user->departamento->id);
             }
-        }
+        }*/
 
         // Validando se o usuário autenticado é de secretaria e adaptando o select para a secretaria do usuário logado
-        if($this->user->is('admin|ouvidoria') && $request->get('responsavel') != 0) {
+        if($this->user->is('admin|ouvidoria|operador') && $request->get('responsavel') != 0) {
             $rows->where('users.id', '=', $request->get('responsavel'));
         }
 
@@ -429,17 +430,17 @@ class DemandaController extends Controller
 
                 $html   = "";
 
-                if($this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
+                if ($this->user->is('admin|ouvidoria|operador') && !$this->user->is('secretaria')) {
                     $html .= '<a href="edit/'.$row->id.'" class="btn btn-xs btn-primary waves-effect"><i class="zmdi zmdi-edit" title="Editar"></i></a> ';
                     $html .= '<a href="registro/'.$row->id.'" class="btn btn-xs btn-success waves-effect" target="__blanck" title="Registro"><i class="zmdi zmdi-file"></i></a> ';
                 }
 
                 $html .= '<a href="cartaEcaminhamento/'.$row->id.'" class="btn btn-xs btn-warning" target="__blanck" title="Documento"><i class="zmdi zmdi-file-text"></i></a> ';
                 
-                if(count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria')) {
+                if(count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria|operador') && !$this->user->is('secretaria')) {
                     //Opção deletar removida @felipe
                     //$html .= '<a href="destroy/'.$row->id.'" class="btn btn-xs btn-danger excluir" title="Deletar"><i class="zmdi zmdi-plus-circle-o"></i></a> ';
-                }  if (count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria') && !$this->user->is('secretaria') && !$demandaAgrupada) {
+                }  if (count($demanda->encaminhamento) == 0 && $this->user->is('admin|ouvidoria|operador') && !$this->user->is('secretaria') && !$demandaAgrupada) {
                     $html .= '<a href="fristEncaminhar/'.$row->id.'" class="btn btn-xs btn-info" title="Encaminhar"><i class="zmdi zmdi-mail-send"></i></a>';
                 } else if (!$demandaAgrupada) {
                     $html .= '<a href="detalheAnalise/'.$row->encaminhamento_id.'" class="btn btn-xs btn-primary" title="Visualizar"><i class="zmdi zmdi-search"></i></a> ';

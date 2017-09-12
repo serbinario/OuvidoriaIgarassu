@@ -142,13 +142,13 @@
         <ul class="main-menu">
             <li><a href="{{ route('indexPublico')  }}" target="_blank"><i class="zmdi zmdi-globe-alt"></i> Acesso Público</a></li>
             <li><a href="{{ route('seracademico.index')  }}"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
-            @role('ouvidoria|admin|secretaria')
+            @role('ouvidoria|admin|secretaria|operador')
                 <li><a href="{{ route('seracademico.ouvidoria.demanda.index')  }}"><i class="zmdi zmdi-assignment-o"></i> Manifestação</a></li>
             @endrole
             {{--@role('ouvidoria|secretaria|admin')
                 <li><a href="{{ route('seracademico.ouvidoria.encaminhamento.encaminhados') }}"><i class="zmdi zmdi-mail-send"></i> Encaminhamentos</a></li>
             @endrole--}}
-            @role('ouvidoria|admin')
+            @role('ouvidoria|admin|operador')
             <li><a href="{{ route('seracademico.ouvidoria.demanda.manifestacoesArquivadas')  }}"><i class="zmdi zmdi-archive"></i> Arquivadas</a></li>
             <li class="sub-menu">
                 <a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-plus"></i> Cadastros</a>
