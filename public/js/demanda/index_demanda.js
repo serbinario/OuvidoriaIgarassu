@@ -80,7 +80,7 @@ $(document).ready(function(){
             {data: 'responsavel', name: 'users.name'},
             {data: 'prioridade', name: 'ouv_prioridade.nome'},
             {data: 'informacao', name: 'ouv_informacao.nome'},
-            {data: 'tipo_demanda', name: 'ouv_tipo_demanda.nome'},
+            {data: 'assunto', name: 'ouv_assunto.nome'},
             {data: 'status', name: 'ouv_status.nome'},
             {data: 'action', name: 'action', orderable: false, searchable: false}
         ]

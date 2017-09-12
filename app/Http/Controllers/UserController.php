@@ -29,7 +29,7 @@ class UserController extends Controller
      * @var array
      */
     private $loadFields = [
-        'Role',
+        'Role|bySistema,2',
         'Permission',
     ];
 

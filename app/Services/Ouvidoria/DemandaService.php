@@ -151,7 +151,9 @@ class DemandaService
 
 
         #### Encaminhamento ###
-        if(isset($data['encaminhamento']) && $data['encaminhamento']['prioridade_id'] && $data['secretaria']) {
+        if(isset($data['encaminhamento'])
+            && (isset($data['encaminhamento']['prioridade_id']) && $data['encaminhamento']['prioridade_id'])
+            && $data['secretaria']) {
 
 
             $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
