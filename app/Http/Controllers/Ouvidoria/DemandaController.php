@@ -612,6 +612,20 @@ class DemandaController extends Controller
                 ->where('status', 1)
                 ->select('html')->first();
 
+            $ultEncaminhamento = \DB::table('ouv_demanda')
+                ->leftJoin(\DB::raw('ouv_encaminhamento'), function ($join) {
+                    $join->on(
+                        'ouv_encaminhamento.id', '=',
+                        \DB::raw("(SELECT encaminhamento.id FROM ouv_encaminhamento as encaminhamento
+                        where encaminhamento.demanda_id = ouv_demanda.id AND encaminhamento.status_id IN (1,7,2,4,6) ORDER BY ouv_encaminhamento.id DESC LIMIT 1)")
+                    );
+                })
+                ->where('ouv_demanda.id', $id)
+                ->select(
+                    'ouv_encaminhamento.id',
+                    'ouv_encaminhamento.parecer'
+                )->first();
+
             // Pega o caminho do arquivo
             $empresa = "Serbinario";
             $caminho = base_path("/resources/views/ouvidoria/arquivos_dinamicos/{$empresa}edit.blade.php");
@@ -626,9 +640,10 @@ class DemandaController extends Controller
             fclose($fp);
 
             #Retorno para view
-            return view("ouvidoria.arquivos_dinamicos.{$empresa}edit", compact('model', 'loadFields', 'loadFields2'));
+            return view("ouvidoria.arquivos_dinamicos.{$empresa}edit",
+                compact('model', 'loadFields', 'loadFields2', 'ultEncaminhamento'));
 
-        } catch (\Throwable $e) {dd($e);
+        } catch (\Throwable $e) {
             return redirect()->back()->with('message', $e->getMessage());
         }
     }
@@ -1023,7 +1038,7 @@ class DemandaController extends Controller
             #Retorno para a view
             return redirect()->back()->with("message", "Remoção realizada com sucesso!");
         } catch (\Throwable $e) {
-            dd($e);
+
             return redirect()->back()->with('message', $e->getMessage());
         }
     }
