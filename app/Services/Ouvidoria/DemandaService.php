@@ -230,6 +230,13 @@ class DemandaService
         
         $data = $this->tratamentoCampos($data);
 
+        // Atualiza o parecer do último encaminhamento
+        if(isset($data['id_encaminhamento'])) {
+            $encaminhamento = \DB::table('ouv_encaminhamento')
+                ->where('id', $data['id_encaminhamento'])
+                ->update(['parecer' => $data['encaminhamento']['parecer']]);
+        }
+
         #Atualizando no banco de dados
         $data['user_id'] = $user->id;
         $demanda = $this->repository->update($data, $id);
