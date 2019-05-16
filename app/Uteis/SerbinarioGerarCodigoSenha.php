@@ -40,7 +40,7 @@ class SerbinarioGerarCodigoSenha
     public static function gerarProtocolo()
     {
         $data  = new \DateTime('now');
-        $data->setTimezone( new \DateTimeZone('BRT') );
+        // $data->setTimezone( new \DateTimeZone('BRT') );
         $ano = $data->format('y');
 
         // Gerando o código da demanda

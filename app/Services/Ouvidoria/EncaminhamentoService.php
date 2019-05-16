@@ -214,7 +214,7 @@ class EncaminhamentoService
         $data = $this->tratamentoCampos($data);
 
         $date  = new \DateTime('now');
-        $date->setTimezone( new \DateTimeZone('BRT') );
+        // $date->setTimezone( new \DateTimeZone('BRT') );
         $dataAtual = $date->format('Y-m-d');
         $this->anoAtual = $date->format('Y');
 

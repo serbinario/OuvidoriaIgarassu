@@ -131,10 +131,11 @@ class DemandaService
         $user = Auth::user();
 
         $data = $this->tratamentoCampos($data);
-        $data['encaminhamento'] = $this->tratamentoCampos($data['encaminhamento']);
+
+
 
         $dataObj  = new \DateTime('now');
-        $dataObj->setTimezone( new \DateTimeZone('BRT') );
+        // $dataObj->setTimezone( new \DateTimeZone('BRT'));
         $dataAtual = $dataObj->format('Y-m-d');
         $this->anoAtual = $dataObj->format('Y');
 
@@ -145,16 +146,17 @@ class DemandaService
         $data['status_id'] = '5';
         $data['ouvidoria_id'] = $user->ouvidoria_id;
 
+        // dd($dataAtual);
         #Salvando o registro pincipal
         $demanda =  $this->repository->create($data);
         $encaminhamento = null;
-
 
         #### Encaminhamento ###
         if(isset($data['encaminhamento'])
             && (isset($data['encaminhamento']['prioridade_id']) && $data['encaminhamento']['prioridade_id'])
             && $data['secretaria']) {
 
+            $data['encaminhamento'] = $this->tratamentoCampos($data['encaminhamento']);
 
             $prioridade = Prioridade::where('id', "=", $data['encaminhamento']['prioridade_id'])->first();
             $previsao = ValidarDataDePrevisao::getResult($dataObj, $prioridade->dias);
