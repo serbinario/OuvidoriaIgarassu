@@ -61,6 +61,8 @@ class CartaEncaminhamentoController extends Controller
 
         // Pega o caminho do arquivo
         $empresa = "Serbinario";
+
+//        dd(base_path("/resources/views/reports/{$empresa}cartaEncaminhamento.blade.php"));
         $caminho = base_path("/resources/views/reports/{$empresa}cartaEncaminhamento.blade.php");
 
         // Abre o arquivo em branco para escrita do conteúdo do arquivo
